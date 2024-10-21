@@ -9,10 +9,12 @@ export interface ConnectionStatusProps {
 export const ConnectionStatus = ({ isConnected }: ConnectionStatusProps) => {
   return (
     <div className={styles.container}>
-      <div className={classNames(styles.dot, {
-        [styles.green]: isConnected,
-        [styles.red]: !isConnected
-      })} />
+      <div
+        className={classNames(styles.dot, {
+          [styles.green]: isConnected,
+          [styles.red]: !isConnected,
+        })}
+      />
     </div>
   );
 };
