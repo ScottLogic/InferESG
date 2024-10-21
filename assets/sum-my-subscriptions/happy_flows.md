@@ -10,7 +10,7 @@ sequenceDiagram
     Frontend -->> Director: "Hello! What can you do?"
     Director -->> LLM: "Is this a processable question?"
     LLM -->> Director: "No, return this generic response"
-    Director -->> Frontend: "I'm InferGPT and can..."
+    Director -->> Frontend: "I'm InferESG and can..."
 ```
 
 ## "What did I spend more on last month, Amazon or Netflix?"

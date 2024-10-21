@@ -1,6 +1,6 @@
 # Frontend
 
-UI service for interfacing with InferGPT.
+UI service for interfacing with InferESG.
 
 ## Set up
 

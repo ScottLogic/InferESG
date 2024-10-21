@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/InferGPT.iml" filepath="$PROJECT_DIR$/.idea/InferGPT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/InferESG.iml" filepath="$PROJECT_DIR$/.idea/InferESG.iml" />
     </modules>
   </component>
 </project>

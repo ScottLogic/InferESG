@@ -4,7 +4,7 @@ from src.api import app, healthy_response, unhealthy_neo4j_response, chat_fail_r
 
 client = TestClient(app)
 utterance = "Hello there"
-expected_message = "Hello to you too! From InferGPT"
+expected_message = "Hello to you too! From InferESG"
 
 
 @pytest.fixture

@@ -1,6 +1,6 @@
-# Contributing to InferGPT
+# Contributing to InferESG
 
-Welcome to InferGPT! We appreciate your interest in contributing. 
+Welcome to InferESG! We appreciate your interest in contributing.
 Before you get started, please take a moment to review this guide.
 
 ## Ways to Contribute

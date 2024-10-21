@@ -38,11 +38,11 @@ services:
       retries: 5
       start_interval: 5s
       start_period: 60s
-  # InferGPT Backend
+  # InferESG Backend
   backend:
     env_file:
       - .env
-    image: infergpt/backend
+    image: inferesg/backend
     build:
       context: backend
       dockerfile: ./Dockerfile
@@ -100,9 +100,9 @@ services:
           target: /backend
           action: sync
 
-  # InferGPT Frontend
+  # InferESG Frontend
   frontend:
-    image: infergpt/frontend
+    image: inferesg/frontend
     build:
       context: frontend
       dockerfile: ./Dockerfile

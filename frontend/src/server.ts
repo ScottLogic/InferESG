@@ -17,7 +17,7 @@ export const getResponse = async (
 };
 
 const unhappyHealthcheckResponse = createChatMessageResponse(
-  'InferGPT healthcheck: backend is unhealthy. Unable to healthcheck Neo4J. Please check the README files for further guidance',
+  'InferESG healthcheck: backend is unhealthy. Unable to healthcheck Neo4J. Please check the README files for further guidance',
 );
 
 const checkBackendHealth = async (): Promise<ChatMessageResponse> => {

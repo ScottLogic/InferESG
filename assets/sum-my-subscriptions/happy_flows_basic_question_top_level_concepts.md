@@ -12,5 +12,5 @@ sequenceDiagram
     end
     UI -->> Director: Hello! What can you do?
     Director -->> Director: Return pure-LLM response
-    Director -->> UI: I'm InferGPT and can...
+    Director -->> UI: I'm InferESG and can...
 ```

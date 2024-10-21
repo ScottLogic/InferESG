@@ -2,7 +2,7 @@
 
 A directory for all util and service modules for storing, manipulating and retrieving data
 
-InferGPT uses a Neo4j Knowledge Graph exclusively.
+InferESG uses a Neo4j Knowledge Graph exclusively.
 
 # Setup
 
@@ -27,7 +27,7 @@ Once installed follow the steps below:
 3. Add the username and password to the root `.env` file.
 4. Add the database uri to the `.env` file. The default value for this is `bolt://localhost:7687`
 5. Run the database in Neo4j desktop.
-6. Test the connection is working by asking InferGPT the keyphrase "healthcheck". 
+6. Test the connection is working by asking InferESG the keyphrase "healthcheck". 
 It will return with a status update on the state of the backend and database
 7. Load the data located at data/create_graph.cypher into the database and run it
 

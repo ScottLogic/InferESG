@@ -11,12 +11,12 @@ We aim to be able to answer complex questions that require a deep understanding 
 2. Which of the companies in this fund should I prioritise deep analysis on?
 3. I'm learning about ESG - can you help me understand this area better?
 
-## InferGPT Roadmap & Docs
+## InferESG Roadmap & Docs
 InferESG is based on InferGPT/LLM - more details below:
 
 Want more context about how it works, our roadmap and documentation? Check out the [wiki](https://github.com/WaitThatShouldntWork/InferGPT/wiki)
 
-For further reading on InferGPT's components, see any of the following
+For further reading on InferESG's components, see any of the following
 
 - [Full system testing](test/README.md)
 - [Data persistence](data/README.md)

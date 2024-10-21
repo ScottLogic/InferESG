@@ -55,7 +55,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-health_prefix = "InferGPT healthcheck: "
+health_prefix = "InferESG healthcheck: "
 further_guidance = "Please check the README files for further guidance."
 
 healthy_response = health_prefix + "backend is healthy. Neo4J is healthy."
