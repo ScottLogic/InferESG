@@ -1,6 +1,9 @@
 name: Type Check Backend
-on:
+on: 
   pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   checking:

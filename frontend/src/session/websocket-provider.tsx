@@ -1,5 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Connection, Message, MessageType, WebsocketContext } from './websocket-context';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Connection,
+  Message,
+  MessageType,
+  WebsocketContext,
+} from './websocket-context';
 
 export interface WebsocketProviderProps {
   children: React.ReactNode;
@@ -12,12 +23,12 @@ const ping = JSON.stringify({ type: MessageType.PING });
 export const WebsocketProvider = ({ children }: WebsocketProviderProps) => {
   const [isConnected, setIsConnected] = useState(false);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
-  
+
   const ws = useRef<WebSocket | null>(null);
 
   const heartbeat = useCallback(() => {
     if (!ws.current || ws.current?.readyState !== 1) return;
-      
+
     ws.current.send(ping);
 
     setTimeout(heartbeat, heartbeatInterval);
@@ -62,7 +73,7 @@ export const WebsocketProvider = ({ children }: WebsocketProviderProps) => {
       lastMessage,
       send: sendMessage || (() => {}),
     }),
-    [isConnected, lastMessage, sendMessage]
+    [isConnected, lastMessage, sendMessage],
   );
 
   return (
