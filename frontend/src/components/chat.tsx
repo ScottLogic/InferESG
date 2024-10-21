@@ -3,14 +3,20 @@ import { Message, MessageComponent } from './message';
 import styles from './chat.module.css';
 import { Waiting } from './waiting';
 import { ConnectionStatus } from './connection-status';
-import { WebsocketContext, MessageType, Message as wsMessage } from '../session/websocket-context';
+import {
+  WebsocketContext,
+  MessageType,
+  Message as wsMessage,
+} from '../session/websocket-context';
 import { Confirmation, ConfirmModal } from './confirm-modal';
 export interface ChatProps {
   messages: Message[];
   waiting: boolean;
 }
 
-const mapWsMessageToConfirmation = (message: wsMessage): Confirmation | undefined => {
+const mapWsMessageToConfirmation = (
+  message: wsMessage,
+): Confirmation | undefined => {
   if (!message.data) {
     return;
   }
@@ -31,8 +37,7 @@ export const Chat = ({ messages, waiting }: ChatProps) => {
     }
     if (lastMessage && lastMessage.type === MessageType.CONFIRMATION) {
       const newConfirmation = mapWsMessageToConfirmation(lastMessage);
-      if (newConfirmation)
-        setConfirmation(newConfirmation);
+      if (newConfirmation) setConfirmation(newConfirmation);
     }
   }, [lastMessage]);
 
@@ -44,7 +49,11 @@ export const Chat = ({ messages, waiting }: ChatProps) => {
 
   return (
     <>
-      <ConfirmModal confirmation={confirmation} setConfirmation={setConfirmation} send={send} />
+      <ConfirmModal
+        confirmation={confirmation}
+        setConfirmation={setConfirmation}
+        send={send}
+      />
       <div ref={containerRef} className={styles.container}>
         <ConnectionStatus isConnected={isConnected} />
         {messages.map((message, index) => (

@@ -6,7 +6,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const localEnv = dotenv.config({ path: path.resolve(__dirname, '../.env') }).parsed;
+const localEnv = dotenv.config({
+  path: path.resolve(__dirname, '../.env'),
+}).parsed;
 const env = { ...process.env, ...localEnv };
 
 const config = {
@@ -15,7 +17,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
 
   module: {
@@ -37,7 +39,7 @@ const config = {
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: '[local]__[hash:base64:5]'
+                localIdentName: '[local]__[hash:base64:5]',
               },
             },
           },
@@ -52,7 +54,7 @@ const config = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
-      }
+      },
     ],
   },
   devtool: 'source-map',
@@ -63,8 +65,8 @@ const config = {
     }),
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(env)
-    })
+      'process.env': JSON.stringify(env),
+    }),
   ],
 };
 

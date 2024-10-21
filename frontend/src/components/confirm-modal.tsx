@@ -4,20 +4,27 @@ import { Message, MessageType } from '../session/websocket-context';
 import React from 'react';
 
 export interface Confirmation {
-  id: string,
-  requestMessage: string,
-  result: boolean | null
+  id: string;
+  requestMessage: string;
+  result: boolean | null;
 }
 
 interface ConfirmModalProps {
-  confirmation: Confirmation | null,
-  setConfirmation: (confirmation: Confirmation | null) => void,
-  send: (message: Message) => void
+  confirmation: Confirmation | null;
+  setConfirmation: (confirmation: Confirmation | null) => void;
+  send: (message: Message) => void;
 }
 
-export const ConfirmModal = ({ confirmation, setConfirmation, send }: ConfirmModalProps) => {
+export const ConfirmModal = ({
+  confirmation,
+  setConfirmation,
+  send,
+}: ConfirmModalProps) => {
   const mapConfirmationToMessage = (confirmation: Confirmation): Message => {
-    return { type: MessageType.CONFIRMATION, data: confirmation.id + ':' + (confirmation.result ? 'y' : 'n') };
+    return {
+      type: MessageType.CONFIRMATION,
+      data: confirmation.id + ':' + (confirmation.result ? 'y' : 'n'),
+    };
   };
 
   const updateConfirmationResult = (newResult: boolean) => {
@@ -25,7 +32,6 @@ export const ConfirmModal = ({ confirmation, setConfirmation, send }: ConfirmMod
       setConfirmation({ ...confirmation, result: newResult });
     }
   };
-
 
   const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -43,13 +49,29 @@ export const ConfirmModal = ({ confirmation, setConfirmation, send }: ConfirmMod
   }, [confirmation]);
 
   return (
-    <dialog className={Styles.modal} ref={modalRef} onClose={() => updateConfirmationResult(false)}>
+    <dialog
+      className={Styles.modal}
+      ref={modalRef}
+      onClose={() => updateConfirmationResult(false)}
+    >
       <div className={Styles.modalContent}>
         <h1 className={Styles.header}>Confirmation</h1>
-        <p className={Styles.requestMessage}>{confirmation && confirmation.requestMessage}</p>
+        <p className={Styles.requestMessage}>
+          {confirmation && confirmation.requestMessage}
+        </p>
         <div className={Styles.buttonsBar}>
-          <button className={Styles.cancel} onClick={() => updateConfirmationResult(false)}>Cancel</button>
-          <button className={Styles.confirm} onClick={() => updateConfirmationResult(true)}>Confirm</button>
+          <button
+            className={Styles.cancel}
+            onClick={() => updateConfirmationResult(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className={Styles.confirm}
+            onClick={() => updateConfirmationResult(true)}
+          >
+            Confirm
+          </button>
         </div>
       </div>
     </dialog>

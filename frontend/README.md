@@ -7,6 +7,7 @@ UI service for interfacing with InferGPT.
 1. Ensure the `.env` file has been configured as described in the main [README](../README.md).
 
 This README covers instructions on how to run the application:
+
 - Locally
 - In a Docker Container
 

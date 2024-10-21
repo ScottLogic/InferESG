@@ -1,4 +1,6 @@
-html, body, #app-root {
+html,
+body,
+#app-root {
   font-family: 'Source Sans 3', sans-serif;
   height: 100%;
   margin: 0;

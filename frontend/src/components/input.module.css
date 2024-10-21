@@ -40,11 +40,13 @@
 
 .disabled {
   cursor: not-allowed;
-  filter: invert(24%) sepia(3%) saturate(0%) hue-rotate(263deg) brightness(95%) contrast(90%);
+  filter: invert(24%) sepia(3%) saturate(0%) hue-rotate(263deg) brightness(95%)
+    contrast(90%);
 }
 
 .sendButton:hover:not(.disabled) {
-  filter: invert(31%) sepia(75%) saturate(3303%) hue-rotate(200deg) brightness(102%) contrast(105%);
+  filter: invert(31%) sepia(75%) saturate(3303%) hue-rotate(200deg)
+    brightness(102%) contrast(105%);
 }
 
 .sendButton:active:not(.disabled) {

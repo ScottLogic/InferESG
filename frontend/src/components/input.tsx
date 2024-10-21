@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import styles from './input.module.css';
 import RightArrow from '../icons/map-arrow-right.svg';
 import classNames from 'classnames';
@@ -20,7 +26,7 @@ export const Input = ({ sendMessage }: InputProps) => {
       sendMessage(userInput);
       setUserInput('');
     },
-    [sendMessage, userInput]
+    [sendMessage, userInput],
   );
 
   const sendDisabled = useMemo(() => userInput.length === 0, [userInput]);
@@ -35,7 +41,13 @@ export const Input = ({ sendMessage }: InputProps) => {
         type="text"
         value={userInput}
       />
-      <button className={classNames(styles.sendButton, { [styles.disabled]: sendDisabled })} onClick={onSend} disabled={sendDisabled}>
+      <button
+        className={classNames(styles.sendButton, {
+          [styles.disabled]: sendDisabled,
+        })}
+        onClick={onSend}
+        disabled={sendDisabled}
+      >
         <img src={RightArrow} />
       </button>
     </form>

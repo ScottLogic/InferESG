@@ -33,7 +33,7 @@ export const useMessages = (): UseMessagesHook => {
       setWaiting(false);
       appendMessage(response.message, Role.Bot);
     },
-    [appendMessage, messages]
+    [appendMessage, messages],
   );
 
   return {
