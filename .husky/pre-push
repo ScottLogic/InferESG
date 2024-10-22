@@ -1,0 +1,8 @@
+#!/bin/bash
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+pattern="^FS-[0-9]+/[a-z0-9._-]+$"
+
+if ! [[ $branch_name =~ $pattern ]]; then
+  echo "Branch name '$branch_name' does not follow the naming convention 'FS-<number>/<branch-name>', please rename and try again."
+  exit 1
+fi
