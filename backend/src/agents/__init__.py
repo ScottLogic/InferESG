@@ -9,7 +9,6 @@ from .validator_agent import ValidatorAgent
 from .answer_agent import AnswerAgent
 from .chart_generator_agent import ChartGeneratorAgent
 from .file_agent import FileAgent
-from .maths_agent import MathsAgent
 
 
 config = Config()
