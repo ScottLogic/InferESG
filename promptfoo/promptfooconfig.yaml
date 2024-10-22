@@ -1,0 +1,28 @@
+# Learn more about building a configuration: https://promptfoo.dev/docs/configuration/guide
+description: "My eval"
+
+prompts:
+  - "What is the capital of {{topic}}"
+  
+
+providers:
+  - "openai:gpt-4o-mini"
+  - "openai:gpt-4o"
+  # - name: custom-mistral-enjoyment
+  #   type: custom
+  #   configuration: python C:\Dev\InferGPT\backend\src\api\app.py
+
+  
+tests:
+  # - label: Country capitals
+  - vars:
+      topic: France
+    assert:
+      - type: icontains
+        value: Paris
+
+  - vars:
+      topic: Spain
+    assert:
+      - type: icontains
+        value: Madrid
