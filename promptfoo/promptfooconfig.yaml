@@ -8,13 +8,9 @@ prompts:
 providers:
   - "openai:gpt-4o-mini"
   - "openai:gpt-4o"
-  # - name: custom-mistral-enjoyment
-  #   type: custom
-  #   configuration: python C:\Dev\InferGPT\backend\src\api\app.py
 
   
 tests:
-  # - label: Country capitals
   - vars:
       topic: France
     assert:
