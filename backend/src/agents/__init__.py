@@ -36,7 +36,7 @@ def get_available_agents() -> List[Agent]:
             WebAgent(config.web_agent_llm, config.web_agent_model),
             ChartGeneratorAgent(config.chart_generator_llm, config.chart_generator_model),
             FileAgent(config.file_agent_llm, config.file_agent_model),
-            # FS-63 Silencing Math agent - tool is not optimised
+            # FS-63 Silencing Math agent - tool is not optimised.
             # MathsAgent(config.maths_agent_llm, config.maths_agent_model),
             ]
 
