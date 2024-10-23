@@ -154,6 +154,7 @@ async def enrich_nodes_properties(llm, model, finalised_graph_structure):
         label = new_node["label"]
         properties_to_add = new_node["properties"]
         # FS-67 - Determine if the structure has nested 'nodes' or not
+        # This is a temporary code as we will change it in future to have LLM return the same structure for both Mistral and OpenAI.
         if isinstance(finalised_graph_structure["nodes"], dict):
             # Nodes are nested under a "nodes" key in a dictionary in the case of OpenAI
             node_list = finalised_graph_structure["nodes"]["nodes"]
