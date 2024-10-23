@@ -123,8 +123,11 @@ async def enriched_rel_properties(llm, model, finalised_graph_structure):
 
     # Merge properties
     for new_rel in enriched_rel_properties["relProperties"]:
-        relationship_type = new_rel["relType"]
-        properties_to_add = new_rel["property"]
+        #FS-67 - This change was done as relType is unavailable here for mistral.
+        relationship_type = new_rel.get("relType", None)
+        if relationship_type is None:
+            continue  # Skip if there's no relationship type specified
+        properties_to_add = new_rel.get("property", None)
 
         for rel in finalised_graph_structure["relationships"]:
             if rel["cypher_representation"] == relationship_type:
@@ -150,7 +153,7 @@ async def enrich_nodes_properties(llm, model, finalised_graph_structure):
     for new_node in enriched_node_properties["nodeProperties"]:
         label = new_node["label"]
         properties_to_add = new_node["properties"]
-        # Determine if the structure has nested 'nodes' or not
+        # FS-67 - Determine if the structure has nested 'nodes' or not
         if isinstance(finalised_graph_structure["nodes"], dict):
             # Nodes are nested under a "nodes" key in a dictionary in the case of OpenAI
             node_list = finalised_graph_structure["nodes"]["nodes"]
