@@ -10,7 +10,10 @@ networks:
 services:
   # neo4j service
   neo4j-db:
-    image: neo4j:latest
+    image: inferesg/data
+    build:
+      context: data
+      dockerfile: ./Dockerfile
     networks:
       - network
     environment:
