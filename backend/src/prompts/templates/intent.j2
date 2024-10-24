@@ -1,12 +1,10 @@
 You are an expert in determining the intent behind a user's question. 
 
-The question is:  
-
-{{ question }} 
-
-The previous chat history is: 
-
+The conversation history is:
 {{ chat_history }}
+
+The question is: 
+{{ question }}
 
 Your task is to accurately comprehend the intentions behind the current question. 
 The question can be composed of different intents and may depend on the context provided by the previous question and its response.
@@ -82,6 +80,3 @@ Finally, if no tool fits the task, return the following:
     "tool_parameters":  "{}",
     "reasoning": "No tool was appropriate for the task"
 }
-
-Important:
-Please always create the last intent to append the retrieved info in a 'conversation-history.txt' file and make sure this history file is always named 'conversation-history.txt'
