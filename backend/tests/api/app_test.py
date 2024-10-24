@@ -66,8 +66,8 @@ def test_chat_response_failure(mocker):
 @pytest.mark.asyncio
 async def test_lifespan_populates_db(mocker, mock_initial_data) -> None:
     mock_populate_db = mocker.patch("src.api.app.populate_db", return_value=mocker.Mock())
-    mock_annual_transactions_cypher_script = mocker.patch(
-        "src.api.app.annual_transactions_cypher_script", return_value=(mocker.Mock())
+    mock_import_data_from_csv_script = mocker.patch(
+        "src.api.app.import_data_from_csv_script", return_value=(mocker.Mock())
     )
     mock_config = {
         "azure_initial_data_filename": "test_file",
@@ -77,16 +77,16 @@ async def test_lifespan_populates_db(mocker, mock_initial_data) -> None:
     mocker.patch("src.api.app.config", return_value=mock_config)
 
     with client:
-        mock_populate_db.assert_called_once_with(mock_annual_transactions_cypher_script, mock_initial_data)
+        mock_populate_db.assert_called_once_with(mock_import_data_from_csv_script, mock_initial_data)
 
 
 @pytest.mark.asyncio
 async def test_lifespan_missing_config_populates_db(mocker) -> None:
     mock_populate_db = mocker.patch("src.api.app.populate_db", return_value=mocker.Mock())
-    mock_annual_transactions_cypher_script = mocker.patch(
-        "src.api.app.annual_transactions_cypher_script", return_value=(mocker.Mock())
+    mock_import_data_from_csv_script = mocker.patch(
+        "src.api.app.import_data_from_csv_script", return_value=(mocker.Mock())
     )
     mocker.patch("src.api.app.config", None)
 
     with client:
-        mock_populate_db.assert_called_once_with(mock_annual_transactions_cypher_script, {})
+        mock_populate_db.assert_called_once_with(mock_import_data_from_csv_script, {})

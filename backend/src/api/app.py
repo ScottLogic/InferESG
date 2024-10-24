@@ -12,7 +12,7 @@ from src.utils.graph_db_utils import populate_db
 from src.utils import Config, test_connection
 from src.director import question
 from src.websockets.connection_manager import connection_manager, parse_message
-from src.utils.annual_cypher_import import annual_transactions_cypher_script
+from src.utils.cyper_import_data_from_csv import import_data_from_csv_script
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -36,10 +36,10 @@ async def lifespan(app: FastAPI):
         blob_client = container_client.get_blob_client(config.azure_initial_data_filename)
         download_stream = blob_client.download_blob()
         annual_transactions = download_stream.readall().decode("utf-8")
-        populate_db(annual_transactions_cypher_script, json.loads(annual_transactions))
+        populate_db(import_data_from_csv_script, json.loads(annual_transactions))
     except Exception as e:
         logger.exception(f"Failed to populate database with initial data from Azure: {e}")
-        populate_db(annual_transactions_cypher_script, {})
+        populate_db(import_data_from_csv_script, {})
     yield
 
 
