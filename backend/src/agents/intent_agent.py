@@ -25,11 +25,22 @@ STATUS_ERROR = "error"
 )
 class IntentAgent(Agent):
 
-    async def read_file_core(self, file_path: str) -> str:
+    async def invoke(self, utterance: str) -> str:
+        chat_history = await read_file_core("conversation-history.txt")
+
+        user_prompt = engine.load_prompt(
+            "intent", question=utterance, chat_history=chat_history)
+
+        return await self.llm.chat(self.model, intent_format, user_prompt=user_prompt, return_json=True)
+
+
+async def read_file_core(file_path: str) -> str:
         full_path = os.path.normpath(os.path.join(FILES_DIRECTORY, file_path))
         try:
             with open(full_path, 'r') as file:
-                content = file.read()
+                lines = file.readlines()
+                last_three_lines = lines[-3:]
+                content = ''.join(last_three_lines)
             return content
         except FileNotFoundError:
             error_message = f"File {file_path} not found."
@@ -38,14 +49,6 @@ class IntentAgent(Agent):
         except Exception as e:
             logger.error(f"Error reading file {full_path}: {e}")
             return ""
-
-    async def invoke(self, utterance: str) -> str:
-        chat_history = await self.read_file_core("conversation-history.txt")
-
-        user_prompt = engine.load_prompt("intent", question=utterance, chat_history=chat_history)
-
-        return await self.llm.chat(self.model, intent_format, user_prompt=user_prompt, return_json=True)
-
 
     # Utility function for error responses
 def create_response(content: str, status: str = STATUS_SUCCESS) -> str:

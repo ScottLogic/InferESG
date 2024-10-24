@@ -13,6 +13,7 @@ from src.utils import Config, test_connection
 from src.director import question
 from src.websockets.connection_manager import connection_manager, parse_message
 from src.utils.annual_cypher_import import annual_transactions_cypher_script
+from src.suggestions_generator import generate_suggestions
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -63,6 +64,7 @@ unhealthy_backend_response = health_prefix + "backend is unhealthy. Unable to he
 unhealthy_neo4j_response = health_prefix + "backend is healthy. Neo4J is unhealthy. " + further_guidance
 
 chat_fail_response = "Unable to generate a response. Check the service by using the keyphrase 'healthcheck'"
+suggestions_failed_response = "Unable to generate suggestions. Check the service by using the keyphrase 'healthcheck'"
 
 
 @app.get("/health")
@@ -87,6 +89,18 @@ async def chat(utterance: str):
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=chat_fail_response)
+
+
+@app.get("/suggestions")
+async def suggestions():
+    logger.info("Requesting chat suggestions")
+    try:
+        final_result = await generate_suggestions()
+        logger.info(f"Chat suggestions: {final_result}")
+        return JSONResponse(status_code=200, content=final_result)
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=suggestions_failed_response)
 
 
 @app.websocket("/ws")

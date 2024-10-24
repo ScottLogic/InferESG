@@ -28,6 +28,7 @@ class Config(object):
         self.chart_generator_llm = None
         self.file_agent_llm = None
         self.router_llm = None
+        self.suggestions_llm = None
         self.validator_agent_model = None
         self.intent_agent_model = None
         self.answer_agent_model = None
@@ -37,6 +38,7 @@ class Config(object):
         self.router_model = None
         self.files_directory = default_files_directory
         self.file_agent_model = None
+        self.suggestions_model = None
         self.load_env()
 
     def load_env(self):
@@ -66,6 +68,7 @@ class Config(object):
             self.web_agent_llm = os.getenv("WEB_AGENT_LLM")
             self.maths_agent_llm = os.getenv("MATHS_AGENT_LLM")
             self.router_llm = os.getenv("ROUTER_LLM")
+            self.suggestions_llm = os.getenv("SUGGESTIONS_LLM")
             self.answer_agent_model = os.getenv("ANSWER_AGENT_MODEL")
             self.intent_agent_model = os.getenv("INTENT_AGENT_MODEL")
             self.validator_agent_model = os.getenv("VALIDATOR_AGENT_MODEL")
@@ -75,6 +78,7 @@ class Config(object):
             self.maths_agent_model = os.getenv("MATHS_AGENT_MODEL")
             self.router_model = os.getenv("ROUTER_MODEL")
             self.file_agent_model = os.getenv("FILE_AGENT_MODEL")
+            self.suggestions_model = os.getenv("SUGGESTIONS_MODEL")
         except FileNotFoundError:
             raise FileNotFoundError("Please provide a .env file. See the Getting Started guide on the README.md")
         except Exception:
