@@ -185,10 +185,14 @@ def test_tool_selection_format_template():
 def test_create_answer_prompt():
     engine = PromptEngine()
     try:
+        chat_history = ""
         final_scratchpad = "example scratchpad"
         datetime = "example datetime"
         expected_string = f"""You have been provided the final scratchpad which contains the results for the question in the user prompt.
 Your goal is to turn the results into a natural language format to present to the user.
+
+The conversation history is:
+{ chat_history }
 
 By using the final scratchpad below:
 { final_scratchpad }

@@ -1,5 +1,6 @@
 from src.prompts import PromptEngine
 from src.agents import Agent, agent
+from src.session import get_session_chat
 import logging
 from src.utils.config import Config
 
@@ -19,6 +20,5 @@ logger = logging.getLogger(__name__)
 class IntentAgent(Agent):
 
     async def invoke(self, utterance: str) -> str:
-        chat_history = ""
-        user_prompt = engine.load_prompt("intent", question=utterance, chat_history=chat_history)
+        user_prompt = engine.load_prompt("intent", question=utterance, chat_history=get_session_chat())
         return await self.llm.chat(self.model, intent_format, user_prompt=user_prompt, return_json=True)

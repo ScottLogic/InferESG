@@ -39,7 +39,9 @@ const unhappyChatResponse = createChatMessageResponse(
 const callChatEndpoint = async (
   message: string,
 ): Promise<ChatMessageResponse> => {
-  return await fetch(`${process.env.BACKEND_URL}/chat?utterance=${message}`)
+  return await fetch(`${process.env.BACKEND_URL}/chat?utterance=${message}`, {
+    credentials: 'include',
+  })
     .then((response) => {
       if (!response.ok) {
         console.log('error found');

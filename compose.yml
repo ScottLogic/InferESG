@@ -38,6 +38,21 @@ services:
       retries: 5
       start_interval: 5s
       start_period: 60s
+
+  redis-cache:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    networks:
+      - network
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli ping | grep PONG']
+      interval: 60s
+      timeout: 10s
+      retries: 5
+
   # InferESG Backend
   backend:
     env_file:
@@ -80,6 +95,8 @@ services:
       FILE_AGENT_MODEL: ${FILE_AGENT_MODEL}
     depends_on:
       neo4j-db:
+        condition: service_healthy
+      redis-cache:
         condition: service_healthy
     networks:
       - network

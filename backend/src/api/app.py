@@ -13,6 +13,7 @@ from src.utils import Config, test_connection
 from src.director import question
 from src.websockets.connection_manager import connection_manager, parse_message
 from src.utils.annual_cypher_import import annual_transactions_cypher_script
+from src.session import RedisSessionMiddleware
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -55,6 +56,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(RedisSessionMiddleware)
+
 health_prefix = "InferESG healthcheck: "
 further_guidance = "Please check the README files for further guidance."
 
@@ -76,7 +79,6 @@ async def health_check():
         response = JSONResponse(status_code=500, content=unhealthy_neo4j_response)
     finally:
         return response
-
 
 @app.get("/chat")
 async def chat(utterance: str):

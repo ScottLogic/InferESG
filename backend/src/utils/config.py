@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 default_frontend_url = "http://localhost:8650"
 default_neo4j_uri = "bolt://localhost:7687"
 default_files_directory = "files"
+default_redis_host = "redis"
+default_redis_cache_duration = 3600
 
 
 class Config(object):
@@ -37,6 +39,8 @@ class Config(object):
         self.router_model = None
         self.files_directory = default_files_directory
         self.file_agent_model = None
+        self.redis_host = default_redis_host
+        self.redis_cache_duration = default_redis_cache_duration
         self.load_env()
 
     def load_env(self):
@@ -75,6 +79,8 @@ class Config(object):
             self.maths_agent_model = os.getenv("MATHS_AGENT_MODEL")
             self.router_model = os.getenv("ROUTER_MODEL")
             self.file_agent_model = os.getenv("FILE_AGENT_MODEL")
+            self.redis_host = os.getenv("REDIS_HOST", default_redis_host)
+            self.redis_cache_duration = os.getenv("REDIS_CACHE_DURATION", default_redis_cache_duration)
         except FileNotFoundError:
             raise FileNotFoundError("Please provide a .env file. See the Getting Started guide on the README.md")
         except Exception:
