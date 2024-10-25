@@ -23,8 +23,8 @@ def test_session_cypher_query(mocker, mock_request_context):
 
     update_session_cypher_query(query_id_2, cypher_query_2)
     assert get_session_cypher_query() == [
-        {"queryId": str(query_id_1), "cypher_query": cypher_query_1},
-        {"queryId": str(query_id_2), "cypher_query": cypher_query_2}
+        {"queryid": str(query_id_1), "cypher_query": cypher_query_1},
+        {"queryid": str(query_id_2), "cypher_query": cypher_query_2}
     ]
 
 
@@ -35,6 +35,6 @@ def test_clear_session_cypher_query(mocker, mock_request_context):
     cypher_query = "match(n) return n"
 
     update_session_cypher_query(query_id, cypher_query)
-    assert get_session_cypher_query() == [{"queryId": str(query_id), "cypher_query": cypher_query}]
+    assert get_session_cypher_query() == [{"queryid": str(query_id), "cypher_query": cypher_query}]
     clear_session_cypher_query()
     assert get_session_cypher_query() == []
