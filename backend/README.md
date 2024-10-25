@@ -32,7 +32,7 @@ Follow the instructions below to run the backend locally. Change directory to `/
 
 1. Set-up a virtual environment
 
-> It's recommended (though not technically required) to create a virtual environment for the project by running `python -m venv .venv` to create it and `. .venv/Scripts/activate` to activate it in your active terminal.
+> It's recommended (though not technically required) to create a virtual environment for the project by running `python -m venv venv` to create it and `source venv/Scripts/activate` to activate it in your active terminal.
 
 2. Install dependencies
 
