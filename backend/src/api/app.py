@@ -12,7 +12,6 @@ from src.utils.graph_db_utils import populate_db
 from src.utils import Config, test_connection
 from src.director import question
 from src.websockets.connection_manager import connection_manager, parse_message
-from src.utils.annual_cypher_import import annual_transactions_cypher_script
 from src.session import RedisSessionMiddleware
 from src.utils.cyper_import_data_from_csv import import_data_from_csv_script
 
