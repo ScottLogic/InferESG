@@ -22,7 +22,7 @@ counter = Counter()
 def count_calls(func):
     def wrapper(self=None, *args, **kwargs):
         counter.increment()
-        logging.info(f"Function {func.__name__} has been called {counter.count} times")
+        logging.debug(f"Function {func.__name__} has been called {counter.count} times")
         return func(self, *args, **kwargs)
 
     counter.reset()

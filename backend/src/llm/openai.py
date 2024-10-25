@@ -28,10 +28,14 @@ class OpenAI(LLM):
                     {"role": "user", "content": user_prompt},
                 ],
                 temperature=0,
-                response_format={"type": "json_object"} if return_json else NOT_GIVEN,
+                response_format={
+                    "type": "json_object"} if return_json else NOT_GIVEN,
             )
-            logger.info("OpenAI response: {0}".format(response))
             content = response.choices[0].message.content
+            logger.info(f"OpenAI response: Finish reason: {
+                        response.choices[0].finish_reason}, Content: {content}")
+            logger.debug(f"Token data: {response.usage}")
+
             if isinstance(content, str):
                 return content
             elif isinstance(content, list):
@@ -39,5 +43,5 @@ class OpenAI(LLM):
             else:
                 return "Unexpected content format"
         except Exception as e:
-            logger.error("Error calling OpenAI model: {0}".format(e))
+            logger.error(f"Error calling OpenAI model: {e}")
             return "An error occurred while processing the request."

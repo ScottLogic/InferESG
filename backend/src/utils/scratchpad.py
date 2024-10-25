@@ -25,5 +25,5 @@ def update_scratchpad(agent_name=None, question=None, result=None, error=None):
 
 
 def clear_scratchpad():
-    logger.info("Scratchpad cleared")
+    logger.debug("Scratchpad cleared")
     scratchpad.clear()
