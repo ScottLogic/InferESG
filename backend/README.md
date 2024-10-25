@@ -3,6 +3,7 @@
 Python service for the InferESG backend.
 
 ## Structure
+
 - `/supervisors` storing all supervisor modules (agents that call other agents for a greater goal)
 - `/agents` containing all agents the director can call. Agents have their own functions stored within the agent module
 - `/utils` with all shared utility modules
@@ -15,6 +16,7 @@ Python service for the InferESG backend.
 > Note: You will need to configure a LLM to run the service.
 
 This README covers instructions on how to run the application:
+
 - Locally
 - In a Docker Container
 
@@ -30,14 +32,16 @@ Follow the instructions below to run the backend locally. Change directory to `/
 
 1. Set-up a virtual environment
 
-> It's recommended (though not technically required) to create a virtual environment for the project by running `python -m venv .venv` to create it and `.venv/Scripts/activate` to activate it in your active terminal.
+> It's recommended (though not technically required) to create a virtual environment for the project by running `python -m venv venv` to create it and `source venv/Scripts/activate` to activate it in your active terminal.
 
 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
-> (VsCode) You may run into some issues with compiling python packages from requirements.txt. To resolve this ensure you have downloaded and installed the "Desktop development with C++" workload from your Visual Studio installer.
+
+> (VsCode) You may run into some issues with compiling python packages from requirements.txt. To resolve this ensure you have downloaded and installed the "Desktop development with C++" workload from your Visual Studio installer. Details on this can be found https://matplotlib.org/devdocs/install/dependencies.html#compiled-extensions
+
 3. Run the app
 
 ```bash
@@ -104,7 +108,7 @@ To add further rules, these are added to `ruff.toml` by using the letter asssign
 
 ## Test
 
-`pytest` is being used for testing the backend. Like with linting, running the [setup](#set-up) steps should download `pytest` for you. 
+`pytest` is being used for testing the backend. Like with linting, running the [setup](#set-up) steps should download `pytest` for you.
 
 We are using a separate `tests` directory to store all the tests. This directory is intended to mirror the `src` directory to make it easier to find the tests for a specific module.
 
@@ -130,6 +134,6 @@ The vscode extension [Pylance](https://marketplace.visualstudio.com/items?itemNa
 
 ```json
 {
-    "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.typeCheckingMode": "basic"
 }
 ```

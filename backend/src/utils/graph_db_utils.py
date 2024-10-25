@@ -1,7 +1,6 @@
 import logging
 from neo4j import GraphDatabase
 from src.utils import Config
-from src.utils.annual_cypher_import import remove_connecting_nodes, remove_transactions_without_merchant, remove_credits
 
 logger = logging.getLogger(__name__)
 
@@ -52,15 +51,6 @@ def populate_db(query, data) -> None:
 
             session.run(query, data=data)
             logger.debug("Database populated")
-
-            session.run(remove_credits)
-            logger.debug("Removed any credits from database")
-
-            session.run(remove_transactions_without_merchant)
-            logger.debug("Removed transactions without merchant from database")
-
-            session.run(remove_connecting_nodes)
-            logger.debug("Removed connecting nodes to transactions without merchants")
     except Exception as e:
         logger.exception(f"Error: {e}")
         raise
