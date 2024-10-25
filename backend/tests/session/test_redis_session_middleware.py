@@ -5,12 +5,9 @@ from uuid import uuid4
 from starlette.requests import Request
 from starlette.responses import Response
 from src.session.redis_session_middleware import (
-    RedisSessionMiddleware,
     get_session,
     set_session,
-    get_redis_session,
-    SESSION_COOKIE_NAME,
-    SESSION_TTL
+    get_redis_session
 )
 
 @pytest.fixture

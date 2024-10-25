@@ -26,6 +26,5 @@ def test_clear_session_chat(mocker, mock_request_context):
 
     update_session_chat(role="user", content="Hello")
     assert get_session_chat() == [{"role": "user", "content": "Hello"}]
-    
     clear_session_chat()
     assert get_session_chat() == []

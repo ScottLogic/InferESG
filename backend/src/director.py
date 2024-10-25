@@ -1,13 +1,12 @@
 import json
 import logging
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
-from src.session import update_session_chat, get_session_chat
+from src.session import update_session_chat
 from src.agents import get_intent_agent, get_answer_agent
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
 from src.websockets.connection_manager import connection_manager
-from starlette.requests import Request
 
 logger = logging.getLogger(__name__)
 config = Config()

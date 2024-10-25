@@ -36,6 +36,5 @@ def test_clear_session_cypher_query(mocker, mock_request_context):
 
     update_session_cypher_query(query_id, cypher_query)
     assert get_session_cypher_query() == [{"queryId": str(query_id), "cypher_query": cypher_query}]
-    
     clear_session_cypher_query()
     assert get_session_cypher_query() == []

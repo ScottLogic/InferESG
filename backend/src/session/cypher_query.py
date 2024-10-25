@@ -17,13 +17,13 @@ def get_session_cypher_query() -> list[CypherQuery] | None:
     return get_session(CYPHER_QUERY_SESSION_KEY, [])
 
 
-def update_session_cypher_query(queryId=None, cypher_query=None):
+def update_session_cypher_query(queryid=None, cypher_query=None):
     cypher_query_session = get_session(CYPHER_QUERY_SESSION_KEY, [])
     if not cypher_query_session:
         # initialise the session object
         set_session(CYPHER_QUERY_SESSION_KEY, cypher_query_session)
-    
-    cypher_query_session.append({"queryId": str(queryId), "cypher_query": cypher_query})
+
+    cypher_query_session.append({"queryid": str(queryid), "cypher_query": cypher_query})
 
 
 def clear_session_cypher_query():
