@@ -5,21 +5,23 @@ Scenario Outline: When a user asks InferESG for information about their transact
     Then   the response to this '<prompt>' should match the '<expected_response>'
 Examples:
 |prompt                                                                         |expected_response      |
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
-|How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+|Check the database and tell me the fund with the highest ESG social score        |The average ESG score (Environmental) for the WhiteRock ETF fund is approximately 69.67.|
+
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
+# |How much did I spend at Tesco?                                                 |639.84|
 
 # |How much did I spend on Amazon?                                                |You spent a total of £1586.56 on Amazon    |
 # |How much did I spend on Tesco compared to Amazon?                              |946.72                 |
