@@ -1,0 +1,20 @@
+.container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.container > p {
+  background-color: color-mix(
+    in srgb,
+    transparent,
+    var(--text-color-primary) 7%
+  );
+  margin: 15px 5px;
+  padding: 15px;
+  border: 1px solid var(--border-primary);
+  border-radius: 5px;
+}

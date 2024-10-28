@@ -8,12 +8,14 @@ import React, {
 import styles from './input.module.css';
 import RightArrow from '../icons/map-arrow-right.svg';
 import classNames from 'classnames';
+import { Suggestions } from './suggestions';
 
 export interface InputProps {
   sendMessage: (message: string) => void;
+  waiting: boolean;
 }
 
-export const Input = ({ sendMessage }: InputProps) => {
+export const Input = ({ sendMessage, waiting }: InputProps) => {
   const [userInput, setUserInput] = useState<string>('');
 
   const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -32,24 +34,27 @@ export const Input = ({ sendMessage }: InputProps) => {
   const sendDisabled = useMemo(() => userInput.length === 0, [userInput]);
 
   return (
-    <form onSubmit={onSend} className={styles.inputContainer}>
-      <input
-        className={styles.input}
-        onChange={onChange}
-        onSubmit={onSend}
-        placeholder="Send a Message..."
-        type="text"
-        value={userInput}
-      />
-      <button
-        className={classNames(styles.sendButton, {
-          [styles.disabled]: sendDisabled,
-        })}
-        onClick={onSend}
-        disabled={sendDisabled}
-      >
-        <img src={RightArrow} />
-      </button>
-    </form>
+    <>
+      <form onSubmit={onSend} className={styles.inputContainer}>
+        <input
+          className={styles.input}
+          onChange={onChange}
+          onSubmit={onSend}
+          placeholder="Send a Message..."
+          type="text"
+          value={userInput}
+        />
+        <button
+          className={classNames(styles.sendButton, {
+            [styles.disabled]: sendDisabled,
+          })}
+          onClick={onSend}
+          disabled={sendDisabled}
+        >
+          <img src={RightArrow} />
+        </button>
+      </form>
+      <Suggestions loadPrompt={setUserInput} waiting={waiting} />
+    </>
   );
 };

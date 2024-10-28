@@ -10,7 +10,7 @@ export const App = () => {
   return (
     <div className={styles.container}>
       <Chat messages={messages} waiting={waiting} />
-      <Input sendMessage={sendMessage} />
+      <Input sendMessage={sendMessage} waiting={waiting} />
     </div>
   );
 };

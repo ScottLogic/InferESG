@@ -27,7 +27,7 @@ const checkBackendHealth = async (): Promise<ChatMessageResponse> => {
       return createChatMessageResponse(responseJson);
     })
     .catch((error) => {
-      console.error('Error making REST call to /chat: ', error);
+      console.error('Error making REST call to /health: ', error);
       return unhappyHealthcheckResponse;
     });
 };
@@ -56,5 +56,18 @@ const callChatEndpoint = async (
     .catch((error) => {
       console.error('Error making REST call to /chat: ', error);
       return unhappyChatResponse;
+    });
+};
+
+export const getSuggestions = async (): Promise<string[]> => {
+  return await fetch(`${process.env.BACKEND_URL}/suggestions`, {
+    credentials: 'include',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error making REST call to /suggestions: ', error);
+      return [];
     });
 };
