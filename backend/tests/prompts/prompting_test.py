@@ -58,7 +58,7 @@ Here is the list of Agents you can choose from:
 AGENT LIST:
 
 
-If the list of agents does not contain something suitable, you should say the agent is 'WebAgent'. ie. If question is 'general knowledge', 'personal' or a 'greeting'.
+If the list of agents does not contain something suitable, you should say the agent is 'none'. ie. If question is 'general knowledge', 'personal' or a 'greeting'.
 
 ## Determine the next best step
 Your task is to pick one of the mentioned agents above to complete the task.
@@ -104,7 +104,7 @@ Here is the list of Agents you can choose from:
 AGENT LIST:
 
 
-If the list of agents does not contain something suitable, you should say the agent is 'WebAgent'. ie. If question is 'general knowledge', 'personal' or a 'greeting'.
+If the list of agents does not contain something suitable, you should say the agent is 'none'. ie. If question is 'general knowledge', 'personal' or a 'greeting'.
 
 ## Determine the next best step
 Your task is to pick one of the mentioned agents above to complete the task.
@@ -168,8 +168,7 @@ If none of the tools are appropriate for the task, return the following tool
 def test_tool_selection_format_template():
     engine = PromptEngine()
     try:
-        expected_string = """Reply only in json with the following format, in the tool_parameters please include the currency and measuring scale used in the content provided.:
-
+        expected_string = """Reply only in json with the following format:
 
 {
     \"tool_name\":  \"the exact string name of the tool chosen\",
