@@ -1,0 +1,10 @@
+- id: "capital_query"
+  text: "What is the capital of {{topic}}?"
+# - id: "translation_query"
+#   text: 'How do people from {{topic}} say "Hello"?'
+
+# - id: "metric_query"
+#   text: "How tall is {{topic}}?"
+
+# - id: "location_query"
+#   text: "Where is it?"

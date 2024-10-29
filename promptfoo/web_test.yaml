@@ -1,0 +1,13 @@
+- description: "France Test"
+  vars:
+    topic: France
+  steps:
+    - prompt_id: "capital_query"
+      assert:
+        - type: icontains
+          value: Paris
+
+    - prompt_id: "translation_query"
+      assert:
+        - type: icontains
+          value: Bonjour

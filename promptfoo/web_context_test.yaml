@@ -1,0 +1,14 @@
+- description: "Context retention MOUNT E"
+  vars:
+    topic: Mount Everest
+
+  steps:
+    - prompt_id: "metric_query"
+      assert:
+        - type: icontains
+          value: "8849 meters"
+
+    - prompt_id: "location_query"
+      assert:
+        - type: icontains
+          value: "Nepal"

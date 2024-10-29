@@ -1,24 +1,7 @@
 # Learn more about building a configuration: https://promptfoo.dev/docs/configuration/guide
+#WE ARE TESTING PROMPTS NOT THE USER FLOW!
 description: "My eval"
 
-prompts:
-  - "What is the capital of {{topic}}"
-  
-
-providers:
-  - "openai:gpt-4o-mini"
-  - "openai:gpt-4o"
-
-  
-tests:
-  - vars:
-      topic: France
-    assert:
-      - type: icontains
-        value: Paris
-
-  - vars:
-      topic: Spain
-    assert:
-      - type: icontains
-        value: Madrid
+prompts: prompts.yaml
+providers: [openai:gpt-4o-mini]
+tests: web_test.yaml
