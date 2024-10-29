@@ -1,4 +1,4 @@
-@transaction_history @spending
+@database_agent @ESG
 Scenario Outline: When a user asks InferESG for information about their transaction history
     Given  a prompt to InferESG
     When   I get the response
@@ -7,6 +7,8 @@ Examples:
 |prompt                                                                         |expected_response      |
 # |How much did I spend at Tesco?                                                 |639.84|
 |Check the database and tell me the fund with the highest ESG social score        |The average ESG score (Environmental) for the WhiteRock ETF fund is approximately 69.67.|
+|Check the database and tell me the fund with the highest ESG social score        |Highest ESG score is Dynamic Industries with a score of 91|
+
 
 # |How much did I spend at Tesco?                                                 |639.84|
 # |How much did I spend at Tesco?                                                 |639.84|
@@ -26,7 +28,7 @@ Examples:
 # |How much did I spend on Amazon?                                                |You spent a total of £1586.56 on Amazon    |
 # |How much did I spend on Tesco compared to Amazon?                              |946.72                 |
 
-@generic
+@web_agent
 Scenario Outline: When a user asks InferESG generic questions
     Given  a prompt to InferESG
     When   I get the response
