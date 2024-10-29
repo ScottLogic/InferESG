@@ -66,7 +66,6 @@ def get_redis_session(request: Request):
         if session_data and isinstance(session_data, str):
             parsed_session_data = try_parse_to_json(session_data)
             if parsed_session_data:
-                logger.info(f"Parsed session data: {parsed_session_data}")
                 return parsed_session_data
     return {}
 

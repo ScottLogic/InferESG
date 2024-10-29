@@ -98,7 +98,6 @@ async def suggestions():
     logger.info("Requesting chat suggestions")
     try:
         final_result = await generate_suggestions()
-        logger.info(f"Chat suggestions: {final_result}")
         return JSONResponse(status_code=200, content=final_result)
     except Exception as e:
         logger.exception(e)

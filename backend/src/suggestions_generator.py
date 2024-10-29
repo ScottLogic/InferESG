@@ -5,11 +5,8 @@ from src.prompts.prompting import PromptEngine
 from src.session import Message, get_session_chat
 from src.utils.config import Config
 
-import logging
-
 config = Config()
 engine = PromptEngine()
-logger = logging.getLogger(__name__)
 suggestions_prompt = engine.load_prompt("generate_message_suggestions")
 model = config.suggestions_model
 
@@ -38,7 +35,7 @@ def get_suggestions_model() -> str:
 def get_chat_history() -> List[str] | str:
     max_history_length = 4
     raw_history = get_session_chat()
-    logger.info(f"Raw history: {raw_history}")
+
     if raw_history is None:
         return "No chat history available."
 
