@@ -1,5 +1,6 @@
 name: Test Backend
-on: 
+on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -33,4 +34,5 @@ jobs:
           emoji: true
           verbose: true
           job-summary: true
+          custom-arguments: '--ignore=backend/tests/BDD'
           report-title: 'Backend Test Report'

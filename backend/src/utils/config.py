@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 default_frontend_url = "http://localhost:8650"
 default_neo4j_uri = "bolt://localhost:7687"
 default_files_directory = "files"
-default_redis_host = "redis"
+default_redis_host = "localhost"
 default_redis_cache_duration = 3600
 
 

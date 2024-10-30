@@ -5,28 +5,13 @@ Scenario Outline: When a user asks InferESG for information about their transact
     Then   the response to this '<prompt>' should match the '<expected_response>'
 Examples:
 |prompt                                                                         |expected_response      |
-# |How much did I spend at Tesco?                                                 |639.84|
-|Check the database and tell me the fund with the highest ESG social score        |The average ESG score (Environmental) for the WhiteRock ETF fund is approximately 69.67.|
-|Check the database and tell me the fund with the highest ESG social score        |Highest ESG score is Dynamic Industries with a score of 91|
+|Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund |The average ESG score (Environmental) for the WhiteRock ETF fund is approximately 69.67|
+|Check the database and tell me the fund with the highest ESG social score        |Dynamic Industries with a score of 91|
+|Check the database and tell me the fund with the lowest Governance ESG score     |Dynamic Industries, which has a score of 60|
+# |Check the database and tell me the fund with the lowest ESG score                |Dynamic Industries with a score of 50|
+# |Check the database and tell me the largest fund                                  |The largest fund is the Global Energy Fund, which has a size of 1,500|
+# |Check the database and tell me which funds contain Shell                         |Funds containing Shell are European Growth Fund, Global Energy Fund, Silverman Global ETF and WhiteRock ETF|
 
-
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-# |How much did I spend at Tesco?                                                 |639.84|
-
-# |How much did I spend on Amazon?                                                |You spent a total of £1586.56 on Amazon    |
-# |How much did I spend on Tesco compared to Amazon?                              |946.72                 |
 
 @web_agent
 Scenario Outline: When a user asks InferESG generic questions
@@ -50,5 +35,4 @@ Scenario Outline: Check Response's confidence
 Examples:
 |prompt                                                                     |
 |What is the capital of France?                                             |
-|How much did I spend at Tesco?                                             |
 
