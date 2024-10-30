@@ -1,0 +1,4 @@
+providers:
+  id: openai:chat # openai:chat - defaults to gpt-4o-mini
+  config:
+    temperature: 0
