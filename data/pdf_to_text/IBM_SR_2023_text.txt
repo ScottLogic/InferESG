@@ -1,0 +1,3235 @@
+2023 ESG REPORT 
+IBM Impact 
+--------- - ------------ ----------___ , _ IXI 
+Contents  
+Introduction  
+Governance  
+Social  
+Environment  
+Appendix  
+IBM 2023 
+ESG Report  About this Report  
+This report covers our progress and performance in 2023. 
+The content of this report is informed by collaboration and 
+engagement with communities, clients, stockholders, and 
+employees, and considers standards and initiatives such as 
+the Global Reporting Initiative (GRI) Standards, the 
+Sustainability Accounting Standards Board (SASB), the 
+Task Force on Climate-Related Financial Disclosures 
+(TCFD), the Stakeholder Capitalism Metrics, and the United 
+Nations Sustainable Development Goals (SDGs). More 
+information on IBM's Environmental, Social and 
+Governance (ESG) reporting can be found on the IBM 
+Impact website . An ESG Data Summary with reference to 
+the GRI and SASB standards and the UN SDGs can be 
+found in the Appendix of this report on page 60 . 
+We conduct regular assessments that identify topics 
+important to our stakeholders and inform our ESG strategy. 
+We are currently performing a double materiality 
+assessment as required in accordance with the Corporate 
+Sustainability Reporting Directive. Our assessments are 
+solely intended to reflect priority ESG issues and should 
+not be construed as a characterization regarding the 
+materiality of such information to IBM’s business or 
+operating results. These assessments are not a 
+determination of “materiality” as the term is defined in 
+securities or other laws of the United States or other 
+jurisdictions, nor its use in the context of financial 
+reporting. We regularly refresh these analyses to capture 
+changing circumstances and to adopt a more dynamic 
+approach to identifying key ESG topics.  The current year data presented covers our global 
+operations from January 1, 2023 to December 31, 2023. 
+Certain employee-related data and programs presented 
+may not include or may not be applicable to certain 
+acquired or non-wholly owned subsidiaries. Certain 
+supplier data presented may not include or may not be 
+applicable to certain business units or acquired or non-
+wholly owned subsidiaries. On November 3, 2021, the 
+company completed the separation of its managed  
+infrastructure services unit. Accordingly, unless otherwise 
+noted, the 2021 information presented in this report 
+includes 10 months of activity related to the managed 
+infrastructure services business, and therefore may not be 
+comparable to 2022 and 2023 information. To the extent 
+any historical information is updated or recast, the 
+information will be disclosed accordingly. Information 
+about our business and financial performance is provided 
+in the 2023 IBM  Annual Report . 
+IBM also completed an external limited assurance audit  of 
+our 2023 greenhouse gas (GHG) emissions inventory and 
+the underlying data and calculation processes.  
+Forward-Looking and Cautionary Statements  
+Any forward-looking statement in this report speaks only 
+as of the date on which it is made; IBM assumes no 
+obligation to update or revise any such statements except 
+as required by law. Forward-looking statements are based 
+on IBM’s current assumptions regarding future business 
+and performance; these statements, by their nature, 
+address matters that are uncertain to different degrees. 
+Forward-looking statements involve a number of risks, 
+uncertainties and other factors that could cause actual 
+results to be materially different.  
+1 
+About IBM®  
+IBM is addressing the hybrid cloud and artificial 
+intelligence (AI) opportunity with a platform-centric 
+approach, focused on providing client value through a 
+combination of technology and business expertise. We 
+provide integrated solutions and products that leverage: 
+data, information technology, deep expertise in industries 
+and business processes, with trust and security and a 
+broad ecosystem of partners and alliances. Our hybrid 
+cloud platform and AI technology and services capabilities 
+support clients’ digital transformations and help them 
+engage with their customers and employees in new ways. 
+These solutions draw from an industry-leading portfolio of 
+capabilities in software, consulting services and a deep 
+incumbency in mission-critical systems, all bolstered by 
+one of the world’s leading research organizations.  
+Contents  
+Introduction  
+Governance  
+Social  
+Environment  
+Appendix  
+2 IBM 2023 
+ESG Report  
+Introduction 
+Letter from Our Chairman and CEO 5 
+Our ESG Goals 7 
+Accountability for ESG at IBM 9 
+Human Rights at IBM 10 
+Ethical Impact |  Governance 
+Corporate Governance and the Board 12 
+Business Ethics 16 
+Responsible Technology 17 
+Policy Advocacy 21 Equitable Impact | Social 
+Our Culture 23 
+Supporting Our Employees 24 
+Diversity and Inclusion 27 
+Community Development 35 
+Supply Chain Social Responsibility 39 
+Environmental Impact | Environment 
+Global Environmental Management System 44 
+Energy and Climate Change 46 
+Conservation and Biodiversity 52 
+Pollution Prevention and Waste Management 54 
+Supply Chain Environmental Responsibility 57 
+Solutions for Sustainability 58 
+Appendix 
+ESG Data Summary 60 
+Awards and Recognition Highlights 71 
+Top Suppliers 72 
+IBM 2023 
+ESG Report 3 Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+Introduction 
+Letter from Our 
+Chairman and CEO 
+I'm proud to present this 2023 IBM Impact report, 
+which highlights our progress across the three pillars of our IBM Impact framework: strengthening business ethics, fostering greater equity in the communities in which we work and live, and protecting our environment. 
+As IBMers, we believe in leveraging technology to make a transformative impact on business and society. At the same time, rapid advances in powerful technologies like AI must be balanced by responsible scaling and deployment strategies. Last year, IBM released watsonx.governance™, an end-to-end toolkit for AI governance that enables responsible, transparent and explainable AI workflows. In addition, IBM and Meta announced the formation of the AI Alliance, a group of more than seventy industry and academic leaders joining together to advance open, safe and responsible AI. 
+We recognize that promoting equitable access to AI skills is also crucial to tomorrow's workforce. Internally, we created the watsonx™ challenge for IBMers around the world to grow their knowledge through hands-on experience in AI for business. Externally, we announced a new goal to train 2 million learners in AI skills by the end of 2026 through expanded education collaborations and new generative AI coursework on IBM SkillsBuild®. We have already engaged over 11 million learners on our platforms, evidence of the substantial progress we've made towards our goal to train 30 million people by 2030. We also applied technology in new ways to make our world's essential systems more efficient and sustainable. We expanded the IBM Sustainability Accelerator program, which leverages AI and other leading-edge technologies to help populations vulnerable to environmental threats. In addition to clean energy and agriculture projects, the initiative grew to include water and city resiliency projects and earned the U.S. Chamber of Commerce Foundation Citizens Award for “Best Sustainability Program.” In addition, last year we beat our 2025 target for reducing IBM’s operational GHG emissions, a solid milestone towards our goal of net-zero operational GHG emissions by 2030. 
+These and other initiatives earned IBM various honors, including recognition by Ethisphere as one of the World’s Most Ethical Companies and by Time Magazine as one of the 100 Most Influential Companies. 
+As our progress in 2023 showed, IBM is committed to trusted technology as a force for good. The application of transformative technologies like AI and hybrid cloud is enabling productivity and business transformation at a scale and speed previously unimaginable. I’m deeply grateful to the many IBMers throughout the world who are helping us to shape and lead this moment responsibly. 
+IBM 2023 
+ESG Report 5 Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+Arvind Krishna 
+Chairman and Chief Executive Officer 
+IBM Impact 
+IBM is focused on the challenges 
+and complexities facing today’s world. Our ESG reporting embodies this philosophy through the three pillars of our IBM Impact framework. 
+Environmental Impact 
+Creating better pathways to conserve natural resources, reduce pollution, and minimize climate-related risks Contents 
+IBM 2023 ESG Report 6 Introduction 
+Governance 
+Social 
+Environment 
+Appendix Ethical Impact 
+Creating innovations, policies, and practices that prioritize ethics, trust, transparency, and above all - accountability 
+Equitable Impact 
+Creating spaces and opportunities for everyone by focusing on diversity, equity and inclusivity within IBM, as well as globally 
+  Our ESG Goals 
+(1 of 2) As detailed throughout this report, our commitment to creating Ethical 
+Impact, Equitable Impact, and Environmental Impact includes goals. Progress for a subset of these goals for calendar year 2023 is as follows: 
+Ethical Impact 
+IBM 2023 ESG Report 7 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+Topic Goal Progress Status 
+Business Ethics Achieve 100% employee participation in our annual Business Conduct Guidelines (BCG) 
+program. We attained 100% employee participation in our annual BCG program in 2023. ACHIEVED IN 2023 
+✔
+Responsible 
+Technology Train 1,000 technology suppliers in technology ethics by 2025. After exceeding our goal to train 1,000 ecosystem partners in technology ethics in 2022, we 
+announced our goal to train technology suppliers. In 2023, we trained more than 600 
+suppliers in technology ethics towards this goal. 
+Prepare our company and clients for responsible AI adoption aligned with IBM Principles 
+for Trust and Transparency. In 2023, we released watsonx.governance, a component of watsonx designed to accelerate responsible, transparent and explainable AI workflows, and led the creation of the AI Alliance, an open community to accelerate responsible AI innovation. ACHIEVED IN 2023 
+✔
+Policy Advocacy Engage in responsible policy advocacy to drive growth and innovation across the globe on topics including, AI, cybersecurity, trade, data privacy and workforce skills. In 2023, IBM advanced a risk-based approach to the regulation of AI and a skills-first approach to filling critical tech jobs through activities such as publishing a policymaker’s 
+guide to responsible AI foundation models and supporting the introduction of two U.S. bipartisan workforce development bills. ACHIEVED IN 2023 
+✔
+Diversity and Inclusion Annual Incentive Program for executives includes a modifier to drive accountability in improving executive diversity representation. Executive representation of women globally, as well as Black and Hispanic executives in the U.S., excluding Red Hat, changed by +1.1 points, -0.2 points and +0.6 points, respectively, in 
+2023. These results did not increase or decrease the incentive score. The executive incentive program will continue to include a modifier and our goal 
+remains to improve executive representation in these areas. 
+Supply Chain Respons ibility Engage 100% of IBM Global Procurement suppliers on sound practices including social and environmental responsibility, ethics and risk planning. In 2023, IBM Global Procurement engaged 100% of our suppliers on sound practices. ACHIEVED IN 2023 
+✔
+Equitable Impact 
+Topic Goal Progress Status 
+Diversity and Inclusion $250 million investment in apprenticeships and new-collar programs by 2025. Since 2022, we have invested $100.3 million towards apprenticeships and new-collar programs, in line with expectations. 
+Maintain our longstanding practice of pay equity, ensuring equal pay for equal work. IBM continues to pay equitably for similar work. Women globally earn $1.00 for every $1.00 earned by men for similar work. The same is true for underrepresented minorities in the U.S. ACHIEVED IN 2023 
+✔
+Community Development Skill 30 million people globally by 2030. Since 2021, over 11.5 million learners have engaged with free IBM training content. 
+Log 4 million volunteer hours by 2025. Since 2022, IBMers logged over 974,000 volunteer hours towards our goal. 
+Supply Chain Responsibility 15% of first-tier supplier diversity spend from Black-owned suppliers by 2025. In 2023, approximately 8.5% of our first-tier supplier diversity spend was with Black-owned 
+suppliers. 
+Our ESG Goals 
+(2 of 2) As detailed throughout this report, our commitment to creating Ethical 
+Impact, Equitable Impact, and Environmental Impact includes goals. Progress for a subset of these goals for calendar year 2023 is as follows: 
+Environmental Impact 
+Topic Goal Progress Status 
+Energy and Climate Change Implement a minimum of 3,000 energy conservation projects to avoid the consumption of 275,000 megawatt-hours (MWh) of energy from 2021 to 2025. Since 2021, we have completed 2,130 energy conservation projects as of year-end 2023, avoiding an estimated 256,000 MWh of energy consumption. 
+Procure 75% of the electricity IBM consumes worldwide from renewable sources by 2025, and 90% by 2030. In 2023, our renewable electricity procurement represented 70.6% of our total electricity consumption, which keeps us on track to meet our 2025 goal. 
+Reduce IBM’s operational GHG emissions 65% by 2025 against base year 2010, adjusted for acquisitions and divestitures. In 2023, we reduced our operational GHG emissions 68.5% against base year 2010, adjusted for acquisitions and divestitures, meeting our goal of 65% emissions reduction by 2025 two years early. ACHIEVED IN 2023 
+✔
+Reach net-zero operational GHG emissions by 2030. We continue to make progress towards net-zero operational GHG emissions by 2030. IN PROGRESS 
+Conservation and Biodiversity Achieve a year-to-year reduction in water withdrawals at larger IBM locations in water-stressed regions.
+† In 2023, water withdrawals at these locations increased by 3.4% versus 2022 as a result of employees returning to the office. NOT ACHIEVED IN 2023 
+Source paper and paper/wood-based packaging directly procured by IBM from forests that are sustainably managed and certified as such. In 2023, 99.8% (based on spend) of the paper and paper/wood-based packaging IBM directly procured worldwide came from suppliers that warranted that the source was derived from sustainably managed forests. 
+Plant 50 pollinator gardens at IBM locations globally by year-end 2023 to support biodiversity. We exceeded our goal, with 70 pollinator gardens planted globally at IBM locations by year-end 2023. ACHIEVED IN 2023 
+✔
+Pollution Prevention and Waste Management Divert 90% (by weight) of IBM’s total nonhazardous waste from landfill and incineration by 2025 through reuse, recycling, composting and waste-to-energy processes. Use waste-to-energy processes for no more than 10% (by weight) of the diverted waste. In 2023, we diverted 94.2% (by weight) of our total nonhazardous waste from landfill and incineration. Of the total amount diverted, 10% (by weight) was sent to waste-to-energy processes thereby meeting our goal. ACHIEVED IN 2023 
+✔
+Eliminate nonessential, single-use plastic items (including cups, straws, cutlery, plates, carry bags and food containers) from IBM-managed cafeteria operations globally by 2025. As of year-end 2023, we eliminated all nonessential, single-use plastic items at 58 of the 60 IBM-managed cafeteria operations worldwide. 
+Solutions for Sustainability Document 100 client engagements or research projects in which IBM solutions have enabled demonstrable environmental benefits by 2025. Since 2021, we have documented 72 such engagements or projects. 
+† Approximately 85% of water withdrawals at these locations are for domestic consumption in the workplace and heating, ventilating and air conditioning of buildings. 
+Introduction 
+IBM 2023 ESG Report 8 Contents 
+Governance 
+Social 
+Environment 
+Appendix 
+Accountability 
+for ESG at IBM 
+IBM’s long-term performance strategy 
+integrates economic, environmental, and societal performance and leadership. 
+The IBM Board of Directors oversees IBM’s long-term business strategy and is actively engaged in ensuring that IBM’s culture reflects its commitment to integrity, trust and transparency, and inclusion. Under the guidance and supervision of our Board and its committees, IBM senior management is responsible for the company’s environmental and social performance and regularly reports to the Board and its committees on IBM’s ESG activities. Our ESG function coordinates day-to-day ESG and corporate responsibility-related activities and is led by the Vice President & Chief Impact Officer who reports to the Senior Vice President, Marketing and Communications & Chief Communications Officer. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 9 Committee Responsibilities Members 
+IBM Board 
+of Directors The Board and its committees have 
+oversight responsibility for ESG-related 
+matters and are continuously engaged 
+with senior management on risk 
+management and activities, policies, and progress on these matters. The Directors and Corporate Governance Committee: Oversees policies and 
+prac 
+tices related to corporate social responsibility, sustainability and other 
+environmental, social and governance matters. 
+The Executive Compensation and Management Resources Committee: Oversees 
+IBM’s
+ compensation programs and employee engagement as an indicator of 
+company culture, and reviews IBM’s human capital management, diversity and 
+inclusion, and other management resources programs. 
+The Audit Committee: Oversees internal controls regarding publicly reported 
+env
+ironment, social and governance data, as well as compliance with legal and 
+regulatory requirements. 
+ESG 
+Executive Steering
+ 
+Committee The ESG Executive Steering Committee 
+provides leadership and direction on 
+key corporate responsibility issues and organization-wide goals. It meets monthly, chaired by the Vice President, Corporate Social Responsibility & Chief Impact Officer, and includes senior executives from functional areas across the company. Each functional area is responsible for developing its specific goals and strategies. - Chair: Vice President 
+&
+ Chief Impact Officer 
+- Vice President & Chief 
+Operating Officer, IBM 
+Research 
+- Vice President, 
+Corporate Environmental Affairs and Product Safety & Chief Sustainability Officer 
+- Director, Labor 
+Relations - Vice President & Chief 
+Leadership, Culture, and Inclusion Officer 
+- Vice President & Chief 
+Privacy and Trust Officer 
+- Vice President & Chief 
+Procurement Officer 
+- Vice President & 
+Controller, Environmental, Social and Governance 
+- Vice President & 
+Global Head of Product Management and Strategy, IBM Sustainability Software - Vice President, 
+Investor Relations 
+- Vice President, 
+Government and Regulatory Affairs 
+- Vice President, 
+Assistant General 
+Counsel & 
+Corporate Secretary 
+- Vice President & 
+Chief Risk Officer 
+- Global Managing 
+Partner, IBM Consulting 
+ESG 
+Working Group
+ The ESG Working Group executes and 
+maintains awareness of ESG matters 
+occurring across the company, monitors 
+regulators and standard-setters’ 
+sustainability-related matters, and helps 
+bring the interests of external 
+stakeholders and IBM’s value chain 
+forward for discussion. It includes representatives from functional areas across IBM and meets at least monthly to review key policy and strategic issues, and to make recommendations to the ESG Executive Steering Committee. Representation is cross-functional with expertise in relevant and varied disciplines 
+ac
+ross the company. 
+Contents 
+Introduction 
+Governance 
+Soc
+ial 
+Environment 
+Appendix Human Rights at IBM 
+At IBM, we have always set high standards 
+for the way we conduct business – from 
+corporate and social responsibility to sound 
+business ethics. 
+In 2019, we adopted a Human Rights Statement of 
+Principles . These principles represent our commitment to 
+respect all human rights in line with international 
+standards such as the UN Guiding Principles on Business 
+and Human Rights, the Universal Declaration of Human 
+Rights, and the International Labour Organization (ILO) 
+Declaration on Fundamental Principles and Rights at Work. 
+In 2021 and 2022, we worked with a nonprofit 
+sustainability and human rights organization to identify the 
+salient human rights issues across our business. This 
+assessment prioritized areas for future due diligence and 
+informed the development of our human rights strategy, 
+including the formation of a role dedicated to overseeing 
+our human rights initiatives. In 2024, we will evaluate our 
+due diligence approach to identify areas in which we can 
+advance our human rights initiatives. Salient Human Rights Issues 
+IBM 2023 
+ESG Report 10 
+Product and Research Misuse 
+Inequality / Discrimination via 
+Products 
+Human Rights in the Supply Chain 
+Privacy and Cybersecurity 
+Ethics and Corruption 
+Human Autonomy and Dignity 
+Freedom of Expression and 
+Access to Information 
+Labor Rights at IBM 
+Environment and 
+Human Rights 
+Right to Science 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+Ethical 
+Impact IBM 2023 
+ESG Report 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Corporate Governance 
+and the Board 
+Corporate Governance 
+IBM’s Board of Directors has long adhered to governance 
+principles designed to ensure the continued vitality of the Board 
+and excellence in the execution of its duties. 
+IBM's corporate governance principles include a policy of 
+requiring a majority of the Board to be independent directors, 
+the importance of equity compensation to align the interests of 
+directors and stockholders, and the practice of regularly 
+scheduled executive sessions, including executive sessions of 
+independent non-management directors, led by the 
+independent Lead Director. The IBM Board Corporate 
+Governance Guidelines reflect IBM’s principles on corporate 
+governance matters. 
+IBM’s Business Conduct Guidelines is our code of ethics for 
+directors, executive officers and employees. Any amendment to, 
+or waiver of, the Business Conduct Guidelines that applies to 
+one of our directors or executive officers may be made only by 
+the Board or a board committee, and would be disclosed on 
+IBM’s website. IBM also has a process by which stockholders 
+and other interested parties may communicate with the Board 
+or non-management directors. Governance Highlights 
+Effective Leadership, Independent Oversight, Strong Corporate Governance 
+- Independent Lead Director with robust and well-defined responsibilities 
+- Committee sessions with key strategic leaders from senior management 
+- Annual Board self-evaluations led by the independent Lead Director 
+- Executive session led by independent Lead Director at each board meeting 
+- Proactive Board and committee refreshment, with focus on diversity and the 
+optimal mix of skills and experience 
+- Annual review of the Board leadership structure 
+- Director overboarding policy 
+Stockholder Rights and Accountability 
+- Annual election of all directors 
+- Majority voting for directors in uncontested elections 
+- Stockholder special meeting right 
+- Proxy access 
+- No stockholder rights plan 
+- No supermajority voting provisions 
+- Robust year-round stockholder engagement process 
+- Signatory of Commonsense Principles 2.0 
+- Endorser of Investor Stewardship Group Principles 
+- Signatory to the Business Roundtable Statement on the Purpose of a 
+Corporation 
+- Stockholder right to remove directors 
+IBM 2023 
+ESG Report 12 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix IBM’s Board of Directors 
+The IBM Board is composed of a diverse group of 
+members, all leaders in their respective fields. All current directors have leadership experience at major domestic and international organizations with operations inside and outside the U.S., at academic or research institutions or in government. Directors also have deep industry expertise as leaders of organizations within some of the company’s most important client industries and constituencies. 
+The Board includes directors who have a deep 
+understanding of our business, and members who bring new skills and fresh perspectives. We have a deliberate mix of age and tenure on the Board, which reflects our commitment to ongoing and proactive board refreshment. 
+The Directors and Corporate Governance Committee and 
+the Board believe that the above-mentioned attributes, along with the leadership skills and other experiences of the Board members described on the next page, provide 
+IBM with the perspectives and judgment necessary to guide IBM’s strategies and oversee their execution. Optimal Mix of Skills and Experience of Directors 
+IBM's directors collaboratively contribute significant experience in the areas most relevant to overseeing our business and strategy. 
+The skills and experience of our Board include, but are not 
+limited to: 
+- Industry leaders with deep executive and oversight 
+experience; 
+- Global operational experience to oversee a business of IBM's scale, scope and complexity; 
+- Technology, cybersecurity and digital transformation experience; 
+- Key insight into IBM's regulatory environment; and 
+- Diversity of backgrounds and experiences. 
+Independent and Diverse Board 
+Independence 
+12 
+Independent 1 
+Non-Independent 
+92% Gender and Ethnic Diversity
+38% 3 
+Women 
+and 
+3 
+Ethnically 
+Diverse Directors Average Tenure 
+2 
+>10 Years 
+5 
+5-10 Years 6 
+<5 Years Average 
+5.9 
+years 
+IBM 2023 ESG Report 13 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix IBM Board of Directors - Experience and Skills 
+Director Marianne C. 
+Brown Thomas 
+Buberl David N. 
+Farr Alex 
+Gorsky Michelle J. 
+Howard Arvind 
+Krishna Andrew N. 
+Liveris F. William 
+McNabb III Michael 
+Miebach Martha E. 
+Pollack Peter R. 
+Voser Frederick H. 
+Waddell Alfred W. 
+Zollar 
+Client Industry Expertise 
+Organizational Leadership 
+and Management 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+Global Operations   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+CFO   
+Specific Risk Oversight/ 
+Risk Management Exposure   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+Technology, Cybersecurity or Digital   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+Academia   
+   
+Government/ Regulatory, 
+Business Associations or Public Policy   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+Public Board   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+Gender Identity Female Male Male Male Female Male Male Male Male Female Male Male Male 
+Race and/or Ethnicity White/ 
+Caucasian White/ 
+Caucasian White/ 
+Caucasian White/ 
+Caucasian Black/African 
+American Asian/Pacific 
+Islander White/ 
+Caucasian White/ 
+Caucasian White/ 
+Caucasian White/ 
+Caucasian White/ 
+Caucasian White/ 
+Caucasian Black/African 
+American 
+Born Outside the U.S.   
+   
+   
+   
+   
+Energy 
+Financial Services 
+& Insurance 
+Healthcare 
+Government 
+Manufacturing 
+Research & Development 
+Information Technology 
+Chemicals 
+IBM 2023 
+ESG  Re
+port 14 
+Contents 
+Introduction 
+Governance 
+Social
+ 
+Environment
+ 
+Appendix Risk Management 
+We maintain a consistent, systemic, and integrated 
+approach to enterprise risk management (ERM) that is designed to identify, mitigate, and manage significant risks and align with recognized standards such as the COSO ERM framework and the ISO 31000 standard. We assess risks across the organization to maintain a holistic, enterprise-level view of risks arising from evolving regulatory, financial, and geopolitical environments as well as from our operations, strategic planning and execution. This assessment includes evaluation of ESG-related risks. 
+The IBM Board of Directors is responsible for overseeing 
+management’s execution of risk oversight, for assessing IBM’s approach to risk management, and the full Board regularly reviews IBM’s enterprise risk management framework and processes. IBM’s senior management is responsible for assessing and managing IBM’s various exposures to risk on a day-to-day basis, including the creation of appropriate risk management programs and policies. Management regularly reports to the Board and its committees on a variety of risks. The ERM program, which drives senior management decision-making, is led by our Chief Risk Officer who reports up through our Chief Financial Officer. We have developed tools that employ analytics and AI technologies to assist our ERM processes and utilize a Country Risk Scorecard to identify and assess emerging risk areas. By leveraging a series of key risk indicators, we can timely and proactively respond together with country and regional leadership. 
+We promote a company culture of risk awareness through 
+online education and mandatory training in areas such as business integrity and cybersecurity— including a Risk Academy, where all employees can take courses and earn badges on risk management awareness and skills. Additionally, all employees are encouraged to report potential risks through numerous channels (anonymously if preferred) or to local management. Environmental and Climate-Related Risks 
+Climate change is a serious concern that warrants meaningful action on a global basis. In addition to other risks identified by our ERM process, we consider risks identified by the TCFD in our risk management profile. IBM, like other companies, is subject to potential climate-related risks and costs, such as those resulting from increased severe weather events, prolonged changes in temperature, new regulations affecting hardware products and data centers, carbon taxes, and increased environmental disclosures requested or required by clients, regulators and others. 
+Our senior management assesses the significance of 
+environmental and climate-related risks and opportunities and manages them accordingly. Reports on IBM’s environmental programs, challenges, and emerging issues are regularly provided to the Board and its Directors and Corporate Governance Committee. 
+We do not expect compliance with environmental laws and 
+climate change regulations to have a disproportionate effect on the company or its financial position, results of operations and competitive position. Conversely, we believe there is opportunity to use IBM’s AI, hybrid cloud, and other technologies to assist clients with managing their climate-related risks. 
+IBM 2023 ESG Report 15 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Business Ethics 
+Every year, employees worldwide participate in IBM’s 
+Business Conduct Guidelines (BCGs) program to certify 
+their understanding of our code of business conduct 
+and ethics, and recommit to doing business with 
+integrity. The IBM BCGs policy and the accompanying 
+online course are available in multiple languages and 
+address the ethical dilemmas that employees may face 
+day-to-day. During 2023, IBM again achieved 100% 
+participation in the annual BCGs program. 
+In addition, IBM Trust and Compliance conducts extensive in-person and 
+virtual training on public procurement, business amenities, anti-corruption, 
+speaking up and non-retaliation, gatekeeper responsibility and fraud 
+prevention matters. Sponsored and attended by our business leaders, these 
+training initiatives set the tone from the top and are customized to highlight 
+the risks a particular audience might face. Various tools and approaches 
+such as live polling and role plays, are leveraged to drive engagement 
+and participation. 
+Our internal reporting channel enables employees to report concerns or 
+suspected violations of our BCGs and unethical or unlawful behavior within 
+IBM. Similar reporting channels have been established for suppliers, 
+business partners and others to raise concerns. Learning about issues and 
+concerns allows us to intervene early, investigate and remediate. 
+Our annual Global Integrity Survey enables employees to provide feedback 
+on their perception of ethics and integrity within IBM. The insights gained 
+from the survey help us gauge employee sentiment regarding speaking up, 
+retaliation and “doing the right thing.” Survey results are also used to 
+implement program changes and enhance training on targeted topics. Integrity in our Daily Operations 
+IBM is committed to principles of business ethics and lawful conduct. It is 
+IBM’s policy to conduct itself ethically and lawfully in all matters and to 
+maintain IBM’s high standards of business integrity. 
+IBM Business Conduct Guidelines 
+Available in 26 languages and accompanied by an annual online course and 
+certification, which IBM employees are required to complete. 
+IBM Code of Conduct for Business Partners 
+The standards of business conduct and business practices with which IBM 
+requires IBM Business Partners to comply. 
+Supply Chain Code of Conduct 
+First-tier suppliers of hardware, software, and services are required to adhere 
+to the Responsible Business Alliance (RBA) Code of Conduct which outlines 
+requirements for labor, health and safety, environmental, ethics and 
+management systems. IBM’s own operations also adhere to the RBA Code 
+of Conduct. 
+IBM Policies 
+Govern internal and external company-wide actions including: 
+- Business conduct and ethics 
+- Reciprocity
+ 
+- Workforce diversity 
+- Health and safety 
+- Data privacy 
+- Diverse business relationships 
+- Environmental affairs - Quality 
+- Politics 
+- Human rights
+ principles 
+- Global employment standards 
+- Cognitive principles 
+- Statements on individual issues 
+IBM 2023 
+ESG Report 16 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Responsible 
+Technology 
+Technology Ethics 
+For more than a century, IBM has earned the trust of our clients 
+and society by ushering powerful new technologies into the world 
+responsibly and with clear purpose. We maintain this trust as 
+society explores the opportunities presented by transformative 
+technologies, such as AI, through our continued commitment to 
+ethics by applying the IBM Principles for Trust and Transparency. 
+At the center of IBM’s responsible technology efforts is our AI 
+Ethics Board, who infuse IBM's principles into business and 
+product decision-making. The AI Ethics Board is steered by a 
+diverse set of senior leaders from across the company and is 
+supported by a strong advocacy network and our AI Ethics Focal 
+Points within various business units. In addition to actively 
+supporting the principles, IBM’s AI Ethics Board shares thought 
+leadership around emerging issues, and in 2023, published various 
+white papers, including "Augmenting Human Intelligence – the 
+IBM Point of View " and "Foundation Models: Opportunities, Risks 
+and Mitigations ." The Foundation Models white paper is the basis 
+for IBM’s AI Risk Atlas in the product documentation of our AI 
+platform, watsonx. 
+The IBM Principles for Trust and Transparency are the guiding values that 
+distinguish IBM’s approach to AI ethics. 
+-The purpose of AI is to augment human intelligence 
+-Data and insights belong to their creator 
+-Technology must be transparent and explainable 
+The Pillars of Trust are our foundational properties for AI ethics that 
+support the Principles. 
+Explainability Good design does not sacrifice transparency in creating a 
+seamless experience. 
+Fairness Properly calibrated, AI can assist humans in making 
+fairer choices. 
+Robustness As systems are employed to make crucial decisions, 
+AI must be secure and robust. 
+Transparency Transparency reinforces trust, and the best way to promote 
+transparency is through disclosure. 
+Privacy AI systems must prioritize and safeguard consumers’ 
+privacy and data rights. 
+IBM 2023 
+ESG Report 17 
+Contents 
+Introduc
+tion 
+Governance 
+Social 
+Environment 
+Appendix Advancing a smart risk-based approach to the regulation of 
+artificial intelligence was one of our policy advocacy priorities in 
+2023. Last year, IBM’s Chief Privacy and Trust Officer, Christina 
+Montgomery, addressed the need for responsible AI innovation in 
+her testimony before the U.S. Senate Judiciary Subcommittee on 
+Privacy, Technology, and the Law, and contributed to the 
+Artificial Intelligence Commission Report as a member of the U.S. 
+Chamber of Commerce AI Commission, and the U.S. National AI 
+Advisory Committee (NAIAC) Year 1 Report as a NAIAC member. 
+For additional AI policy advocacy highlights from 2023 see "Policy 
+Advocacy" on page 21. 
+IBM is a “living lab” for the technology it brings to market, 
+continually improving product capabilities that help businesses 
+and governments use, integrate and deploy AI responsibly. Our 
+governance frameworks are integrated into solutions like the 
+recently released watsonx.governance , a component of watsonx 
+designed to accelerate responsible, transparent and explainable AI 
+workflows. Beyond the governance we embed in our own 
+solutions, we are making excellent progress on the goal we 
+announced last year to train 1,000 technology suppliers in 
+technology ethics by 2025, with more than 600 suppliers trained 
+at the end of 2023. 
+IBM recently renamed the Chief Privacy Office to the Office of 
+Privacy and Responsible Technology. This change reflects the 
+evolution of our privacy, data and AI program as IBM and our 
+clients prepare for AI regulatory requirements and demonstrates 
+our commitment to remain at the leading edge of responsible 
+technology now and in the future. Collaborations and initiatives 
+- In early 2023, IBM reaffirmed its commitment to the Rome Call for AI Ethics to champion 
+ethical approaches to the design, development and deployment of artificial intelligence. 
+- We led the creation of the AI Alliance , a broad range of global organizations fostering an open 
+community to enable developers and researchers to accelerate responsible AI innovation 
+while ensuring scientific rigor, trust, safety, security, diversity and economic competitiveness. 
+- The Notre Dame – IBM Technology Ethics Lab released its 2023-2024 Call for Proposals 
+(CFP) , “The Ethics of Large-Scale Models.” The Lab also delivered a virtual symposium on the 
+ethical use of foundation models in enterprises, along with an Auditing AI Workshop , and a 
+course titled “Auditing AI: An Introduction.” Finally, collaborative projects between Notre 
+Dame and IBM researchers have focused on topics, such as understanding how organizations 
+can quantify the return on investments (ROI) in AI ethics . 
+- IBM and 18 other enterprise companies worked together under the aegis of the Data & Trust 
+Alliance organization to create Data Provenance Standards , the first cross-industry metadata 
+to bring transparency to the origin of datasets used for both traditional data and AI 
+applications. 
+- IBM contributed to the U.S. Department of Commerce’s National Institute of Standards and 
+Technology (NIST) AI Risk Management Framework , a guidance document to help manage 
+the risks of AI technologies. IBM also contributed to the development of a companion 
+resource for generative AI through a NIST Generative AI Public Working Group. 
+- IBM contributed to the Partnership on AI’s “PAI’s Guidance for Safe Foundation Model 
+Deployment ,” a framework for model providers to responsibly develop and deploy a range of 
+AI models, promote safety for society, and adapt to evolving capabilities and uses. 
+- IBM is an International Association of Privacy Professionals (IAPP) AI Governance 
+Foundational Supporter and has supported the development of training and a new 
+certification path for professionals working in the field of AI governance, including support to 
+develop the IAPP Body of Knowledge . 
+IBM 2023 
+ESG Report 18
+ 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Cybersecurity 
+From an enterprise perspective, IBM implements a multi-
+faceted risk management approach to identify and address 
+cybersecurity risks based on the NIST Cybersecurity 
+Framework. We have established policies and procedures that 
+provide the foundation upon which IBM’s infrastructure and 
+data are managed. We regularly assess and adjust our 
+technical controls and methods to identify and mitigate 
+emerging cybersecurity risks. We use a layered approach with 
+overlapping controls to defend against cybersecurity attacks 
+and threats on IBM networks, end-user devices, servers, 
+applications, data and cloud solutions. 
+We draw heavily on our own commercial security solutions 
+and services to manage and mitigate cybersecurity risks. IBM 
+maintains a Security Operations Center (SOC) that monitors for 
+threats to IBM’s networks and systems, utilizing threat 
+intelligence provided by a range of sources, including the IBM 
+Security® X-Force® Exchange platform, which maintains one of 
+the largest compilations of threat intelligence in the world. We 
+also rely on tools licensed from third party security vendors to 
+monitor and manage cybersecurity risks. We periodically 
+engage third parties to supplement and review our 
+cybersecurity practices and provide relevant certifications. 
+We have a global incident response process, managed by 
+IBM’s Computer Security Incident Response Team (CSIRT), 
+that relies primarily on internal expertise to respond to 
+cybersecurity threats and attacks. We utilize a combination of 
+online training, educational tools, videos and other awareness 
+initiatives to foster a culture of security awareness and 
+responsibility among our workforce, including responsibility for 
+reporting suspicious activity. 
+IBM has a third party supplier risk management program to 
+oversee and identify risks from cybersecurity threats 
+associated with its use of third party service providers and 
+vendors. Risks are assessed and prioritized based, among 
+other things, on the type of offering/engagement, supplier 
+assessments, threat intelligence and industry practices. IBM Cybersecurity Governance 
+Responsible for overseeing management’s execution of 
+cybersecurity risk management and for assessing IBM’s 
+approach to risk management IBM Board of Directors & Audit Committee 
+Composed of, among others, SVPs from the major business 
+units, the SVP overseeing cybersecurity, and the SVP for 
+Legal and Regulatory Affairs & General Counsel; the CAC is 
+responsible for, among other things, setting the Company’s 
+governance structure for managing cybersecurity risk and 
+reviewing noteworthy cybersecurity incidents and 
+strategies to prevent recurrence Cybersecurity Advisory Committee (CAC) 
+Manages the team responsible for leading enterprise-wide 
+information security strategy, policy, standards, 
+architecture and processes for IBM’s internal systems IBM Chief Information Security Officer (CISO) 
+Coordinate with the Office of the CISO on security issues 
+specific to particular business segments Business Unit Information Security Officers (BISOs) for each business area 
+IBM 2023 ESG Report 19 
+Data Privacy 
+IBM is committed to developing policies and practices that 
+prioritize ethics, trust, transparency and accountability . Our 
+Principles for Trust and Transparency  have built a strong 
+foundation that enables us to successfully adapt to new eras of digital transformation and breakthroughs. To address the ever-changing regulatory environment, IBM has implemented an Integrated Governance Program
+ (IGP) 
+to drive a continuous compliance approach in data privacy and data governance. The IGP includes data and model 
+clearance  that was used extensively in the creation of the 
+IBM watsonx Granite™ model series , decoder-only 
+foundation models for generative AI tasks for enterprise use. 
+We regularly review and update the IBM Privacy 
+Statement , translating it into multiple languages, with the 
+continued goal to simplify the explanation of how IBM 
+collects, uses and shares personal information. We are firmly committed to the responsible stewardship of data entrusted to us by our clients. Every six months, we publish reports
+ of inquiries we may receive from law enforcement 
+agencies regarding data and the steps we take to protect the integrity of such information. 
+As current and emerging technologies raise new 
+challenges to privacy and consumer welfare, IBM remains committed to
+ helping in the development of precise 
+technology and policy safeguards. IBM worked with the Future of Privacy Forum on its report, Data Sharing for 
+Research: A Compendium of Case Studies, Analysis and 
+Recommendations , that reviewed corporate-academic 
+partnerships and provided practical recommendations for companies and researchers on sharing data for research. To prepare for what comes next with new technologies like neurotechnology and quantum, IBM will continue collaborating with academic, industry and government leaders to create enduring solutions. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 ESG Report 
+20 
+Policy Advocacy 
+We advocate for public policies that are 
+relevant to our business and to our 
+stakeholders – including our employees, 
+our partners, our stockholders, and the 
+communities where we live and work. 
+We engage policymakers and leaders globally to promote 
+ideas that can help spur growth and innovation with new 
+technologies or address societal challenges, such as building a skilled and diverse workforce. We do this by developing innovative policy ideas that are aligned with national agendas, through building trusted relationships with government leaders, and through partnerships with academia and civil society. IBM has never made political contributions nor endorsed candidates for office, and our company does not have a political action committee. 
+The IBM Policy Lab, established in 2020, convenes leaders 
+worldwide in public
+ policy, academia, and technology to 
+develop clear and actionable policy recommendations that 
+leverage technology to help tackle some of today’s most pressing issues. In 2023, the IBM Policy Lab released papers covering: 
+- 
+How governments  can strengthen their cloud 
+policies globally ; 
+- The role of technology companies in the fight against 
+climate change ; 
+- A policymaker’s guide to AI foundation models ; 
+- Digital skills for the EU; 
+- A technology workforce playbook for the U.S.; and 
+- Policy principles to develop and implement 
+cybersecurity reporting . IBM is committed to meaningful management and 
+oversight, and accurate
+ reporting with respect to our 
+engagement with government officials, and we consistently 
+seek to provide our stakeholders with relevant data 
+regarding our public policy engagement. We receive 
+consistently high ratings from independent analysts of 
+corporate practices on lobbying and political spending, 
+including from the Center for Political Accountability and 
+Transparency International UK. 
+IBM is also committed to advocating for policies that 
+advance diversity and
+ inclusion globally. For information on 
+our advocacy efforts, see "Diversity and Inclusion" on 
+page 27. 
+More information about our public policy governance and 
+public reporting is
+ available on our IBM Government and 
+Regulatory Affairs website . 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023  
+ESG
+ Report 21 IBM’s public advocacy highlights in 2023 included : 
+- Advancing a risk-based approach to the regulation of 
+artificial intelligence with:
+ 
+- Attendance by IBM CEO Arvind Krishna at the first 
+U.S. Senate AI Insight Forum; 
+- Testimony before the U.S. Senate Judiciary 
+Committee on Rules for AI by IBM Vice President & 
+Chief Privacy and Trust Officer 
+Christina Montgomery; 
+- Attendance by IBM SVP & Director of Research 
+Dario Gil at
+ the AI Safety Summit in the 
+United Kingdom; 
+- Welcoming the White House Executive Order on AI 
+and the introduction of The AI Research, 
+Innovation, and Accountability Act of 2023 in the 
+U.S. Senate; 
+- Welcoming a provisional agreement on the world’s 
+first comprehensive AI
+ legislation, the European 
+Union’s AI Act; and 
+- Joining as a signatory on the Government of 
+Canada’s voluntary AI
+ code of conduct . 
+- Advancing a skills-first approach to filling critical tech 
+jobs - especially
+ in key areas such as cybersecurity 
+and AI - by supporting the release of the Office of the 
+National Cyber Director’s National Cyber Workforce 
+and Education Strategy , supporting the introduction of 
+two bipartisan workforce development bills in the U.S. 
+House of Representatives, and with testimony before 
+the U.S. House of Representatives Education and the 
+Workforce Committee. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG 
+Report Equitable 
+Impact 
+Our Culture 
+IBM operates in more than 175 countries 
+and employs over 282,000 people. We are 
+in constant pursuit of our goal to make the 
+world work better and are proud to be at 
+the forefront of groundbreaking changes 
+in the industries we serve and the world 
+at large. 
+We do this by delivering innovative products and services 
+that maximize the productivity and efficiency of businesses 
+while contributing positively to society. IBMers are critical 
+to accomplishing this. By providing an inclusive 
+environment that encourages learning and the exploration 
+of new ideas and innovative approaches, we can make the 
+greatest impact with our clients, partners and the world. 
+Our culture is what drives us. It’s what motivates every 
+IBMer to
+ do their best work. Together, we think big, set the 
+pace for our industry, forge partnerships, and make the 
+world work better. In 2023, our engagement and inclusion 
+results from our annual Engagement Survey remain strong, 
+demonstrating that our value proposition and work 
+environment support a world class culture. 
+In 2023, our voluntary attrition decreased 
+when compared to each of the past 
+two years. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 23 Over 187,000 employees globally responded to the annual Engagement Survey 
+Nearly 
+9 out of 10 
+employees who participated in the survey reported 
+feeling empowered to express their authentic 
+identities at work. More than 
+8 out of 10 
+employees who participated in the survey indicated 
+that they were engaged at work. 
+Our Culture Formula 
+Our culture formula brings the IBM work experience to life. Our purpose articulates why we exist and the role we 
+play in society and industry, while our three fundamental values serve as the principles that govern our culture 
+and brand. Our Growth Behaviors guide how we show up for each other and for our clients and partners. 
+IBM Culture 
+= 
+Purpose 
+- To be the catalyst that makes 
+the world
+ work better + Values
+- Dedication to every 
+client’s success
+ 
+- Innovation that matters - for 
+our company
+ and for 
+the world 
+- Trust and personal 
+responsibility in
+ 
+all relationships + Behaviors 
+- Growth Minded 
+- Trusted 
+- Team Focused 
+- Outcome Focused 
+- Resourceful 
+- Courageous 
+Supporting 
+Our Employees 
+IBMer Career and Development 
+Twice annually, IBMers complete performance reflections 
+which encourage them to celebrate their accomplishments and plan for focus areas going forward. They are evaluated against two dimensions: business outcomes and skills. Managers and employees engage in this process together. 
+IBMer Learning 
+IBM invests in its employees’ professional development with a range of advanced tools and resources that empower IBMers to direct their own career paths and build the skills required to pursue their goals. Our next generation learning strategy deeply centers on skills growth. We have refreshed our learning program to better align with this strategy. Our enterprise-wide shift emphasizes learning and experiences to build skills and expertise critical to job roles and internal mobility. With our refreshed programs, IBMers will accelerate skills growth and gain more relevant skills in a more efficient and personalized manner, allowing for deeper learning in less time. For additional employee learning data see "ESG Data Summary" on pag
+e 63. 
+Our current learning resources: 
+Your Learning at IBM Generates personalized learning recommendations and 
+resources for IBMers using IBM Watson
+® AI technology. 
+Your Career at IBM 
+Designed to help IBMers assess their current skills, identify 
+skills they need for new roles, and find career opportunities within IBM, it connects IBMers to certification programs, as well as coaching and mentoring to supplement their development. 
+85 Average Learning Hours Per Regular, Full Time Employee 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 ESG Report 24 
+Leadership Development 
+To ensure the continued growth of IBM and the 
+achievement of our strategic goals, last year, we 
+introduced the IBM Leadership Behaviors which define the 
+characteristics and capabilities required of IBM executives. 
+These behaviors are built upon the IBM Growth Behaviors 
+and articulate our expectations for how IBM executives 
+show up for our clients, partners, and employees. The 
+behaviors are the anchor for the framework we use to 
+assess and develop executives at the senior most levels of 
+our company and are embedded into a set of Signature 
+Executive Learning Experiences that act as the starting 
+point for each phase of the IBM executive leadership 
+journey. We believe these Behaviors are a market 
+differentiator and are key to selecting and developing the 
+executive talent required to achieve long-term success. IBM Leadership Behaviors 
+for Executives 
+Inspire Followership 
+- Role model for IBM’s culture 
+- Exude the confidence to achieve 
+what
+ might seem impossible 
+- Foster an environment of caring, 
+belonging
+ and inclusivity Activate the Enterprise 
+- Drive ambition for the IBM 
+Corporation
+ 
+- Maximize productivity by 
+leveraging
+ the full power of IBM 
+- Create positive energy from friction Accelerate Strategy 
+- Make big bets without fear of failure 
+- Infuse speed and agility 
+- Make appropriate trade-offs to 
+maximize
+ outcomes 
+Growth 
+Behaviors 
+Growth Minded Trusted Team Focused Outcome Focused Resourceful Courageous 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 25 
+Health, Safety, and Well-being 
+IBM has a long-standing commitment to the health, safety, 
+and well-being of its employees. This commitment is 
+embodied in our health and safety policy and through our 
+compliance with
+ country legal requirements, both of which 
+are implemented through IBM’s Health & Safety 
+Management System (HSMS). Established in 1999, our 
+HSMS provides a framework to manage evolving and 
+emerging health and safety risks by providing a system to 
+identify, assess, and address the health and safety risks 
+employees face in their day-to-day work activities. For worker-related injuries and ill health data see "ESG Data Summary" on page 
+63. 
+IBM's Health and Safety Management 
+System supports IBM operations globally 
+and has been externally certified since 
+2019 to comply with the ISO 45001:2018 
+occupational health and safety standard. Well-being Programs 
+We believe our employees perform their best at work, at 
+home and in the communities where they live and work 
+when their well-being is supported. Our well-being 
+programs, which include physical, mental, and financial 
+health, are shaped by risk assessments, frequent surveys 
+and employee feedback sessions. In 2023, our well-being 
+programs focused on cardiovascular, musculoskeletal and 
+mental health. 
+Our well-being programs vary by country 
+and are based on the prevailing health 
+and safety needs of the applicable 
+end-users. 
+Mental Health 
+At IBM, mental health has always been and will 
+continue to be a priority. All employees worldwide 
+have access to: 
+-Employee assistance programs and 
+supplemental resources
+ that provide 
+confidential, 24/7 critical mental 
+health support; 
+-Our Mental Health Ally Badge program, 
+designed to
+ help employees become mental 
+health allies with an online training that covers 
+basic information about mental health, how to 
+recognize and address stigma, and ways to 
+connect peers in need of support with an 
+appropriate service or resource; and 
+-A resilience-building tool to help equip them 
+with the
+ ability to handle challenges, thrive in 
+the face of stress, and bounce back smarter 
+and stronger to face changing work and life demands. 
+Benefits 
+IBM is committed to helping our employees 
+achieve balance while fostering success by 
+providing them with an array of benefits, such as 
+paid leave and programs to support health and 
+well-being. 
+We offer a comprehensive benefits program Appendix Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+designed to support IBM employees and 
+their families across multiple dimensions of 
+health – physical, mental, social and financial. Benefits vary from country to country. 
+IBM 2023 
+ESG Report 26 
+Diversity 
+and Inclusion 
+At IBM, we foster a culture of conscious 
+inclusion and active allyship, where every IBMer can make a positive impact on society while bringing their authentic selves to work. We aspire to create a sense of belonging for all by building a more diverse workforce, cultivating a flexible work environment and advocating for equity, both inside and outside of IBM. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 ESG Report 27 
+Our four strategic 
+priorities measure 
+our progress 
+through actions 
+and outcomes Employee Experience 
+We are champions of inclusion, enabling 
+diverse communities of IBMers to thrive and grow. Accountability 
+We harness data transparency to enable accountability, action and outcomes for increased diversity representation and inclusion at every level of our company. 
+Advocacy 
+We work to drive systemic change 
+that creates opportunity for diverse communities. Allyship 
+We provide training and support to 
+help every IBMer be an upstander through inclusive behaviors. 
+ 
+Employee Experience 
+Our eight official communities include Women, LGBTQ+, 
+People with Diverse Abilities, Black, Hispanic, Native American, Pan-Asian and Veteran. We set strategy for each of our communities annually through Community Leadership Councils which are supported by our most senior IBM leaders and amplified through our Business Resource Groups. 
+We believe it is important to create a work environment 
+where employees feel supported. IBM’s Inclusive Workplace Design initiative continued in 2023
+ which 
+included all-gender restrooms, reflection and prayer rooms, lactation rooms, increased aisle widths and turning radius and tonal contrast materials for the visually impaired. These design elements will be included in all new workplace projects going forward. The guidelines also include baseline Inclusive Design elements which are required at IBM legacy locations. 
+Business Resource Groups 
+Business Resource Groups are volunteer, employee-led 
+groups formed around a common interest, bond, or background. 
+-
+ Over 200 Business Resource Groups 
+- Employees in more than 50 countries 
+participate 
+-
+ In 2023, IBM established 25 new Business Resource Groups Appendix 
+IBM 2023 ESG Report 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+28 
+Advocacy 
+We demonstrate advocacy through our effort to drive 
+systemic change that creates opportunity for diverse communities. For information on our philanthropic efforts to support inclusivity see "Community Development" on page 
+35 and for information on our work with diverse 
+suppliers see "Supplier Diversity" on page 42. 
+Policy Advocacy 
+In 2023, we supported several bills brought forth to the 
+U.S. Congress and state legislatures in support of our diverse communities:
+ 
+- The Equality Act, to extend civil rights protections to the LGBTQ+ community
+ 
+- The Dream Act and the American Dream and Promise Act, to provide protections and certainty for Deferred Action for Childhood Arrivals (DACA) recipients, or DREAMers
+ 
+- State policing reform proposals 
+Additionally, we urged the Czech Republic's Prime Minister to support same-sex marriage and joined a business coalition advocating for LGBTQ+ inclusion in Slovakia.
+ Skills-First Talent Strategies 
+For nearly a decade, IBM has developed our organization’s 
+talent model to put skills first. We emphasize skills-first hiring, which means we prioritize the right mix of in-demand skills over specific degrees when looking for talent to work in technology's fastest-growing areas, like AI. This policy and what we call our "new-collar" programs provide an entry point into IBM for people with relevant skills, but without advanced degrees, therefore expanding ways for people to enter the workforce. Our new-collar programs, like apprenticeships and 
+returnships, can help close the 
+opportunity gap, as well as narrow the skills gap in IT. To promote this approach, in 2022 IBM committed to investing $250 million in apprenticeship and new-collar programs by 2025, towards which we have invested $100.3 million. Our continued investment in apprenticeships and new-collar programs globally helps to ensure the next decade in tech is more inclusive. 
+We recognize that for new-collar strategies to make an 
+impact on the labor market at scale, we must work together. This is why we founded and have
+ chaired for four 
+years the Consumer Technology Association’s Apprenticeship Coalition that helps companies launch apprenticeship programs in the U.S. Additionally, we are founding members of the OneTen Coalition and the New York Jobs CEO Council, as well as a chair of the Business Roundtable’s Multiple Pathways Initiative. These efforts work to improve opportunities by scaling new-collar programs and encouraging more companies to adopt skills-first talent strategies. 
+IBM 2023 ESG Report 29 Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix IBM U.S. Apprenticeship Program 
+Our U.S. Department of Labor registered 
+program is competency-based and enables apprentices to be paid while they learn skills for various strategic roles. Launched in 2017, the program began with software engineering and has expanded to 
+35 job roles, including 
+data science, cybersecurity, and design. We have hired nearly 1,000 apprentices through our U.S. program, with more than 90% of past program graduates becoming full-time IBMers. 
+IBM Tech Re-Entry Program 
+Our re-entry program serves people looking to 
+rejoin the workforce after a career break. This paid “returnship” provides a path back to full- time employment and helps individuals modernize their skills with learning, plus mentorship from IBM experts. Available in 
+20 
+countries, this initiative is also providing opportunities to people whose careers were disrupted by the COVID-19 pandemic. 
+IBM 2023 
+ESG Report 30 Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Allyship 
+IBM provides voluntary training and support to help 
+every IBMer be an upstander through inclusive 
+behaviors. In addition, we require all employees 
+globally to complete training on the Business Conduct 
+Guidelines, which includes learnings on sexual 
+harassment, discrimination, bullying and retaliation 
+prevention as part of its annual certification process. 
+We regularly refresh education for our employees to 
+help foster an inclusive culture and provide them with 
+the tools and knowledge to become an ally through our 
+Be Equal® Ally Badge, which has been earned by 
+thousands
+ of IBMers annually. I’m In Allyship Campaign 
+In 2023, we launched a yearlong allyship campaign called I’m In, which included a series of strategic initiatives 
+focused
+ on mentorship, sponsorship, career development, and building empathy through storytelling. Our 
+programming enables active allyship, supports our commitment to attracting and retaining talent, reinforces our 
+pledge to inclusion and creates a sense of belonging. 
+Allyship Circles 
+These events feature immersive sessions that 
+explore
+ allyship and actionable strategies for 
+immediate impact. Dynamic breakout sessions 
+provide a safe space for meaningful conversations 
+and knowledge sharing, fostering personal growth. 
+The events conclude with actionable steps for 
+becoming better allies and contributing positively 
+to a more inclusive workplace. 
+Executive Speed Mentoring 
+The Executive Speed Mentoring program 
+seamlessly
+ combines career road mapping and 
+executive mentorship in a collaborative setting. 
+Through its four-part structure, employees 
+showcase accomplishments, learn practical career 
+progression strategies and gain insights from 
+executives. The integration of executive mentoring 
+adds valuable support, guidance, and perspectives 
+to enhance career growth and development. Be Equal Podcast 
+This thought-provoking and empowering podcast 
+series delves into the multifaceted world of Diversity 
+and Inclusion. Hosted by passionate IBMers and available on all major streaming platforms, this series provides a platform for a wide range of voices and global perspectives that encourages dialogue, learning, and action to create a more inclusive workplace. 
+Boots2Blue An IBM 
+ veteran hiring initiative representing  the 
+journey a veteran makes from wearing boots while in 
+military service to transitioning to a civilian career 
+at IBM. 
+Travelers Requiring Special Assistance Helpdesk 
+A new concierge service we created  in collaboration 
+with American Express Global Business Travel to 
+support our employees who have special needs when 
+traveling. A helpdesk of trained counselors provides 
+inclusive travel assistance, including airport, train, 
+hotel, and ground transportation booking, and 
+coordinates accommodation support throughout the 
+travel experience. 
+Accountability 
+IBM harnesses data transparency to enable accountability, 
+action and outcomes for increased diversity representation 
+and inclusion at every level of our company. 
+Pay Equity 
+Paying people fairly based on their job and without 
+discrimination—regardless
+ of gender or race—is not 
+optional. It is a mandate that aligns with our values. IBM 
+has a longstanding practice of pay equity and is firmly 
+committed to equal pay for equal work. It has been part of 
+our global policy since 1935—preceding the U.S. law by 
+several decades. We have been conducting statistical pay 
+equity analysis in the U.S. since the 1970s. To support our 
+commitment to pay equity, each year we follow a 
+consistent methodology to identify and address any pay 
+equity gaps across genders globally and across races and 
+ethnicities in the U.S. In 2023, all countries where IBM has 
+employees were included in our pay equity analysis. The 
+pay equity data represents total compensation, including 
+base, bonus and equity. 
+We are proud of the results: overall, IBM pays equitably for 
+similar
+ work. Women globally earn $1.00 for every $1.00 
+earned by men for similar work. The same is true for 
+underrepresented minorities in the U.S. Diversity-Linked Executive Compensation 
+To reinforce our focus on attracting and retaining diverse 
+talent
+ in our workforce that represents our clients and the 
+world, we include a diversity modifier as part of our 
+executive compensation plan. It measures improvement in 
+executive representation for women globally and 
+underrepresented minority (URM) groups (specifically, 
+Black and Hispanic) in the U.S. Our goal remains to 
+improve and close the gap in representation. We believe a 
+diverse workforce drives creativity and innovation in our 
+products and services and as a result increases 
+shareholder value. 
+In 2023, of our global promotions, 
+40.8% were women and, 
+of our U.S. 
+promotions, 
+9.4% were Black 
+employees and 
+9.2% were Hispanic 
+employees. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 31 Opportunities for Self-Identification 
+IBM believes that 
+providing
+ opportunities for self- 
+disclosure allows employees to voluntarily share their uniqueness. By self-identifying, we show awareness and may leverage differences by creating solutions and network opportunities for a successful company. Of employees who self-identified in 2023, approximately: 
+- 10% self-identified as LGBTQ+ 
+- 5% self-identified as Veterans 
+- 5% self-identified as People with 
+Diverse
+ Abilities 
+The privacy of our employees is a chief concern. 
+We comply with all applicable legal requirements 
+when handling employee information. Self-identification information is not visible to managers or team members and is held in strictest confidence. 
+Representation and Hiring Trends 
+Overall 
+Representation  
+Women 
+(Global) 
+21 22 23 36.7%*
+37.2%*
+37.4% Black 
+(U.S.) 
+21 22 23 7.4%7.7%
+7.5%Hispanic 
+(U.S.) 
+21 22 23 6.6%
+7.0%
+7.0% Native American 
+(U.S.) 
+21 22 23 0.3%*
+0.3%*
+0.3% Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 0.2%
+0.2%
+0.2% Pan-Asian 
+(U.S.) 
+21 22 23 19.2%
+19.7%
+20.5%Multi-race 
+(U.S.) 
+21 22 23 0.9%
+0.9%
+0.9% New Hires  
+ Women 
+(Global) 
+21 22 23 40.1%39.7%*40.5%Black 
+(U.S.) 
+21 22 23 13.8%
+13.5% 
+12.4% Hispanic 
+(U.S.) 
+21 22 23 9.6%*
+9.8% 
+8.9% Native American 
+(U.S.) 
+21 22 23 0.3%*
+0.3%*
+0.5%Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 0.2%
+0.3%0.2% Pan-Asian 
+(U.S.) 
+21 22 23 23.5%24.0%27.6% Multi-race
+(U.S.) 
+21 22 230.7%0.7% 
+0.5% 
+Management 
+Representation  
+Women 
+(Global) 
+21 22 23 31.0%*
+31.1%*
+31.4% Black 
+(U.S.) 
+21 22 23 5.6%*5.8%*
+5.6%Hispanic 
+(U.S.) 
+21 22 23 5.6%*
+5.9% 5.0%* Native American 
+(U.S.) 
+21 22 23 0.3%*
+0.3%*
+0.4%Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 0.1%
+0.1%
+0.1% Pan-Asian 
+(U.S.) 
+21 22 2317.1%*
+18.4%*
+19.6%Multi-race 
+(U.S.) 
+21 22 230.8%
+0.8%*
+0.8% New Hires  
+  
+   Women 
+(Global)
+21 22 2334.1%*30.4%*33.4%Black
+(U.S.)
+21 22 23 8.8%* 
+5.5%10.0%* Hispanic
+(U.S.) 
+21 22 238.1%* 
+4.0%*
+10.2% Native American 
+(U.S.) 
+21 22 23 0.0%*
+0.0% 0.5%* Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 0.3%
+0.4%
+0.0% Pan-Asian 
+(U.S.) 
+21 22 2319.4%*
+22.9%*27.3%Multi-race
+(U.S.) 
+21 22 230.3%*0.0%*0.0% 
+Management includes all executives and people managers. IBM hired over 30,000 employees in 2023. 
+Data excludes students. 
+* For 2023, IBM revised the definition of employee categories to improve consistency and prior results have been restated to align with these definitions. IBM has also included an additional racial category for Native Hawaiian/Pacific Islander with prior 
+years’ results. Social 
+Environment 
+Appendix 
+Contents 
+Introduction 
+Governance 
+IBM 2023 
+ESG Report 32 
+Representation and Hiring Trends 
+Technical 
+Representation 
+Women 
+(Global) 
+21 22 23 
+30.1%
+30.6%*
+31.1%Black 
+(U.S.) 
+21 22 23
+6.6%7.1%
+6.8%Hispanic 
+(U.S.) 
+21 22 23
+6.7%7.0%
+6.8% Native American 
+(U.S.) 
+21 22 23 
+0.2%*
+0.3%*
+0.3% Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 
+0.2%
+0.2%
+0.2% Pan-Asian 
+(U.S.) 
+21 22 23 
+24.5%
+24.7%*
+23.6% Multi-race 
+(U.S.) 
+21 22 23
+1.0%
+0.9%*
+0.9% New Hires  
+Women 
+(Global) 
+21 22 23 
+34.0%32.5%32.8% Black 
+(U.S.) 
+21 22 23 
+11.6%11.5%
+11.7% Hispanic 
+(U.S.) 
+21 22 23 
+8.9%8.6%*
+6.7% Native American 
+(U.S.) 
+21 22 23 
+0.2%*
+0.2%* 
+0.8% Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 
+0.2%
+0.3%0.2%Pan-Asian 
+(U.S.) 
+21 22 23 
+29.9%31.9%34.2% Multi-race 
+(U.S.) 
+21 22 23 
+0.9%*0.9%*0.7% 
+Executive 
+Representation 
+Women 
+(Global) 
+21 22 23 
+28.8%
+29.1%
+30.2%Black 
+(U.S.) 
+21 22 23 
+6.6%
+6.4%6.1%*Hispanic 
+(U.S.) 
+21 22 23 
+5.9%6.4% 5.5%Native American 
+(U.S.) 
+21 22 23 
+0.3%*
+0.5%
+0.5%Native Hawaiian/ 
+Pacific Islander 
+(U.S.) 
+21 22 23 
+0.1%
+0.1%
+0.1%Pan-Asian 
+(U.S.) 
+21 22 23 
+15.7%
+16.6%*
+17.6%Multi-race 
+(U.S.) 
+21 22 23 
+0.5%
+0.6%
+0.7%  New Hires 
+Women 
+(Global) 
+21 22 23 
+33.2%*
+30.9%*36.4%Black 
+(U.S.) 
+21 22 23 
+10.4% 
+7.1%*
+6.8%Hispanic 
+(U.S.) 
+21 22 23 
+6.4%*
+13.6% 7.1%Native American 
+(U.S.) 
+21 22 23 
+0.0%
+0.0%0.0%Native Hawaiian/
+Pacific Islander 
+(U.S.) 
+21 22 23
+0.4%0.0%0.0% Pan-Asian 
+(U.S.) 
+21 22 23 
+20.0%20.5%*28.4% Multi-race 
+(U.S.) 
+21 22 23
+0.0%
+1.9%*
+0.0% 
+Executive includes Director level and above. As noted in the Proxy, excluding Red Hat, executive representation of women globally, as well as Black and Hispanic executives in the U.S., changed by 
++1.1 points, -0.2 points and +0.6 points, respectively in 2023. 
+Data excludes students. 
+* For 2023, IBM revised the definition of employee categories to improve consistency and prior results have been restated to align with these definitions. IBM has also included an additional racial category for Native Hawaiian/Pacific Islander with prior years’ results. Social 
+Environment 
+Appendix 
+Contents 
+Introduction 
+Governance 
+IBM 2023 
+ESG Report 33 
+The data below is from IBM and Red Hat’s unofficial submission of U.S. EEO-1 data as of December 31, 2023. 
+IBM EEO-1 
+Female Male 
+American 
+Indian or 
+Alaska 
+Native Black or 
+African 
+American Native 
+Hawaiian 
+or Other 
+Pacific 
+Islander White Asian Hispanic 
+or Latino Two or 
+More 
+Races American 
+Indian or 
+Alaska 
+Native Black or 
+African 
+American Native 
+Hawaiian 
+or Other 
+Pacific 
+Islander White Asian Hispanic 
+or Latino Two or 
+More 
+Races Total 
+Executive/Senior Officials and Managers 6 67 — 470 123 56 16 4 90 3 912 306 99 20 2,172 
+First/Mid-level Officials and Managers 12 199 3 1,446 401 143 48 10 182 8 2,862 1,072 248 97 6,731 
+Professionals 25 1,088 18 5,135 2,644 779 131 51 1,378 43 12,009 4,969 1,503 258 30,031 
+Technicians 1 36 — 130 23 30 1 7 171 5 930 112 186 8 1,640 
+Sales Workers 11 201 5 1,045 304 164 17 28 361 6 3,212 724 370 37 6,485 
+Administrative Support Workers — 81 — 295 27 35 3 — 20 1 115 6 17 2 602 
+Craft Workers — — — — — — — — — — — — — — — 
+Laborers and Helpers — — — — — — — — — — — — — — — 
+Service Workers — — — — — — — — — — — — — — — 
+Operatives — — — — — — — — — — — — — — — 
+Totals 55 1,672 26 8,521 3,522 1,207 216 100 2,202 66 20,040 7,189 2,423 422 47,661 
+Red Hat EEO-1 
+Female Male 
+American 
+Indian or 
+Alaska 
+Native Black or 
+African 
+American Native 
+Hawaiian 
+or Other 
+Pacific 
+Islander White Asian Hispanic 
+or Latino Two or 
+More 
+Races American 
+Indian or 
+Alaska 
+Native Black or 
+African 
+American Native 
+Hawaiian 
+or Other 
+Pacific 
+Islander White Asian Hispanic 
+or Latino Two or 
+More 
+Races Total 
+Executive/Senior Officials and Managers — — — 15 1 1 — — — — 51 8 2 — 78 
+First/Mid-level Officials and Managers 2 35 — 365 47 21 5 3 27 — 675 93 39 13 1,325 
+Professionals 1 132 2 957 267 84 31 10 182 4 2,553 500 227 98 5,048 
+Technicians — — — — — — — — — — — — — — — 
+Sales Workers — 9 — 183 13 12 7 — 22 3 543 57 31 19 899 
+Administrative Support Workers — 11 — 37 5 4 — — 1 — 5 2 2 1 68 
+Craft Workers — — — — — — — — — — — — — — — 
+Laborers and Helpers — — — — — — — — — — — — — — — 
+Service Workers — — — — — — — — — — — — — — — 
+Operatives — — — — — — — — — — — — — — — 
+Totals 3 187 2 1,557 333 122 43 13 232 7 3,827 660 301 131 7,418 
+Data includes all U.S. employees on IBM and Red Hat’s payroll, including active full-time, part-time, casual, temporary (if on the company payroll), co-ops/interns, and people on short-term disability. Not included are employees who are inactive, terminated or on 
+severance, retired (but still on the payroll for benefits or payouts), expatriates, contractors, inpatriates on foreign payrolls, or people on long-term disability. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 ESG Report 34 
+Community 
+Development 
+Corporate social responsibility (CSR) has 
+been a hallmark of IBM’s culture for over 
+100 years. Together, we have a shared commitment to creating a better, more equitable world—for each other and within our global communities. During the past year we have launched, expanded, and enhanced innovative social impact programs that are driving greater global impact. 
+More than 
+8 out of 10 
+employees believe IBM makes a positive 
+impact in the community. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 35 IBM’s social impact programs aim to address complex societal challenges by utilizing our technologies and 
+our greatest strength, our employees. Our priority areas are: 
+Education & Skills – We are investing in the future of work with a holistic, end-to-end ecosystem 
+approach
+ that fosters access to education and training, while creating a more diverse pipeline 
+of applicants. 
+- We are committed to skilling 30 million individuals by 2030. 
+- Since 2021, over 11.5 million learners have engaged with free IBM training content. 
+- In 2023, we announced that we will train two million learners in AI by the end of 2026, with a 
+focus
+ on historically underrepresented communities in the technology industry. 
+- In addition, we are collaborating with 20 historically Black colleges and universities (HBCUs) to 
+establish
+ IBM Cybersecurity Leadership Centers. 
+Sustainability – As a technology company, IBM can play a key role in enabling organizations to turn 
+sustainability
+ ambition into action. 
+- By the end of 2025, we expect to provide $30 million worth of cash, technology, and services 
+through
+ our IBM Sustainability Accelerator to organizations helping populations vulnerable to 
+environmental threats. In 2024, we announced up to an additional $45 million investment over 
+the next five years. 
+IBM Giving and Volunteering – We connect employees with the resources they need to make an 
+impact
+ in communities around the world. 
+- IBM is progressing towards our goal of 4 million volunteer hours by 2025 with over 974K 
+volunteer
+ hours recorded thus far. 
+Education & Skills 
+We believe the talent gap is one of the biggest challenges 
+facing businesses today and are taking bold action to help close it through our social impact education programs. In 2021, we committed to skill 30 million people by 2030. This will help democratize opportunity, fill the growing skills gap, and give new generations of workers the tools they need to build a better future for themselves and society. Since then, over 11.5 million learners have engaged with free IBM training content through our combined education initiatives. In 2023, as part of this goal, we committed to train 2 million learners in AI by the end of 2026. To achieve this, we are expanding our collaborations with universities and partners to deliver AI training to adult learners, and are launching new generative AI coursework through IBM SkillsBuild. 
+Through our social impact education programs, IBM is 
+meeting the needs of different learners while providing education and digital credentials. Our cornerstone programs are:
+ 
+IBM SkillsBuild 
+IBM SkillsBuild  is a free education program that provides 
+valuable skills and career opportunities to traditionally 
+underrepresented communities in technology. It includes an online platform that is complemented by customized practical learning experiences delivered in collaboration with a global network of partners. The program serves learners around the world and offers over 1,000 courses in over 20 different languages on AI, cybersecurity, data analysis, cloud computing and many other technical disciplines in addition to workplace skills. 
+Last year, IBM SkillsBuild added a new selection of 
+generative AI courses as part of our new AI training commitment and launched a new sustainability curriculum 
+to help equip the next generation of leaders with skills for the green economy through free training that connects cutting edge technologies to ecology and climate change. With AI-powered recommendations available for each learner, this interdisciplinary coursework connects topics such as ecology and biodiversity, with technology training in AI and data analytics. 
+IBM’s STEM for Girls initiative, designed to foster a robust 
+STEM ecosystem for the upcoming generation of women in India, was more deeply integrated into IBM SkillsBuild in 2023. This integration aims to facilitate deeper engagement by program participants with the courses offered on the platform.
+ 
+HBCU Cybersecurity Leadership Centers 
+IBM has collaborated with over 20 HBCUs to create IBM 
+Cybersecurity Leadership Centers that are advancing STEM-based opportunities for students. Through this collaboration, faculty and students at participating schools have access to coursework, lectures, immersive training experiences, certifications, IBM Cloud®-hosted software, and professional development resources, all at no cost to them.
+ 
+P-TECH® 
+In 2011, IBM co-created P-TECH  as an innovative high 
+school model incorporating post-secondary pathways and 
+workplace experiences aligned to career readiness. Today, it has evolved into a successful, global, open model with an ecosystem of education partners. IBM supports the model including mentoring, career exploration and access to IBM SkillsBuild. 
+Since 2021, over 
+11.5M learners have 
+engaged with free IBM training content. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 36 
+Sustainability 
+We believe the power of science, technology and 
+innovation can help tackle environmental issues while serving the communities exposed to environmental hazards. By uniting experts and technology with the purpose of improving the lives of populations most affected by environmental threats, we have the potential to make a lasting, scalable impact. 
+IBM Sustainability Accelerator 
+The IBM Sustainability Accelerator
+ is a pro bono social 
+impact program that applies IBM technologies, such as 
+hybrid cloud and AI, and expertise to enhance and scale nonprofit and government organization solutions, helping populations especially vulnerable to environmental threats. Each year, we select five organizations to participate in cohorts centered around different sustainability topics. Since its launch in 2021, the program has made significant progress. 
+Last year, the program joined the U.S. government's 
+PREPARE Call to Action and VACS Champions initiative, the UN Water Action Agenda, the UN Climate Technology Centre and Network, and formed a UN Energy Compact.
+ 
+At the beginning of 2024, building on top of our goal to provide
+ $30 million in cash, technology, and services by 
+the end of 2025 towards this program, we announced that we plan to increase this goal by up to an additional $45 million over the next five years. Since 2021, we have invested nearly $11.7 million towards the IBM Sustainability Accelerator. The IBM Sustainability Accelerator currently has three active cohorts and, in 2024, announced our RFP for the fourth cohort focused on resilient cities:
+ 
+- Sustainable Agriculture:  In support of the UN SDG 2 to 
+end hunger, achieve food security and improved nutrition and promote sustainable agriculture. 
+Focused 
+on helping smallholder farmers make agriculture more sustainable to increase their productivity and income, consumer awareness and the development of more sustainable markets. Three out of the five projects from the cohort concluded in 2023, with approximately 40,000 direct beneficiaries. The rest of the projects are currently undergoing technical implementation. 
+- Clean Energy:  In support of the UN SDG 7 to ensure 
+access to affordable, reliable, sustainable and modern energy for all. Focused on addressing 
+clean energy 
+issues such as electricity access, energy usage, energy transition and renewables strategies for communities. The cohort started testing and deploying solutions in communities around the world. 
+- Water Management:  In support of the UN SDG 6 to 
+ensure availability and sustainable management of water and sanitation for all. Focused on scaling technology solutions that address water issues by supporting availability and sustainable management of water and sanitation for vulnerable communities. In the second half of 2023, the cohort kicked off and entered the ideation phase with IBM Garage™. 
+- Resilient Cities: In support of the UN SDG 11 to make 
+cities inclusive, safe, resilient and sustainable. This new cohort, targeted for launch in 4Q2024, will aim to find ways to foster urban resiliency in the long-term
+. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 37 
+IBM Giving and Volunteering 
+Volunteerism and giving are at the epicenter of our work 
+and are foundational to our commitment to advancing 
+diversity, equity and inclusion. 
+IBM Volunteers® 
+IBM Volunteers leverage the collective power of people 
+and resources to ensure meaningful impact worldwide. 
+The program supports active and retired IBMers who donate their time and talents to academia, grassroots initiatives, and organizations helping to build our communities. IBM routinely brings our workforce together through global campaigns that feature both in-person and virtual opportunities for meaningful community engagement that addresses critical mission areas. In 2023, more than 27,000 volunteers participated in IBM volunteering, collectively logging over 543,000 volunteer hours. 
+Volunteering Hours 2022 2023 
+Worldwide retiree and employee 
+vol
+unteer hours 431,000† 543,000 
+†     Restatement from prior year to reflect calculation correction. 
+IBMers are committed to engaging with purpose-driven 
+initiatives through our signature volunteer programs that 
+align with both the enterprise and our CSR priority areas of 
+education, skills and sustainability. Our signature volunteer programs include: 
+- IBM SkillsBuild & P-TECH: IBM volunteers champion 
+education
+ equity and workforce inclusion by sharing 
+their career expertise with learners and job seekers, 
+creating pathways for all individuals to participate in the 
+future of work. - IBM Service Corps: Provides IBMers with opportunities 
+to
+ use their professional skills to help communities 
+tackle complex challenges in education, humanitarian 
+efforts, cybersecurity, and economic development. 
+Since 2008, employees have participated in 478 
+projects in 56 countries. 
+- IBM Sustainability Accelerator: IBM volunteers deliver 
+innovative
+ technology solutions to nonprofit 
+organizations, aiding populations especially vulnerable 
+to environmental threats and producing outcomes that 
+will lead to a more sustainable world. 
+IBM Giving Worldwide 
+IBM has a comprehensive giving strategy that allows us to 
+provide
+ our expertise, technology, and cash to support our 
+CSR mission and priorities in education and skills, 
+sustainability and other areas. Our giving strategy is global 
+and focuses on areas where IBM seeks to make a 
+significant impact on those with the greatest need. 
+For the breakdown of our total contributions worldwide see 
+"ESG
+ Data Summary" on page 66  . 
+IBM Giving 
+$386.9M 
+2023 Total contributions worldwide Diversity and inclusion are foundational principles of IBM's culture. Deeply embedded into our volunteer programs, these values help us create a more equitable future for everyone. Throughout 2023, IBM offered volunteer opportunities aligned with our eight Diversity & Inclusion Communities that fostered an environment of conscious inclusivity where differences are embraced and IBMers could make a positive impact on society. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 38 IBM is deeply committed to supporting organizations 
+and communities in need. In 2023, the Disaster Relief 
+Program offered IBMers the opportunity to support 
+communities around the world through charitable 
+giving. Through this program, IBM also establishes 
+charitable giving campaigns where we match 
+employee donations 1:1. 
+Supply Chain Social Responsibility 
+In 2023, we worked with over 10,000 
+suppliers of hardware, software, and 
+services, and continued to promote social and environmental responsibility among our global supply network and across our industry. 
+Since 2010, IBM has required its first-tier suppliers to create and maintain a social and environmental management system to address their responsibilities within a year of starting to do business with us. IBM suppliers must establish their management systems, measure performance, set goals, disclose results, and cascade these requirements to their upstream suppliers who perform work material to the goods and services provided to IBM. See the IBM Supply Chain Responsibility 
+website  for more details. 
+For information on our promotion of environmental responsibility among our global supply chain see "Supply Chain Environmental Responsibility" on  page 57
+. Responsible Business Alliance (RBA): IBM is a founding 
+member of the RBA, a nonprofit industry group that enables its members to strive for continuous improvement in the social, environmental, and ethical responsibility of their companies, and upstream supply chains.
+ 
+- We require our first-tier suppliers of hardware, software, and services (as well as IBM’s internal operations) to adhere to the RBA Code of Conduct, which contains provisions on labor, health and safety, environmental requirements, ethics and management systems. The RBA code is the foundation for the social and environmental management system criteria that we require our suppliers to maintain.
+ 
+- To help suppliers meet our requirements, we provide and facilitate education, including online access to the RBA learning academy that we augment with IBM developed materials. We regularly update these programs to address areas where assessments have revealed needed improvement.
+ 
+We encourage our suppliers to publish ESG reports to help drive greater supply chain transparency and best practice sharing. Our top 50 Production and Logistics suppliers and top 50 Services and General Procurement suppliers for 2023 are listed in 
+"Top Suppliers" on page 72 . From this 
+group, 81 published ESG reports with 68 in reference to GRI standards (as does IBM). 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 39 
+Supplier Audits 
+Annually, a cross-section of our first-tier suppliers are 
+requested to participate in RBA-validated audits to gauge their conformance to the RBA code and to IBM’s requirements. If an RBA full audit reveals nonconformance, we work with suppliers to review their corrective action plans and suggest recommendations to reach code conformance. For suppliers with corrective action plans, we require them to be re-audited to measure their progress towards full conformance. 
+In 2023, IBM suppliers participated in 82 RBA full audits 
+and 48 re-audits in 
+22 countries where heightened risks 
+for social and environmental responsibility are known to exist. The 82 full audits revealed a total of 664 nonconformances against the five provisional sections of the RBA Code. 
+2023 Distribution of Nonconformances by Section of the 
+RBA Code of Conduct  
+34% 
+Health and Safety 14% 
+Management System 
+35% 
+Labor 8% 
+Environmental 
+82 
+Full Audits 9% 
+Ethics In 2023, the RBA audit protocol was changed to feature a distributed assessment of Management Systems within the other four provisions of the Code: Labor, Health and Safety, Environment, and Ethics. This change helps to ensure that inadequacies are addressed in subsequent corrective action plans and vetted during re-audits. We largely attribute the net increase in the number of supplier nonconformances from the prior year to the change in the audit protocol. 
+In 2023, IBM collaborated with 48 suppliers to plan and 
+execute RBA re-audits to vet corrective action plans associated with full audits performed during 2021-2023. These re-audits yielded an 85% improvement in conformance from the findings in the related full audits - a 14 point improvement over 2022. This was the result of heightened collaboration and evidence validation with our global suppliers in their corrective action plans to guide and assure improvements were being made according to plan. In this same group, 44% of suppliers attained full conformance to the RBA Code after 
+one cycle of full audit, 
+correction action plan and re-audit. For continuous improvement, we remain engaged with suppliers that show residual nonconformance and require a second corrective action plan to be developed for further assessment. 
+As part of our RBA Code conformance management 
+system, we review full and re-audit results monthly with IBM’s procurement teams and vice presidents, and quarterly with our Chief Procurement Officer. From this dialogue, we make alterations to our supplier education programs, assistance and future sourcing patterns.  Modern Slavery and Forced Labor
+ 
+Over the past decade, there has been growing realization of the circumstances surrounding the involuntary exploitation of individuals under modern slavery and the potential for forced labor in extended supply chains. Through our membership in the RBA, we have been active in addressing this issue. In 2020, RBA membership adopted a code change that explicitly addressed parameters to prevent forced labor in the supply chain. We have built upon the RBA code provisions to develop online training for our buyers and employees and have collaborated with external parties to create a technology platform to assist multi stakeholders in interrupting modern slavery. Annually, we publish three reports in response to Canadian, Australian and United Kingdom legislation with details on our activities to combat modern slavery and forced labor. These reports are updated each June and are available on our IBM Impact website
+. 
+For more information on our RBA full audits and re-audits, see "ESG Data Summary" on page 
+ 67. 
+IBM 2023 ESG Report 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+40 
+Responsible Minerals Sourcing 
+Since the passage of Section 1502 of the Dodd-Frank 
+Financial Reform Act of 2010, our focus has been to ensure that 3TG minerals (tantalum, tin, tungsten and gold) used in our products do not contribute directly or indirectly to armed groups in the Democratic Republic of the Congo and adjoining countries. We deploy a multifaceted approach that includes robust policies and practices, as well as external collaboration, to reach these objectives. 
+Our responsible minerals sourcing policy is aligned with 
+the framework of the Organisation for Economic Co-Operation and Development (OECD) Due Diligence Guidance for Responsible Supply Chains of Minerals from Conflict-Affected and High-Risk Areas (CAHRAs), including Annex II and the related supplements pertaining to downstream companies. IBM has expanded its efforts to include ethically sourced cobalt and mica, following the approach we built with our suppliers on 3TG. 
+We are an active member of the Responsible Minerals 
+Initiative and engage directly with our in-scope suppliers to collaborate and build capacity. We require in-scope suppliers to source 3TG minerals from ethical smelters or refiners (SORs) that are conformant or active in a recognized third-party validation scheme, or from recycled scrap sources. IBM pairs skilled members of our responsible minerals team with first-tier (and upstream) suppliers to work on training, best practice sharing, and overcoming the challenges of a dynamic market environment where SOR conformant status changes occur and must be adapted to. Our working relationships span multiple layers of the supply chain, in which many interrelationships exist, in order to sustain progress.  As a complementary activity, IBM’s Responsible Minerals team maintains communications with our research community to keep them abreast of the challenges in the marketplace associated with minerals sourcing. This can help to influence future development of products. As an 
+example, the IBM Almaden Research Center has invented
+ 
+a battery technology free of nickel and cobalt, which could potentially help eliminate the need for critical metals in battery production and transform the long-term sustainability of many elements of our energy infrastructure. 
+Our annual Conflict Minerals Report (CMR) is anticipated to 
+be published in May 2024
+ and will include information on 
+our in-scope suppliers’ use of conformant 3TG SORs in 2023. A library of current and past CMRs, in addition to our Responsible Minerals policy, due diligence process, and our white paper “IBM’s Journey in Responsible Minerals Sourcing,” are available on the IBM Responsible 
+Minerals website . 
+Our working relationships span multiple layers of the supply chain, in which many interrelationships exist, in order to sustain progress. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 41 
+Global Supplier Diversity 
+We recognize that a diverse supplier base is integral to our 
+company’s profitability and strategic objectives — solidifying the connection between customer satisfaction and success in the marketplace. 
+Building and maintaining a community of diverse suppliers 
+increases IBM’s opportunity to hear new ideas, apply different approaches, and gain access to additional solutions that respond to customer needs. Such collaboration helps IBM deliver innovation, quality products and world-class service to a growing global marketplace. 
+Our global supplier diversity program includes suppliers 
+that are majority owned, operated, and controlled by people from a racial or ethnic minority (as defined in each applicable country or region), women, military veterans, LGBTQ+ individuals, or people with diverse abilities. Learn more about our program on the IBM Supplier 
+Diversity website . 
+IBM’s Global Supplier Diversity Program, in existence for over 55 years, operates in all countries where we do business, and diverse suppliers provide products and services for each of our procurement categories. We require our first-tier suppliers to report their own diverse supplier expenditures that are utilized in support of IBM contracts and is collected as second-tier spend. First-Tier Supplier Diversity Spend ($B)† 2023 
+U.S. $0.9 
+Non-U.S. $0.3 
+Total $1.2 
+† In 2023, our second-tier supplier diversity spend was approximately 
+$0.5B. 
+In 2020, IBM set a goal of dedicating 15% of our first-tier 
+supplier diversity spending to Black-owned businesses by 
+2025. In 2023, approximately 8.5% of our first-tier 
+supplier diversity spend was with Black-owned suppliers. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 42
+ 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report Environmental 
+Impact 
+With a 50-plus year commitment to environmental responsibility in all of its business activities 
+and a 34-year history of annual public environmental reporting, IBM continues to take deliberate actions to drive real results. 
+Global Environmental 
+Management System 
+IBM’s corporate environmental policy , first 
+formalized in 1971, provides the strategic 
+framework for our global environmental management system (EMS). We have maintained an EMS for decades and continually update it to reflect our current intersections with environmental matters. The global scope of our EMS covers hardware product design and development, manufacturing, data centers, real estate operations, procurement, logistics, and asset recovery services. Setting and executing against goals to drive continual improvement is an integral part of our EMS. We currently have  21 environmental sustainability goals 
+that address energy and climate change, conservation and biodiversity, pollution prevention and waste management, supply chain and value chain, and EMS. We have continuously maintained a single global registration to the ISO 14001 EMS standard since 1997 and to the ISO 50001 energy management systems standard since 2012. In addition, our GHG emissions quantification process is certified to the ISO 14064-1:2018 standard and our GHG emissions inventory and disclosures are verified with limited assurance by an independent third-party using the ISO 14064-3:2019 standard. More information about IBM’s management system certifications and our environmental programs can be found on the IBM Environment website
+. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 44 
+Stakeholder Engagement 
+We proactively engage and collaborate on environmental 
+matters with stakeholders from a cross-section of nongovernmental organizations (NGOs), government agencies, businesses, industry associations, investors, academia, communities, and employees. Some examples are: 
+European Green Digital Coalition (EGDC): The EGDC is a 
+group of companies committed to supporting the EU’s “green and digital transformation.” IBM’s Flex Platform solution, which provides balancing capacity for the grid, was selected by EGDC to demonstrate “calculator” development across six economic sectors (energy/power, transport, construction/ buildings, manufacturing, agriculture and smart cities) to help digital technologies users assess the net environmental impact (positive or negative) of selected solutions with methodologies jointly developed by member companies, together with NGOs and relevant expert organizations. The IBM Flex Platform solution case study calculator was finalized in June 2023 and presented at the Digital with Purpose Global Summit in September 2023. 
+National Aeronautics and Space Administration (NASA): 
+In 2023, IBM and NASA expanded our collaboration on AI foundation models to encompass geospatial analytics and large language models. Together, we announced and open-sourced the first geospatial foundation model to monitor our changing planet using NASA earth observation data. Downstream applications include detecting natural hazards and tracking changes to forests and agricultural practices. This model was showcased at COP28 and highlighted reforestation efforts with the Government of Kenya. We also co-developed and open-sourced a new large language model trained on scientific literature to make this knowledge more accessible and announced development of a new AI foundation model for weather and climate. Downstream applications include downscaling climate projections and fine-tuning forecasts to support renewable energy forecasting. Technip Energies (TEN):  IBM Research invented the VolCat 
+Technology as a more efficient, and sustainable way to recycle polyethylene terephthalate (PET) used in textiles and packaging and, in 2021, IBM formed the VolCat Technology Joint Venture with TEN and Under Armour to develop the VolCat Technology into a process robust enough to regenerate dyed PET packaging, polyester textile and cotton-polyester blends. In 2023, building on our partnership, TEN announced the launch of Reju, a polyester regeneration company that will take the VolCat Technology to industrial scale. 
+The Green Grid (TGG):  TGG focuses on creating tools, 
+providing technical expertise and advocating for the 
+optimization of data center energy and resource efficiency. As a member of TGG since its inception in 2007, IBMers actively participate on the TGG Executive Leadership Council, the Server and Storage Energy Standing Working Group and hold chair positions on both the Data Center Energy Efficiency Standards Standing Working Group and the Data Center IT Equipment Energy Efficiency Metric Activity Working Group. In 2023, TGG provided its technical expertise and advocacy on proposed laws and regulations in the U.S., the EU, China, and India, and on new and updated standards developed by the ISO. 
+U.S. Department of Energy (DOE): IBM joined the U.S. DOE’s 
+Energy Efficiency Scaling for 2 Decades program which aims to increase the energy efficiency of computing by 1,000 times over the next two decades. 
+U.S. National Science Foundation (NSF) Convergence 
+Accelerator: IBM Research has partnered with the University 
+of Pittsburgh, Cornell University, NuMat Technologies, ChemForward and Digital Science to accelerate the discovery of alternatives, replacements, and remediation solutions for per- and polyfluoroalkyl substances (PFAS), a growing class of environmental pollutants commonly referred to as ‘forever chemicals.’ This project, called PFACTS, includes the development of an online platform, AI tools, and community engagement to help reduce and eventually eliminate the nonessential use of PFAS. In February 2024, PFACTS was selected for a Phase 2 award from the NSF’s Convergence Accelerator as part of Track I: Sustainable Materials for Global Challenges. This effort builds upon the Phase 1 year of planning, scoping, and collaborating with key semiconductor industry groups and leading consumer electronics manufacturers during 2023. 
+Wildlife Habitat Council (WHC): For information on our 
+engagement with the WHC, see "Biodiversity" on page 
+53. 
+45 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 
+Energy and 
+Climate Change 
+For decades, IBM has been committed to addressing climate change through the company’s energy conservation and climate protection programs. 
+As a founding partner, IBM helped the U.S. Environmental Protection Agency (EPA) launch ENERGY STAR in 1992. We began disclosing our CO
+2 emissions in 1994, set our first CO2 
+emissions reduction goal in 2000, and made our first purchase of renewable electricity in 2001. In 2007, we published our policy position on climate change, recognizing that climate change is a serious concern that warrants timely, meaningful action on a global level. Our company supported the Paris Agreement in 2015, and in 2017, we publicly reiterated our support for the U.S. to remain a party to it. IBM became a founding member of the Climate Leadership Council in 2019, supporting a bipartisan plan for a carbon tax with 100% of the net proceeds returned to citizens as a carbon dividend. 
+Our goals for energy efficiency and conservation, renewable 
+electricity procurement and GHG emissions reduction include: 
+- Procure 75% of the electricity IBM consumes worldwide 
+from renewable sources by 2025, and 90% by 2030. 
+- Reduce IBM’s operational GHG emissions 65% by 2025 against base year 2010, adjusted for acquisitions and divestitures. - Reach net-zero operational GHG emissions by 2030, using feasible technologies to remove emissions in an amount which equals or exceeds IBM’s residual emissions. Correspondingly, aim for residual emissions of 350,000 metric tons of CO
+2-equivalent (mtCO2e) or less by 2030. 
+- With reference to the voluntary Greenhouse Gas Protocol, our GHG emissions goals address Scope 1 and Scope 2 (market-based) emissions, as well as Scope 3 emissions associated with IBM's electricity consumption at third-party co-location data centers. 
+- Implement a minimum of 3,000 new energy conservation projects to avoid the consumption of 275,000 MWh of energy from 2021 to 2025. 
+- Improve average data center cooling efficiency 20% by 2025 against base year 2019. These goals and reporting cover our activities taking place in locations owned or leased by IBM. These locations include IBM data centers located in facilities managed by third parties where IBM does not procure the energy or control the operations of the buildings – also known as co-location data centers. All figures contained in this section have been adjusted for acquisitions and divestitures.
+1 
+Our GHG emissions goals achieve a rate of reduction that exceeds what scientists from the UN Intergovernmental Panel on Climate Change (IPCC) indicate is necessary to limit Earth’s warming to 1.5 degrees Celsius above pre-industrial levels. 
+For information on our supplier engagement goals related to 
+energy and climate, see "Supply Chain Environmental Responsibility" on page 
+57
+. Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 46 Energy and Climate Change 2019 2020 2021 2022 2023 
+Total operational energy consumption in MWh 2,837,000 2,529,000 2,486,000 2,448,000 2,287,000† 
+Renewable electricity procurement as % of total electricity 
+consumption (goal 75% by 2025, and 90% by 2030)‡ 42.9% 55.6% 62.7% 65.9% 70.6% 
+Total operational GHG emissions covered by our goal 
+in mtCO2e§,¶ 809,000 569,000 475,000 430,000 364,000 
+Operational GHG emissions reduction as % of 2010 base 
+year (goal 65% by 2025)¶ 30.0% 50.8% 58.9% 62.8% 68.5% 
+† 4.7% of energy consumption has been estimated for IBM locations that use less than 500 MWh of energy per year and in cases where the utility invoices were not 
+available at the time of reporting. 
+‡ Renewable electricity procurement includes contracted purchases and renewable electricity that automatically comes to IBM via routine grid power. 
+§ Covers all of IBM’s Scope 1 and Scope 2 emissions, as well as Scope 3 emissions associated with IBM’s electricity use at co-location data centers. 
+¶ GHG emissions from previous years and base year have been adjusted to remove GHGs not covered by the Kyoto Protocol, which are not classified as Scope 1 emissions according to the Greenhouse Gas Protocol. 
+1 Figures have been adjusted to account for the separation of IBM's managed infrastructure services unit that was completed on November 3, 2021. IBM does 
+not take credit for a reduction of GHG emissions because of a significant divestiture. For those divestitures, we have removed the relevant GHG emissions 
+from the base year of the calculation. For acquisitions, we have not adjusted the base year, but our current year data and performance against our goal include 
+the acquired GHG emissions. 
+Energy Consumption 
+One of the most effective ways to reduce IBM’s GHG 
+emissions is to make our operations more efficient, thereby reducing our actual consumption of energy, which is our most significant source of GHG emissions. 
+IBM’s energy use decreased by 6.6% in 2023 from 2022, 
+driven by increased operational efficiencies and a continued focus on energy conservation. Our global operations consumed approximately 2,287,000 MWh of energy across all commodities, of which 82% was electricity. 
+Energy Conservation 
+During 2023, we implemented 675 energy conservation projects across more than 130 locations globally, avoiding an estimated 95,000 MWh of energy consumption and 33,000 mtCO
+2e emissions, thereby saving approximately $11 million.1 
+More than 58% of energy conservation savings were due to upgrades in IT equipment at our data centers, most of which now incorporate hot/cold aisle containment.
+2 We also 
+continued to execute projects aimed at enhancing the energy efficiency of both cooling and IT equipment, retrofitting lighting systems and optimizing the operational efficiency in our data center facilities. For our other infrastructure buildings, additional savings were generated through strategic adjustments to lighting levels, temperature, and other building systems to avoid unnecessary energy consumption as we continue to adapt to new levels of onsite working. In 2021, we established a goal to implement a minimum of 3,000 energy conservation projects to avoid the consumption of 275,000 MWh of energy from 2021 to 2025. As of year-end 2023, we completed 2,130 energy conservation projects towards our 2025 goal, avoiding an estimated 256,000 MWh of energy consumptio
+n. 
+Since 1990, we have conserved an estimated 10.1 million MWh of energy consumption —equivalent to more than four times our current annual energy consumption— saving an estimated $691 million and avoiding an estimated 4.66 million mtCO
+2e emissions. 
+In 2023, we implemented 675 energy conservation projects globally, avoiding an estimated 95,000 MWh of energy consumption. Appendix 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+IBM 2023 
+ESG Report 47 1 In measuring performance against IBM's energy conservation goal, we only include the first year's savings from projects. Accordingly, IBM's total energy savings and GHG emissions avoidance from these projects are greater than the simple summation of the annual results. We do not include reductions in energy consumption resulting from downsizings, the sale of operations or cost-avoidance actions, such as fuel switching and off-peak load shifting, in our energy conservation results. 
+2 Hot/cold aisle containment is a strategy used in data centers to improve energy efficiency and reduce cooling costs. It involves organizing server racks in a way that achieves the greatest separation of hot exhaust air and cold intake air. Total Energy Consumption 
+Megawatt-hours (MWh) 
+2019 2020 2021 2022 2023 0 500,000 1,000,000 1,500,000 2,000,000 2,500,000 3,000,000 
+¢Fuels 
+¢Heating, Cooling and Steam 
+¢Electricity 
+2023 Energy Conservation Savings by Project Type 
+13% 
+Heating and cooling 
+projects 2% 
+Lighting projects 4% 
+Other projects 
+10% 
+Space efficiency projects 1% 
+Controls 
+projects 
+58% 
+IT 
+equipment 
+upgrade 
+projects 12% 
+Central utility plant projects 
+Data Center Energy Efficiency 
+Our comprehensive approach to reducing the environmental 
+footprint of our data centers prioritizes energy efficiency and includes the following strategies: 
+- Space Utilization: We optimize existing data center space to 
+increase workload density, minimizing energy consumption per unit of compute power. 
+- Technology Upgrades: We invest in energy-efficient IT infrastructure, leveraging advancements in hardware and software efficiency. 
+- Leasing Strategy: We prioritize leasing more energy-efficient co-location data centers equipped with advanced cooling and power management systems. 
+In 2021, we established a goal to improve the average data center cooling efficiency 20% by 2025 against base year 2019.
+1 In 2023, 
+our weighted average Power Usage Effectiveness (PUE)2 was 1.46, 
+an improveme nt of 16.4%  in coolin g efficiency when compared to 
+our baseline of 1.55 in 2019. 
+New requirements for co-location data center landlords 
+implemented in our leasing strategy are continuing to yield results, and our ongoing efforts to enhance the utilization of our data centers offer a viable route towards accomplishing our goal. 
+1 To determine our performance against this goal, we actively measure Power Usage Effectiveness (PUE) in all data centers under our direct control in which we have metering. For co-located facilities, we use PUE data provided by landlords. In cases where direct PUE data is unavailable, we utilize industry benchmark data to track progress and measure our overall energy efficiency performance. 
+2 PUE is the ratio of the total energy consumed by the data center divided by the energy consumed by the IT equipment. The closer the value is to 1, the more energy efficient the data center and its cooling delivery are. Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 48 
+Renewable Electricity Consumption 
+We increased our renewable electricity consumption to 
+approximately 1,322,000 MWh in 2023, representing 70.6% of our total electricity consumption, up from 65.9% in 2022. That includes 56.6% contracted directly from power suppliers or obtained via landlords, and 14.0% already in the electricity mix we received from the grid. 
+We remain on track to meet our current goal of procuring 
+75% of our worldwide electricity consumption from renewable sources by 2025, and 90% by 2030. Performance in 2023 was primarily driven by an increased use of renewables in our offices in India and in two IBM Cloud data centers in the United States. Overall, 74% of the electricity consumed in our data centers came from renewable sources, including both contracted and grid-supplied compared to 66% in 2022. Globally, 28 data centers were supplied with 100% renewable electricity in 2023. 
+Our reporting of renewable electricity consumption counts 
+only what is generated in the grid regions where our consumption actually occurs. We do not rely upon the purchase of unbundled renewable energy certificates to comprise any “percent renewable” if we cannot credibly consume the electricity those certificates represent. Our definition of “grid region” aligns with how the U.S. Energy Information Administration defines power balancing authorities’ territories. We apply the same concept for other jurisdictions. 
+More information about IBM’s approach to renewable 
+electricity procurement and reporting can be found on the IBM Environment website
+Contents 
+Introduction 
+Governance 
+. Social 
+Environment 
+Appendix 
+49 IBM 
+2023 
+ESG Report
+ Use of Renewable Electricity as Percent of Global Electricity Consumption, and by Source (2023) 
+2019 2020 2021 2022 2023 0% 10% 20% 30% 40% 50% 60% 70% 
+¢ Contracted Renewables ¢ Grid-supplied Renewables 12% 
+Solar 
+34% 
+Wind 48% 
+Hydropower 1% 
+Other 
+renewables 5% 
+Biomass 
+Greenhouse Gas Emissions 
+In 2023, we reduced IBM's operational GHG emissions 68.5% 
+against base year 2010, adjusted for acquisitions and divestitures, meeting our 2025 goal two years early. These reductions occurred due to our increase in renewable electricity purchases, our continued focus on operational efficiency and energy conservation and lowered energy consumption. 
+We plan to maintain and improve performance by continuing to use energy responsibly and efficiently and by purchasing more renewable electricity. Our focus remains to reach net-zero operational GHG emissions by 2030, with residual emissions of no more than 350,000 mtCO
+2e. This will require 
+both further emissions reductions and the use of feasible technologies to remove our residual emissions by 2030. For our GHG emissions inventory, see "ESG Data Summary" on 
+page 69 . Determining Scope 3 GHG emissions across a company’s value chain can be extremely challenging due to a lack of access to primary source data across multiple entities. We report Scope 3 emissions in five of the fifteen categories defined by the GHG Protocol's Corporate Value Chain Emissions Accounting and Reporting standard. IBM calculates certain Scope 3 emissions related to the “Purchased Goods and Services" category — namely, emissions associated with electricity IBM consumes in third-party operated spaces that IBM leases for data center operations (referred to as co-location data centers), and we furthermore approximate emissions in four other Scope 3 categories. These approximations represent Scope 3 emissions pertaining to areas for which we have some relevant information upon which to make assumptions. For IBM’s reported Scope 3 emissions, see "ESG Data Summary" on 
+page 69. IBM has long committed to doing business with suppliers who conduct themselves with high standards of ethical, environmental, and social responsibility, and we have goals in place that aim to incentivize key suppliers in emissions-intensive industries to reduce their operational GHG emissions. To learn more about IBM’s goals around supply chain engagement and our progress, see "Supply Chain Environmental Responsibility" on 
+page 57. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 50 Emissions Covered by IBM’s Fifth-Generation Goal (mtCO
+2e) 2019 2020 2021 2022 2023 
+Scope 1 (direct emissions)† 98,000 73,000 78,000 78,000 71,000 
+Scope 2 market-based (indirect emissions)‡ 460,000 262,000 221,000 183,000 150,000 
+Scope 3 (indirect emissions)§ 251,000 234,000 176,000 169,000 143,000 
+Total emissions covered by IBM’s current goal 809,000 569,000 475,000 430,000 364,000 
+Operational GHG emissions reduction as % of 2010 base year 30.0%   50.8%   58.9%   62.8%   68.5% 
+† Emissions associated with IBM’s use of fuels for building operations and transportation, as well as from the use of refrigerants and chemicals with a global warming potential. These emissions have been adjusted to remove substances that are not covered by the Kyoto Protocol, which are not classified as Scope 1 emissions according to the Greenhouse Gas Protocol. 
+‡ Emissions from IBM’s use of electricity, cooling, heat and steam at IBM-managed locations, accounting for our purchases of renewable electricity. 
+§ Emissions associated with the generation of electricity consumed by IBM’s data centers located in third-party managed facilities, reported under category “Purchased goods and services” of the Greenhouse Gas Protocol. 
+Product Energy Efficiency 
+IBM designs its products to be energy efficient, to incorporate 
+recycled content and environmentally preferable materials, and to facilitate reuse and recycling at product end-of-life. For more than two decades, we have maintained a goal to improve the computing power delivered for each kilowatt-hour of electricity consumed for new server products as compared to equivalent, previous-generation products with a valid upgrade path. 
+Enterprise Servers 
+As an important part of our comprehensive portfolio of 
+sustainability solutions, IBM z16™ and IBM LinuxONE 4 systems continue to be developed with consideration of their environmental impacts. In 2023, we introduced the IBM z16 single frame and IBM LinuxONE Rockhopper 4, both with new rack mount options, designed to deliver strong sustainability benefits when moving workloads from x86 servers. 
+Like their multi-frame predecessors, the IBM z16 single frame 
+and IBM LinuxONE Rockhopper 4 utilize the dual-chip IBM Telum® processor. IBM Telum contains two separate processor chips acting as one through a high-speed communications bus, for a performance increase. The largest IBM z16 single frame provides approximately 14% more IBM z/OS® capacity than the largest IBM z15® T02 (both with 6 configurable processors).
+1 However, when compared to the 
+immediate previous generation systems, while the re-architecture of the chip and the feature size reduction increased performance, they also contributed to a decrease in compute power per kilowatt delivered of 11% in an IBM z16 single frame with 6 configurable processors and 5% in an IBM LinuxONE Rockhopper 4 with 68 configurable processors.
+2 
+Consolidating Linux workloads on an IBM z16 single frame or IBM LinuxONE Rockhopper 4 instead of running them on compared x86 servers with similar conditions and location can reduce energy consumption by 75% and space by 67%.
+3 This 
+can have the associated benefit of reducing the amount of cooling required in data centers and potentially alleviating physical IT growth so that clients that are constrained for space can defer or avoid expanding or building new data centers. 
+IBM continues to certify in-scope products under the U.S. EPA 
+ENERGY STAR program. In 2023, IBM had 9 enterprise Power9® and Power10 servers and 6 storage products certified to ENERGY STAR. 
+Storage 
+IBM Storage teams are focused on designing systems for 
+improved energy efficiency. For example, new IBM Storage FlashSystem® devices using IBM FlashCore®  Module drives across different configurations require at least 29% less energy than a market leading competitor.
+4 This may provide a 
+useful route for clients to quickly reduce the carbon footprint of their data centers. In addition, IBM Storage FlashSystem products provide more power and temperature data for clients to understand their environmental impact through IBM Storage Insights, a cloud-based, AI-driven storage monitoring service. 
+IBM Cloud® Carbon Calculator 
+Businesses today are interested in tracking their GHG 
+emissions across various IT infrastructure to help meet their environmental sustainability goals or report performance. 
+Developed by IBM Cloud and IBM Research in association with 
+Intel, the IBM Cloud Carbon Calculator helps measure and track emissions associated with the use of IBM Cloud services. Based on the Greenhouse Gas Protocol standards, it helps uncover emission patterns, anomalies and potential “hot spots” that can help in building a strategy to mitigate GHG emissions. Using an intuitive, standards-based, AI-augmented dashboard, users can access GHG emissions data over time for multiple types of workloads by location, by service and by cloud group. For further analysis, this data can also be easily exported using the IBM Cloud Carbon Calculator API for use in other applications. By leveraging the available integration with Envizi™ (separate Envizi license required), customers can generate standards-based GHG emission reports for a variety of purposes. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 51 1 Based on internal measurements. Results may vary by customer based on individual workload, configuration and software levels. For capacity sizing for your systems, use the IBM zPCR Capacity Planning tool  and refer to the IBM Z ® Large Systems Performance 
+Reference (LSPR) website . 
+2 System capacity based on data available at the IBM Z LSPR website. Power consumption published in the IBM 8562 Installation Manual for Physical Planning  and the IBM 3932 Installation Manual for Physical Planning . Single-thread-based MIPS are used. For 
+IBM Z, the performance is LSPR Data (Average RNI Based) (GCP-IBM Z) for the maximum number of customer general purpose cores. For IBM LinuxONE, the performance is LSPR Data (Low RNI Based) (IFL-LinuxONE) for the maximum number of customer IFL 
+cores. All the systems are externally air cooled. Calculations use worst-case power conditions with the maximum system power configuration at the maximum utilization and for the system environment driven maximum power condition. Results may vary. 
+3 Compared IBM Machine Type 3932 Max 68 model consisting of 2CPC drawers and an IO drawer to support network and external storage with 68 IFLs and 7 TB of memory in 1 frame versus compared 36 x86 servers (2 Skylake Xeon Gold Chips, 40 Cores) with a total of 1440 cores. IBM Machine Type 3932 Max 68 model power consumption was measured on systems and confirmed using the IBM Power estimator for the IBM Machine Type 3932 Max 68 model configuration. x86 power values were based on Feb. 2023 IDC QPI power values and reduced to 55% based on measurements of x86 servers by IBM and observed values in the field. The x86 server compared to uses approximately .6083 kWh, 55% of IDC QPI system watts value. Savings assumes the Worldwide Data Center Power Utilization Effectiveness (PUE) factor of 1.55 to calculate the additional power needed for cooling. PUE is based on Uptime Institute 2022 Global Data Center Survey
+. x86 system space calculations require 3 racks. Results may vary based on client-
+specific usage and location. 
+4 Based on comparable configurations between IBM FlashSystem and a 2023 Gartner Magic Quadrant report participant: https://community.ibm.com/community/user/storage/blogs/chelsey-gosse/2023/09/20/2023-gartner-magic-quadrant-primary-storage . 
+Each comparison was at the same temperature, memory, and core frequencies with comparable raw capacities and system performances. For each configuration, the power of the devices were estimated with engineering calculations from the typical power withdraw of the CPUs, drives and components on each of the devices. Based on information from: https://www.manua.ls/dell/powermax-2000/manual
+; https://www.delltechnologies.com/asset/en-au/products/storage/technical-support/dell-powerstore-gen2-
+spec-sheet.pdf ; https://www.sanstorageworks.com/PowerMax-8000.asp . 
+Conservation 
+and Biodiversity 
+IBM has comprehensive programs and 
+goals that help conserve natural resources and protect biodiversity. 
+Water Conservation 
+Our water conservation goal is to achieve year-to-year reductions in water withdrawals at larger IBM locations in water-stressed regions. Approximately 85% of water withdrawals at these locations are for domestic consumption in the workplace, of which approximately 60% are for drinking water, cafeteria, washrooms, etc., and approximately 25% are for heating, ventilating and air conditioning of buildings. In 2023, our water withdrawals increased at locations in water-stressed regions by 3.4% versus 2022, despite conservation efforts which avoided withdrawals of approximately 25,800 cubic meters. This increase was primarily associated with the continued return of employees to offices. Conservation efforts consisted of replacing irrigated turf areas with native drought resistant plants, expanding water system leak detection and repair programs at our locations, upgrading humidifier equipment, and installing waterless urinals and faucet aerators in washrooms. To help us identify additional opportunities for conservation and to enable more accurate measures of water use, we continued to install water meters in campuses and multi-tenant buildings. 
+Paper and Paper/Wood-Based Packaging Sourced 
+from Sustainably Managed Forests 
+Our goal is to source paper and paper/wood-based 
+packaging that is directly procured by IBM from sustainably managed forests. Suppliers must provide evidence that their sources have been certified by an accredited third-party certification program such as the Forest Stewardship Council, Programme for the Endorsement of Forest Certification, Sustainable Forestry Initiative, or the Canadian Standards Association Group Sustainable Forest Management System standard. 
+In 2023, 99.8% (based on spend) of our paper and paper/ 
+wood-based packaging IBM directly procured worldwide came from suppliers that warranted that the source was derived from sustainably managed forests. 
+Water Conservation 2019 2020 2021 2022 2023 
+% Annual reduction in water withdrawals at larger IBM locations 
+in water-stressed regions (goal year-to-year reduction) 2.0% 6.7% 4.3% 0.19% -3.4% 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 52 
+Biodiversity 
+Pollinator species are essential for maintaining a diverse 
+ecosystem, yet they are in rapid decline. Recognizing the positive impact we could have on this worldwide issue, in 2021, IBM established a global program focused on creating, enhancing and restoring pollinator habitats. We set a goal to plant 50 pollinator gardens at IBM locations globally by year-end 2023. IBM successfully surpassed this goal by establishing 70 pollinator gardens at 54 IBM locations across 26 countries. The gardens consisted of rewilded meadows, terrace gardens, ground level flower beds, containers and pots and the establishment of drought tolerant landscaping with pollinator-friendly plants and flowers. Collectively, the gardens and meadows covered roughly 735,300 ft
+2. 
+EcoTeams@IBM 
+EcoTeams@IBM provides employees worldwide an 
+opportunity to voluntarily lead and participate in local environmental initiatives that are meaningful to them and support IBM’s environmental goals and objectives. During the past two years, 12 EcoTeams were actively involved in the pollinator garden goal and contributed to the establishment and maintenance of 15 pollinator gardens. In 2023, there were 23 active EcoTeams spanning 58 IBM locations across 16 countries. EcoTeams supported over 70 activities such as learning events, tree plantings, beach and park clean ups, bike to work events, as well as providing plant kits for employees to use at home, and maintaining bird boxes. EcoTeams also actively participated in global events such as Earth Day, International Day for Biological Diversity and Zero Emissions Day. Wildlife Habitat Council 
+IBM has been a member of the Wildlife Habitat Council 
+(WHC) for more than 30 years and in 2023, 4 IBM sites (IBM Corporate Headquarters, New York; IBM Research Triangle Park, North Carolina; IBM Almaden Research Center and IBM Silicon Valley Laboratory, both in California) held WHC Conservation Certifications for their wildlife habitat management and conservation education programs. 
+Third-Party Sustainability Certification 
+for Buildings 
+In 2021, we set a goal to pursue third-party sustainability 
+certifications for major office construction and renovation projects greater than 15,000 square feet or $5 million in project cost executed by IBM globally. In 2023, a total of 8 projects received third-party certifications: 
+1. Ahmedabad, India (LEED Platinum) 
+2. Bangalore, India, Phase-I and Phase-II, Bhartiya 
+City, Block 3A, (WELL Platinum)) 
+3. Bangalore, India, Phase-II, Bhartiya City, Block 3A, (LEED Platinum) 
+4. Bangalore, India, Bhartiya City, Block 3B, (LEED Platinum & WELL Platinum) 
+5. Hong Kong, China (WELL Platinum) 
+6. Kochi, India (LEED Platinum) 
+7. Toronto, Canada (WELL Silver) 
+8. Washington, DC, U.S. (LEED Gold) 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 53 At year-end 2023, 
+70 pollinator gardens were established at 
+54 IBM locations globally 
+Pollution Prevention 
+and Waste Management 
+We believe the best way to prevent pollution is to avoid the generation of waste at its source. 
+For waste that is generated, we minimize pollution through a comprehensive and proactive waste management program that calls for implementation of the following practices, in order of preference: 
+1. Reuse 
+2. Recycling 
+3. Recovery (e.g., waste-to-energy) 
+4. Other treatment (e.g., aqueous and chemical 
+treatments, incineration) 
+5. Land disposal Nonhazardous Waste 
+Our nonhazardous waste goal encompasses IBM-owned locations and leased locations of 100,000 square feet or greater worldwide and includes two parts: 
+1. Divert 90% or more (by weight) of our total 
+nonhazardous waste from landfill and incineration by 2025, through reuse, recycling, composting and waste-to-energy processes. 
+2. Use waste-to-energy processes for no more than 10% (by weight) of the diverted waste. 
+In 2023, reporting locations generated approximately 16,500 mt of nonhazardous waste worldwide, an increase of 12% over
+ 2022. The increase of nonhazardous waste 
+generated year-over-year was due to construction debris at several locations, which accounted for approximately 8% (by weight) of IBM’s total nonhazardous waste generated in 2023, and the continued return of employees back to the office. Nevertheless, we diverted 94.2% (by weight) from landfill or incineration, meeting the first component of our goal. Of the total amount diverted, 10% (by weight) was sent to waste-to-energy processes, meeting the second component of our goal. The waste diversion results were achieved through proper management of IBM generated end-of-life IT equipment, parts, and product scrap (approximately 44% by weight of 
+IBM’s total nonhazardous waste generated in 2023); improved waste collection infrastructure resulting in better sorting of waste; recycling of construction debris, promotion of the IBM Furniture Donation Program for employees and external organizations; and the continued focus on elimination of nonessential, single-use plastic items from our cafeterias. 
+While IBM met 
+its nonhazardous waste goal in 2023, the 
+diversion rate may decrease next year, and the amount of 
+waste sent to waste-to-energy processes may increase, as a result of various factors. In 2024, we will continue to look for opportunities to decrease our use of waste-to-energy processes and will focus on providing additional education to employees on proper waste segregation.
+ 
+Nonhazardous Waste Landfill and Incineration Avoidance 2019 2020 2021 2022 2023 
+Total generated (mt x 1,000) 31.5 22.1 20.7 14.8 16.5 
+% By weight diverted from landfill or incineration (goal 90% by 2025) 87.3% 83.3% 94.2% 93.8% 94.2% 
+% By weight of diverted waste sent to waste-to-energy processes 
+(goal no more than 10%, established in 2021) — — 9.7% 11.9% 10.0% 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 54 
+Nonessential, Single-Use Plastics in Cafeterias 
+As part of IBM's effort to conserve natural resources and 
+minimize waste, in 2021 we established a goal to eliminate nonessential, single-use plastic items (e.g., cups, straws, cutlery, plates, carry bags, and food containers) from IBM-managed cafeteria operations globally by 2025. In 2023, we conducted on-site assessments to monitor conformance against our goal and amended procurement contracts with our largest food services vendors to ensure single-use plastic items are not reintroduced and that controls are in place to prohibit future ordering. As of year-end 2023, we eliminated all nonessential, single-use plastic items at 58 of the 60 IBM-managed cafeteria operations worldwide.
+1 
+Our focus for 2024 will be to complete the elimination of nonessential, single-use plastic items from two remaining 
+locations, to continue conducting on-site assessments to monitor conformance, and to ensure new procurement contracts for IBM-managed cafeterias incorporate the objectives of the goal. 
+Product Packaging 
+IBM has maintained a program focused on the environmental 
+attributes of our product packaging since the late 1980s. A key
+ 
+priority is to design products which can be shipped with minimal packaging. Whenever possible, we choose packaging materials that have less adverse impact on the environment and collaborate with suppliers to use recycled and recyclable materials and to promote reuse. To reduce the environmental impacts of our product packaging, IBM set a goal in 2021 to eliminate nonessential plastic packaging from IBM logo hardware products by year-end 2024. For essential plastic packaging, our goal is to ensure such packaging is designed to be 100% reusable, recyclable, or compostable, or incorporates 30% or more recycled content where technically feasible. 
+Most of the packaging material (by weight) used for IBM logo 
+products is cellulose-based (e.g., timber, corrugated cardboard) and procured from suppliers that certify it is sourced from sustainably managed forests. Small amounts of primary packaging are plastic, used mainly to protect IBM logo products from moisture during handling and shipment or physical damage from shock and vibration of fragile systems. In addition, ancillary plastic packaging is used for secondary 
+or 
+tertiary applications to help secure and consolidate loads for shipment. We identified 21 single-use plastic elimination or substitution projects and have completed 13 projects as of year-end 2023. In 2024, we plan to complete the 8 remaining projects. The projects we completed in 2023 include: 
+- Replaced polyurethane (PU) foam inserts used at our 
+storage assembly plant in Hungary to protect IBM Storage system circuit boards with a cellulose fiber-based “wood-foam” insert that is recyclable and sourced from sustainably managed forests. This project will contribute to the reduction of PU use annually. These efforts were recognized in collaboration with our supplier, Nefab, with a WorldStar Award from the World Packaging Organisation. - Replaced polyethylene (PE) bubble inserts in Jiffy mailers with 35% recycled content paper-based inserts. This project is estimat ed to avoid the use of 0.16 mt of 
+PE annually. 
+- 
+Replace d PU foam void fillers used at our U.S. assembly 
+plant to protect IBM Power®. products with AirWave void fillers which are starch-based. This effort will eliminate the use of roughly 
+0.14 mt of PU foam void filler annually. 
+- Through redesign and consolidation of the IBM Spectrum Fusion™ rackless packaging, we reduced the use of expanded polyethylene (EPE) foam. This action will reduce the use of EPE foam by 
+95% by volume with estimated 
+savings of 0.03 mt of EPE foam annually. 
+The 13 projects completed thus far will avoid the use of an estimated 99.7 mt per year of virgin plastic. 
+We also implemented other packaging material use efficiency 
+and waste reduction projects in 2023. For IBM Spectrum Fusion and IBM Power, we completed several packaging redesigns which resulted in the consolidation of products into bulk packaging. With this redesign, the packaging for IBM Spectrum Fusion was reduced by 73% (by weight) for wood, 95% for plastic foam, and 42% for corrugated cardboard. For IBM Power, we reduced the number of pallets required for larger orders through consolidation of the packages onto larger pallets, eliminating smaller pallets. This combination o f 
+projects resulted in the elimination of 
+73.5 mt of packaging 
+waste in 2023. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 55 1 Nonessential, single-use plastic items were removed from 37 IBM-managed cafeterias in accordance with legal requirements in Europe and India. 
+Product Reuse and Recycling 
+For many decades, IBM has developed products with 
+consideration for serviceability and upgradability, and for the reuse, recyclability and recoverability of materials within them. We have a long-standing goal to reuse or recycle end-of-life products such that the amount of product waste sent by our operations to landfills or for incineration does not exceed a combined 3% (by weight) of 
+the total amount processed. 
+In 2023, we processed approximately 12,400 mt of 
+end-of-life products and product scrap from 63 countries
+, 
+with 96.8% (by weight) resold, reused, or sent for recycling, 2.5% sent to waste-to-energy processes, and 0.7% sent to landfills or for incineration for final disposition. This includes both end-of-life products generated by IBM and its clients.
+ 
+Since we began reporting on product disposal in 1995, IBM has processed 1.14 million mt (2.51 billion pounds) of products and product waste worldwide. Remediation 
+When groundwater contamination was first discovered at one of our sites in 1977, we voluntarily initiated groundwater monitoring at our manufacturing and development locations worldwide and that practice continues today. We are committed to taking proactive measures to prevent environmental contamination from our operations and are taking swift action to clean up environmental contamination found at 3 current IBM locations and 17 formerly-owned locations where we retain responsibility for environmental remediation. 
+Under the U.S. Superfund law, we are involved in 
+remediation activities at some third-party sites in the U.S. The Superfund law creates retroactive responsibility for all parties that may have sent waste or otherwise contributed to contamination at a site, regardless of whether the site’s operations and/or the shipments of waste to that site were legal, or even best practices, at the time. Currently, we are participating in remediation activities or bear some financial responsibility at 15 Superfund sites. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 56 Product Reuse and Recycling 2019 2020 2021 2022 2023 
+Total end-of-life products and product waste processed (mt x 1,000) 20.8 16.9 18.0 12.4 12.4 
+% By weight of total end-of-life products and product waste sent by IBM’s product end-of-life operations to landfill or incineration for treatment (goal not to exceed a combined 3% by weight) 0.8% 0.5% 0.3% 0.4% 0.7% 2023 Product End-of-Life Processing Methods 
+29.9% 
+Resold 
+61.7% 
+Sent for 
+recycling 5.2% 
+Reused 2.5% 
+Waste-to-
+energy 0.7% 
+Landfill or 
+incineration 
+Supply Chain 
+Environmental Responsibility 
+IBM has long committed to doing 
+business with suppliers who conduct themselves with high standards of ethical, environmental, and social responsibility. We support this commitment by setting specific environmental requirements for our suppliers and by partnering with them to drive continual improvement. 
+Environmental Goals for Suppliers 
+Since 2010, IBM has required first-tier suppliers to establish their own environmental management systems, as well as set, and publicly disclose progress on, quantifiable goals for energy management, GHG emissions reduction and waste management. We also established the following additional goals to help accelerate GHG emissions reduction in our supply chain and to encourage suppliers to take ownership and build their capabilities across a broad range of sustainability topics. - Require key suppliers in emissions-intensive business sectors to set an emissions reduction goal by 2022, addressing their Scope 1 and Scope 2 GHG emissions, that is aligned with scientific recommendations from the UN IPCC to limit Earth’s warming to 1.5 degrees Celsius above pre-industrial levels. 
+- As of year-end 2023, 98% of the key logistics, airline, 
+hotel, production, and technology product suppliers in scope of IBM’s goal demonstrated that they have set GHG emissions reduction goals. We will continue to engage with the remaining 2% of in-scope suppliers and track the status of their goal setting process through completion. 
+- Establish, by year-end 2021, individual baselines for fleet carbon intensity with each key carrier and shipment supplier involved with our product distribution globally. Starting in 2022, convene with each supplier to set a fleet carbon intensity reduction target covering the services they provide to IBM. 
+- Both goals were completed. In 2021, we engaged 
+each of our key carrier and shipment suppliers to better understand their GHG emissions reduction programs and fleet carbon intensity baselines for their respective logistics operations. During 2022, we validated that these suppliers had GHG emissions reduction targets in place, either based on fleet carbon intensity or based on total absolute GHG emissions, covering the services they provide to IBM. - Convene an annual Sustainability Leadership Symposium to recognize progress and achievement among suppliers in emissions-intensive business sectors across applicable areas of environmental stewardship. 
+- In September 2023, we held our second annual 
+symposium with the theme of innovative approaches to waste reduction – an area that touches all businesses and is key for preventing pollution and reducing the consumption of natural resources. We had over 100 participants, including a diverse mix of suppliers such as manufacturers, logistics providers, facility service providers, hotels, and airlines. The symposium included 4 roundtable discussions addressing: (1) Driving a circular economy through procurement best practices (2) Pros, cons, and challenges of zero waste to landfill certifications (3) Strategies to minimize manufacturing waste, and (4) Tools for tracking and measuring waste. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 57 
+Solutions for 
+Sustainability 
+To track the many ways our technology and 
+innovation enable clients to improve their 
+environmental sustainability, we 
+established a goal in 2021 to document 
+100 client engagements or research 
+projects by 2025 in which IBM products, 
+capabilities, and solutions have enabled 
+demonstrable environmental benefits. At 
+year-end 2023, 72 such engagements or 
+projects had been documented. 
+IBM’s Sustainability Solutions 
+Companies across sectors are looking to transform their 
+business models by leveraging sustainability to meet the 
+growing demands of key stakeholders and customers. The 
+pursuit of net zero GHG emissions can only truly begin 
+when an organization is able to monitor, track, and report 
+on their energy use, GHG emissions, and associated goals, 
+so that they can take action. 
+IBM’s sustainability technology, consulting and research 
+capabilities can help make data more visible and 
+actionable. By leveraging AI and automation we can help 
+accelerate clients’ business objectives and sustainability 
+goals; increase productivity; reduce costs, waste, 
+and emissions—and help them meet their 
+regulatory requirements. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 58 When working with IBM, companies can accelerate their journey through five business and 
+sustainability imperatives : 
+Energy Transition and Climate Resilience: Transitioning to 
+renewable energy sources increases supply and demand 
+complexity. Weather events impact energy availability and the 
+infrastructure stability essential to meeting demands. Data and 
+AI are key to transforming the increasingly distributed and 
+complex electricity grids utility providers will need. IBM 
+Consulting's Energy Transition Services leverages AI, IoT and 
+blockchain to support new energy marketplaces, enable more 
+efficient and reliable utility operations and create more 
+resilient, long-lasting physical infrastructure. IBM Maximo® 
+helps manage and maintain widely dispersed energy 
+infrastructure assets to optimize power generation, distribution 
+and workforces while the IBM Environmental intelligence Suite 
+provides insights to help build resilience to climate impacts. 
+Client Case Studies: 
+Neste , ABO Wind 
+Intelligent Assets, Facilities, and Infrastructure: IBM helps 
+clients build more efficient physical operations to increase 
+productivity, advance decarbonization and reduce cost, waste 
+and emissions. IBM’s AI-powered asset lifecycle management 
+solutions help clients respond to new requirements by 
+embedding sustainable practices into their daily operations 
+through their assets, facilities and infrastructure. Maximo and 
+TRIRIGA® application suites and IBM Consulting expertise 
+enable clients to reduce downtime and extend asset life, 
+improve asset performance and reliability, optimize facility and 
+space utilization and maximize technician productivity to help 
+them build a more reliable and sustainable future. 
+Client Case Studies: 
+Transport for London , King Abdullah Financial District 
+Sustainable Supply Chains and Circularity: IBM helps clients 
+design, build and run more sustainable, resilient, and equitable 
+supply chains by leveraging responsible sourcing and 
+transparent operations. Our technology and expertise optimize 
+workflows to hyper-automate decision making, cut cost and 
+accelerate profit by introducing AI, blockchain and integration 
+capabilities into your supply chain ecosystem. Our Engineering 
+Lifecycle Management, IBM Sterling® Order and Fulfillment 
+Suite and IBM Sterling Supply Chain Intelligence provide 
+supply chain resiliency and transparency with an accelerated 
+time to value through actionable insights. 
+Client Case Studies: 
+Antonello Produce , Pietro Coricelli Responsible Computing and Green IT: Through energy 
+efficient data centers, compute and storage platforms, 
+emissions observability and planning tools, and consulting 
+services, IBM helps clients modernize their IT and embed more 
+responsible and sustainable strategies across the IT landscape 
+to achieve their goals. Clients can design, deploy, manage and 
+optimize energy efficient infrastructures with a hybrid cloud 
+approach using IBM LinuxONE, IBM z16, IBM Power, IBM 
+Storage, IBM Turbonomic®, Apptio® and IBM Cloud. 
+Organizations are seeing benefits from using AI to automate IT, 
+business or network processes, including cost savings and 
+efficiencies. Artificial Intelligent Units (AIUs) and system-on-
+chips dedicated to AI can save energy and increase speed. IBM 
+Global Asset Recovery Services (GARS) can support end-of-life 
+hardware refurbishment, remanufacturing, and recycling. 
+Client Case Studies: 
+Norsk helsenett , Coop Group 
+Sustainability Strategy, Data and Reporting: With deep 
+industry expertise, an ecosystem of partnerships and proven 
+co-creation methods, IBM Consulting guides clients’ 
+sustainable transformation journeys using a comprehensive 
+approach firmly rooted in materiality and future-proofed 
+outcomes that integrate sustainability and business objectives. 
+Strategic advisory services and the IBM Garage™ method help 
+clients transition swiftly from vision and goals to successful 
+execution of impactful, ethical innovations at scale in order to 
+achieve their business and sustainability objectives and meet 
+regulatory requirements. IBM offers industry-leading, AI-
+enabled solutions including the IBM Envizi ESG Suite, 
+OpenPages® and Planning Analytics, which all help clients 
+reduce the cost, time, and burden of ESG reporting and 
+data management. 
+Client Case Studies: 
+BanFast , Water Corporation 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+Appendix IBM 2023 
+ESG Report 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix ESG Data Summary 
+The following tables disclose information about our ESG programs, policies and metrics in reference to the following voluntary reporting frameworks and 
+initiatives: The Global Reporting Initiative (GRI) ; the Sustainability Accounting  Standards Board (SASB) Software & IT Services industry standards; and 
+the United Nations Sustainable Development Goals (SDGs) . 
+General 
+Description GRI SASB SDGs 
+Organization name International Business Machines Corporation 2-1 
+Location of headquarters Armonk, NY 2-1 
+Reporting practice 
+Entities included in the organization’s sustainability reporting The current year data presented covers our global operations. Certain supplier and employee-related data and programs presented may not 
+include or
+ may not be applicable to certain acquired or non-wholly owned subsidiaries. 2-2 
+Reporting period January 1, 2023 to December 31, 2023. 2-3 
+Reporting frequency Annual 2-3 
+Contact point ESG@IBM.com 2-3 
+Restatements of information To the extent any historical information has been updated or recast, the information has been disclosed accordingly. 2-4 
+External assurance IBM completed an external limited assurance audit of our 2023 greenhouse gas emissions inventory and the underlying data and 
+calcula
+tion processes. 
+Greenhouse Gas Independent Limited Assurance Statement 2-5 
+Process to determine material topics We conduct regular impact assessments to inform ESG strategy and to identify which topics are important to our shareholders. We are 
+currentl
+y performing a double materiality assessment as required in accordance with the Corporate Sustainability Reporting Directive.1 3-1, 3-2, 3-3 TC-SI-230a.2 
+Statement on sustainable development strategy 2023 IBM Impact Report (page 5) 2-22 16 
+Activities, value chain and other business relationships IBM Products , 2023 IBM Annual Report 2-6 
+Economic performance 
+Direct economic value generated and distributed 2023 IBM Annual Report (pages 8, 46-49) ; 2023 IBM Impact Report (pages 35-38) 201-1 
+Financial assistance received from government IBM does not disclose government financial assistance unless deemed financially or otherwise material under U.S. accounting and securities laws
+, rules and regulations. As a publicly traded company, IBM discloses matters and other transactions deemed reportable under the U.S. 
+GAAP and U.S. Securities and Exchange Commission regulations in IBM’s 2023 Annual Report or other required filings with the U.S. Securities and Exchange Commission. 2023 IBM Annual Report (page 56) 201-4 
+Stakeholder engagement We proactively engage and collaborate with stakeholders from a cross-section of nongovernmental organizations (NGOs), government agencies, businesses, suppliers, industry associations, investors, academia, communities and employees, and stockholders to identify and prioritize issues. 2-29 
+Membership associations IBM proactively engages and collaborates with stakeholders from a cross-section of nongovernmental organizations (NGOs), universities, industry 
+ass
+ociations and advocacy organizations on environmental matters, diversity and equality, and supply chain responsibility. IBM has received 
+recognition and awards from numerous advocacy groups, governments, and NGOs for its corporate responsibility efforts. Among IBM’s memberships 
+and associations are the Climate Registry, the UN Science-Policy Business Forum on the Environment (UN-SPBF), and the Responsible Business 
+Alliance, of which IBM is a founding member. IBM is a core partner of the New York Climate Exchange, focused on building a climate education, 
+workforce development and research center in New York City. IBM is also a member of MIT Climate and Sustainability Consortium. IBM has 
+participated in policy advocacy in support of diverse communities. IBM has supported several bills brought forth to the U.S. Congress, including The 
+Respect for Marriage Act, The Equality Act, The Dream Act and The American Dream and Promise Act. 
+2023 IBM Impact Report (pages 30, 39-42, 44, 71) ; IBM Voluntary Environmental Initiatives  ; IBM Government and Regulatory Affairs 2-28 
+1 Our assessments are solely intended to reflect priority ESG issues and should not be construed as a characterization regarding the materiality of such information to IBM’s business or operating results. These assessments are not a determination of “materiality” 
+as the term is defined in securities or other laws of the United States or other jurisdictions, nor its use in the context of financial reporting. 
+IBM 2023 
+ESG Report 60 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Ethical Impact | Governance 
+Description 2021 2022 2023 GRI SASB SDGs 
+Governance structure 2024 IBM Proxy Statement (pages 8-24) ; IBM Board Corporate Governance Guidelines  ; 2023 IBM Impact Report (pages 9, 12-14) 2-9 8, 16 
+Nomination and selection of the highest governance body 2024 IBM Proxy Statement (pages 8-17, 23) 2-10 
+Chair of the highest governance body IBM Chairman of the Board is CEO Arvind Krishna. 
+2024 IBM Proxy Statement (pages 4, 18, 21-22) ; IBM Business Conduct Guidelines ; IBM Board Corporate Governance Guidelines 2-11 
+Role of the highest governance body in overseeing the 
+management of impacts 2024 IBM Proxy Statement (pages 4, 18, 21-22) ; 2023 IBM Impact Report (pages 12-14) 2-12 
+Delegation of responsibility for managing impacts 2023 IBM Impact Report (page 9) 2-13 
+Role of the highest governance body in sustainability reporting 2024 IBM Proxy Statement (pages 24, 29-30) ; 2023 IBM Impact Report (page 9) 2-14 
+Collective knowledge of the highest governance body 2024 IBM Proxy Statement (pages 5, 8-10, 24, 29-30) ; 2023 IBM Impact Report (pages 9, 14) 2-17 
+Evaluation of the performance of the highest governance body 2024 IBM Proxy Statement (pages 8-17, 23) 2-18 
+Board of directors 2023 IBM Impact Report (pages 12-14) TC-SI-330a.3 8 
+Average tenure (years) 4.9 5.9 5.9 
+Non-independent directors 1 1 1 
+Independent directors 11 11 12 
+Gender and ethnic diversity 33% 33% 38% 405-1 5 
+Director nominees with <5 year tenure 8 6 6 
+Director nominees with 5-10 year tenure 2 4 5 
+Director nominees with >10 year tenure 2 2 2 
+Risk management, business ethics, and compliance 
+Business continuity risks related to disruptions of operations 2024 Impact Report (page 15) ; 2023 IBM Proxy Statement ; IBM CDP Disclosures ; 2023 IBM 10-K (pages 3-11) 201-2, 205-1 TC-SI-550a.1, 
+TC-SI-550a.2 
+Legal actions for anti-competitive behavior, anti-trust, and monopoly practices As a company with a substantial employee population and with clients in more than 175 countries, IBM is involved, either as plaintiff or 
+defendant, in a variety of ongoing claims, demands, suits, investigations and proceedings that arise from time to time in the ordinary course of its business. As a publicly traded company, IBM discloses pending, material legal matters deemed reportable under the U.S. GAAP and 
+U.S. Securities and Exchange Commission regulations in IBM’s Forms 2023 10-K, 10-Q, 8-K or other required filings with the U.S. Securities 
+and Exchange Commission. 
+2023 IBM 10-K 206-1 TC-SI-520a.1 
+Communication and training about anti-corruption policies 
+and procedures 2023 IBM Impact Report (page 16) ; IBM Business Conduct Guidelines 205-2 
+Confirmed incidents of corruption and actions taken As a company with a substantial employee population and with clients in more than 175 countries, IBM is involved, either as plaintiff or 
+defendant, in a variety of ongoing claims, demands, suits, investigations and proceedings that arise from time to time in the ordinary course of its business. As a publicly traded company, IBM discloses pending, material legal matters deemed reportable under the U.S. GAAP and 
+U.S. Securities and Exchange Commission regulations in IBM’s Forms 2023 10-K, 10-Q, 8-K or other required filings with the U.S. Securities 
+and Exchange Commission. 
+2023 IBM 10-K 205-3 
+Communication of critical concerns Although IBM does not publicly disclose the total number and nature of critical concerns reported to the Board, the Board and its committees have oversight responsibility for ESG-related matters: they are continuously engaged with senior management on risk management and activities, policies and progress towards our ESG goals. 
+2024 IBM Proxy Statement (pages 24-25) ; 2023 IBM Impact Report (pages 9, 12-14) 2-16 
+Policy commitments IBM Reports and Policies ; 2024 Impact Report (page 16)  ; IBM Business Conduct Guidelines 2-23, 2-24 
+Processes to remediate negative impacts 2023 IBM Impact Report (page 16) ; IBM Business Conduct Guidelines 2-25 
+Mechanisms for seeking advice and raising concerns 2023 IBM Impact Report (page 16) ; IBM Business Conduct Guidelines 2-26 
+IBM 2023 
+ESG Report 61 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Ethical Impact | Governance 
+Description 2021 2022 GRI SASB SDGs 
+Compliance with laws and regulations IBM does not disclose non-compliance unless deemed financially or otherwise material under U.S. accounting and sec2023 
+ur
+ities laws, rules and 
+regulations. As a publicly traded company, IBM discloses matters and other transactions deemed reportable under the U.S. GAAP and U.S. 
+Securities and Exchange Commission regulations in IBM’s Forms 2023 10-K, 10-Q, 8-K or other required filings with the U.S. Securities and Exchange Commission. 
+IBM Global Environmental Management System
+; IBM Product Stewardship ; 2023 IBM Impact Report (page 15) ; 2023 IBM 10-K ; 2023 IBM 
+Annual Report 2-27 
+Conflicts of interest 2024 IBM Proxy Statement (pages 20-21) ; IBM Business Conduct Guidelines 2-15 
+Policy advocacy IBM Government and Regulatory Affairs ; 2023 IBM Impact Report (page 21) 415-1 16 
+Tax IBM Tax Governance Policy ; IBM Business Conduct Guidelines ; 2023 IBM Annual Report (pages 78-81) ; 2024 IBM Proxy Statement 
+As required by OECD guidelines and U.S. tax law, our country-by-country report is filed with the U.S. Internal Revenue service. 207-1, 207-2, 
+207-3, 207-4 
+Customer health, safety and privacy 3 
+Customer health and safety IBM has not experienced controversies about the safety of IBM's products nor has IBM paid any regulatory or court-imposed fines, 
+settlements or awards related to the safety of IBM products or services in the past three years. 
+2023 IBM Impact Report (page 17) ; IBM Product Stewardship ; IBM Global Employment Standards 416-1, 416-2 16 
+Product and service information and labeling IBM Global Labeling Guidelines 417-1, 417-2 12 
+Incidents of non-compliance concerning marketing 
+communications IBM does not maintain a record of incidents of non-compliance with regulations and voluntary codes concerning marketing communications. 417-3 16 
+Data privacy and cybersecurity IBM Data Privacy Policy ; IBM Trust Center ; Principles for Trust and Transparency ; IBM Privacy Statement ; 2023 IBM Annual Report ; 2023 
+IBM Impact Report (pages 17-20) 418-1 TC-SI-220a.1, TC-SI-220a.2, TC-SI-220a.3, TC-SI-220a.4, TC-SI-220a.5, TC-SI-230a.1, 
+TC-SI-230a.2 16 
+IBM 2023 ESG Report 62 
+Contents  
+Introduction  
+Governance  
+Social  
+Environment  
+Appendix  Equitable Impact | Social  
+Description  2021  2022  2023  GRI SASB  SDGs  
+Employees  2023 IBM Annual Report (page 15) ; 2022 IBM Annual Report (page 15) ; 2021 IBM Annual Report (page 15)  2-7, 2-8  
+Total employees (in thousands)  
+IBM/wholly owned subsidiaries  282.1  288.3  282.2  
+Less-than-wholly owned subsidiaries  9.8 8.2 8.7 
+Complementary  15.7  14.8  14.4  
+Employees responded to the annual Engagement Survey  170,000  185,000  187,000  TC-SI-330a.2  
+Employees that indicated that they were engaged at work  8 out of 10  8 out of 10  8 out of 10  TC-SI-330a.2  
+Career and development  2023 IBM Impact Report (page 24) ; IBMer Learning and Development  404-2, 404-3  
+Total employee learning hours worldwide (M)  22.5  24.3  23.1  TC-SI-330a.2  
+Average learning hours per regular/full time employee  84 86 85 404-1  TC-SI-330a.2  
+Health, safety, and well-being  2023 IBM Impact Report (page 26) ; IBM Health and Safety Report  403-3, 403-4, 
+403-5, 403-6, 
+403-7  3 
+Health and safety management system  IBM Health and Safety Policy ; IBM Business Conduct Guidelines ; IBM ISO Management Certifications  403-1, 403-2, 
+403-8  
+Worker-related injuries  403-9  
+Number of fatalities  1 0 0 
+Rate of fatalities  0.0016  0 0 
+Number of high-consequence work-related injuries  5 1 1 
+Rate of high-consequence work-related injuries1 0.0082  0.0018  0.0018  
+Number of recordable work-related injuries2 38 9 32 
+Rate of recordable work-related injuries  0.0625  0.0159  0.0588  
+Number of hours worked  607,952,000  564,650,000  544,558,000  
+Main types of work-related injuries  Slips, trips and falls, automobile and struck 
+by/strike against an object  Struck by/strike against an object, slips and  
+falls, overexertion  Struck by/strike against an object, slips and  
+falls, overexertion  
+Worker-related ill health  403-10  
+Number of fatalities as a result of work-related ill health  0 0 0 
+Number of cases of recordable work-related ill health2 22 24 35 
+Main types of work-related ill health  Hearing loss & musculoskeletal  Hearing loss & musculoskeletal  Hearing loss, mental health, musculoskeletal  
+Benefits  IBM Benefits ; 2023 IBM Impact Report (page 26)  401-2, 401-3  
+Defined benefit plan obligations and other retirement plans  2023 IBM Annual Report (pages 57, 107-110)  201-3  
+Minimum notice periods regarding operational changes  IBM Global Employment Standards  402-1  
+Compensation  
+Ratios of standard entry level wage by gender compared to 
+local minimum wage  IBM Global Employment Standards  202-1  
+Ratio of basic salary and remuneration of women to men  Overall, IBM pays equitably for similar work. Women globally earn $1.00 for every $1.00 earned by men for similar work. 
+IBM Impact Report (31) ; IBM Global Employment Standards  405-2  
+Remuneration policies and process to determine remuneration  2024 IBM Proxy Statement (pages 25-26, 33-66) ; IBM Executive Compensation and Management Resources Committee Charter  2-19, 2-20  
+Annual total compensation ratio  2024 IBM Proxy Statement (page 64)  2-21 
+IBM 2023 
+ESG Report  63 1 1,000,000 hours worked is used for rate calculations.  
+2 ASTM E2920-19 Standard Guide for Recording Occupational Injuries and Illnesses is used to standardize reporting of work-related recordable (i.e., Level 1) injuries and illnesses.  
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Equitable Impact | Social 
+Description 2021 2022 2023 GRI SASB SDGs 
+Diversity and inclusion 2023 IBM Impact Report (pages 32-34) ; IBM EEO-1;  Red Hat EEO-1 405-1 TC-SI-330a.1, 
+TC-SI-330a.3 5, 8 
+Representation trends 2023 IBM Impact Report (pages 32-33) 405-1 
+Overall representation 
+Women (Global) 36.7% 37.2% 37.4% 
+Black (U.S.) 7.4% 7.7% 7.5% 
+Hispanic (U.S.) 6.6% 7.0% 7.0% 
+Native American (U.S.) 0.3% 0.3% 0.3% 
+Native Hawaiian/Pacific Islander (U.S.) 0.2% 0.2% 0.2% 
+Pan-Asian (U.S.) 19.2% 19.7% 20.5% 
+Multi-race (U.S.) 0.9% 0.9% 0.9% 
+Management representation 
+Women (Global) 31.0% 31.1% 31.4% 
+Black (U.S.) 5.6% 5.8% 5.6% 
+Hispanic (U.S.) 5.0% 5.6% 5.9% 
+Native American (U.S.) 0.3% 0.3% 0.4% 
+Native Hawaiian/Pacific Islander (U.S.) 0.1% 0.1% 0.1% 
+Pan-Asian (U.S.) 17.1% 18.4% 19.6% 
+Multi-race (U.S.) 0.8% 0.8% 0.8% 
+Technical representation 
+Women (Global) 30.1% 30.6% 31.1% 
+Black (U.S.) 6.6% 7.1% 6.8% 
+Hispanic (U.S.) 6.7% 7.0% 6.8% 
+Native American (U.S.) 0.2% 0.3% 0.3% 
+Native Hawaiian/Pacific Islander (U.S.) 0.2% 0.2% 0.2% 
+Pan-Asian (U.S.) 24.5% 24.7% 23.6% 
+Multi-race (U.S.) 1.0% 0.9% 0.9% 
+Executive representation 
+Women (Global) 28.8% 29.1% 30.2% 
+Black (U.S.) 6.1% 6.6% 6.4% 
+Hispanic (U.S.) 5.5% 5.9% 6.4% 
+Native American (U.S.) 0.3% 0.5% 0.5% 
+Native Hawaiian/Pacific Islander (U.S.) 0.1% 0.1% 0.1% 
+Pan-Asian (U.S.) 15.7% 16.6% 17.6% 
+Multi-race (U.S.) 0.5% 0.6% 0.7% 
+Opportunities for self-identification 2023 IBM Impact Report (page 31) 
+Self-identified as People with Diverse Abilities 1.0% 1.0% 4.7% 
+Self-identified as Veterans 5.0% 5.0% 4.9% 
+Self-identified as LGBTQ+ 9.0% 9.0% 10.0% 
+IBM 2023 
+ESG Report 64 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Equitable Impact | Social 
+Description 2021 2022 2023 GRI SASB SDGs 
+Hiring trends 
+Overall new hires1 Over 79,0001 Over 59,000 Over 30,000 401-1 
+Women (Global) 40.1% 39.7% 40.5% 
+Black (U.S.) 13.8% 13.5% 12.4% 
+Hispanic (U.S.) 9.6% 9.8% 8.9% 
+Native American (U.S.) 0.3% 0.3% 0.5% 
+Native Hawaiian/Pacific Islander (U.S.) 0.2% 0.3% 0.2% 
+Pan-Asian (U.S.) 23.5% 24.0% 27.6% 
+Multi-race (U.S.) 0.7% 0.7% 0.5% 
+Management new hires 
+Women (Global) 34.1% 30.4% 33.4% 
+Black (U.S.) 10.0% 8.8% 5.5% 
+Hispanic (U.S.) 8.1% 4.0% 10.2% 
+Native American (U.S.) 0.5% 0.0% 0.0% 
+Native Hawaiian/Pacific Islander (U.S.) 0.3% 0.4% 0.0% 
+Pan-Asian (U.S.) 19.4% 22.9% 27.3% 
+Multi-race (U.S.) 0.3% 0.0% 0.0% 
+Technical new hires 
+Women (Global) 34.0% 32.5% 32.8% 
+Black (U.S.) 11.6% 11.5% 11.7% 
+Hispanic (U.S.) 8.9% 8.6% 6.7% 
+Native American (U.S.) 0.2% 0.2% 0.8% 
+Native Hawaiian/Pacific Islander (U.S.) 0.2% 0.3% 0.2% 
+Pan-Asian (U.S.) 29.9% 31.9% 34.2% 
+Multi-race (U.S.) 0.9% 0.9% 0.7% 
+Executives new hires 
+Women (Global) 33.2% 30.9% 36.4% 
+Black (U.S.) 10.4% 7.1% 6.8% 
+Hispanic (U.S.) 7.1% 6.4% 13.6% 
+Native American (U.S.) 0.0% 0.0% 0.0% 
+Native Hawaiian/Pacific Islander (U.S.) 0.4% 0.0% 0.0% 
+Pan-Asian (U.S.) 20.0% 20.5% 28.4% 
+Multi-race (U.S.) 0.0% 1.9% 0.0% 
+Proportion of senior management hired from the 
+local community Diversity and international experience are crucial for IBM, which operates in more than 175 countries. Our business success is derived from 
+an understanding of diverse business environments and economic conditions, and a broad perspective on global business opportunities. We support local management in implementing our business strategy, programs and initiatives. 
+IBM Global Employment Standards 202-2 
+IBM 2023 
+ESG Report 65 1 Restated to include Red Hat and to align with 2023 revision of definition of employee categories to improve consistency. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Equitable Impact | Social 
+Description 2021 2022 2023 GRI SASB SDGs 
+Community development 2023 IBM Impact Report (pages 35-38) 203-1, 203-2, 
+413-1 2, 6, 7, 11 
+Total contributions worldwide ($M)1 $474.1 $447.9 $386.9 
+Contributions by type 
+Technology $387.8 $338.4 $307.8 
+Services $42.1 $64.7 $52.4 
+Cash $44.2 $44.8 $26.7 
+Contributions by region 
+Europe, Middle East, Africa $167.9 $151.1 $144.7 
+Asia Pacific $150.4 $103.3 $105.2 
+North America $109.4 $171.6 $116.8 
+Latin America $46.4 $21.8 $20.1 
+Worldwide retiree and employee volunteer hours 440,000 431,000 543,000 
+Collective bargaining agreements IBM operates in more than 175 countries and in many of them our workforce is represented by unions and collective bargaining agreements 
+(CBA) are in place. However, the level of the CBA (enterprise, sector, cross-sector or a combination) may differ from country to country, ranging from a small percentage of our employees being covered by a CBA in some locations, to 100% coverage in others. 
+IBM Global Employment Standards
+; RBA Supplier Code of Conduct 2-30, 407-1 
+Human rights 2023 IBM Impact Report (pages 10, 17, 29, 35-38) ; IBM Human Rights Principles ; IBM Global Employment Standards ; IBM Business 
+Conduct Guidelines ; IBM Global Environmental Management System ; IBM Corporate Environmental Policy 406-1, 410-1, 
+411-1, 413-1, 413-2, 408-1, 
+409-1 TC-SI-330a.2 1, 2 
+IBM 2023 ESG Report 66 1 Does not add due to the use of rounded numbers for disclosure purposes. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Equitable Impact | Social 
+Description 2023 GRI SASB SDGs 
+Supply chain social responsibility 2023 IBM Impact Report (pages 39-42) ; IBM  Supply Chain Responsibility ; IBM Supplier Diversity 414-1, 414-2 5, 8, 16, 17 
+First-tier supplier diversity spend ($B) 204-1 
+U.S. $0.9 
+Non-U.S. $0.3 
+Total worldwide $1.2 
+Supplier RBA full audits and re-audits by country Full audit Re-audit Total 
+Brazil 2 2 4 
+Bulgaria 0 1 1 
+Chile 5 4 9 
+China 22 15 37 
+Columbia 0 1 1 
+Czech Republic 2 1 3 
+Germany 3 1 4 
+Greece 1 0 1 
+Hungary 1 1 2 
+India 9 5 14 
+Italy 2 0 2 
+Japan 4 1 5 
+Korea 1 1 2 
+Malaysia 3 1 4 
+Mexico 10 5 15 
+Philippines 3 2 5 
+Romania 1 2 3 
+Singapore 3 1 4 
+Taiwan 5 3 8 
+Thailand 3 0 3 
+UAE 1 1 2 
+United States 1 0 1 
+Total 82 48 130 
+IBM 2023 
+ESG Report 67 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Equitable Impact | Social 
+Description 2023 GRI SASB SDGs 
+Supplier RBA full audits - Top 10 nonconformances to RBA 
+code provisions Priority & major nonconformance Minor nonconformance Total 
+Labor - Management systems 11.7% 0.8% 12.5% 
+Health & safety - Management systems 10.7% 1.2% 11.9% 
+Emergency preparedness 8.3% 2.1% 10.4% 
+Working hours 5.7% 4.4% 10.1% 
+Ethics 7.1% 0.0% 7.1% 
+Occupational safety 6.0% 0.2% 6.2% 
+Environmental management systems 5.7% 0.0% 5.7% 
+Freely chosen employment 3.0% 1.7% 4.7% 
+Wages and benefits 3.5% 1.0% 4.5% 
+Occupational injury and illness 2.6% 0.4% 3.0% 
+Improved nonconformance rates from re-audits Full audits Re-audits — 
+Working hours (Lab) 15.3% 7.4% — 
+Emergency preparedness (H&S) 10.9% 0.6% — 
+Occupational safety (H&S) 7.0% 0.6% — 
+Freely chosen employment (Lab) 6.2% 0.6% — 
+Wages and benefits (Lab) 5.6% 2.1% — 
+Occupational injury and illness (H&S) 4.9% 0.0% — 
+Non-discrimination (Mgt) 4.1% 0.2% — 
+Audits and assessments (Mgt) 3.3% 0.6% — 
+Management accountability and responsibility (Mgt) 2.9% 0.0% — 
+Legal and customer requirements 2.7% 0.8% — 
+IBM 2023 ESG Report 68 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Environmental Impact | Environment 
+Description 2019 2020 2021 2022 2023 GRI SASB SDGs 
+Global environmental management system ISO 14001;  ISO 50001;  ISO 14064-1; 2023 IBM Impact Report (page 44)
+Energy consumption 2023 IBM Impact Report (page 46) 302-1, 302-2, 
+302-4, 302-5 TC-SI-130a.1 7, 8, 11, 12, 13 
+Total operational energy consumption (MWh) 2,837,000 2,529,000 2,486,000 2,448,000 2,287,0001
+Energy intensity Due to the wide range of services and activities associated with IBM operations, IBM does not report an energy intensity metric for 
+our operations. 302-3 
+Data center energy efficiency 2023 IBM Impact Report (page 48) TC-SI-130a.3 7, 8, 9, 11, 12, 13 
+Renewable electricity 2023 IBM Impact Report (page 46) TC-SI-130a.1 7, 8, 11, 12, 13 
+Renewable electricity procurement as percentage of total electricity consumption (goal 75% by 2025, and 90% by 2030)
+242.9% 55.6% 62.7% 65.9% 70.6% 
+Greenhouse gas emissions 2023 IBM Impact Report (page 50) ; IBM Greenhouse Gas Emissions Inventory 11, 13 
+Total operational GHG emissions covered by our goal3,4,5 809,000 569,000 475,000 430,000 364,000 
+Operational GHG emissions reduction as % of 2010 base year 
+(goal 65% by 2025)4 30.0% 50.8% 58.9% 62.8% 68.5% 305-5 
+GHG emissions inventory (in metric tons of CO2-equivalent)5 
+Scope 1 (direct emissions) 98,000 73,000 78,000 78,000 71,000 305-1 
+Use of fossil fuels for operations 64,000 59,000 58,000 54,000 49,000 
+Use of fossil fuels for transportation 26,000 8,000 8,000 17,000 14,000 
+Use of chemicals with a global warming potential 8,000 6,000 12,000 7,000 8,000 
+Scope 2 (market-based) 460,000 262,000 221,000 183,000 150,000 305-2 
+Use of electricity in IBM-managed locations 434,000 240,000 198,000 170,000 139,000 
+Use of purchased energy commodities 26,000 22,000 23,000 13,000 11,000 
+Scope 2 (location-based) 546,000 413,000 356,000 330,000 306,000 305-2 
+Scope 3 (indirect emissions) 305-3 
+Purchased goods and services6 251,000 234,000 176,000 169,000 143,000 
+Use of sold products7 287,000 291,000 272,000 264,000 297,000 
+Upstream leased assets8 40,000 13,000 13,000 18,000 13,000 
+Business travel9 393,000 85,000 37,000 125,000 117,000 
+Employee commuting10 119,000 42,000 15,000 10,000 15,000 
+Biogenic emissions11 — — — — 700 305-3 
+GHG emissions intensity Due to the wide range of services and activities associated with IBM operations, there is not a GHG emissions intensity metric that is applicable across all our operations. However, an intensity metric for overall IBM operations can be derived from dividing our reported Scopes 1, 2 and 3 emissions by IBM’s revenue. IBM Energy and Climate 
+305-4 
+Air emissions IBM Pollution Prevention 305-6, 305-7 13 
+Water management 2023 IBM Impact Report (page 52) 303-1, 303-2, 
+303-5 TC-SI-130a.2 6, 14, 15 
+Percent annual reduction in water withdrawals at larger IBM 
+locations in water-stressed regions (goal year-to-year reduction) 2.0% 6.7% 4.3% 0.19% -3.4% 303-3 
+Water discharge IBM does not report total water discharges from all locations where we operate. Water discharges are managed at a location level and discharge information is reported to regulatory agencies where required. 
+IBM Water Conservation ; IBM CDP Disclosures 303-4 
+IBM 2023 ESG Report 69 
+Environmental Impact | Environment 
+Description 2019 2020 2021 2022 2023 GRI SASB SDGs 
+Nonhazardous waste 2023 IBM Impact Report (pages 54-56) 306-1, 306-2, 
+306-5 12 
+Total generated (metric tons x 1,000) 31.5 22.1 20.7 14.8 16.5 306-3 
+Percent by weight diverted from landfill or incineration 
+(goa
+l 90% by 2025) 87.3% 83.3% 94.2% 93.8% 94.2% 306-4 
+Percent by weight of diverted waste sent to waste-to-
+energy
+ processes (goal no more than 10%, established 
+in 2021) — — 9.7% 11.9% 10.0% 
+Hazardous waste IBM Pollution Prevention 306-1, 306-2 12 
+Product packaging and materials use 2023 IBM Impact Report (pages 52, 54-56) 301-3 12 
+Product reuse and recycling 2023 IBM Impact Report (pages 54-56) 301-1, 301-2, 
+301-3 12 
+Total end-of-life products and product waste processed (mt x 
+1,000) 20.8 16.9 18.0 12.4 12.4 
+Percent by weight of total end-of-life products and product 
+was
+te sent by IBM’s product end-of-life operations to landfill 
+or incineration for treatment (goal not to exceed a combined 
+3% by weight) 0.8% 0.5% 0.3% 0.4% 0.7% 
+Biodiversity IBM Biodiversity ; 2023 IBM Impact Report (pages 52-53) 304-1, 304-2, 
+304-3, 304-4 13, 14, 15 
+Supplier environmental assessment IBM Supply Chain ; IBM Supply Chain Responsibility ; IBM Global Environmental Management System ; IBM Management System 
+Requirements for Suppliers ; 2023 IBM Impact Report (page 57) 308-1, 308-2 13, 17 
+1 4.7% of energy consumption has been estimated for IBM locations that use less than 500 MWh of energy per year and in cases where the utility invoices were not available at the time of reporting. 
+2 Renewable electricity procurement includes contracted purchases and renewable electricity that automatically comes to IBM via routine grid power. 
+3 Covers all of IBM’s Scope 1 and Scope 2 emissions, as well as Scope 3 emissions associated with IBM’s electricity use at co-location data centers. 
+4 GHG emissions from previous years and base year have been adjusted to remove GHGs not covered by the Kyoto Protocol, which are not classified as Scope 1 emissions according to the Greenhouse Gas Protocol. 
+5 Rounded to nearest thousand. 
+6 Purchased goods and services: These are the emissions associated with IBM's use of electricity in data centers located in facilities managed by third parties where IBM does not procure the electricity (also referred to as co-location data centers). 
+7 Use of sold products: These are the emissions associated with the electricity consumption of our sold products when they are used by our clients. In estimating emissions from the use of our sold products, we only capture products sold during the reporting year 
+and account for 12 months of estimated consumption. We use product specifications such as nameplate power, quantity of products sold every year, and we make assumptions around typical client hardware utilization rates, and use industry average Power 
+Usage Effectiveness and global electricity GHG emission factors to estimate these emissions. We do not extrapolate this data to estimate emissions around a hypothetical lifetime of our products because that would require gross assumptions based on lifetime and specific client applications. 
+8 Upstream leased assets: In some countries, IBM provides leased vehicles for employees that they may use for personal purposes. For these vehicles, we have set standard guidelines that require leasing of vehicles with lower emissions profiles. These guidelines 
+enable reductions in average car emission levels as the car fleets are renewed. 
+9 Business travel: These emissions are associated to business air travel on commercial carriers and car rentals. Business travel is a necessary and important part of ensuring that IBM understands our clients' needs and delivers the best client experience possible. 
+We have worked with rental car companies to require that they offer more fuel-efficient vehicles to our employees while traveling for business. IBMers can reduce the need for travel by taking advantage of strategic collaboration and meeting tools that allow them 
+to easily engage with clients and their colleagues to have productive meetings, without the need for travel. 
+10 Employee commuting: Our reported figure for employee commuting emissions only includes estimations made for our U.S. employees since this is the population for which we can make credible assumptions around their commuting behavior and we have access 
+to reliable third-party data to estimate emissions. IBM has been active for decades in promoting programs that reduce employees' work-related commutes and associated GHG emissions. For example, many locations promote biking to work by having bicycle 
+lockers, racks and showers available on-site. At several larger locations, IBM sponsors shuttle services to transport employees to mass transit stations and also between IBM campuses and buildings. Also, many IBM locations are within reach of the public 
+transportation system, giving employees the choice to use more energy-efficient mass transit to commute to work. Globally, many of our locations partner with local public transit authorities to develop ride-sharing programs and negotiate subsidized transit 
+passes for IBM employees. 
+11 Biogenic emissions are CO2 emissions associated with IBM’s use of biofuels. In line with the Greenhouse Gas Protocol, these emissions are reported separately and not accounted for as Scope 1 emissions because they are considered part of the natural 
+CO2 cycle. 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 70 
+Awards and 
+Recognition Highlights 
+IBM is recognized every year for its 
+corporate responsibility efforts by publications, advocacy groups, governments, and NGOs worldwide. Below are highlights of our recognition from 2023. 
+Black Enterprise  | 2023 Best Companies for Diversity, 
+Equity & Inclusion
+ 
+Comparably  | 2023: Best CEOs, Best Company Culture, 
+Best Company for Women, Best Company for Diversity, Best Company Compensation, Happiest Employees, Best Company Work-Life Balance, Best CEOs for Women, Best CEOs for Diversity, Best Career Growth, Best Leadership Teams, Best Company Outlook, Best Global Culture
+ Disability:IN  | 2023 Best Place to Work for Disability 
+Inclusion
+ 
+Ethisphere  | 2023 World’s Most Ethical Companies 
+Forbes  | 2023: World's Best Employers, Top 100 Net Zero 
+Leaders, Best Employers for Diversity, Best Employers for Women, America's Best Employers for Veterans
+ 
+IDC | 2023 Worldwide AI Governance Platforms Vendor 
+Assessment Leader
+ 
+Institute of Directors, India  | 2023 Golden Peacock 
+Global Award for Sustainability
+ 
+JUST Capital  | 2023 JUST 100 Newsweek  | 2023: America's Greenest Companies, 
+America's Greatest Workplaces for Diversity, America's Greatest Workplaces for Parents and Families, America's Greatest Workplaces for LGBTQ+
+ 
+SEAL Awards  | 2023 SEAL Sustainable Product 
+Award - IBM z16
+ 
+TIME | 2023 100 Most Influential Companies 
+USA Today  | 2023 America's Climate Leaders 
+U.S. Chamber of Commerce Foundations  | 2023 Citizens 
+Award - IBM Sustainability Accelerator
+ 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix 
+IBM 2023 
+ESG Report 71 
+Contents 
+Introduction 
+Governance 
+Social 
+Environment 
+Appendix Top Suppliers 
+IBM’s Production and Logistics Procurement suppliers support our hardware brands and product distribution 
+operations, while Services and General Procurement suppliers support client services, software offerings, and internal operations. Below are IBM’s top 50 suppliers in each category in 2023 with links to their ESG reports, if available. 
+Production and Logistics 
+AcBel Polytech 
+Advanced Energy Industries 
+AMD (Xilinx) 
+Amphenol 
+BDT Media Automation 
+Broadcom 
+Celestica 
+Cisco 
+Coherent 
+Competitive Engineering Inc. 
+Compro Business Services 
+Delta Electronics 
+Deutsche Post DHL 
+FedEx 
+Flex 
+Fujifilm 
+Fujitsu Geodis 
+Government Contracting 
+Specialists Inc. 
+Ibiden 
+Intel 
+Jabil 
+Juniper Networks 
+Kioxia 
+KLA Corporation 
+Kyocera 
+Lenovo 
+Marvell Technology 
+Mercury Corporation 
+Microchip Technology 
+Micron Technology 
+Molex 
+NEC Platform Technologies 
+Nippon Express Nvidia 
+NXP Semiconductors 
+Pentair 
+Reconext 
+Samsung 
+Sanmina 
+Seagate 
+Smart Modular Technologies 
+Sony 
+TD SYNNEX Corporation 
+Trenton Systems 
+UPS 
+WESCO 
+Western Digital 
+Wistron 
+Zollner Elektronik Services and General Procurement 
+Amazon Web Services 
+Apleona 
+Artech 
+ASML Holdings N.V. 
+AT&T 
+Beijing Foreign Enterprise 
+Service (FESCO) 
+BI WORLDWIDE 
+Boston Consulting Group 
+Broadcom (VMware) 
+Capgemini 
+CBRE Group 
+Cisco 
+Cloudera 
+Collabera 
+Deloitte 
+Dun & Bradstreet 
+Fidelity 
+George P. Johnson 
+HCL Technologies Infinite Computer Systems 
+Jones Lang LaSalle 
+Juniper Networks 
+KPMG 
+Kyndryl 
+Lenovo 
+ManpowerGroup 
+Merative 
+MetLife 
+Microsoft 
+NetApp 
+Oracle 
+Persistent Systems 
+Precisely 
+Rocket Software 
+Salesforce 
+SAP 
+SDI International 
+ServiceNow SHI International 
+Sodexo 
+Sun Life 
+Supermicro 
+Tech Mahindra 
+The Employment Solution 
+Toshiba 
+UNICOM Global 
+UnitedHealth Group 
+Westcon-Comstor 
+Whiting-Turner 
+WPP 
+IBM 2023 
+ESG Report 72 
+International Business Machines Corporation 
+New Orchard Road, Armonk, New York 10504 
+(914) 499-1900 
+© 2024 International Business Machines Corporation. All rights reserved. 
+IBM and the IBM logo are trademarks of International Business Machines 
+Corporation, registered in many jurisdictions worldwide. Other product 
+and service names might be trademarks of IBM or other companies. A 
+current list of IBM trademarks is available on ibm.com/trademark . 

@@ -178,3 +178,4 @@ node_modules/
 # IDE stuff
 .vscode
 /.idea/material_theme_project_new.xml
+*.ds_store
