@@ -14,28 +14,9 @@ def get_pdf_content_lines(pdf_file_path):
 
 
 def format_text(lines):
-    """
-    Advanced text formatting to handle:
-    1. Intelligent word separation
-    2. Removing unnecessary whitespaces
-    3. Handling split words and merged words
-    """
+
     # Join all lines with a space
     text = ' '.join(lines)
-
-    # Remove multiple whitespaces
-    text = re.sub(r'\s+', ' ', text)
-
-    # Intelligently separate merged words
-    # This looks for transitions from lowercase to uppercase within a word
-    text = re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
-
-    # Handle specific PDF extraction artifacts
-    # Remove whitespace between characters that should be together
-    text = re.sub(r'(\w)\s+(\w)', r'\1\2', text)
-
-    # Handle hyphenated words across lines
-    text = re.sub(r'(\w+)-\s+(\w+)', r'\1\2', text)
 
     # Trim leading and trailing whitespace
     text = text.strip()
