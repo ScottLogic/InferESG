@@ -11,7 +11,7 @@ Install promptfoo by running `npx install promptfoo`
 
 ### Activate Python venv
 Promptfoo must be run in a python virtual environment as python is used to load the jinja prompt templates.
-See [Running Locally](../README.md)
+To set up a virtual environment, see [Running Locally](../README.md)
 
 ## Run Promptfoo
 Promptfoo configuration (e.g. LLM model) can be set in `promptfooconfig.yaml`
