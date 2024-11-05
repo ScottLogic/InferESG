@@ -9,6 +9,7 @@ from .validator_agent import ValidatorAgent
 from .answer_agent import AnswerAgent
 from .chart_generator_agent import ChartGeneratorAgent
 from .file_agent import FileAgent
+from .knowledge_graph_generator_agent import KnowledgeGraphAgent
 
 
 config = Config()
@@ -24,6 +25,10 @@ def get_intent_agent() -> Agent:
 
 def get_answer_agent() -> Agent:
     return AnswerAgent(config.answer_agent_llm, config.answer_agent_model)
+
+
+def get_knowledge_graph_agent() -> KnowledgeGraphAgent:  # Something about this feels wrong
+    return KnowledgeGraphAgent(config.knowledge_graph_agent_llm, config.knowledge_graph_agent_model)
 
 
 def agent_details(agent) -> dict:
@@ -55,6 +60,7 @@ __all__ = [
     "get_intent_agent",
     "get_available_agents",
     "get_validator_agent",
+    "get_knowledge_graph_agent",
     "Parameter",
     "tool",
 ]

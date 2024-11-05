@@ -2,11 +2,12 @@ import json
 import logging
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
 from src.session import update_session_chat
-from src.agents import get_intent_agent, get_answer_agent
+from src.agents import get_intent_agent, get_answer_agent, get_knowledge_graph_agent
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
 from src.websockets.connection_manager import connection_manager
+from src.utils.graph_db_utils import populate_db
 
 logger = logging.getLogger(__name__)
 config = Config()
@@ -42,3 +43,13 @@ async def question(question: str) -> str:
     clear_scratchpad()
 
     return final_answer
+
+
+async def dataset_upload() -> None:
+    query = await get_knowledge_graph_agent().generate_knowledge_graph("./datasets/esg_poc.csv")
+    logger.info(f"query: {query}")
+
+    with open("./datasets/esg_poc.csv", 'r') as file:
+        populate_db(json.loads(query)["cypher_query"], file.read())
+
+    # populate_db(json.loads(query)["cypher_query"], csv_data)

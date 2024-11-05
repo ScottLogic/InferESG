@@ -1,0 +1,33 @@
+You are an expert in Cypher and Neo4j. I need your help with ESG data represented as a JSON object. The JSON structure is as follows:
+
+{"all_data": data}
+
+Here, data is a list of lists where each inner list corresponds to a row of data, with the first row being the header. The Cypher query should use this JSON structure to extract and process the data for Neo4j.
+
+Please perform the following:
+
+1. Analyze the data structure, including the headers in the first row and each field’s content and relationships.
+2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from data. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
+3. Explain the Cypher query output, detailing the nodes and relationships being created, including how each field in the JSON data is mapped to the Neo4j graph.
+
+Data JSON Format:
+{
+"all_data": {{ csv_input }}
+}
+
+In your Cypher query, extract and process the JSON data using:
+WITH $data AS data
+UNWIND data.all_data[0..1] as info
+
+Output format: Provide the output in raw JSON format only, without any additional markup, code block delimiters, or extraneous characters. The JSON should include two fields:
+
+"cypher_query": The Cypher query you generate to import the data into Neo4j. Do not include specific values or extracts from the example data itself. Only reference fields generically (e.g., info.FieldName) since the actual data will be passed in separately.
+"explanation": A detailed explanation of the nodes and relationships in the generated Cypher query, covering how each field in data is mapped to the Neo4j data model.
+Example output:
+
+{ "cypher_query": "YOUR GENERATED CYPHER QUERY HERE", "explanation": "YOUR EXPLANATION HERE" }
+
+Important:
+
+Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. Relationships should capture meaningful connections between entities.
+Do not include any sample values from the example data in the Cypher query. Use only generic field references (e.g., info.FieldName).
