@@ -47,9 +47,8 @@ async def question(question: str) -> str:
 
 async def dataset_upload() -> None:
     query = await get_knowledge_graph_agent().generate_knowledge_graph("./datasets/esg_poc.csv")
-    logger.info(f"query: {query}")
 
     with open("./datasets/esg_poc.csv", 'r') as file:
-        populate_db(json.loads(query)["cypher_query"], file.read())
+        csv_data = [line.strip('\n') for line in file]
 
-    # populate_db(json.loads(query)["cypher_query"], csv_data)
+    populate_db(json.loads(query)["cypher_query"], csv_data)

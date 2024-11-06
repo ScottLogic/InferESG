@@ -48,18 +48,3 @@ docker run -e NEO4J_AUTH=neo4j/password -p 7474:7474 -p 7687:7687 {my-data-image
 > Replace `neo4j/password` with your chosen username and password (seperated by a `/`).
 
 3. Check neo4j is running at [http://localhost:7474/](http://localhost:7474/)
-
-## Initial Data (Azure Blob Storage)
-
-To load initial dummy data into the project, you will need an azure blob storage set up, containing a `json` file. 
-
-The following environment variables should be set up:
-
-```
-AZURE_STORAGE_CONNECTION_STRING="my-connection-string"
-AZURE_STORAGE_CONTAINER_NAME=my-container-name
-AZURE_INITIAL_DATA_FILENAME=test-data.json
-```
-
-If there is no blob storage set up, it will default to importing no data.
-
