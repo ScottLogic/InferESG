@@ -9,6 +9,7 @@ COPY ./requirements.txt ./requirements.txt
 
 # Copy the esg_poc.csv, directory should match what local run of application will need
 COPY ./datasets/esg_poc.csv ./datasets/esg_poc.csv
+COPY ./datasets/bloomberg.csv ./datasets/bloomberg.csv
 
 # Install the dependencies from the requirements file
 RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt
