@@ -2,16 +2,17 @@ You are an expert in Cypher and Neo4j. I need your help with ESG data represente
 
 {"all_data": data}
 
-Here, data is a list of lists, where each inner list corresponds to a row of data from a CSV file. The first row is the header row containing field names, and it does not have any empty fields. The Cypher query should use this JSON structure to extract and process the data for Neo4j.
+Here, `data` is a list of lists, where each inner list corresponds to a row of data, with the first row being the header. The Cypher query should use this JSON structure to extract and process the data for Neo4j.
 
 Please perform the following:
 
 1. Analyze the data structure, including the headers in the first row and each field’s content and relationships.
 2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from `data`. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
-3. Handle empty values: In cases where fields contain empty values in rows beyond the header, provide suitable defaults:
+3. Skip the header row when unwinding data and process only the data rows. The header row should only be used to infer field names and should not be processed as data.
+4. Handle empty values: In cases where fields contain empty values in data rows, provide suitable defaults:
     * Set empty strings or missing textual fields to `null` or an appropriate placeholder, such as `"Unknown"`.
     * Set missing numeric values to `0` or another logical default.
-4. Explain the Cypher query output, detailing the nodes and relationships being created, including how each field in the JSON data is mapped to the Neo4j graph and how defaults are applied.
+5. Explain the Cypher query output, detailing the nodes and relationships being created, including how each field in the JSON data is mapped to the Neo4j graph and how defaults are applied.
 
 Data JSON Format:
 {
@@ -20,7 +21,7 @@ Data JSON Format:
 
 In your Cypher query, extract and process the JSON data with the following guidelines:
 
-* Start with `WITH $data AS data UNWIND data.all_data AS row` to process each row, referencing the first row (i.e., `data.all_data[0]`) for headers.
+* Start with `WITH $data AS data UNWIND data.all_data[1..] AS row` to skip the header row (i.e., `data.all_data[0]`).
 * Use the first row as the header to extract column names, and process the subsequent rows as data entries.
 * Avoid using multiple `UNWIND` statements on `data.all_data` to prevent errors from redundant data unwinding.
 * Set default values for any empty or missing fields in data rows, as specified. Assume that headers in the first row will always be present and do not need defaults.
@@ -37,5 +38,5 @@ Important:
 
 * Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. Relationships should capture meaningful connections between entities.
 * Do not include any sample values from the example data in the Cypher query. Use only generic field references (e.g., row.FieldName).
-* Use a single UNWIND statement on data.all_data and ensure there are no redundant or unnecessary operations that might cause syntax errors.
-* Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.
+* Use a single `UNWIND` statement on `data.all_data[1..]` to skip the header row and ensure there are no redundant or unnecessary operations that might cause syntax errors.
+* Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.
