@@ -5,7 +5,7 @@ import logging.config
 import os
 from azure.storage.blob import BlobServiceClient
 from typing import NoReturn
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, HTTPException, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.utils.graph_db_utils import populate_db
@@ -15,6 +15,7 @@ from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.utils.cyper_import_data_from_csv import import_data_from_csv_script
 from src.suggestions_generator import generate_suggestions
+from src.file_upload_service import handle_file_upload, get_file_upload
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -68,6 +69,8 @@ unhealthy_neo4j_response = health_prefix + "backend is healthy. Neo4J is unhealt
 
 chat_fail_response = "Unable to generate a response. Check the service by using the keyphrase 'healthcheck'"
 suggestions_failed_response = "Unable to generate suggestions. Check the service by using the keyphrase 'healthcheck'"
+file_upload_failed_response = "Unable to upload file. Check the service by using the keyphrase 'healthcheck'"
+file_get_upload_failed_response = "Unable to get uploaded file. Check the service by using the keyphrase 'healthcheck'"
 
 
 @app.get("/health")
@@ -102,6 +105,30 @@ async def suggestions():
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=suggestions_failed_response)
+
+@app.post("/uploadfile")
+async def create_upload_file(file: UploadFile):
+    logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
+    try:
+        upload_id = handle_file_upload(file)
+        return JSONResponse(status_code=200, content={"filename": file.filename, "id": upload_id})
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=file_upload_failed_response)
+
+@app.get("/uploadfile")
+async def fetch_file(id: str):
+    logger.info(f"fetch uploaded file id={id} ")
+    try:
+        final_result = get_file_upload(id)
+        if final_result is None:
+            return JSONResponse(status_code=404, content=f"Upload with id {id} not found")
+        return JSONResponse(status_code=200, content=final_result)
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=file_get_upload_failed_response)
 
 
 @app.websocket("/ws")
