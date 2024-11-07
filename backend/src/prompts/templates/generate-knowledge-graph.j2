@@ -30,6 +30,8 @@ Output format: Provide the output in raw JSON format only, without any additiona
 `"cypher_query"`: The Cypher query you generate to import the data into Neo4j. Do not include specific values or extracts from the example data itself. Only reference fields generically (e.g., `row.FieldName`) since the actual data will be passed in separately.
 `"explanation"`: A detailed explanation of the nodes and relationships in the generated Cypher query, covering how each field in `data` is mapped to the Neo4j data model and how default values are applied to handle empty data.
 
+Make sure the output is valid JSON with no additional formatting, code block markers, or line breaks.
+
 Example output:
 
 { "cypher_query": "YOUR GENERATED CYPHER QUERY HERE", "explanation": "YOUR EXPLANATION HERE" }
@@ -40,3 +42,4 @@ Important:
 * Do not include any sample values from the example data in the Cypher query. Use only generic field references (e.g., row.FieldName).
 * Use a single `UNWIND` statement on `data.all_data[1..]` to skip the header row and ensure there are no redundant or unnecessary operations that might cause syntax errors.
 * Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.
+* The output should be valid JSON with no line breaks. Do not add line breaks to the output.
