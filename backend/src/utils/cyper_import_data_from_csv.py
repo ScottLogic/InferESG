@@ -16,24 +16,24 @@ MERGE (co:Country {Name: row.Country})
 MERGE (c)-[:REGISTERED_IN]->(co)
 
 MERGE (esge:ESGScore {
-    Category: 'Environmental', 
-    Score: toFloat(row.`ESG score (Environmental)`), 
+    Category: 'Environmental',
+    Score: toFloat(row.`ESG score (Environmental)`),
     Date: row.`ESG scoring date`
 })
 
 MERGE (c)-[:HAS_ESG_SCORE]->(esge)
 
 MERGE (esgs:ESGScore {
-    Category: 'Social', 
-    Score: toFloat(row.`ESG score (Social)`), 
+    Category: 'Social',
+    Score: toFloat(row.`ESG score (Social)`),
     Date: row.`ESG scoring date`
 })
 
 MERGE (c)-[:HAS_ESG_SCORE]->(esgs)
 
 MERGE (esgg:ESGScore {
-    Category: 'Governance', 
-    Score: toFloat(row.`ESG score (Governance)`), 
+    Category: 'Governance',
+    Score: toFloat(row.`ESG score (Governance)`),
     Date: row.`ESG scoring date`
 })
 
