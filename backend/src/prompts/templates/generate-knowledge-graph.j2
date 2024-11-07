@@ -7,41 +7,41 @@ Here, `data` is a list of lists, where each inner list corresponds to a row of d
 Please perform the following:
 
 1. Analyze the data structure, including the headers in the first row and each field’s content and relationships.
-2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from `data`. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
+2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from data. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
 3. Skip the header row when unwinding data and process only the data rows. The header row should only be used to infer field names and should not be processed as data.
 4. Build a map of each row by pairing each header from data.all_data[0] with its corresponding value in row. Handle empty or missing values using COALESCE:
     * For empty textual fields, use COALESCE(value, 'Unknown').
     * For missing numeric values, use COALESCE(value, 0).
-5. Avoid using apoc.map.fromLists. Instead, construct the map using headers and values directly within Cypher.
+5. Avoid using apoc.map.fromLists. Instead, construct the map manually within Cypher, using headers and row values directly.
 
 Data JSON Format:
 {
 "all_data": {{ csv_input }}
 }
 
-In your Cypher query, extract and process the JSON data with the following guidelines:
-
+Guidelines for the Cypher Query:
 * Start with `WITH $data AS data UNWIND data.all_data[1..] AS row` to skip the header row (i.e., `data.all_data[0]`).
 * Avoid using multiple `UNWIND` statements on `data.all_data` to prevent errors from redundant data unwinding.
 * Use the first row as the header to extract column names, and process the subsequent rows as data entries.
-* For each row, create a map by pairing each header with the corresponding value in row, applying defaults using COALESCE. For example, COALESCE(row[0], 'Unknown') for text fields or COALESCE(row[1], 0) for numeric fields.
+* For each row, construct a map by pairing each header (from `data.all_data[0]`) with the corresponding value in `row`. Apply default values using `COALESCE`, for example, `COALESCE(row[index], 'Unknown')` for text fields or `COALESCE(row[index], 0)` for numeric fields.
 * Set default values for any empty or missing fields in data rows, as specified. Assume that headers in the first row will always be present and do not need defaults.
 
-Output format: Provide the output in raw JSON format only, without any additional markup, code block delimiters, or extraneous characters. The JSON should include two fields:
+Output format:
+Provide the output in raw JSON format only, without any additional markup, code block delimiters, or extraneous characters. The JSON should include two fields:
 
-`"cypher_query"`: The Cypher query you generate to import the data into Neo4j. Do not include specific values or extracts from the example data itself. Only reference fields generically (e.g., `row.FieldName`) since the actual data will be passed in separately.
+`"cypher_query"`: The Cypher query you generate to import the data into Neo4j. Do not include specific values or extracts from the example data itself. Only reference fields generically using the map structure, like `entry.FieldName`, since the actual data will be passed in separately.
 `"explanation"`: A detailed explanation of the nodes and relationships in the generated Cypher query, covering how each field in data is mapped to the Neo4j data model and how default values are applied to handle empty data.
 
 Make sure the output is valid JSON with no additional formatting, code block markers, or line breaks.
 
-Example output:
+Example Output:
 
 { "cypher_query": "YOUR GENERATED CYPHER QUERY HERE", "explanation": "YOUR EXPLANATION HERE" }
 
 Important Notes:
 * Avoid using apoc.map.fromLists and instead pair headers and row values manually, applying defaults.
 * Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. Relationships should capture meaningful connections between entities.
-* Do not include any sample values from the example data in the Cypher query. Use only generic field references (e.g., `row.FieldName`).
+* Do not include any sample values from the example data in the Cypher query. Use only generic field references like `entry.FieldName`.
 * Use a single `UNWIND` statement on `data.all_data[1..]` to skip the header row and ensure there are no redundant or unnecessary operations that might cause syntax errors.
 * Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.
 * The output should be valid JSON with no line breaks. Do not add line breaks to the output.

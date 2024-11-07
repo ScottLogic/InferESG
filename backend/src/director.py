@@ -50,6 +50,9 @@ async def dataset_upload() -> None:
     query = await get_knowledge_graph_agent().generate_knowledge_graph(dataset_file)
 
     with open(dataset_file, 'r') as file:
-        csv_data = [line.strip('\n') for line in file]
+        csv_data = [
+            [entry for entry in line.strip('\n')]
+            for line in file
+        ]
 
     populate_db(json.loads(query)["cypher_query"], csv_data)
