@@ -7,12 +7,15 @@ Here, `data` is a list of lists, where each inner list corresponds to a row of d
 Please perform the following:
 
 1. Analyze the data structure, including the headers in the first row and each field’s content and relationships.
-2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from data. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
+2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from the data. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
 3. Skip the header row when unwinding data and process only the data rows. The header row should only be used to infer field names and should not be processed as data.
 4. Build a map of each row by pairing each header from data.all_data[0] with its corresponding value in row. Handle empty or missing values using COALESCE:
     * For empty textual fields, use COALESCE(value, 'Unknown').
     * For missing numeric values, use COALESCE(value, 0).
-5. Avoid using apoc.map.fromLists. Instead, construct the map manually within Cypher, using headers and row values directly.
+5. Ensure headers remain defined in each WITH clause where they are referenced:
+    * Explicitly carry the headers variable in each WITH clause where it is needed. If a variable is defined earlier in the query, ensure it is passed forward in subsequent WITH clauses to avoid any "undefined variable" errors.
+    * When defining new variables, always include headers and any other relevant variables (e.g., row) in the WITH clause to ensure they remain accessible throughout the query.
+6. Avoid using apoc.map.fromLists. Instead, construct the map manually within Cypher, using headers and row values directly.
 
 ESG-Specific Data Structure and Relationships
 * Identify fields related to Environmental, Social, and Governance (ESG) categories.
@@ -32,6 +35,8 @@ Guidelines for the Cypher Query:
 * Start with `WITH $data AS data UNWIND data.all_data[1..] AS row` to skip the header row (i.e., `data.all_data[0]`).
 * Avoid using multiple `UNWIND` statements on `data.all_data` to prevent errors from redundant data unwinding.
 * Use the first row as the header to extract column names, and process the subsequent rows as data entries.
+* Explicitly carry headers in each WITH clause:
+    * After setting headers with data.all_data[0] AS headers, ensure headers is retained by including it in each WITH clause where it is needed, alongside any other variables (e.g., row, values).
 * For each row, construct a map by pairing each header (from `data.all_data[0]`) with the corresponding value in `row`. Apply default values using `COALESCE`, for example, `COALESCE(row[index], 'Unknown')` for text fields or `COALESCE(row[index], 0)` for numeric fields.
 * Set default values for any empty or missing fields in data rows, as specified. Assume that headers in the first row will always be present and do not need defaults.
 
