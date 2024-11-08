@@ -9,31 +9,35 @@ Here, all_data is a list of lists, where each inner list corresponds to a row of
 
 Objective: Analyze the structure of this data to produce an intuitive Neo4j model, focusing on identifying core entities, attributes, and relationships. Then generate a Cypher query to import the data according to this model.
 
-Phase 1: Data Model Inference
+# Data Model Inference
 Output a comprehensive model of the data in the "model" field of the JSON response.
 
-Data Structure:
+1. Data Structure:
 
-Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Report, Year, Industry) and map out each unique entity's attributes.
-Determine Relationships: Define the relationships between these entities, such as companies having reports, reports being linked to specific years, and industry categorizations for companies.
-Classify ESG Fields: Group ESG-related fields under Environmental, Social, or Governance categories.
-Attribute Assignment: Specify how each attribute within an entity (e.g., scores, industry) should be represented.
-Output Model Structure:
+* Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Report, Year, Industry) and map out each unique entity's attributes.
+* Determine Relationships: Define the relationships between these entities, such as companies having reports, reports being linked to specific years, and industry categorizations for companies.
+* Classify ESG Fields: Group ESG-related fields under Environmental, Social, or Governance categories.
+* Attribute Assignment: Specify how each attribute within an entity (e.g., scores, industry) should be represented.
 
-Describe Entities:
-Example: Company: Represents each company with attributes like name and identifier.
-Example: Report: Represents each report entry, with attributes including ESG scores and other metrics.
-Describe Relationships:
-Example: (:Company)-[:HAS_REPORT]->(:Report): Links each company to its reports.
-Example: (:Report)-[:FOR_YEAR]->(:Year): Links reports to their respective years.
-Example: (:Company)-[:BELONGS_TO]->(:Industry): Categorizes companies under industries.
-Example: (:Report)-[:HAS_ENVIRONMENT]->(:Environment): Connects reports to specific ESG metrics.
+2. Output Model Structure:
+
+* Describe Entities:
+    * Example: Company: Represents each company with attributes like name and identifier.
+    * Example: Report: Represents each report entry, with attributes including ESG scores and other metrics.
+* Describe Relationships:
+    * Example: (:Company)-[:HAS_REPORT]->(:Report): Links each company to its reports.
+    * Example: (:Report)-[:FOR_YEAR]->(:Year): Links reports to their respective years.
+    * Example: (:Company)-[:BELONGS_TO]->(:Industry): Categorizes companies under industries.
+    * Example: (:Report)-[:HAS_ENVIRONMENT]->(:Environment): Connects reports to specific ESG metrics.
+
 Please provide the inferred model structure in the "model" field of the JSON output, specifying entities, attributes, and relationships in detail without describing the reasoning process. The output must explicitly link each header in the input data to the corresponding part of the model.
 
-Expected Output Format:
+# Expected Output Format:
+
 { "model": "The model identifies 'Company' as the primary entity with unique identifiers and categorizes companies by industry. 'Report' nodes are created for each data row, with 'Year' nodes representing temporal relationships. ESG metrics are grouped into 'Environment', 'Social', and 'Governance' nodes linked to each report. Relationships include ..."}
+
 Important Notes:
 
-Ensure the model clearly identifies which header field relates to which part of the Neo4j graph.
-Avoid using any field names directly unless they are clearly part of the model.
-The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
+* Ensure the model clearly identifies which header field relates to which part of the Neo4j graph.
+* Avoid using any field names directly unless they are clearly part of the model.
+* The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
