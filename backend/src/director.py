@@ -47,12 +47,14 @@ async def question(question: str) -> str:
 
 async def dataset_upload() -> None:
     dataset_file = "./datasets/bloomberg.csv"
-    knowledge_graph_config = await get_knowledge_graph_agent().generate_knowledge_graph(dataset_file)
 
     with open(dataset_file, 'r') as file:
         csv_data = [
             [entry for entry in line.strip('\n').split(",")]
             for line in file
         ]
+
+    knowledge_graph_config = await get_knowledge_graph_agent().generate_knowledge_graph(dataset_file, csv_data)
+
 
     populate_db(knowledge_graph_config["cypher_query"], csv_data)

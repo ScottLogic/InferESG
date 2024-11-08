@@ -2,7 +2,6 @@ You are an expert in Neo4j and Cypher. I need your help to analyze and model ESG
 
 The input data is formatted as JSON:
 
-json
 {
 "all_data": {{ csv_input }}
 }
@@ -32,10 +31,9 @@ Example: (:Report)-[:HAS_ENVIRONMENT]->(:Environment): Connects reports to speci
 Please provide the inferred model structure in the "model" field of the JSON output, specifying entities, attributes, and relationships in detail without describing the reasoning process. The output must explicitly link each header in the input data to the corresponding part of the model.
 
 Expected Output Format:
-json
 { "model": "The model identifies 'Company' as the primary entity with unique identifiers and categorizes companies by industry. 'Report' nodes are created for each data row, with 'Year' nodes representing temporal relationships. ESG metrics are grouped into 'Environment', 'Social', and 'Governance' nodes linked to each report. Relationships include ..."}
 Important Notes:
 
 Ensure the model clearly identifies which header field relates to which part of the Neo4j graph.
 Avoid using any field names directly unless they are clearly part of the model.
-The output should be valid JSON with no line breaks. Do not add line breaks to the output.
+The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.

@@ -14,17 +14,13 @@ engine = PromptEngine()
     tools=[],
 )
 class KnowledgeGraphAgent(Agent):
-    async def generate_knowledge_graph(self, file_path: str) -> dict[str, str]:
-        with open(file_path, 'r') as file:
-            csv_lines = []
-            for line in file:
-                csv_lines.append(line)
-                if len(csv_lines) >= 50:
-                    break
+    async def generate_knowledge_graph(self, file_path: str, csv_data: list[list[str]]) -> dict[str, str]:
+
+        reduced_data_set = csv_data[slice(50)]
 
         create_model = engine.load_prompt(
             "generate-knowledge-graph-model",
-            csv_input=csv_lines
+            csv_input=reduced_data_set
         )
 
         model_response = await self.llm.chat(self.model, create_model, user_prompt="")
@@ -33,7 +29,7 @@ class KnowledgeGraphAgent(Agent):
 
         create_query = engine.load_prompt(
             "generate-knowledge-graph-query",
-            csv_input=csv_lines,
+            csv_input=reduced_data_set,
             model_input=model
         )
 
