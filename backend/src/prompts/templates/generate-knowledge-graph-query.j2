@@ -3,7 +3,7 @@ You are an expert in Cypher and Neo4j. I need your help to generate a Cypher que
 Inputs:
 
 1. CSV Data: You will receive the CSV data, which consists of a list of lists where the first list contains the headers, and the subsequent lists represent the rows of data.
-2. Model Description: You will receive a description of model structure to create from the data. This model will define the core entities, attributes, and relationships based on the headers from the provided data.
+2. Model Description: You will receive a description of the model structure to create from the data. This model will define the core entities, attributes, and relationships based on the headers from the provided data.
 
 The format will be:
 {
@@ -13,34 +13,34 @@ The format will be:
 
 all_data is the raw CSV data with headers.
 
-Objective: Generate a Cypher query based on the provided model structure and data.
+Objective:
+Generate a Cypher query based on the provided model structure and data.
 
-# Cypher Query Generation Steps:
-
+Cypher Query Generation Steps:
 1. Process Data:
 
-* Use data.all_data[0] as headers to identify the fields.
-* Process each row of data and map the header fields to their corresponding parts of the model based on the model input.
-* Reminder: Avoid duplicating fields across multiple nodes. For example, if the same field appears in multiple places (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times.
-
+Use data.all_data[0] as headers to identify the fields.
+Process each row of data and map the header fields to their corresponding parts of the model based on the model input.
+Reminder: Avoid duplicating fields across multiple nodes. For example, if the same field appears in multiple places (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times.
+Extract parts of fields, such as the year from a full date, to avoid ambiguity when creating nodes like Year (use substring(row[2], 0, 4) to extract the year from a date string).
+Ensure that each node, such as Year or Industry, is only created once and reused in relationships to avoid redundant nodes.
 2. Generate Cypher Query:
 
-* For each unique primary entity (e.g., Company, Report, Industry, Year), create a node with its respective attributes.
-* For each row of data:
-    * Create a Report node, linking it to its associated Company, Year, and other related entities.
-    * Create nodes for each ESG category (Environment, Social, Governance) and link them to the corresponding Report node.
-* Define the relationships as inferred in the model.
+For each unique primary entity (e.g., Company, Report, Industry, Year), create a node with its respective attributes.
+For each row of data:
+Create a Report node, linking it to its associated Company, Year, and other related entities.
+Create nodes for each ESG category (Environment, Social, Governance) and link them to the corresponding Report node.
+Define the relationships as inferred in the model, using MERGE where appropriate to ensure no duplicates.
 
 3. Handling Missing Data:
 
-* Use default values for missing data where necessary, as defined in the model description.
-
-# Output:
+Use default values for missing data where necessary, as defined in the model description.
+Output:
 Please output only the Cypher query in the following JSON format:
 
 {"cypher_query": "WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers ... [cypher query here]"}
 
 Important Notes:
-
-* Ensure the query is well-formed and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
-* The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
+Ensure the query is well-formed and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
+Avoid duplicating nodes by creating reusable references for fields that should not be repeated across multiple nodes (e.g., industry, company name).
+The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.

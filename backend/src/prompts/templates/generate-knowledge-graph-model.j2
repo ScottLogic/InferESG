@@ -7,7 +7,8 @@ The input data is formatted as JSON:
 }
 Here, all_data is a list of lists, where each inner list corresponds to a row of data, and the first row contains the headers.
 
-Objective: Analyze the structure of this data to produce an intuitive Neo4j model, focusing on identifying core entities, attributes, and relationships. Then generate a Cypher query to import the data according to this model.
+# Objective:
+Analyze the structure of this data to produce an intuitive Neo4j model, focusing on identifying core entities, attributes, and relationships. Then generate a Cypher query to import the data according to this model.
 
 # Data Model Inference
 Output a comprehensive model of the data in the "model" field of the JSON response.
@@ -34,10 +35,11 @@ Please provide the inferred model structure in the "model" field of the JSON out
 
 # Expected Output Format:
 
-{ "model": "The model identifies 'Company' as the primary entity with unique identifiers and categorizes companies by industry. 'Report' nodes are created for each data row, with 'Year' nodes representing temporal relationships. ESG metrics are grouped into 'Environment', 'Social', and 'Governance' nodes linked to each report. Relationships include ..."}
+{ "model": "The model identifies 'Company' as the primary entity with unique identifiers and categorizes companies by industry. 'Report' nodes are created for each data row, with 'Year' nodes representing temporal relationships. ESG metrics are grouped into 'Environment', 'Social', and 'Governance' nodes linked to each report. Relationships include ..." }
 
 Important Notes:
 
 * Ensure the model clearly identifies which header field relates to which part of the Neo4j graph.
-* Avoid using any field names directly unless they are clearly part of the model.
+* Do not duplicate fields across multiple nodes where possible. For instance, if the same field appears in multiple entities (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times. This helps ensure that each piece of data is represented only once in the graph.
+* Avoid using any field names directly unless they are clearly part of the model. For example, industry names should be handled through a :Industry node, not as individual attributes on Company nodes.
 * The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
