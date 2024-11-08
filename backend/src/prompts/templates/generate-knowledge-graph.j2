@@ -14,6 +14,15 @@ Please perform the following:
     * For missing numeric values, use COALESCE(value, 0).
 5. Avoid using apoc.map.fromLists. Instead, construct the map manually within Cypher, using headers and row values directly.
 
+ESG-Specific Data Structure and Relationships
+* Identify fields related to Environmental, Social, and Governance (ESG) categories.
+* For each row, create a Company node with relevant company attributes.
+* Create relationships between the Company node and specific ESGCategory nodes (Environment, Social, and Governance):
+    * Link environmental fields (e.g., env_score, co2_emissions, energy_use) to an Environment node, with each metric as a property on this node.
+    * Link social fields (e.g., social_score, injury_rate, human_rights) to a Social node, with relevant metrics.
+    * Link governance fields (e.g., gov_score, board_size, shareholder_rights) to a Governance node.
+* Relationships between Company and each ESGCategory node should indicate the category, and properties should be set to the values from row.
+
 Data JSON Format:
 {
 "all_data": {{ csv_input }}
@@ -40,7 +49,7 @@ Example Output:
 
 Important Notes:
 * Avoid using apoc.map.fromLists and instead pair headers and row values manually, applying defaults.
-* Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. Relationships should capture meaningful connections between entities.
+* Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. ESG categories should be represented by ESGCategory nodes (e.g., Environment, Social, Governance).
 * Do not include any sample values from the example data in the Cypher query. Use only generic field references like `entry.FieldName`.
 * Use a single `UNWIND` statement on `data.all_data[1..]` to skip the header row and ensure there are no redundant or unnecessary operations that might cause syntax errors.
 * Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.

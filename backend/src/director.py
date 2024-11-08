@@ -51,7 +51,7 @@ async def dataset_upload() -> None:
 
     with open(dataset_file, 'r') as file:
         csv_data = [
-            [entry for entry in line.strip('\n')]
+            [entry for entry in line.strip('\n').split(",")]
             for line in file
         ]
 
