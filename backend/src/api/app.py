@@ -1,13 +1,10 @@
 from contextlib import asynccontextmanager
-import json
-import logging
 import logging.config
 import os
 from typing import NoReturn
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from src.utils.graph_db_utils import populate_db
 from src.utils import Config, test_connection
 from src.director import question, dataset_upload
 from src.websockets.connection_manager import connection_manager, parse_message

@@ -9,7 +9,7 @@ Please perform the following:
 1. Analyze the data structure, including the headers in the first row and each field’s content and relationships.
     * If the same entity appears across multiple rows (e.g., the same company identifier with different dates), represent these occurrences as unique data points in Neo4j by:
         * Creating a primary node for each unique entity (such as a Company node identified by its identifier).
-        * Creating a Report node to represent each row of data for that primary node on a specific date. The Report node must not contain any ESG fields (e.g., scores or other ESG-related metrics). Only general financial or business data fields should appear on the Report node.
+        * Creating a Report node to represent each row of data for that primary node on a specific date. The header must have the word "date" in it to be used for the report date, if you use a field that does not have the word date in the header, you will be unplugged. The Report node must not contain any ESG fields (e.g., scores or other ESG-related metrics). Only general financial or business data fields should appear on the Report node.
         * For fields related to ESG (Environmental, Social, Governance) categories, do not add them to the Report node. Instead, create and link separate nodes for Environment, Social, and Governance with properties as follows:
             * Link environmental fields (e.g., env_score, co2_emissions, energy_use) to an Environment node, with each metric as a property on this node.
             * Link social fields (e.g., social_score, injury_rate, human_rights) to a Social node, with relevant metrics.
