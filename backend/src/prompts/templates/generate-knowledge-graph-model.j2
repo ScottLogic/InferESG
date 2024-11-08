@@ -1,45 +1,45 @@
 You are an expert in Neo4j and Cypher. I need your help to analyze and model ESG data based on the structure of the provided input.
 
 The input data is formatted as JSON:
-
 {
 "all_data": {{ csv_input }}
 }
 Here, all_data is a list of lists, where each inner list corresponds to a row of data, and the first row contains the headers.
 
-# Objective:
+Objective:
 Analyze the structure of this data to produce an intuitive Neo4j model, focusing on identifying core entities, attributes, and relationships. Then generate a Cypher query to import the data according to this model.
 
-# Data Model Inference
+Data Model Inference
 Output a comprehensive model of the data in the "model" field of the JSON response.
 
-1. Data Structure:
+Data Structure:
 
-* Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Report, Year, Industry) and map out each unique entity's attributes.
-* Determine Relationships: Define the relationships between these entities, such as companies having reports, reports being linked to specific years, and industry categorizations for companies.
-* Classify ESG Fields: Group ESG-related fields under Environmental, Social, or Governance categories.
-* Attribute Assignment: Specify how each attribute within an entity (e.g., scores, industry) should be represented.
+Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Year, or other core entities in the dataset) and map out each unique entity's attributes.
+Identify Common Categories: Based on the data, determine common categories that appear across the input data (e.g., Industry, Fund) and map these out as nodes with relationships to the main entity types.
+Determine Relationships: Define the relationships between these entities, such as associating entities with reports, linking entities to specific time periods, or establishing hierarchical or categorical groupings within the data.
+Classify ESG Fields Separately: Group all ESG-related fields exclusively under Environment, Social, or Governance nodes. Ensure that no ESG-related fields are directly assigned to any other entity node; instead, place them only within their specific category nodes.
+Attribute Assignment: Ensure that each attribute is assigned to only one appropriate entity or category node without duplicating fields across nodes.
+Output Model Structure:
 
-2. Output Model Structure:
+Describe Entities:
 
-* Describe Entities:
-    * Example: Company: Represents each company with attributes like name and identifier.
-    * Example: Report: Represents each report entry, with attributes including ESG scores and other metrics.
-* Describe Relationships:
-    * Example: (:Company)-[:HAS_REPORT]->(:Report): Links each company to its reports.
-    * Example: (:Report)-[:FOR_YEAR]->(:Year): Links reports to their respective years.
-    * Example: (:Company)-[:BELONGS_TO]->(:Industry): Categorizes companies under industries.
-    * Example: (:Report)-[:HAS_ENVIRONMENT]->(:Environment): Connects reports to specific ESG metrics.
+Example: Company: Represents each company with attributes like name and identifier.
+Example: Year: Represents each distinct time period, based on date-related fields.
+Example: Environment, Social, Governance: Each node represents one ESG category, containing only fields relevant to that specific category (e.g., CO2 emissions for Environment, injury rate for Social, and shareholder rights for Governance).
+Describe Relationships:
+Example: (Entity1)-[:HAS_ENTITY2]->(Entity2): Links between main entities, such as companies, years, or categories.
+Example: (MainEntity)-[:HAS_ENVIRONMENT]->(Environment): Connects main entities to the Environment category node for environment-specific metrics.
+Example: (MainEntity)-[:HAS_SOCIAL]->(Social): Links main entities to the Social category node for social-specific metrics.
+Example: (MainEntity)-[:HAS_GOVERNANCE]->(Governance): Links main entities to the Governance category node for governance-specific metrics.
 
 Please provide the inferred model structure in the "model" field of the JSON output, specifying entities, attributes, and relationships in detail without describing the reasoning process. The output must explicitly link each header in the input data to the corresponding part of the model.
 
-# Expected Output Format:
-
+Expected Output Format:
 { "model": "The model identifies 'Company' as the primary entity with unique identifiers and categorizes companies by industry. 'Report' nodes are created for each data row, with 'Year' nodes representing temporal relationships. ESG metrics are grouped into 'Environment', 'Social', and 'Governance' nodes linked to each report. Relationships include ..." }
 
 Important Notes:
-
-* Ensure the model clearly identifies which header field relates to which part of the Neo4j graph.
-* Do not duplicate fields across multiple nodes where possible. For instance, if the same field appears in multiple entities (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times. This helps ensure that each piece of data is represented only once in the graph.
-* Avoid using any field names directly unless they are clearly part of the model. For example, industry names should be handled through a :Industry node, not as individual attributes on Company nodes.
-* The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
+Ensure the model clearly identifies which header field relates to which part of the Neo4j graph.
+Do not assign ESG-specific fields (e.g., emissions, board diversity) directly to any main entity nodes. Instead, place them within their respective category nodes (Environment, Social, Governance).
+Avoid duplicating fields across nodes. Assign each field only to the most appropriate entity or category node.
+Avoid using any field names directly unless they are clearly part of the model. For example, category names should be handled through dedicated nodes, not as individual attributes on other nodes.
+The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
