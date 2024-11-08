@@ -15,14 +15,12 @@ engine = PromptEngine()
 
 async def search_urls(search_query, num_results=10) -> str:
     logger.info(f"Searching the web for: {search_query}")
-    urls = []
     try:
-        for url in search(search_query, num_results=num_results):
-            urls.append(url)
+        https_urls = [url for url in search(search_query, num_results=num_results) if url.startswith("https")]
         return json.dumps(
             {
                 "status": "success",
-                "urls": urls,
+                "urls": https_urls,
                 "error": None,
             }
         )

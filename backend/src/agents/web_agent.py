@@ -38,8 +38,8 @@ async def web_general_search_core(search_query, llm, model) -> str:
                 }
             return json.dumps(response, indent=4)
         logger.info(f'Answer found successfully {answer_result}')
-        valid_answer = json.loads(answer_result["response"]).get("is_valid", "")
-        if valid_answer:
+        search_more = json.loads(answer_result["response"]).get("search_more", "")
+        if not search_more:
             final_answer = json.loads(answer_result["response"]).get("answer", "")
             if not final_answer:
                 return "No answer found."
