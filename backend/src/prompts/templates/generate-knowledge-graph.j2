@@ -1,55 +1,60 @@
-You are an expert in Cypher and Neo4j. I need your help with ESG data represented as a JSON object. The JSON structure is as follows:
+You are an expert in Cypher and Neo4j. I need your help to interpret and model ESG data structured as a JSON object in the following format:
 
-{"all_data": data}
+{ "all_data": data }
 
-Here, `data` is a list of lists, where each inner list corresponds to a row of data, with the first row being the header. The Cypher query should use this JSON structure to extract and process the data for Neo4j.
+Here, data is a list of lists, where each inner list corresponds to a row of data, with the first row as headers.
 
-Please perform the following:
+Objective: Generate a flexible Cypher query that dynamically analyzes the input structure to determine core entities and relationships, create an appropriate Neo4j model, and import the data. This model should adapt to varying data structures, only assuming that fields related to ESG fall within the categories of Environmental, Social, or Governance metrics.
 
-1. Analyze the data structure, including the headers in the first row and each field’s content and relationships.
-    * If the same entity appears across multiple rows (e.g., the same company identifier with different dates), represent these occurrences as unique data points in Neo4j by:
-        * Creating a primary node for each unique entity (such as a Company node identified by its identifier).
-        * Creating a Report node to represent each row of data for that primary node on a specific date. The header must have the word "date" in it to be used for the report date, if you use a field that does not have the word date in the header, you will be unplugged. The Report node must not contain any ESG fields (e.g., scores or other ESG-related metrics). Only general financial or business data fields should appear on the Report node.
-        * For fields related to ESG (Environmental, Social, Governance) categories, do not add them to the Report node. Instead, create and link separate nodes for Environment, Social, and Governance with properties as follows:
-            * Link environmental fields (e.g., env_score, co2_emissions, energy_use) to an Environment node, with each metric as a property on this node.
-            * Link social fields (e.g., social_score, injury_rate, human_rights) to a Social node, with relevant metrics.
-            * Link governance fields (e.g., gov_score, board_size, shareholder_rights) to a Governance node.
-        * Creating a year node to establish a relationship between reports of the same year.
-2. Create a Cypher query that imports the data from this JSON object into Neo4j, transforming it into nodes and relationships based on the structure inferred from the data. Each unique entity should be a node, and relationships should be based on how fields relate to each other.
-3. Skip the header row when unwinding data and process only the data rows. The header row should only be used to infer field names and should not be processed as data.
-4. Handle empty or missing values using COALESCE:
-    * For empty textual fields, use COALESCE(value, 'Unknown').
-    * For missing numeric values, use COALESCE(value, 0).
-5. Avoid using apoc.map.fromLists. Instead, construct the map manually within Cypher, using headers and row values directly.
+Phase 1: Data Analysis and Model Inference
+1. Interpret the Data Structure:
 
-Data JSON Format:
+* Analyze the header row to identify potential entities and relationships within the data, using only the headers and a sampling of values in subsequent rows.
+* Infer the following:
+    * Entity Types: Detect primary entities (such as a company or organization) that should serve as unique nodes.
+    * Date or Time: Identify any fields that appear to represent dates or years, likely used to distinguish different records or reports.
+    * Categories: Determine fields that may serve as categories or classifications (e.g., industry, sector) for grouping related entities.
+    * ESG-Related Fields: Identify fields with ESG relevance, categorizing them under Environment, Social, or Governance.
+2.Define Model Structure:
+
+* Create a description of the model based on the inferred entities and relationships:
+    * Primary Entity Nodes: For each unique primary entity, create a node (e.g., a Company or other identified entity).
+    * Report Nodes: For each row in the data, create a Report node, linking it to the primary entity node and any date or year nodes.
+    * ESG Nodes: Group ESG-related fields into Environment, Social, and Governance nodes. Link these nodes to each Report node based on the inferred ESG fields.
+    * Categorical Nodes: For any identified categories (e.g., industry or sector), create nodes and link relevant entities to these categories.
+    * Date/Year Nodes: Create nodes to represent years, allowing linkage of reports to their corresponding years.
+3. Output Model Description: Based on the analysis, output a high-level description of the entities, relationships, and categories you plan to create, highlighting any inferred relationships without referencing specific field names.
+
+Here is the input data to begin:
 {
 "all_data": {{ csv_input }}
 }
 
-Guidelines for the Cypher Query:
-* Start with `WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers, row`.
-* Use the first row as the header to extract column names, and process the subsequent rows as data entries.
-* Set default values for any empty or missing fields in data rows, as specified. Assume that headers in the first row will always be present and do not need defaults.
+Phase 2: Cypher Query Generation
+Using the model structure from Phase 1, create a Cypher query to import the data, adhering to the following guidelines:
 
-Output format:
-Provide the output in raw JSON format only, without any additional markup, code block delimiters, or extraneous characters. The JSON should include two fields:
+1. Data Processing Instructions:
 
-`"cypher_query"`: The Cypher query you generate to import the data into Neo4j. Do not include specific values or extracts from the example data itself. Only reference fields generically using the map structure, like `entry.FieldName`, since the actual data will be passed in separately.
-`"explanation"`: A non-technical description of the entities and relationships identified in the input data. Do not discuss how the query works. Instead, focus on describing the entities and their relationships as you understand them from the data.
+* Start with data.all_data[0] as headers and process only the data rows.
+* Construct mappings between headers and values manually without using apoc.map.fromLists.
+* Set default values for missing or empty fields:
+    * Use COALESCE(value, 'Unknown') for text fields.
+    * Use COALESCE(value, 0) for numeric fields.
+2. Node and Relationship Creation:
 
-Make sure the output is valid JSON with no additional formatting, code block markers, or line breaks.
+* Create nodes for each entity inferred from the data, linking to any category or industry nodes.
+* Create Report nodes for each data row and link them to the relevant primary entity, date, and ESG nodes.
+* For each ESG-related field, create separate Environment, Social, and Governance nodes linked to the Report.
+* Create Year nodes based on date fields and establish relationships to organize reports by year.
+3. Output JSON Format:
 
-Example Input:
-{'all_data': [['Identifier (RIC)', 'Company Name', 'Date', 'ESG_score', 'Social_score', 'Gov_score', 'Env_score', 'BVPS', 'Market_cap', 'Shares', 'Industry', 'Net_income', 'RETURN_ON_ASSET', 'QUICK_RATIO', 'ASSET_GROWTH', 'FNCL_LVRG', 'PE_RATIO', 'Scope_1', 'Scope_2', 'CO2_emissions', 'Energy_use', 'Water_use', 'Water_recycle', 'Toxic_chem_red', 'Injury_rate', 'Women_Employees', 'Human_Rights', 'Strikes', 'Turnover_empl', 'Board_Size', 'Shareholder_Rights', 'Board_gen_div', 'Bribery', 'Recycling_Initiatives', 'Total_assets'], ['AAL', 'American Airlines Group Inc', '2021', '59.02910721', '64.28601828', '56.39811612', '54.38515247', '-11.39725006', '10198305438', '644015000', 'Airlines', '-1993000000', '-3.1032', '0.7333', '7.1507', '34.6286', '5.8534', '898.9575031', '6.470219367', '41439616', '551629386', '1873777.95', '', '0', '', '41', '1', '1', '5.8', '10', '1', '20', '1', '0', '66467000000'], ['AAL', 'American Airlines Group Inc', '2020', '69.40117811', '68.81448509', '83.94361492', '56.96600148', '-14.19130047', '10626751115', '483888000', 'Airlines', '-8885000000', '-14.5652', '0.4953', '3.3553', '34.6286', '5.8534', '904.2455266', '7.364001706', '40604000', '540190224', '1729932.37', '', '0', '', '41.618', '1', '0', '5.5', '12', '1', '16.66666667', '1', '0', '62008000000']]}
-
+* The JSON output should include:
+    * "cypher_query": The generated Cypher query, which should be flexible and reference fields generically (e.g., entry.FieldName).
+    * "explanation": A summary of the model's entities and relationships.
 Example Output:
-
-{ "cypher_query": "WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers, row MERGE (c:Company {identifier: COALESCE(row[0], 'Unknown'), name: COALESCE(row[1], 'Unknown')}) MERGE (y:Year {year: substring(row[2], 0, 4)}) CREATE (r:Report {date: row[2], bvps: COALESCE(row[7], 0), market_cap: COALESCE(row[8], 0), shares: COALESCE(row[9], 0), industry: COALESCE(row[10], 'Unknown'), net_income: COALESCE(row[11], 0), return_on_asset: COALESCE(row[12], 0), quick_ratio: COALESCE(row[13], 0), asset_growth: COALESCE(row[14], 0), fncl_lvrg: COALESCE(row[15], 0), pe_ratio: COALESCE(row[16], 0), total_assets: COALESCE(row[34], 0)}) MERGE (c)-[:HAS_REPORT]->(r) MERGE (r)-[:REPORTED_IN]->(y) CREATE (e:Environment {env_score: COALESCE(row[6], 0), co2_emissions: COALESCE(row[19], 0), energy_use: COALESCE(row[20], 0), water_use: COALESCE(row[21], 0), water_recycle: COALESCE(row[22], 0), toxic_chem_red: COALESCE(row[23], 0)}) CREATE (s:Social {social_score: COALESCE(row[4], 0), injury_rate: COALESCE(row[24], 0), women_employees: COALESCE(row[25], 0), human_rights: COALESCE(row[26], 0), strikes: COALESCE(row[27], 0), turnover_empl: COALESCE(row[28], 0)}) CREATE (g:Governance {gov_score: COALESCE(row[5], 0), board_size: COALESCE(row[29], 0), shareholder_rights: COALESCE(row[30], 0), board_gen_div: COALESCE(row[31], 0), bribery: COALESCE(row[32], 0), recycling_initiatives: COALESCE(row[33], 0)}) MERGE (r)-[:HAS_ENVIRONMENT]->(e) MERGE (r)-[:HAS_SOCIAL]->(s) MERGE (r)-[:HAS_GOVERNANCE]->(g)", "explanation": "The data represents various companies and their financial and ESG-related metrics over multiple years. Each company is identified by a unique identifier and has a corresponding Company node. For each year of data, a Report node is created that captures general financial information without ESG metrics. ESG-related metrics are stored in separate nodes for Environment, Social, and Governance, each linked to the Report node. Additionally, a Year node is created to represent the year of the report, establishing relationships between the Report and Year nodes." }
+{ "cypher_query": "YOUR CYPHER QUERY HERE", "explanation": "YOUR EXPLANATION HERE" }
 
 Important Notes:
-* Avoid using apoc.map.fromLists and instead pair headers and row values manually, applying defaults.
-* Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. ESG categories should be represented by ESGCategory nodes (e.g., Environment, Social, Governance).
-* Do not include any sample values from the example data in the Cypher query. Use only generic field references like `entry.FieldName`.
-* Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.
-* The output should be valid JSON with no line breaks. Do not add line breaks to the output.
+* Flexibility: The query should be adaptable to various data structures, referencing fields generically and avoiding hard-coded field names (except for ESG categories).
+* Default Values: Apply default values for missing or empty fields as described.
+* Valid JSON: Ensure the JSON output is valid with no extraneous characters or line breaks.
