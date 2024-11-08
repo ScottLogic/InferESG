@@ -13,7 +13,7 @@ def test_handle_file_upload_size():
     with pytest.raises(HTTPException) as err:
         handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024*1024))
 
-    assert err.value.status_code == 400
+    assert err.value.status_code == 413
     assert err.value.detail == 'File upload must be less than 10485760 bytes'
 
 
@@ -46,7 +46,6 @@ def test_handle_file_upload_text(mocker):
 def test_handle_file_upload_pdf(mocker):
 
     mock = mocker.patch("src.file_upload_service.update_session_file_uploads", MagicMock())
-    # pdf_mock = mocker.patch("src.file_upload_service.extract_text_to_fp", MagicMock())
     pdf_mock = mocker.patch("src.file_upload_service.PdfReader", MagicMock())
 
 

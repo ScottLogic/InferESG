@@ -23,10 +23,10 @@ class FileUploadMeta(TypedDict):
 
 class FileUpload(TypedDict):
     uploadId: str
-    filename: str
-    contentType: str
-    size: int
-    content: str
+    filename: str | None
+    contentType: str | None
+    size: int | None
+    content: str | None
 
 
 def get_session_file_uploads_meta() -> list[FileUploadMeta] | None:
@@ -56,9 +56,7 @@ def clear_session_file_uploads_meta():
 
     meta_list = get_session(UPLOADS_META_SESSION_KEY, [])
 
-    keys = []
-    for meta in meta_list:
-        keys.append(UPLOADS_KEY_PREFIX + meta["uploadId"])
+    keys = [ UPLOADS_KEY_PREFIX + meta["uploadId"] for meta in meta_list ]
 
     keystr = " ".join(keys)
     logger.info("Deleting keys " + keystr)

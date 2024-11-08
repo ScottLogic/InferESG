@@ -14,7 +14,7 @@ MAX_FILE_SIZE = 10*1024*1024
 def handle_file_upload(file:UploadFile) -> str:
 
     if (file.size or 0) > MAX_FILE_SIZE:
-        raise HTTPException(status_code=400, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
+        raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
 
 
     all_content = ""
@@ -27,11 +27,6 @@ def handle_file_upload(file:UploadFile) -> str:
             page_text = pdf_file.pages[page_num].extract_text()
             all_content += page_text
             all_content += "\n"
-
-        # pdfminer.six processing
-        # out_str = StringIO()
-        # extract_text_to_fp(file.file, out_str) #, codec='cp1251', strip_control=True)
-        # all_content = out_str.getvalue()
 
         end_time = time.time()
 
@@ -47,10 +42,10 @@ def handle_file_upload(file:UploadFile) -> str:
                             detail="File upload must be supported type (text/plain or application/pdf)")
 
     session_file = FileUpload(uploadId=str(uuid.uuid4()),
-                             contentType=file.content_type or "" ,
-                             filename=file.filename or "",
-                             content=all_content or "",
-                             size=file.size or 0)
+                             contentType=file.content_type,
+                             filename=file.filename,
+                             content=all_content,
+                             size=file.size)
 
     update_session_file_uploads(session_file)
 
