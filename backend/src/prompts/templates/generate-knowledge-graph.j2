@@ -18,13 +18,10 @@ Please perform the following:
 6. Avoid using apoc.map.fromLists. Instead, construct the map manually within Cypher, using headers and row values directly.
 
 ESG-Specific Data Structure and Relationships
-* Identify fields related to Environmental, Social, and Governance (ESG) categories.
-* For each row, create a Company node with relevant company attributes.
-* Create relationships between the Company node and specific ESGCategory nodes (Environment, Social, and Governance):
+* Identify fields related to Environmental, Social, and Governance (ESG) categories. If suitable, these fields should be captured on the appropriate ESG category node which has a relationship with parent node for the row.
     * Link environmental fields (e.g., env_score, co2_emissions, energy_use) to an Environment node, with each metric as a property on this node.
     * Link social fields (e.g., social_score, injury_rate, human_rights) to a Social node, with relevant metrics.
     * Link governance fields (e.g., gov_score, board_size, shareholder_rights) to a Governance node.
-* Relationships between Company and each ESGCategory node should indicate the category, and properties should be set to the values from row.
 
 Data JSON Format:
 {
@@ -32,8 +29,7 @@ Data JSON Format:
 }
 
 Guidelines for the Cypher Query:
-* Start with `WITH $data AS data UNWIND data.all_data[1..] AS row` to skip the header row (i.e., `data.all_data[0]`).
-* Avoid using multiple `UNWIND` statements on `data.all_data` to prevent errors from redundant data unwinding.
+* Start with `WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers, row`.
 * Use the first row as the header to extract column names, and process the subsequent rows as data entries.
 * Explicitly carry headers in each WITH clause:
     * After setting headers with data.all_data[0] AS headers, ensure headers is retained by including it in each WITH clause where it is needed, alongside any other variables (e.g., row, values).
@@ -53,12 +49,11 @@ Example Input:
 
 Example Output:
 
-{ "cypher_query": " "cypher_query": "WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers, row, COALESCE(row[0], 'Unknown') AS Identifier, COALESCE(row[1], 'Unknown') AS CompanyName, COALESCE(row[2], 'Unknown') AS Date, COALESCE(row[3], 0) AS ESG_score, COALESCE(row[4], 0) AS Social_score, COALESCE(row[5], 0) AS Gov_score, COALESCE(row[6], 0) AS Env_score, COALESCE(row[7], 0) AS BVPS, COALESCE(row[8], 0) AS Market_cap, COALESCE(row[9], 0) AS Shares, COALESCE(row[10], 'Unknown') AS Industry, COALESCE(row[11], 0) AS Net_income, COALESCE(row[12], 0) AS RETURN_ON_ASSET, COALESCE(row[13], 0) AS QUICK_RATIO, COALESCE(row[14], 0) AS ASSET_GROWTH, COALESCE(row[15], 0) AS FNCL_LVRG, COALESCE(row[16], 0) AS PE_RATIO, COALESCE(row[17], 0) AS Scope_1, COALESCE(row[18], 0) AS Scope_2, COALESCE(row[19], 0) AS CO2_emissions, COALESCE(row[20], 0) AS Energy_use, COALESCE(row[21], 0) AS Water_use, COALESCE(row[22], 0) AS Water_recycle, COALESCE(row[23], 0) AS Toxic_chem_red, COALESCE(row[24], 0) AS Injury_rate, COALESCE(row[25], 0) AS Women_Employees, COALESCE(row[26], 0) AS Human_Rights, COALESCE(row[27], 0) AS Strikes, COALESCE(row[28], 0) AS Turnover_empl, COALESCE(row[29], 0) AS Board_Size, COALESCE(row[30], 0) AS Shareholder_Rights, COALESCE(row[31], 0) AS Board_gen_div, COALESCE(row[32], 0) AS Bribery, COALESCE(row[33], 0) AS Recycling_Initiatives, COALESCE(row[34], 0) AS Total_assets CREATE (c:Company {Identifier: Identifier, CompanyName: CompanyName, Date: Date, ESG_score: ESG_score, Social_score: Social_score, Gov_score: Gov_score, Env_score: Env_score, BVPS: BVPS, Market_cap: Market_cap, Shares: Shares, Industry: Industry, Net_income: Net_income, RETURN_ON_ASSET: RETURN_ON_ASSET, QUICK_RATIO: QUICK_RATIO, ASSET_GROWTH: ASSET_GROWTH, FNCL_LVRG: FNCL_LVRG, PE_RATIO: PE_RATIO, Scope_1: Scope_1, Scope_2: Scope_2, CO2_emissions: CO2_emissions, Energy_use: Energy_use, Water_use: Water_use, Water_recycle: Water_recycle, Toxic_chem_red: Toxic_chem_red, Injury_rate: Injury_rate, Women_Employees: Women_Employees, Human_Rights: Human_Rights, Strikes: Strikes, Turnover_empl: Turnover_empl, Board_Size: Board_Size, Shareholder_Rights: Shareholder_Rights, Board_gen_div: Board_gen_div, Bribery: Bribery, Recycling_Initiatives: Recycling_Initiatives, Total_assets: Total_assets }) CREATE (e:ESGCategory:Environment {CO2_emissions: CO2_emissions, Energy_use: Energy_use, Env_score: Env_score}) CREATE (s:ESGCategory:Social {Social_score: Social_score, Injury_rate: Injury_rate, Women_Employees: Women_Employees, Human_Rights: Human_Rights}) CREATE (g:ESGCategory:Governance {Gov_score: Gov_score, Board_Size: Board_Size, Shareholder_Rights: Shareholder_Rights}) CREATE (c)-[:HAS_ENVIRONMENT]->(e) CREATE (c)-[:HAS_SOCIAL]->(s) CREATE (c)-[:HAS_GOVERNANCE]->(g)", "explanation": "The data represents various companies and their ESG (Environmental, Social, and Governance) metrics over multiple years. Each company is identified by a unique identifier and has attributes such as name, date, and various scores related to ESG performance. The relationships established in the database connect each company to specific ESG categories: Environment, Social, and Governance. Each category node contains relevant metrics, such as CO2 emissions and social scores, which are linked to the company node, allowing for a structured representation of the company's ESG performance." }
+{ "cypher_query": "YOUR CYPHER QUERY HERE", "explanation": "YOUR EXPLANATION HERE" }
 
 Important Notes:
 * Avoid using apoc.map.fromLists and instead pair headers and row values manually, applying defaults.
 * Be precise with node labels, properties, and relationship types, ensuring each unique entity has a corresponding node. ESG categories should be represented by ESGCategory nodes (e.g., Environment, Social, Governance).
 * Do not include any sample values from the example data in the Cypher query. Use only generic field references like `entry.FieldName`.
-* Use a single `UNWIND` statement on `data.all_data[1..]` to skip the header row and ensure there are no redundant or unnecessary operations that might cause syntax errors.
 * Assume headers in the first row are complete and do not contain any empty fields. Apply default values only to data rows if fields are empty or missing.
 * The output should be valid JSON with no line breaks. Do not add line breaks to the output.
