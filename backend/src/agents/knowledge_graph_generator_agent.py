@@ -1,3 +1,4 @@
+import json
 import logging
 
 from src.prompts import PromptEngine
@@ -13,11 +14,7 @@ engine = PromptEngine()
     tools=[],
 )
 class KnowledgeGraphAgent(Agent):
-    async def generate_knowledge_graph(self, file_path: str) -> str:
-
-        # load file
-        # extract headers and the first couple of lines
-        # pass into llm with prompt
+    async def generate_knowledge_graph(self, file_path: str) -> dict[str, str]:
         with open(file_path, 'r') as file:
             csv_lines = []
             for line in file:
@@ -25,9 +22,22 @@ class KnowledgeGraphAgent(Agent):
                 if len(csv_lines) >= 50:
                     break
 
-        create_answer = engine.load_prompt(
-            "generate-knowledge-graph",
+        create_model = engine.load_prompt(
+            "generate-knowledge-graph-model",
             csv_input=csv_lines
         )
 
-        return await self.llm.chat(self.model, create_answer, user_prompt="")
+        model_response = await self.llm.chat(self.model, create_model, user_prompt="")
+
+        model = json.loads(model_response)["model"]
+
+        create_query = engine.load_prompt(
+            "generate-knowledge-graph-query",
+            csv_input=csv_lines,
+            model_input=model
+        )
+
+        query_response = await self.llm.chat(self.model, create_query, user_prompt="")
+
+        query = json.loads(query_response)["cypher_query"]
+        return {"cypher_query": query, "model": model}

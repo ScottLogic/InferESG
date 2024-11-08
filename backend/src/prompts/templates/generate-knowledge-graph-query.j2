@@ -1,0 +1,42 @@
+You are an expert in Cypher and Neo4j. I need your help to generate a Cypher query for importing ESG data into a Neo4j graph database.
+
+Inputs:
+
+Model Description: You will receive the model structure from Phase 1 as input. This model will define the core entities, attributes, and relationships based on the headers from the provided data.
+CSV Data: You will also receive the actual CSV data, which consists of a list of lists where the first list contains the headers, and the subsequent lists represent the rows of data.
+The format will be:
+
+json
+{
+"model": {{ model_input }},
+"all_data": {{ csv_input }}
+}
+Here:
+
+model is the model structure generated in Phase 1.
+all_data is the raw CSV data with headers.
+Objective: Generate a Cypher query based on the provided model structure and data.
+
+Cypher Query Generation Steps:
+Process Data:
+
+Use data.all_data[0] as headers to identify the fields.
+Process each row of data and map the header fields to their corresponding parts of the model based on the model input.
+Generate Cypher Query:
+
+For each unique primary entity (e.g., Company, Report, Industry, Year), create a node with its respective attributes.
+For each row of data:
+Create a Report node, linking it to its associated Company, Year, and other related entities.
+Create nodes for each ESG category (Environment, Social, Governance) and link them to the corresponding Report node.
+Define the relationships as inferred in the model.
+Handling Missing Data:
+
+Use default values for missing data where necessary, as defined in the model description.
+Output:
+Please output only the Cypher query in the following JSON format:
+
+json
+{"cypher_query": "WITH $data AS data UNWIND data.all_data[1..] AS row ... [cypher query here]"}
+
+Ensure the query is well-formed and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
+The output should be valid JSON with no line breaks. Do not add line breaks to the output.
