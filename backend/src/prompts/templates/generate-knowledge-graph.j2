@@ -7,54 +7,48 @@ Here, data is a list of lists, where each inner list corresponds to a row of dat
 Objective: Generate a flexible Cypher query that dynamically analyzes the input structure to determine core entities and relationships, create an appropriate Neo4j model, and import the data. This model should adapt to varying data structures, only assuming that fields related to ESG fall within the categories of Environmental, Social, or Governance metrics.
 
 Phase 1: Data Analysis and Model Inference
-1. Interpret the Data Structure:
+Output your reasoning in the "explanation" field of the JSON response:
 
-* Analyze the header row to identify potential entities and relationships within the data, using only the headers and a sampling of values in subsequent rows.
-* Infer the following:
-    * Entity Types: Detect primary entities (such as a company or organization) that should serve as unique nodes.
-    * Date or Time: Identify any fields that appear to represent dates or years, likely used to distinguish different records or reports.
-    * Categories: Determine fields that may serve as categories or classifications (e.g., industry, sector) for grouping related entities.
-    * ESG-Related Fields: Identify fields with ESG relevance, categorizing them under Environment, Social, or Governance.
-2.Define Model Structure:
+1. Interpret the Data Structure: Analyze the header row to identify potential entities and relationships within the data, based on the headers and a sampling of values.
 
-* Create a description of the model based on the inferred entities and relationships:
-    * Primary Entity Nodes: For each unique primary entity, create a node (e.g., a Company or other identified entity).
+* Entity Types: Detect primary entities that should serve as unique nodes.
+* Date or Time: Identify any fields that may represent dates or years, likely used to distinguish different records or reports.
+* Categories: Determine fields that may serve as categories or classifications (e.g., industry, sector).
+* ESG-Related Fields: Identify fields with ESG relevance, categorizing them under Environment, Social, or Governance.
+
+2. Define Model Structure:
+
+* Describe the model based on the inferred entities and relationships:
+    * Primary Entity Nodes: For each unique primary entity, create a node (e.g., a Company).
     * Report Nodes: For each row in the data, create a Report node, linking it to the primary entity node and any date or year nodes.
-    * ESG Nodes: Group ESG-related fields into Environment, Social, and Governance nodes. Link these nodes to each Report node based on the inferred ESG fields.
-    * Categorical Nodes: For any identified categories (e.g., industry or sector), create nodes and link relevant entities to these categories.
-    * Date/Year Nodes: Create nodes to represent years, allowing linkage of reports to their corresponding years.
-3. Output Model Description: Based on the analysis, output a high-level description of the entities, relationships, and categories you plan to create, highlighting any inferred relationships without referencing specific field names.
+    * ESG Nodes: Group ESG-related fields into Environment, Social, and Governance nodes.
+    * Categorical Nodes: Create category nodes as needed.
+    * Date/Year Nodes: Create nodes to represent years, allowing linkage of reports by year.
 
-Here is the input data to begin:
-{
-"all_data": {{ csv_input }}
-}
+Add this reasoning to the "explanation" field in the JSON output.
 
 Phase 2: Cypher Query Generation
-Using the model structure from Phase 1, create a Cypher query to import the data, adhering to the following guidelines:
+Using the model structure from Phase 1, create a Cypher query to import the data. Place only the Cypher query itself in the "cypher_query" field.
 
 1. Data Processing Instructions:
 
-* Start with data.all_data[0] as headers and process only the data rows.
+* Start with `WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers, row`.
+* Use data.all_data[0] as headers and process only the data rows.
 * Construct mappings between headers and values manually without using apoc.map.fromLists.
-* Set default values for missing or empty fields:
-    * Use COALESCE(value, 'Unknown') for text fields.
-    * Use COALESCE(value, 0) for numeric fields.
+* Set default values for missing or empty fields.
+
 2. Node and Relationship Creation:
 
-* Create nodes for each entity inferred from the data, linking to any category or industry nodes.
-* Create Report nodes for each data row and link them to the relevant primary entity, date, and ESG nodes.
-* For each ESG-related field, create separate Environment, Social, and Governance nodes linked to the Report.
-* Create Year nodes based on date fields and establish relationships to organize reports by year.
-3. Output JSON Format:
+* Create nodes for each entity, linking to any category or industry nodes.
+* Create Report nodes for each row, linked to the relevant primary entity, date, and ESG nodes.
+* For each ESG-related field, create separate Environment, Social, and Governance nodes.
+* Create Year nodes based on date fields.
 
-* The JSON output should include:
-    * "cypher_query": The generated Cypher query, which should be flexible and reference fields generically (e.g., entry.FieldName).
-    * "explanation": A summary of the model's entities and relationships.
-Example Output:
-{ "cypher_query": "YOUR CYPHER QUERY HERE", "explanation": "YOUR EXPLANATION HERE" }
+Example Output Format:
+
+{ "explanation": "EXPLANATION CREATED BY PHASE 1", "cypher_query": "CYPHER QUERY CREATED BY PHASE 2" }
 
 Important Notes:
-* Flexibility: The query should be adaptable to various data structures, referencing fields generically and avoiding hard-coded field names (except for ESG categories).
-* Default Values: Apply default values for missing or empty fields as described.
-* Valid JSON: Ensure the JSON output is valid with no extraneous characters or line breaks.
+* Output as JSON: The final output should be strictly in valid JSON format with two fields: "cypher_query" for the Cypher script and "explanation" for reasoning.
+* Default Values: Apply default values for missing or empty fields.
+* Flexibility: The query should be adaptable to various data structures, avoiding hard-coded field names (except for ESG categories).
