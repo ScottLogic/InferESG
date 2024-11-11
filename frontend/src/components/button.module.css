@@ -36,3 +36,7 @@
 .icon {
   margin-right: 8px;
 }
+
+.button:has(.icon) {
+  padding-left: 16px;
+}
