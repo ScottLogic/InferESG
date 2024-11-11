@@ -21,6 +21,7 @@ matplotlib==3.9.1
 pytest-bdd==7.3.0
 langchain==0.3.4
 langchain-openai==0.2.3
+python-multipart==0.0.17
 pillow==10.4.0
 pypdf==4.3.1
 hiredis==3.0.0
