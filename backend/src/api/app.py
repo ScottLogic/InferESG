@@ -1,4 +1,4 @@
-from contextlib import asynccontextmanagerá
+from contextlib import asynccontextmanager
 import logging.config
 import os
 from typing import NoReturn
