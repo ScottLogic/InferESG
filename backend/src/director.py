@@ -2,7 +2,8 @@ import json
 import logging
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
 from src.session import update_session_chat
-from src.agents import get_intent_agent, get_answer_agent, get_knowledge_graph_agent
+from src.agents import get_intent_agent, get_answer_agent
+from src.agents.knowledge_graph_generator_agent import KnowledgeGraphAgent
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
@@ -13,6 +14,7 @@ logger = logging.getLogger(__name__)
 config = Config()
 engine = PromptEngine()
 director_prompt = engine.load_prompt("director")
+knowledge_graph_agent = KnowledgeGraphAgent(config.knowledge_graph_agent_llm, config.knowledge_graph_agent_model)
 
 
 async def question(question: str) -> str:
@@ -44,6 +46,7 @@ async def question(question: str) -> str:
 
     return final_answer
 
+
 async def dataset_upload() -> None:
     dataset_file = "./datasets/bloomberg.csv"
 
@@ -53,7 +56,6 @@ async def dataset_upload() -> None:
             for line in file
         ]
 
-    knowledge_graph_config = await get_knowledge_graph_agent().generate_knowledge_graph(dataset_file, csv_data)
-
+    knowledge_graph_config = await knowledge_graph_agent.generate_knowledge_graph(csv_data)  # type: ignore
 
     populate_db(knowledge_graph_config["cypher_query"], csv_data)
