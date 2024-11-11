@@ -1,9 +1,24 @@
 html,
 body,
 #app-root {
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: 'Roboto', sans-serif;
   height: 100%;
   margin: 0;
+
+  --primary: #f29900;
+  --primary-dark: #f28900;
+  --grey-50: #faf7f5;
+  --grey-100: #f5f2f0;
+  --grey-200: #eeebe9;
+  --grey-300: #e0dddc;
+  --grey-400: #bdbbb9;
+  --grey-500: #9e9c9b;
+  --grey-600: #757473;
+  --grey-700: #62605f;
+  --grey-800: #424141;
+  --grey-900: #212120;
+  --black: #000000;
+  --white: #ffffff;
 
   --background-color-primary: #282828;
   --blue: #007bff;
