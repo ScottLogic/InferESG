@@ -14,7 +14,7 @@ engine = PromptEngine()
     tools=[],
 )
 class KnowledgeGraphAgent(Agent):
-    async def generate_knowledge_graph(self, file_path: str, csv_data: list[list[str]]) -> dict[str, str]:
+    async def generate_knowledge_graph(self, csv_data: list[list[str]]) -> dict[str, str]:
 
         reduced_data_set = csv_data[slice(50)]
 
