@@ -32,8 +32,7 @@ class OpenAI(LLM):
                     "type": "json_object"} if return_json else NOT_GIVEN,
             )
             content = response.choices[0].message.content
-            logger.info(f"OpenAI response: Finish reason: {
-                        response.choices[0].finish_reason}, Content: {content}")
+            logger.info(f"OpenAI response: Finish reason: {response.choices[0].finish_reason}, Content: {content}")
             logger.debug(f"Token data: {response.usage}")
 
             if isinstance(content, str):
