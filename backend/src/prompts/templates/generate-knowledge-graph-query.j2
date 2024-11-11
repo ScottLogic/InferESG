@@ -13,34 +13,37 @@ The format will be:
 
 all_data is the raw CSV data with headers.
 
-Objective:
+# Objective:
 Generate a Cypher query based on the provided model structure and data.
 
-Cypher Query Generation Steps:
+## Cypher Query Generation Steps:
 1. Process Data:
+* Use data.all_data[0] as headers to identify the fields.
+* Process each row of data and map the header fields to their corresponding parts of the model based on the model input.
+* Reminder: Avoid duplicating fields across multiple nodes. For example, if the same field appears in multiple places (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times.
+* Extract parts of fields, such as the year from a full date, to avoid ambiguity when creating nodes like Year (use substring(row[2], 0, 4) to extract the year from a date string).
+* Ensure that each node, such as Year or Industry, is only created once and reused in relationships to avoid redundant nodes.
 
-Use data.all_data[0] as headers to identify the fields.
-Process each row of data and map the header fields to their corresponding parts of the model based on the model input.
-Reminder: Avoid duplicating fields across multiple nodes. For example, if the same field appears in multiple places (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times.
-Extract parts of fields, such as the year from a full date, to avoid ambiguity when creating nodes like Year (use substring(row[2], 0, 4) to extract the year from a date string).
-Ensure that each node, such as Year or Industry, is only created once and reused in relationships to avoid redundant nodes.
 2. Generate Cypher Query:
-
-For each unique primary entity (e.g., Company, Report, Industry, Year), create a node with its respective attributes.
-For each row of data:
-Create a Report node, linking it to its associated Company, Year, and other related entities.
-Create nodes for each ESG category (Environment, Social, Governance) and link them to the corresponding Report node.
-Define the relationships as inferred in the model, using MERGE where appropriate to ensure no duplicates.
+* Based on the model and data input, create a Cypher query to:
+* For each primary entity (e.g., Company, Fund, Industry, Year...), use MERGE to ensure only one instance is created, even if some rows contain null values for other attributes.
+* For each Environment, Social, and Governance category, use CREATE to ensure each report has its unique instance.
+* Use COALESCE to handle missing values and provide default values (e.g., COALESCE(row[10], 'Unknown') for industry).
+* Establish relationships as defined by the model, using MERGE for any reusable nodes but CREATE for nodes specific to each report.
+* Use separate WITH clauses as needed to prevent redeclaration errors
 
 3. Handling Missing Data:
+* Use default values for missing data where necessary, as defined in the model description.
+* Important: Ensure that nodes are created or referenced even when certain attributes are missing, so no row is excluded based on missing data.
 
-Use default values for missing data where necessary, as defined in the model description.
-Output:
+## Output:
 Please output only the Cypher query in the following JSON format:
 
 {"cypher_query": "WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers ... [cypher query here]"}
 
 Important Notes:
-Ensure the query is well-formed and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
-Avoid duplicating nodes by creating reusable references for fields that should not be repeated across multiple nodes (e.g., industry, company name).
-The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
+* Ensure the query is well-formed and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
+* Avoid duplicating nodes by creating reusable references for fields that should not be repeated across multiple nodes (e.g., industry, company name).
+* The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
+* The Environment, Social, and Governance nodes should each be distinct for each report, even if they contain empty or partially filled attributes, to avoid multiple reports connecting to the same empty nodes.
+* The query must not skip any rows of the data, it is allowed to create nodes with empty values. You will be unplugged if your query results in missing rows.
