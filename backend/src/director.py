@@ -2,10 +2,11 @@ import json
 import logging
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
 from src.session import update_session_chat
-from src.agents import get_intent_agent, get_answer_agent
+from src.agents import get_intent_agent, get_answer_agent, get_knowledge_graph_agent
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
+from src.utils.graph_db_utils import populate_db
 from src.websockets.connection_manager import connection_manager
 
 logger = logging.getLogger(__name__)
@@ -42,3 +43,17 @@ async def question(question: str) -> str:
     clear_scratchpad()
 
     return final_answer
+
+async def dataset_upload() -> None:
+    dataset_file = "./datasets/bloomberg.csv"
+
+    with open(dataset_file, 'r') as file:
+        csv_data = [
+            [entry for entry in line.strip('\n').split(",")]
+            for line in file
+        ]
+
+    knowledge_graph_config = await get_knowledge_graph_agent().generate_knowledge_graph(dataset_file, csv_data)
+
+
+    populate_db(knowledge_graph_config["cypher_query"], csv_data)
