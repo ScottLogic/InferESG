@@ -7,21 +7,6 @@ utterance = "Hello there"
 expected_message = "Hello to you too! From InferESG"
 
 
-@pytest.fixture
-def mock_initial_data(mocker):
-    blob_service_client = mocker.patch("src.api.app.BlobServiceClient", return_value=mocker.Mock())
-    container_client = mocker.Mock()
-    blob_service_client.get_container_client.return_value = container_client
-    blob_client = mocker.Mock()
-    container_client.get_blob_client.return_value = blob_client
-    download_stream = mocker.Mock()
-    blob_client.download_blob.return_value = download_stream
-    mock_data = mocker.Mock()
-    mocker.patch("src.api.app.json.loads", return_value=mock_data)
-
-    return mock_data
-
-
 def test_health_check_response_healthy(mocker):
     mock_test_connection = mocker.patch("src.api.app.test_connection", return_value=True)
 
@@ -75,7 +60,7 @@ def test_chat_delete(mocker):
 
 
 @pytest.mark.asyncio
-async def test_lifespan_populates_db(mocker, mock_initial_data) -> None:
+async def test_lifespan_populates_db(mocker) -> None:
     mock_dataset_upload = mocker.patch("src.api.app.dataset_upload", return_value=mocker.Mock())
 
     with client:
