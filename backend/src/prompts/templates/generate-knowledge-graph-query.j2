@@ -20,20 +20,22 @@ Generate a Cypher query based on the provided model structure and data.
 1. Process Data:
 * Use data.all_data[0] as headers to identify the fields.
 * Process each row of data and map the header fields to their corresponding parts of the model based on the model input.
-* Reminder: Avoid duplicating fields across multiple nodes. For example, if the same field appears in multiple places (e.g., company name, industry), create and reference a single node for that field rather than creating it multiple times.
-* Ensure that each node is only created once and reused in relationships to avoid redundant nodes.
+* Primary Entity Uniqueness: For each primary entity (e.g., Company, Fund, Industry), use the MERGE command on a unique identifier (e.g., Identifier for Company, Name for Industry) to ensure only one instance of each primary entity is created. If a node for a primary entity already exists in the graph, it should be reused rather than creating a duplicate.
+* Reminder: Use MERGE on primary entities to avoid duplication, even if some rows contain null values for other attributes. Nodes for these entities should not be recreated for each row and should be reused across relationships.
+* Environment, Social, and Governance Categories: For each report, use CREATE to generate unique nodes for Environment, Social, and Governance, even if they contain only default or empty values. This ensures each report links to its own ESG nodes rather than sharing them across multiple reports.
 
 2. Generate Cypher Query:
-* Based on the model and data input, create a Cypher query to:
-* For each primary entity (e.g., Company, Fund, Industry), use MERGE to ensure only one instance is created, even if some rows contain null values for other attributes.
-* For each Environment, Social, and Governance category, use CREATE to ensure each report has its unique instance.
+Based on the model and data input, create a Cypher query to:
+* Primary Entities: For primary entities (Company, Industry, etc.), use MERGE to ensure each primary entity has a single node instance, with reusable references to avoid redundant nodes.
+* Category-Specific Nodes: For each ESG report, use CREATE for Environment, Social, and Governance nodes so that each report has its own unique instance of these nodes.
 * Use COALESCE to handle missing values and provide default values (e.g., COALESCE(row[10], 'Unknown') for industry).
 * Establish relationships as defined by the model, using MERGE for any reusable nodes but CREATE for nodes specific to each report.
 * Use separate WITH clauses as needed to prevent redeclaration errors
+* Define and Preserve Variables: Ensure all variables, especially unique identifiers like identifier, are declared in WITH clauses and preserved across WITH clauses as needed. This prevents referencing undefined variables in MERGE or other clauses. Any variable declared in a previous WITH should not be redeclared.
 
 3. Handling Missing Data:
 * Use default values for missing data where necessary, as defined in the model description.
-* Important: Ensure that nodes are created or referenced even when certain attributes are missing, so no row is excluded based on missing data.
+* Ensure that nodes are created or referenced even when certain attributes are missing, so no row is excluded based on missing data.
 
 ## Output:
 Please output only the Cypher query in the following JSON format:
@@ -41,8 +43,7 @@ Please output only the Cypher query in the following JSON format:
 {"cypher_query": "WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row WITH headers ... [cypher query here]"}
 
 Important Notes:
-* Ensure the query is well-formed and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
-* Avoid duplicating nodes by creating reusable references for fields that should not be repeated across multiple nodes (e.g., industry, company name).
-* The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
-* The Environment, Social, and Governance nodes should each be distinct for each report, even if they contain empty or partially filled attributes, to avoid multiple reports connecting to the same empty nodes.
-* The query must not skip any rows of the data, it is allowed to create nodes with empty values. You will be unplugged if your query results in missing rows.
+* Ensure the query is well-formed, and that the relationships and node creation follow the structure and model described in the input. The query should handle all data rows and be ready for execution in a Neo4j environment.
+* Avoid Duplicating Primary Entity Nodes: For fields that should not be repeated across multiple nodes (e.g., Industry, Company name), use MERGE to create a single node instance and reference it throughout the query.
+* Unique ESG Nodes per Report: Ensure that each report links to distinct Environment, Social, and Governance nodes, even if they are empty or partially filled, to avoid multiple reports connecting to the same empty nodes.
+* Handle all data rows: The query must not skip any rows of the data. It is allowed to create nodes with empty values, and you will be unplugged if your query results in missing rows.

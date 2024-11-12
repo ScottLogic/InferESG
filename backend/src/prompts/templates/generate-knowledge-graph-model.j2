@@ -11,7 +11,7 @@ Analyze the structure of this data to produce an intuitive Neo4j model, focusing
 
 1. Data Structure:
 * Report: Each row in the dataset represents an ESG report about a company. If there is a date or year in the row, then the report should have a "reported in" relationship to the company which contains the date / year.
-* Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Fund, or other core entities in the dataset) and map out each unique entity's attributes. Favour full names over abbreviations.
+* Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Fund, or other core entities in the dataset) and how they relate to other categories in the data. Favour full names over abbreviations.
 * Identify Common Categories: Based on the data, determine common categories that appear in the data. Look for recurring values that appear in the same csv column and map these out as nodes with relationships to the main entity types.
 * Determine Relationships: Define the relationships between these entities, such as associating entities with reports, linking entities to specific time periods, or establishing hierarchical or categorical groupings within the data.
 * Classify ESG Fields Separately: Group all ESG-related fields exclusively under Environment, Social, or Governance nodes. Ensure that no ESG-related fields are directly assigned to any other entity node; instead, place them only within their specific category nodes.
@@ -19,7 +19,8 @@ Analyze the structure of this data to produce an intuitive Neo4j model, focusing
 
 2. Output Model Structure:
 Describe Entities:
-* Example: Company: Represents each company with attributes like name and identifier.
+* Example: Report: Represents all the information about a company in a snapshot of time. Numerical attributes associated with the company that change throughout the input data should be captured on the report.
+* Example: Company: Represents each company and contains general information, that is not specific to a specific point in time.
 * Example: Environment, Social, Governance: Each node represents one ESG category, containing only fields relevant to that specific category (e.g., CO2 emissions for Environment, injury rate for Social, and shareholder rights for Governance).
 
 Describe Relationships:
@@ -42,3 +43,4 @@ Important Notes:
 * Avoid duplicating fields across nodes. Assign each field only to the most appropriate entity or category node.
 * Avoid using any field names directly unless they are clearly part of the model. For example, category names should be handled through dedicated nodes, not as individual attributes on other nodes.
 * The output should be valid JSON with no line breaks or markdown. Do not add line breaks or markdown to the output.
+* Do not make date or year as a node, it must always be a relationship
