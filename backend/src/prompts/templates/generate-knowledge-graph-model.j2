@@ -7,21 +7,18 @@ The input data is formatted as JSON:
 Here, all_data is a list of lists, where each inner list corresponds to a row of data, and the first row contains the headers.
 
 # Objective:
-Analyze the structure of this data to produce an intuitive Neo4j model, focusing on identifying core entities, attributes, and relationships. Then generate a Cypher query to import the data according to this model.
+Analyze the structure of this data to produce an intuitive Neo4j model, focusing on identifying core entities, attributes, and relationships.
 
-## Data Model Inference
-Output a comprehensive model of the data in the "model" field of the JSON response.
-
-## Data Structure:
+1. Data Structure:
 * Report: Each row in the dataset represents an ESG report about a company. This can be represented as a node.
 * Identify Key Entities: Based on the data headers, determine the main entity types (e.g., Company, Fund, or other core entities in the dataset) and map out each unique entity's attributes. Favour full names over abbreviations.
 * Identify Common Categories: Based on the data, determine common categories that appear in the data. Look for recurring values that appear in the same csv column and map these out as nodes with relationships to the main entity types.
 * Determine Relationships: Define the relationships between these entities, such as associating entities with reports, linking entities to specific time periods, or establishing hierarchical or categorical groupings within the data.
 * Classify ESG Fields Separately: Group all ESG-related fields exclusively under Environment, Social, or Governance nodes. Ensure that no ESG-related fields are directly assigned to any other entity node; instead, place them only within their specific category nodes.
 * Attribute Assignment: Ensure that each attribute is assigned to only one appropriate entity or category node without duplicating fields across nodes.
-Output Model Structure:
 
-## Describe Entities:
+2. Output Model Structure:
+Describe Entities:
 * Example: Company: Represents each company with attributes like name and identifier.
 * Example: Year: Represents each distinct time period, based on date-related fields.
 * Example: Environment, Social, Governance: Each node represents one ESG category, containing only fields relevant to that specific category (e.g., CO2 emissions for Environment, injury rate for Social, and shareholder rights for Governance).
