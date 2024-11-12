@@ -25,11 +25,11 @@ Describe Entities:
 
 Describe Relationships:
 * Example: (Entity1)-[:HAS_ENTITY2]->(Entity2): Links between main entities, such as companies, years, or categories.
-* Example: (MainEntity)-[:REPORTED_ON {date: "YYYY-MM-DD"}]->(Report) or (MainEntity)-[:REPORTED_ON {year: "YYYY"}]->(Report): Links each report to its main entity, using the REPORTED_ON relationship with an attribute for the report date.
+* Example: (MainEntity)-[:HAS_REPORT {date: "YYYY-MM-DD"}]->(Report) or (MainEntity)-[:HAS_REPORT {year: "YYYY"}]->(Report): Links each report to its main entity, using the HAS_REPORT relationship with an attribute for the report date.
 * Example: (MainEntity)-[:BELONGS_TO]->(CategoryNode): Links main entities to a categorical node for any recurring category (such as industries or sectors).
-* Example: (Report)-[:HAS_ENVIRONMENT]->(Environment): Connects main entities to the Environment category node for environment-specific metrics.
-* Example: (Report)-[:HAS_SOCIAL]->(Social): Links main entities to the Social category node for social-specific metrics.
-* Example: (Report)-[:HAS_GOVERNANCE]->(Governance): Links main entities to the Governance category node for governance-specific metrics.
+* Example: (Report)-[:HAS_ESG_ENVIRONMENTAL_METRICS]->(Environment): Connects main entities to the Environment category node for environment-specific metrics.
+* Example: (Report)-[:HAS_ESG_SOCIAL_METRICS]->(Social): Links main entities to the Social category node for social-specific metrics.
+* Example: (Report)-[:HAS_ESG_GOVERNANCE_METRICS]->(Governance): Links main entities to the Governance category node for governance-specific metrics.
 
 Please provide the inferred model structure in the "model" field of the JSON output, specifying entities, attributes, and relationships. The output must explicitly link each header in the input data to the corresponding part of the model.
 

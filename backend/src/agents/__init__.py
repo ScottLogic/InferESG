@@ -1,14 +1,15 @@
 from typing import List
 from src.utils import Config
-from .agent import Agent, agent
-from .datastore_agent import DatastoreAgent
-from .web_agent import WebAgent
-from .intent_agent import IntentAgent
-from .tool import tool, Parameter
-from .validator_agent import ValidatorAgent
-from .answer_agent import AnswerAgent
-from .chart_generator_agent import ChartGeneratorAgent
-from .file_agent import FileAgent
+from src.agents.agent import Agent, agent
+from src.agents.datastore_agent import DatastoreAgent
+from src.agents.web_agent import WebAgent
+from src.agents.intent_agent import IntentAgent
+from src.agents.tool import tool, Parameter
+from src.agents.validator_agent import ValidatorAgent
+from src.agents.answer_agent import AnswerAgent
+from src.agents.chart_generator_agent import ChartGeneratorAgent
+from src.agents.file_agent import FileAgent
+from src.agents.knowledge_graph_generator_agent import KnowledgeGraphAgent
 
 
 config = Config()
@@ -24,6 +25,10 @@ def get_intent_agent() -> Agent:
 
 def get_answer_agent() -> Agent:
     return AnswerAgent(config.answer_agent_llm, config.answer_agent_model)
+
+
+def get_knowledge_graph_agent() -> KnowledgeGraphAgent:
+    return KnowledgeGraphAgent(config.knowledge_graph_agent_llm, config.knowledge_graph_agent_model)
 
 
 def agent_details(agent) -> dict:
