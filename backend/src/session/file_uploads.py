@@ -51,8 +51,8 @@ def update_session_file_uploads(file_upload:FileUpload):
     redis_client.set(UPLOADS_KEY_PREFIX + file_upload["uploadId"], json.dumps(file_upload))
 
 
-def clear_session_file_uploads_meta():
-    logger.info("File Uploads session cleared")
+def clear_session_file_uploads():
+    logger.info("Clearing file uploads from session")
 
     meta_list = get_session(UPLOADS_META_SESSION_KEY, [])
 

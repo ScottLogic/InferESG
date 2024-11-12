@@ -4,7 +4,11 @@ import ChatIcon from '../icons/chat.svg';
 import { Button } from './button';
 import logo from '../icons/primary-logo-dark.svg';
 
-export const NavBar = () => {
+interface NavbarProps {
+  startNewConversation: () => void;
+}
+
+export const NavBar = ({ startNewConversation }: NavbarProps) => {
   return (
     <div className={styles.container}>
       <div>
@@ -14,9 +18,7 @@ export const NavBar = () => {
         <Button
           icon={ChatIcon}
           text="Start new chat"
-          onClick={() => {
-            console.log('Start new chat');
-          }}
+          onClick={startNewConversation}
         />
       </div>
     </div>

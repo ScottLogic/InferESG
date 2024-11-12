@@ -5,9 +5,11 @@ import logging.config
 import os
 from azure.storage.blob import BlobServiceClient
 from typing import NoReturn
-from fastapi import FastAPI, HTTPException, WebSocket, UploadFile
+from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from src.session.file_uploads import clear_session_file_uploads
+from src.session.redis_session_middleware import reset_session
 from src.utils.graph_db_utils import populate_db
 from src.utils import Config, test_connection
 from src.director import question
@@ -94,6 +96,18 @@ async def chat(utterance: str):
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=chat_fail_response)
+
+@app.delete("/chat")
+async def clear_chat():
+    logger.info("Delete the chat session")
+    try:
+        # clear files first as need session data for file keys
+        clear_session_file_uploads()
+        reset_session()
+        return Response(status_code=204)
+    except Exception as e:
+        logger.exception(e)
+        return Response(status_code=500)
 
 
 @app.get("/suggestions")
