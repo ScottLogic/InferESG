@@ -17,16 +17,16 @@ Reply only in JSON format with the following structure:
 ```json
 {
     "answer": "The answer to the user's question, based on the content provided",
-    "search_more": true or false,
-    "search_more_reason": "A sentence explaining whether the answer is valid or not, and why"
+    "perform_web_search": true or false,
+    "perform_web_search_reason": "A sentence explaining whether the answer is valid or not, and why"
 }
 
 
 ### **Explanation:**
 
 1. **Answer**: The LLM generates an answer based on the user’s question and the provided content.
-2. **Search More**: If a more general web search using a web search engine is required then indicate that, it should set this field to true.
-3. **Search More Reason**: The LLM explains why further web search is required.
+2. **Should Perform Web Search**: If a more general web search using a web search engine is required then indicate that, it should set this field to true.
+3. **Perform Web Search Reason**: The LLM explains why further web search is required.
 
 ### **Example of Usage:**
 
@@ -41,14 +41,14 @@ Reply only in JSON format with the following structure:
 ```json
 {
     "answer": "Tesla's revenue since its creation is: 2008: $15 million, 2009: $30 million, ..., 2023: $81 billion.",
-    "search_more": false,
-    "search_more_reason": "The answer includes Tesla's revenue for every year since its creation, based on the data provided. No further search is required."
+    "perform_web_search": false,
+    "perform_web_search_reason": "The answer includes Tesla's revenue for every year since its creation, based on the data provided. No further search is required."
 }
 
 {
     "answer": "Tesla's revenue for 2010 to 2023 is available, but data for the earlier years is missing.",
-    "search_more": true,
-    "search_more_reason": "The answer is incomplete because data for Tesla's early years is missing. A more general web search is required."
+    "perform_web_search": true,
+    "perform_web_search_reason": "The answer is incomplete because data for Tesla's early years is missing. A more general web search is required."
 }
 
-Important: If the question is related to real time data, the LLM should provide search_more is true.
+Important: If the question is related to real time data, the LLM should provide perform_web_search is true.

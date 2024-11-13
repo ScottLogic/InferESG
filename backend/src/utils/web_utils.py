@@ -81,9 +81,9 @@ async def create_search_term(search_query, llm, model) -> str:
             }
         )
 
-async def answer_user_ques(search_query, llm, model) -> str:
+async def answer_user_question(search_query, llm, model) -> str:
     try:
-        summariser_prompt = engine.load_prompt("answer-user-ques", question=search_query)
+        summariser_prompt = engine.load_prompt("answer-user-question", question=search_query)
         response = await llm.chat(model, summariser_prompt, "", return_json=True)
         return json.dumps(
             {

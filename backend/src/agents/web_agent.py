@@ -11,7 +11,7 @@ from src.utils.web_utils import (
     summarise_pdf_content,
     find_info,
     create_search_term,
-    answer_user_ques
+    answer_user_question
 )
 from .validator_agent import ValidatorAgent
 import aiohttp
@@ -29,7 +29,7 @@ engine = PromptEngine()
 async def web_general_search_core(search_query, llm, model) -> str:
     try:
         # Step 1: Generate the search term from the user's query
-        answer_to_user = await answer_user_ques(search_query, llm, model)
+        answer_to_user = await answer_user_question(search_query, llm, model)
         answer_result = json.loads(answer_to_user)
         if answer_result["status"] == "error":
             response = {
@@ -38,8 +38,8 @@ async def web_general_search_core(search_query, llm, model) -> str:
                 }
             return json.dumps(response, indent=4)
         logger.info(f'Answer found successfully {answer_result}')
-        search_more = json.loads(answer_result["response"]).get("search_more", "")
-        if not search_more:
+        perform_web_search = json.loads(answer_result["response"]).get("perform_web_search", "")
+        if not perform_web_search:
             final_answer = json.loads(answer_result["response"]).get("answer", "")
             if not final_answer:
                 return "No answer found."
@@ -239,6 +239,8 @@ async def perform_search(search_query: str, num_results: int) -> Dict[str, Any]:
 
 async def perform_scrape(url: str) -> str:
     try:
+        if not str(url).startswith("https"):
+            return ""
         scrape_result_json = await scrape_content(url)
         scrape_result = json.loads(scrape_result_json)
         if scrape_result["status"] == "error":
