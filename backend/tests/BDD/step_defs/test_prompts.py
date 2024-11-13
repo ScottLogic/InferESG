@@ -39,43 +39,47 @@ def check_response_includes_expected_response(context, prompt, expected_response
     response = send_prompt(prompt)
     actual_response = response.json()
 
-    try:
-        expected_value = Decimal(str(expected_response).strip())
-        actual_value = Decimal(str(actual_response).strip())
+    # Allow `expected_response` to be a list of possible valid responses
+    possible_responses = [resp.strip() for resp in expected_response.split(",")]
 
-        tolerance = Decimal("0.01")
-        is_equal = abs(expected_value - actual_value) <= tolerance
+    match_found = False
+    for expected_resp in possible_responses:
+        try:
+            expected_value = Decimal(expected_resp)
+            actual_value = Decimal(str(actual_response).strip())
 
-        if not is_equal:
-            pytest.fail(f"\nNumeric values don't match!\n" f"Expected: {expected_value}\n" f"Actual: {actual_value}")
+            tolerance = Decimal("0.01")
+            if abs(expected_value - actual_value) <= tolerance:
+                match_found = True
+                break  # Exit loop if a match is found
 
-    except (ValueError, decimal.InvalidOperation):
-        expected_str = str(expected_response).strip()
-        actual_str = str(actual_response).strip()
+        except (ValueError, decimal.InvalidOperation):
+            if expected_resp in str(actual_response).strip():
+                match_found = True
+                break
 
-        logger.info(f"Expected : {expected_str} \nActual: {actual_str}")
+    if not match_found:
+        # Fallback to the correctness evaluator if none of the options matched
+        result = correctness_evaluator.evaluate_strings(
+            input=prompt,
+            prediction=expected_response,
+            reference=actual_response,
+        )
 
-        if actual_str.find(expected_str) == -1:
-            result = correctness_evaluator.evaluate_strings(
-                input=prompt,
-                prediction=expected_str,
-                reference=actual_str,
-            )
-
-            if result["value"] == "N":
-                logger.error(
-                    f"\nTest failed!\n"
-                    f"Expected: {expected_str}\n"
-                    f"Actual: {actual_str}\n"
-                    f"Reasoning: {result.get('reasoning', 'No reasoning provided')}"
-                )
-
-            assert result["value"] == "Y", (
+        if result["value"] == "N":
+            logger.error(
                 f"\nTest failed!\n"
-                f"Expected: {expected_str}\n"
-                f"Actual: {actual_str}\n"
+                f"Expected one of: {possible_responses}\n"
+                f"Actual: {actual_response}\n"
                 f"Reasoning: {result.get('reasoning', 'No reasoning provided')}"
             )
+
+        assert result["value"] == "Y", (
+            f"\nTest failed!\n"
+            f"Expected one of: {possible_responses}\n"
+            f"Actual: {actual_response}\n"
+            f"Reasoning: {result.get('reasoning', 'No reasoning provided')}"
+        )
 
 
 @then(parsers.parse("the response to this '{prompt}' should give a confident answer"))
