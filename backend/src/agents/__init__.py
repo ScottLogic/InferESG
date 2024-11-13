@@ -9,7 +9,7 @@ from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.file_agent import FileAgent
-from src.agents.knowledge_graph_generator_agent import KnowledgeGraphAgent
+from src.agents.knowledge_graph_agent import KnowledgeGraphAgent
 
 
 config = Config()
