@@ -2,7 +2,8 @@ import json
 import logging
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
 from src.session import update_session_chat
-from src.agents import get_intent_agent, get_answer_agent, get_knowledge_graph_agent
+from src.agents import get_intent_agent, get_answer_agent
+from src.utils.dynamic_knowledge_graph import generate_dynamic_knowledge_graph
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
@@ -54,6 +55,6 @@ async def dataset_upload() -> None:
             for line in file
         ]
 
-    knowledge_graph_config = await get_knowledge_graph_agent().generate_knowledge_graph(csv_data)  # type: ignore
+    knowledge_graph_config = await generate_dynamic_knowledge_graph(csv_data)
 
     populate_db(knowledge_graph_config["cypher_query"], csv_data)

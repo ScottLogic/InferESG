@@ -9,7 +9,6 @@ from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.file_agent import FileAgent
-from src.agents.knowledge_graph_agent import KnowledgeGraphAgent
 
 
 config = Config()
@@ -25,10 +24,6 @@ def get_intent_agent() -> Agent:
 
 def get_answer_agent() -> Agent:
     return AnswerAgent(config.answer_agent_llm, config.answer_agent_model)
-
-
-def get_knowledge_graph_agent() -> KnowledgeGraphAgent:
-    return KnowledgeGraphAgent(config.knowledge_graph_agent_llm, config.knowledge_graph_agent_model)
 
 
 def agent_details(agent) -> dict:

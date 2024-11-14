@@ -28,7 +28,7 @@ class Config(object):
         self.file_agent_llm = None
         self.router_llm = None
         self.suggestions_llm = None
-        self.knowledge_graph_agent_llm = None
+        self.dynamic_knowledge_graph_llm = None
         self.validator_agent_model = None
         self.intent_agent_model = None
         self.answer_agent_model = None
@@ -41,7 +41,7 @@ class Config(object):
         self.redis_host = default_redis_host
         self.redis_cache_duration = default_redis_cache_duration
         self.suggestions_model = None
-        self.knowledge_graph_agent_model = None
+        self.dynamic_knowledge_graph_model = None
         self.load_env()
 
     def load_env(self):
@@ -69,7 +69,7 @@ class Config(object):
             self.maths_agent_llm = os.getenv("MATHS_AGENT_LLM")
             self.router_llm = os.getenv("ROUTER_LLM")
             self.suggestions_llm = os.getenv("SUGGESTIONS_LLM")
-            self.knowledge_graph_agent_llm = os.getenv("KNOWLEDGE_GRAPH_AGENT_LLM")
+            self.dynamic_knowledge_graph_llm = os.getenv("DYNAMIC_KNOWLEDGE_GRAPH_LLM")
             self.answer_agent_model = os.getenv("ANSWER_AGENT_MODEL")
             self.intent_agent_model = os.getenv("INTENT_AGENT_MODEL")
             self.validator_agent_model = os.getenv("VALIDATOR_AGENT_MODEL")
@@ -82,7 +82,7 @@ class Config(object):
             self.redis_host = os.getenv("REDIS_HOST", default_redis_host)
             self.redis_cache_duration = os.getenv("REDIS_CACHE_DURATION", default_redis_cache_duration)
             self.suggestions_model = os.getenv("SUGGESTIONS_MODEL")
-            self.knowledge_graph_agent_model = os.getenv("KNOWLEDGE_GRAPH_AGENT_MODEL")
+            self.dynamic_knowledge_graph_model = os.getenv("DYNAMIC_KNOWLEDGE_GRAPH_MODEL")
         except FileNotFoundError:
             raise FileNotFoundError("Please provide a .env file. See the Getting Started guide on the README.md")
         except Exception:
