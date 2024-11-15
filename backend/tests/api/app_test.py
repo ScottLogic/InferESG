@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 import pytest
+from src.chat_storage_service import ChatResponse
 from src.api import app, healthy_response, unhealthy_neo4j_response, chat_fail_response
 
 client = TestClient(app)
@@ -73,6 +74,23 @@ def test_chat_delete(mocker):
 
     assert response.status_code == 204
 
+def test_chat_message_success(mocker):
+    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning")
+    mock_get_chat_message = mocker.patch("src.api.app.get_chat_message", return_value=message)
+
+    response = client.get("/chat/123")
+
+    mock_get_chat_message.assert_called_with("123")
+    assert response.status_code == 200
+    assert response.json() == message
+
+def test_chat_message_not_found(mocker):
+    mock_get_chat_message = mocker.patch("src.api.app.get_chat_message", return_value=None)
+
+    response = client.get("/chat/123")
+
+    mock_get_chat_message.assert_called_with("123")
+    assert response.status_code == 404
 
 @pytest.mark.asyncio
 async def test_lifespan_populates_db(mocker, mock_initial_data) -> None:

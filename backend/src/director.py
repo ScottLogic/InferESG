@@ -1,5 +1,9 @@
 import json
 import logging
+from uuid import uuid4
+
+from src.utils.json import try_pretty_print
+from src.chat_storage_service import ChatResponse, store_chat_message
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
 from src.session import update_session_chat
 from src.agents import get_intent_agent, get_answer_agent
@@ -13,8 +17,7 @@ config = Config()
 engine = PromptEngine()
 director_prompt = engine.load_prompt("director")
 
-
-async def question(question: str) -> str:
+async def question(question: str) -> ChatResponse:
     intent = await get_intent_agent().invoke(question)
     intent_json = json.loads(intent)
     update_session_chat(role="user", content=question)
@@ -33,12 +36,22 @@ async def question(question: str) -> str:
             generated_figure = entry["result"]
             await connection_manager.send_chart({"type": "image", "data": generated_figure})
             clear_scratchpad()
-            return ""
+            return ChatResponse(id=str(uuid4()),
+                                question=question,
+                                answer="",
+                                reasoning=try_pretty_print(current_scratchpad))
 
     final_answer = await get_answer_agent().invoke(question)
     update_session_chat(role="system", content=final_answer)
     logger.info(f"final answer: {final_answer}")
 
+    response = ChatResponse(id=str(uuid4()),
+                            question=question,
+                            answer=final_answer,
+                            reasoning=try_pretty_print(current_scratchpad))
+
+    store_chat_message(response)
+
     clear_scratchpad()
 
-    return final_answer
+    return response

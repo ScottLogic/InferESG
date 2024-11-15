@@ -8,6 +8,7 @@ from typing import NoReturn
 from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from src.chat_storage_service import get_chat_message
 from src.session.file_uploads import clear_session_file_uploads
 from src.session.redis_session_middleware import reset_session
 from src.utils.graph_db_utils import populate_db
@@ -109,6 +110,17 @@ async def clear_chat():
         logger.exception(e)
         return Response(status_code=500)
 
+@app.get("/chat/{id}")
+def chat_message(id: str):
+    logger.info(f"Get chat message called with id: {id}")
+    try:
+        final_result = get_chat_message(id)
+        if final_result is None:
+            return JSONResponse(status_code=404, content=f"Message with id {id} not found")
+        return JSONResponse(status_code=200, content=final_result)
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=chat_fail_response)
 
 @app.get("/suggestions")
 async def suggestions():

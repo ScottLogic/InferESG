@@ -1,9 +1,12 @@
 export interface ChatMessageResponse {
-  message: string;
+  id?: string;
+  question?: string;
+  answer: string;
+  reasoning?: string;
 }
 
 function createChatMessageResponse(message: string): ChatMessageResponse {
-  return { message };
+  return { answer: message };
 }
 
 export const getResponse = async (
@@ -50,9 +53,6 @@ const callChatEndpoint = async (
       return response;
     })
     .then((response) => response.json())
-    .then((responseJson) => {
-      return createChatMessageResponse(responseJson);
-    })
     .catch((error) => {
       console.error('Error making REST call to /chat: ', error);
       return unhappyChatResponse;
@@ -63,9 +63,7 @@ export const getSuggestions = async (): Promise<string[]> => {
   return await fetch(`${process.env.BACKEND_URL}/suggestions`, {
     credentials: 'include',
   })
-    .then((response) => {
-      return response.json();
-    })
+    .then((response) => response.json())
     .catch((error) => {
       console.error('Error making REST call to /suggestions: ', error);
       return [];
