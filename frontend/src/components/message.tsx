@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import styles from './message.module.css';
-import UserIcon from '../icons/user.svg';
-import BotIcon from '../icons/cpu.svg';
+import UserIcon from '../icons/account-circle.svg';
+import BotIcon from '../icons/logomark.svg';
 
 export enum Role {
   User = 'User',
@@ -42,8 +42,8 @@ export const MessageComponent = ({ message }: MessageProps) => {
 
   return (
     <div className={classNames(styles.container, roleClass)}>
-      <img src={icon} />
-      <p>{content}</p>
+      <img src={icon} className={styles.iconStyle} />
+      <p className={styles.messageStyle}>{content}</p>
     </div>
   );
 };
