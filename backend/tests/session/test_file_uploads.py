@@ -3,7 +3,7 @@ import pytest
 from unittest.mock import patch, MagicMock
 from starlette.requests import Request
 from starlette.responses import Response
-from src.session.file_uploads import (FileUpload, clear_session_file_uploads_meta, get_session_file_upload,
+from src.session.file_uploads import (FileUpload, clear_session_file_uploads, get_session_file_upload,
                                        get_session_file_uploads_meta, update_session_file_uploads)
 
 @pytest.fixture
@@ -73,7 +73,7 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
 
     update_session_file_uploads(file_upload=file)
 
-    clear_session_file_uploads_meta()
+    clear_session_file_uploads()
     assert get_session_file_uploads_meta() == []
     mock_redis.delete.assert_called_with("file_upload_1234")
 
@@ -82,7 +82,7 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
     assert get_session_file_uploads_meta() == [ {'filename': 'test.txt', 'uploadId': '1234'},
                                                {'filename': 'test2.txt', 'uploadId': '12345'}]
 
-    clear_session_file_uploads_meta()
+    clear_session_file_uploads()
     assert get_session_file_uploads_meta() == []
     mock_redis.delete.assert_called_with("file_upload_1234 file_upload_12345")
 

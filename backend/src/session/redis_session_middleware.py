@@ -56,6 +56,10 @@ def set_session(key: str, value):
     request: Request = request_context.get()
     request.state.session[key] = value
 
+def reset_session():
+    logger.info("Reset chat session")
+    request: Request = request_context.get()
+    request.state.session = {}
 
 def get_redis_session(request: Request):
     session_id = request.cookies.get(SESSION_COOKIE_NAME)

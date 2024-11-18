@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Message, MessageComponent } from './message';
 import styles from './chat.module.css';
 import { Waiting } from './waiting';
-import { ConnectionStatus } from './connection-status';
 import {
   WebsocketContext,
   MessageType,
@@ -26,7 +25,7 @@ const mapWsMessageToConfirmation = (
 
 export const Chat = ({ messages, waiting }: ChatProps) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const { isConnected, lastMessage, send } = useContext(WebsocketContext);
+  const { lastMessage, send } = useContext(WebsocketContext);
   const [chart, setChart] = useState<string | undefined>(undefined);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
 
@@ -55,7 +54,6 @@ export const Chat = ({ messages, waiting }: ChatProps) => {
         send={send}
       />
       <div ref={containerRef} className={styles.container}>
-        <ConnectionStatus isConnected={isConnected} />
         {messages.map((message, index) => (
           <MessageComponent key={index} message={message} />
         ))}

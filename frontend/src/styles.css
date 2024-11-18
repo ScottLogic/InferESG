@@ -26,6 +26,6 @@ body,
   --text-color-primary: #ffffff;
   --text-color-secondary: #899090;
 
-  background-color: var(--background-color-primary);
-  color: var(--text-color-primary);
+  background-color: var(--grey-200);
+  color: var(--grey-900);
 }

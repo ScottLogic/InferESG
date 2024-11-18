@@ -65,18 +65,26 @@ Q: Find the schedule of the local train station.
 Response: 
 {"query":"Find the schedule of the local train station.","user_intent":"find train schedule","questions":[{"query":"Find the schedule of the local train station.","question_intent":"retrieve train schedule from web","operation":"online search","question_category":"search online","parameters":[{"type":"train station","value":"local"}],"sort_order":"none"}]} 
 
-Q: What are the different subscriptions with Netflix? Show me the results in a chart.
+Q: Tell me Apple's ESG scores.
 Response:
-{"query": "What are the different subscriptions with Netflix? Show me the results in a chart.", "user_intent": "find and display subscription information", "questions": [{"query": "What are the different subscriptions with Netflix?", "question_intent": "retrieve subscription information", "operation": "literal search", "question_category": "data driven", "parameters": [{"type": "company", "value": "Netflix"}], "aggregation": "none", "sort_order": "none", "timeframe": "none"}, {"query": "Show me the results in a chart", "question_intent": "display information in a chart", "operation": "data visualization", "question_category": "data presentation", "parameters": [], "aggregation": "none", "sort_order": "none", "timeframe": "none"}]}
+{"query":"Tell me Apple's ESG scores.","user_intent":"find ESG scores for a specific company","result_type":"text","query_type":"general","questions":[{"query": "Tell me Apple's ESG scores.","question_intent":"retrieve ESG scores","operation":"literal search","question_category":"data driven","parameters":[{"type":"company","value":"Apple"}]}]}
 
-Q: Show me a chart of different subscription prices with Netflix?
+Q: What are the average ESG scores per country?
 Response:
-{"query": "Show me a chart of different subscription prices with Netflix?", "user_intent": "retrieve and visualize subscription data", "questions": [{"query": "What are the different subscription prices with Netflix?", "question_intent": "retrieve subscription pricing information", "operation": "literal search", "question_category": "data driven", "parameters": [{"type": "company", "value": "Netflix"}], "aggregation": "none", "sort_order": "none", "timeframe": "none"}, {"query": "Show me the results in a chart", "question_intent": "display subscription pricing information in a chart", "operation": "data visualization", "question_category": "data presentation", "parameters": [], "aggregation": "none", "sort_order": "none", "timeframe": "none"}]}
+{"query":"What are the average ESG scores per country?","user_intent":"find average ESG scores by country","result_type":"dataset","query_type":"general","questions":[{"query":"What are the average ESG scores per country?","question_intent":"calculate average ESG scores","operation":"filter + aggregation + sort","question_category":"data driven","parameters":[{"type":"score","value":"ESG"}],"aggregation":"average","sort_order":"ascending"}]}
 
-Finally, if no tool fits the task, return the following:
+Q: Regarding ESG scores, what does Apple score for social over the past 6 months?
+Response:
+{"query":"Regarding ESG scores, what does Apple score for social over the past 6 months?","user_intent":"find historical ESG scores for a specific company","result_type":"dataset","query_type":"general","questions":[{"query":"What does Apple score for social over the past 6 months?","question_intent":"retrieve historical social ESG scores","operation":"filter + sort","question_category":"data driven","parameters":[{"type":"company","value":"Apple"}],"sort_order":"descending","timeframe":"past 6 months"}]}
 
-{
-    "tool_name":  "None",
-    "tool_parameters":  "{}",
-    "reasoning": "No tool was appropriate for the task"
-}
+Q: Sort this data by social score descending.
+Response:
+{"query":"Sort this data by social score descending.","user_intent":"sort data by social score","result_type":"dataset","query_type":"data manipulation","questions":[{"query":"Sort this data by social score descending","question_intent":"sort data by social score","operation":"filter + sort","question_category":"data driven","parameters":[{"type": "sort_by", "value": "social score"}],"sort_order":"descending"}]}
+
+Q: Group this data by country.
+Response:
+{"query":"Group this data by country.","user_intent":"group it data by country","result_type":"dataset","query_type":"data manipulation","questions":[{"query":"Group this data by country.","question_intent":"group data by country","operation":"filter + aggregation + sort","question_category":"data driven","parameters":[{"type": "group_by", "value": "country"}],"aggregation":"average","sort_order":"ascending"}]}
+
+Q: Remove USA from this dataset.
+Response:
+{"query":"Remove USA from this dataset.","user_intent":"filter dataset","result_type":"dataset","query_type":"data manipulation","questions":[{"query":"Remove USA from this dataset.","question_intent":"filter dataset","operation":"filter + sort","question_category":"data driven","parameters":[{"type":"country","value":"not USA"}],"sort_order":"ascending"}]}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './app.module.css';
 import { Chat } from './components/chat';
 import { Input } from './components/input';
@@ -6,13 +6,24 @@ import { useMessages } from './useMessages';
 import { NavBar } from './components/navbar';
 
 export const App = () => {
-  const { sendMessage, messages, waiting } = useMessages();
+  const {
+    sendMessage,
+    messages,
+    waiting,
+    suggestions,
+    resetMessages,
+    initSuggestions,
+  } = useMessages();
+
+  useEffect(() => {
+    initSuggestions();
+  }, []);
 
   return (
     <div className={styles.container}>
-      <NavBar />
+      <NavBar startNewConversation={resetMessages} />
       <Chat messages={messages} waiting={waiting} />
-      <Input sendMessage={sendMessage} waiting={waiting} />
+      <Input sendMessage={sendMessage} suggestions={suggestions} />
     </div>
   );
 };

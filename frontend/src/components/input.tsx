@@ -12,10 +12,10 @@ import { Suggestions } from './suggestions';
 
 export interface InputProps {
   sendMessage: (message: string) => void;
-  waiting: boolean;
+  suggestions: string[];
 }
 
-export const Input = ({ sendMessage, waiting }: InputProps) => {
+export const Input = ({ sendMessage, suggestions }: InputProps) => {
   const [userInput, setUserInput] = useState<string>('');
 
   const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ export const Input = ({ sendMessage, waiting }: InputProps) => {
           <img src={RightArrow} />
         </button>
       </form>
-      <Suggestions loadPrompt={setUserInput} waiting={waiting} />
+      <Suggestions loadPrompt={setUserInput} suggestions={suggestions} />
     </>
   );
 };
