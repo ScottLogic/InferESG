@@ -24,6 +24,7 @@ export const App = () => {
       <NavBar startNewConversation={resetMessages} />
       <Chat messages={messages} waiting={waiting} />
       <Input
+        key={messages?.[0]?.time}
         sendMessage={sendMessage}
         waiting={waiting}
         suggestions={suggestions}
