@@ -3,22 +3,39 @@
   border-radius: 20px;
 }
 
+.button_container:not(:has(.withText)) {
+  border-radius: 24px;
+}
+
 .button {
-  height: 40px;
   box-sizing: border-box;
   color: var(--grey-900);
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  border-radius: 20px;
   border: none;
-  padding: 0 24px;
   background-color: transparent;
   display: inline-flex;
   align-items: center;
 }
 
-.button:hover {
+.withText {
+  height: 40px;
+  padding: 0 24px;
+  padding-left: 16px;
+  border-radius: 20px;
+}
+
+.iconOnly {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:not(:disabled):hover {
   background-color: rgb(255 255 255 / 0.15);
   box-shadow: 0 1px 4px 0 rgb(0 0 0 / 0.2);
   cursor: pointer;
@@ -33,10 +50,10 @@
   opacity: 0.5;
 }
 
-.icon {
+.iconBaseStyle {
   margin-right: 8px;
 }
 
-.button:has(.icon) {
-  padding-left: 16px;
+.iconOnlyStyle {
+  margin: 0;
 }

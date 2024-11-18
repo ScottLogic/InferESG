@@ -23,7 +23,11 @@ export const App = () => {
     <div className={styles.container}>
       <NavBar startNewConversation={resetMessages} />
       <Chat messages={messages} waiting={waiting} />
-      <Input sendMessage={sendMessage} suggestions={suggestions} />
+      <Input
+        sendMessage={sendMessage}
+        waiting={waiting}
+        suggestions={suggestions}
+      />
     </div>
   );
 };
