@@ -38,8 +38,8 @@ async def web_general_search_core(search_query, llm, model) -> str:
                 }
             return json.dumps(response, indent=4)
         logger.info(f'Answer found successfully {answer_result}')
-        perform_web_search = json.loads(answer_result["response"]).get("should_perform_web_search", "")
-        if not perform_web_search:
+        should_perform_web_search = json.loads(answer_result["response"]).get("should_perform_web_search", "")
+        if not should_perform_web_search:
             final_answer = json.loads(answer_result["response"]).get("answer", "")
             if not final_answer:
                 return "No answer found."
