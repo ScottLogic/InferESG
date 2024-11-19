@@ -7,7 +7,7 @@ from src.utils.config import Config
 
 config = Config()
 engine = PromptEngine()
-suggestions_prompt = engine.load_prompt("generate_message_suggestions")
+suggestions_prompt = engine.load_prompt("generate-message-suggestions")
 model = config.suggestions_model
 
 
@@ -16,7 +16,7 @@ async def generate_suggestions() -> List[str]:
     model = get_suggestions_model()
     chat_history = get_chat_history()
     suggestions_prompt = engine.load_prompt(
-        "generate_message_suggestions", chat_history=chat_history)
+        "generate-message-suggestions", chat_history=chat_history)
     response = await llm.chat(model, suggestions_prompt, user_prompt="Give me 5 suggestions.", return_json=True)
     try:
         response_json = json.loads(response)
