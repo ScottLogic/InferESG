@@ -6,6 +6,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from src.session.redis_session_middleware import (
     get_session,
+    reset_session,
     set_session,
     get_redis_session
 )
@@ -63,3 +64,15 @@ def test_get_redis_session(mocker, mock_request, mock_redis):
 
     assert result == {"user_id": 1}
     mock_redis.get.assert_called_once_with(session_id)
+
+def test_reset_session(mocker, mock_request_context):
+    mocker.patch("src.session.redis_session_middleware.request_context", mock_request_context)
+
+    set_session("key1", "value1")
+    set_session("key2", "value2")
+    assert get_session("key1") == "value1"
+    assert get_session("key2") == "value2"
+
+    reset_session()
+    assert get_session("key1", None) is None
+    assert get_session("key2", None) is None

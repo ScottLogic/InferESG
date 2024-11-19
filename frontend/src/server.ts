@@ -71,3 +71,10 @@ export const getSuggestions = async (): Promise<string[]> => {
       return [];
     });
 };
+
+export const resetChat = async (): Promise<Response> => {
+  return await fetch(`${process.env.BACKEND_URL}/chat`, {
+    credentials: 'include',
+    method: 'DELETE',
+  });
+};

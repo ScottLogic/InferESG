@@ -1,7 +1,21 @@
 import_data_from_csv_script = """
 LOAD CSV WITH HEADERS FROM 'file:///esg_poc.csv' AS row
 
-MERGE (f:Fund {Name: row.`Fund Name`, Size: toFloat(row.`Fund Size (Billion USD)`)})
+MERGE (f:Fund {Name: row.`Fund Name`, Size: toFloat(row.`Fund Size (Billion USD)`), SizeUnit:
+    CASE
+        WHEN "Fund Size (Billion USD)" in keys(row) THEN "Billion"
+        WHEN "Fund Size (Million USD)" IN keys(row) THEN "Million"
+        WHEN "Fund Size (Thousand USD)" IN keys(row) THEN "Thousand"
+        ELSE "Unknown"
+    END,
+    Currency:
+        CASE
+            WHEN "Fund Size (Billion USD)" IN keys(row) THEN "USD"
+            WHEN "Fund Size (Billion EUR)" IN keys(row) THEN "EUR"
+            WHEN "Fund Size (Billion GBP)" IN keys(row) THEN "GBP"
+            ELSE "USD"
+        END
+})
 
 MERGE (c:Company {Name: row.`Company Name`})
 

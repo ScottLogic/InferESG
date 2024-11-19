@@ -5,9 +5,11 @@ import logging.config
 import os
 from azure.storage.blob import BlobServiceClient
 from typing import NoReturn
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from src.session.file_uploads import clear_session_file_uploads
+from src.session.redis_session_middleware import reset_session
 from src.utils.graph_db_utils import populate_db
 from src.utils import Config, test_connection
 from src.director import question
@@ -15,6 +17,7 @@ from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.utils.cyper_import_data_from_csv import import_data_from_csv_script
 from src.suggestions_generator import generate_suggestions
+from src.file_upload_service import handle_file_upload, get_file_upload
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -68,6 +71,8 @@ unhealthy_neo4j_response = health_prefix + "backend is healthy. Neo4J is unhealt
 
 chat_fail_response = "Unable to generate a response. Check the service by using the keyphrase 'healthcheck'"
 suggestions_failed_response = "Unable to generate suggestions. Check the service by using the keyphrase 'healthcheck'"
+file_upload_failed_response = "Unable to upload file. Check the service by using the keyphrase 'healthcheck'"
+file_get_upload_failed_response = "Unable to get uploaded file. Check the service by using the keyphrase 'healthcheck'"
 
 
 @app.get("/health")
@@ -92,6 +97,18 @@ async def chat(utterance: str):
         logger.exception(e)
         return JSONResponse(status_code=500, content=chat_fail_response)
 
+@app.delete("/chat")
+async def clear_chat():
+    logger.info("Delete the chat session")
+    try:
+        # clear files first as need session data for file keys
+        clear_session_file_uploads()
+        reset_session()
+        return Response(status_code=204)
+    except Exception as e:
+        logger.exception(e)
+        return Response(status_code=500)
+
 
 @app.get("/suggestions")
 async def suggestions():
@@ -102,6 +119,30 @@ async def suggestions():
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=suggestions_failed_response)
+
+@app.post("/uploadfile")
+async def create_upload_file(file: UploadFile):
+    logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
+    try:
+        upload_id = handle_file_upload(file)
+        return JSONResponse(status_code=200, content={"filename": file.filename, "id": upload_id})
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=file_upload_failed_response)
+
+@app.get("/uploadfile")
+async def fetch_file(id: str):
+    logger.info(f"fetch uploaded file id={id} ")
+    try:
+        final_result = get_file_upload(id)
+        if final_result is None:
+            return JSONResponse(status_code=404, content=f"Upload with id {id} not found")
+        return JSONResponse(status_code=200, content=final_result)
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=file_get_upload_failed_response)
 
 
 @app.websocket("/ws")

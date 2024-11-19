@@ -16,7 +16,7 @@
 
 .waitingDot {
   animation: waiting 1.5s infinite ease-in-out;
-  background-color: var(--text-color-primary);
+  background-color: var(--grey-900);
   border-radius: 50%;
   display: inline-block;
   height: 8px;

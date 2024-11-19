@@ -62,6 +62,17 @@ def test_chat_response_failure(mocker):
     assert response.status_code == 500
     assert response.json() == chat_fail_response
 
+def test_chat_delete(mocker):
+    mock_reset_session = mocker.patch("src.api.app.reset_session")
+    mock_clear_files = mocker.patch("src.api.app.clear_session_file_uploads")
+
+    response = client.delete("/chat")
+
+    mock_clear_files.assert_called_once()
+    mock_reset_session.assert_called_once()
+
+    assert response.status_code == 204
+
 
 @pytest.mark.asyncio
 async def test_lifespan_populates_db(mocker, mock_initial_data) -> None:

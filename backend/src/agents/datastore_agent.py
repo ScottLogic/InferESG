@@ -106,7 +106,12 @@ async def get_semantic_layer_cache(llm, model, graph_schema):
 
 @agent(
     name="DatastoreAgent",
-    description="This agent is responsible for handling database queries relating to the user's personal data.",
+    description=(
+        "This agent is responsible for handling database queries related to ESG (Environmental, Social, Governance) "
+        "data, including retrieving ESG scores, financial metrics, and other company-specific or fund-specific "
+        "information. It interacts with the graph database to extract, process, and return ESG-related information "
+        "from various sources, such as company sustainability reports or fund portfolios."
+    ),
     tools=[generate_cypher],
 )
 class DatastoreAgent(Agent):

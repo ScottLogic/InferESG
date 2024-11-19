@@ -43,7 +43,10 @@ services:
       start_period: 60s
 
   redis-cache:
-    image: redis:latest
+    image: inferesg/redis
+    build:
+      context: redis
+      dockerfile: ./Dockerfile
     container_name: redis
     restart: always
     ports:
