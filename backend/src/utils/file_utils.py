@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 MAX_FILE_SIZE = 10*1024*1024
 
-def handle_file_upload(file:UploadFile) -> str:
+def handle_file_upload(file:UploadFile) -> FileUpload:
 
     if (file.size or 0) > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
@@ -49,7 +49,7 @@ def handle_file_upload(file:UploadFile) -> str:
 
     update_session_file_uploads(session_file)
 
-    return session_file["uploadId"]
+    return session_file
 
 def get_file_upload(upload_id) -> FileUpload | None:
     return get_session_file_upload(upload_id)
