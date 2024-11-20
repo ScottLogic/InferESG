@@ -28,7 +28,6 @@ def store_chat_message(chat:ChatResponse):
 def get_chat_message(id: str) -> ChatResponse | None:
     value = redis_client.get(CHAT_KEY_PREFIX + id)
     if value and isinstance(value, str):
-        parsed_session_data = try_parse_to_json(value)
-        if parsed_session_data:
+        if parsed_session_data := try_parse_to_json(value):
             return parsed_session_data
     return None
