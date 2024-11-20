@@ -22,13 +22,15 @@ export const App = () => {
   return (
     <div className={styles.container}>
       <NavBar startNewConversation={resetMessages} />
-      <Chat messages={messages} waiting={waiting} />
-      <Input
-        key={messages?.[0]?.time}
-        sendMessage={sendMessage}
-        waiting={waiting}
-        suggestions={suggestions}
-      />
+      <div className={styles.chatContainer}>
+        <Chat messages={messages} waiting={waiting} />
+        <Input
+          key={messages?.[0]?.time}
+          sendMessage={sendMessage}
+          waiting={waiting}
+          suggestions={suggestions}
+        />
+      </div>
     </div>
   );
 };
