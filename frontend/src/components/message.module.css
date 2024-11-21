@@ -45,6 +45,7 @@
 .reasoning_header:hover {
   background-color: var(--grey-200);
   cursor: pointer;
+  border-radius: 0 0 16px 16px;
 }
 
 .expandIcon {
@@ -58,6 +59,10 @@
   .expandIcon {
     transform: rotate(90deg);
   }
+}
+
+.reasoning_header_expanded:hover {
+  border-radius: 0;
 }
 
 .reason {
