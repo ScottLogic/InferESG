@@ -6,11 +6,11 @@ from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.chat_storage_service import get_chat_message
-from src.report_director import report_on_file_upload
+from src.directors.report_director import report_on_file_upload
 from src.session.file_uploads import clear_session_file_uploads
 from src.session.redis_session_middleware import reset_session
 from src.utils import Config, test_connection
-from src.director import question, dataset_upload
+from src.directors.chat_director import question, dataset_upload
 from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.suggestions_generator import generate_suggestions

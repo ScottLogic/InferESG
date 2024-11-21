@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 import pytest
 from src.chat_storage_service import ChatResponse
-from src.report_director import FileUploadReport
+from src.directors.report_director import FileUploadReport
 from src.api import app, healthy_response, unhealthy_neo4j_response, chat_fail_response
 
 client = TestClient(app)
