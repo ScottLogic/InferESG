@@ -13,9 +13,14 @@ export const Suggestions = ({ loadPrompt, suggestions }: SuggestionsProps) => {
   const checkScrollable = useCallback(() => {
     const container = containerRef.current;
     if (container) {
+      const computedStyle = window.getComputedStyle(container);
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+
       const hasOverflow = container.scrollWidth > container.offsetWidth;
       const isAtEnd =
-        container.scrollLeft + container.offsetWidth >= container.scrollWidth;
+        container.scrollLeft + container.offsetWidth >=
+        container.scrollWidth - paddingRight;
+
       setIsScrollable(hasOverflow && !isAtEnd);
     }
   }, []);

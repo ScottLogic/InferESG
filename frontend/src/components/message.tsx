@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef, useState } from 'react';
 import styles from './message.module.css';
 import UserIcon from '../icons/account-circle.svg';
 import BotIcon from '../icons/logomark.svg';
@@ -44,6 +44,25 @@ export const MessageComponent = ({ message }: MessageProps) => {
   const { class: roleClass, icon } = roleStyleMap[role];
 
   const [expanded, setExpanded] = useState(false);
+
+  const messageRef = useRef<HTMLParagraphElement>(null);
+  const [isSingleLine, setIsSingleLine] = useState(false);
+
+  const checkSingleLine = () => {
+    if (messageRef.current) {
+      const singleLineHeight = 22;
+      const actualHeight = messageRef.current.offsetHeight;
+      setIsSingleLine(actualHeight <= singleLineHeight);
+    }
+  };
+
+  useEffect(() => {
+    checkSingleLine();
+    window.addEventListener('resize', checkSingleLine);
+    return () => {
+      window.removeEventListener('resize', checkSingleLine);
+    };
+  }, [content]);
 
   return (
     <div className={classNames(styles.container, roleClass)}>
