@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class Answer(TypedDict):
     agent_name: str | None
     question: str | None
@@ -20,7 +21,6 @@ def get_scratchpad() -> Scratchpad:
 
 
 def update_scratchpad(agent_name=None, question=None, result=None, error=None):
-    question = question["query"] if question else None
     scratchpad.append({"agent_name": agent_name, "question": question, "result": result, "error": error})
 
 
