@@ -39,27 +39,25 @@ export const Suggestions = ({ loadPrompt, suggestions }: SuggestionsProps) => {
   return (
     <div>
       <p className={styles.decorativeText}>Suggested questions</p>
-      <div className={styles.containerWrapper}>
-        <div className={styles.contentWrapper}>
-          <div
-            className={styles.container}
-            ref={containerRef}
-            onScroll={checkScrollable}
-          >
-            {suggestions.map((suggestion, index) => (
-              <div
-                key={index}
-                onClick={() => loadPrompt(suggestion)}
-                className={styles.suggestionItem}
-              >
-                <p>{suggestion}</p>
-              </div>
-            ))}
-          </div>
-          <div
-            className={`${styles.gradient} ${!isScrollable ? styles.hidden : ''}`}
-          ></div>
+      <div className={styles.contentWrapper}>
+        <div
+          className={styles.container}
+          ref={containerRef}
+          onScroll={checkScrollable}
+        >
+          {suggestions.map((suggestion, index) => (
+            <div
+              key={index}
+              onClick={() => loadPrompt(suggestion)}
+              className={styles.suggestionItem}
+            >
+              <p className={styles.suggestionText}>{suggestion}</p>
+            </div>
+          ))}
         </div>
+        <div
+          className={`${styles.gradient} ${!isScrollable ? styles.hidden : ''}`}
+        ></div>
       </div>
     </div>
   );
