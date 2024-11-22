@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useState, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './message.module.css';
 import UserIcon from '../icons/account-circle.svg';
 import BotIcon from '../icons/logomark.svg';
