@@ -45,25 +45,6 @@ export const MessageComponent = ({ message }: MessageProps) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const messageRef = useRef<HTMLParagraphElement>(null);
-  const [isSingleLine, setIsSingleLine] = useState(false);
-
-  const checkSingleLine = () => {
-    if (messageRef.current) {
-      const singleLineHeight = 22;
-      const actualHeight = messageRef.current.offsetHeight;
-      setIsSingleLine(actualHeight <= singleLineHeight);
-    }
-  };
-
-  useEffect(() => {
-    checkSingleLine();
-    window.addEventListener('resize', checkSingleLine);
-    return () => {
-      window.removeEventListener('resize', checkSingleLine);
-    };
-  }, [content]);
-
   return (
     <div className={classNames(styles.container, roleClass)}>
       <div className={styles.message_container}>

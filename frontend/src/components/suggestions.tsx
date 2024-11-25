@@ -30,10 +30,6 @@ export const Suggestions = ({ loadPrompt, suggestions }: SuggestionsProps) => {
     const handleResize = () => checkScrollable();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [checkScrollable]);
-
-  useEffect(() => {
-    checkScrollable();
   }, [suggestions, checkScrollable]);
 
   return (
