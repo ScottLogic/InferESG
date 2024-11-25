@@ -10,10 +10,10 @@ engine = PromptEngine()
     tools=[],
 )
 class ESGReportAgent(Agent):
-    async def invoke(self, document_text: str) -> str:
+    async def invoke(self, utterance: str) -> str:
         user_prompt = engine.load_prompt(
             "create-esg-report-user-prompt",
-            document_text=document_text)
+            document_text=utterance)
 
         system_prompt = engine.load_prompt(
             "create-esg-report-system-prompt",
