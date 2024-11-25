@@ -10,6 +10,7 @@ Create a cypher query that will import the Tabular Data into Neo4j as defined in
 # 1. Cypher Query Notes
 * You will use CREATE on entities `"type": "metrics"`
 * You will use MERGE on entities with `"type": "category"` or `"type": "main_entity"`
+* You will include attributes on relationships where declared in the model
 * You will detect data types by examining the rows of data.
 - If a value is entirely numeric and does not contain decimals, cast it as `Integer`.
 - If a value contains decimal points, cast it as `Float`.
