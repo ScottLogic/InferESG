@@ -5,11 +5,14 @@ Scenario Outline: When a user asks InferESG for information about their transact
     Then   the response to this '<prompt>' should match the '<expected_response>'
 Examples:
 |prompt                                                                         |expected_response      |
-|Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund |The average ESG score (Environmental) for the WhiteRock ETF fund is approximately 69.67|
-|Check the database and tell me the fund with the highest ESG social score        |Dynamic Industries with a score of 91|
-|Check the database and tell me the fund with the lowest Governance ESG score     |Dynamics Industries, Silvermans Global ETF, WhiteRocks ETF, which has a score of 60|
-|Check the database and tell me the fund with the lowest ESG score                |Dynamic Industries, Silverman Global ETF, WhiteRock ETF, with a score of 50|
-|Check the database and tell me the largest fund                                  |The largest fund is the Global Energy Fund, which has a size of 1,500|
+|Check the database and tell me the average ESG score for the American Airlines Group Inc company |The average ESG score for American Airlines Group Inc is approximately 60.37|
+
+# prompts based on the esg_poc.csv which is no longer loaded into the datastore by default
+# |Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund |The average ESG score (Environmental) for the WhiteRock ETF fund is approximately 69.67|
+# |Check the database and tell me the fund with the highest ESG social score        |Dynamic Industries with a score of 91|
+# |Check the database and tell me the fund with the lowest Governance ESG score     |Dynamics Industries, Silvermans Global ETF, WhiteRocks ETF, which has a score of 60|
+# |Check the database and tell me the fund with the lowest ESG score                |Dynamic Industries, Silverman Global ETF, WhiteRock ETF, with a score of 50|
+# |Check the database and tell me the largest fund                                  |The largest fund is the Global Energy Fund, which has a size of 1,500|
 # |Check the database and tell me which funds contain Shell                         |Funds containing Shell are European Growth Fund, Global Energy Fund, Silverman Global ETF and WhiteRock ETF|
 
 

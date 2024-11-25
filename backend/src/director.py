@@ -7,15 +7,18 @@ from src.chat_storage_service import ChatResponse, store_chat_message
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
 from src.session import update_session_chat
 from src.agents import get_intent_agent, get_answer_agent
+from src.utils.dynamic_knowledge_graph import generate_dynamic_knowledge_graph
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
+from src.utils.graph_db_utils import populate_db
 from src.websockets.connection_manager import connection_manager
 
 logger = logging.getLogger(__name__)
 config = Config()
 engine = PromptEngine()
 director_prompt = engine.load_prompt("director")
+
 
 async def question(question: str) -> ChatResponse:
     intent = await get_intent_agent().invoke(question)
@@ -55,3 +58,17 @@ async def question(question: str) -> ChatResponse:
     clear_scratchpad()
 
     return response
+
+
+async def dataset_upload() -> None:
+    dataset_file = "./datasets/bloomberg.csv"
+
+    with open(dataset_file, 'r') as file:
+        csv_data = [
+            [entry for entry in line.strip('\n').split(",")]
+            for line in file
+        ]
+
+    knowledge_graph_config = await generate_dynamic_knowledge_graph(csv_data)
+
+    populate_db(knowledge_graph_config["cypher_query"], csv_data)

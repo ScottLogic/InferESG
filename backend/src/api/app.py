@@ -1,9 +1,6 @@
 from contextlib import asynccontextmanager
-import json
-import logging
 import logging.config
 import os
-from azure.storage.blob import BlobServiceClient
 from typing import NoReturn
 from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
@@ -11,12 +8,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.chat_storage_service import get_chat_message
 from src.session.file_uploads import clear_session_file_uploads
 from src.session.redis_session_middleware import reset_session
-from src.utils.graph_db_utils import populate_db
 from src.utils import Config, test_connection
-from src.director import question
+from src.director import question, dataset_upload
 from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
-from src.utils.cyper_import_data_from_csv import import_data_from_csv_script
 from src.suggestions_generator import generate_suggestions
 from src.file_upload_service import handle_file_upload, get_file_upload
 
@@ -30,22 +25,9 @@ config = Config()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        if (
-            config.azure_storage_connection_string is None
-            or config.azure_storage_container_name is None
-            or config.azure_initial_data_filename is None
-        ):
-            raise Exception("Missing Azure Environment variables. Please check the README.md for guidance.")
-
-        blob_service_client = BlobServiceClient.from_connection_string(config.azure_storage_connection_string)
-        container_client = blob_service_client.get_container_client(config.azure_storage_container_name)
-        blob_client = container_client.get_blob_client(config.azure_initial_data_filename)
-        download_stream = blob_client.download_blob()
-        annual_transactions = download_stream.readall().decode("utf-8")
-        populate_db(import_data_from_csv_script, json.loads(annual_transactions))
+        await dataset_upload()
     except Exception as e:
-        logger.exception(f"Failed to populate database with initial data from Azure: {e}")
-        populate_db(import_data_from_csv_script, {})
+        logger.exception(f"Failed to populate database with initial data from file: {e}")
     yield
 
 
@@ -87,6 +69,7 @@ async def health_check():
         response = JSONResponse(status_code=500, content=unhealthy_neo4j_response)
     finally:
         return response
+
 
 @app.get("/chat")
 async def chat(utterance: str):
@@ -132,6 +115,7 @@ async def suggestions():
         logger.exception(e)
         return JSONResponse(status_code=500, content=suggestions_failed_response)
 
+
 @app.post("/uploadfile")
 async def create_upload_file(file: UploadFile):
     logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
@@ -143,6 +127,7 @@ async def create_upload_file(file: UploadFile):
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=file_upload_failed_response)
+
 
 @app.get("/uploadfile")
 async def fetch_file(id: str):

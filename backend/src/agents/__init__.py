@@ -1,14 +1,14 @@
 from typing import List
 from src.utils import Config
-from .agent import Agent, agent
-from .datastore_agent import DatastoreAgent
-from .web_agent import WebAgent
-from .intent_agent import IntentAgent
-from .tool import tool, Parameter
-from .validator_agent import ValidatorAgent
-from .answer_agent import AnswerAgent
-from .chart_generator_agent import ChartGeneratorAgent
-from .file_agent import FileAgent
+from src.agents.agent import Agent, agent
+from src.agents.datastore_agent import DatastoreAgent
+from src.agents.web_agent import WebAgent
+from src.agents.intent_agent import IntentAgent
+from src.agents.tool import tool, Parameter
+from src.agents.validator_agent import ValidatorAgent
+from src.agents.answer_agent import AnswerAgent
+from src.agents.chart_generator_agent import ChartGeneratorAgent
+from src.agents.file_agent import FileAgent
 
 
 config = Config()
