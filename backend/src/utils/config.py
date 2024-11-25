@@ -20,6 +20,7 @@ class Config(object):
         self.neo4j_password = None
         self.answer_agent_llm = None
         self.intent_agent_llm = None
+        self.esg_agent_llm = None
         self.validator_agent_llm = None
         self.datastore_agent_llm = None
         self.maths_agent_llm = None
@@ -32,6 +33,7 @@ class Config(object):
         self.validator_agent_model = None
         self.intent_agent_model = None
         self.answer_agent_model = None
+        self.esg_report_agent_model = None
         self.datastore_agent_model = None
         self.chart_generator_model = None
         self.web_agent_model = None
@@ -61,6 +63,7 @@ class Config(object):
             self.files_directory = os.getenv("FILES_DIRECTORY", default_files_directory)
             self.answer_agent_llm = os.getenv("ANSWER_AGENT_LLM")
             self.intent_agent_llm = os.getenv("INTENT_AGENT_LLM")
+            self.esg_agent_llm = os.getenv("ESG_REPORT_AGENT_LLM")
             self.validator_agent_llm = os.getenv("VALIDATOR_AGENT_LLM")
             self.datastore_agent_llm = os.getenv("DATASTORE_AGENT_LLM")
             self.chart_generator_llm = os.getenv("CHART_GENERATOR_LLM")
@@ -72,6 +75,7 @@ class Config(object):
             self.dynamic_knowledge_graph_llm = os.getenv("DYNAMIC_KNOWLEDGE_GRAPH_LLM")
             self.answer_agent_model = os.getenv("ANSWER_AGENT_MODEL")
             self.intent_agent_model = os.getenv("INTENT_AGENT_MODEL")
+            self.esg_report_agent_model = os.getenv("ESG_REPORT_AGENT_MODEL")
             self.validator_agent_model = os.getenv("VALIDATOR_AGENT_MODEL")
             self.datastore_agent_model = os.getenv("DATASTORE_AGENT_MODEL")
             self.web_agent_model = os.getenv("WEB_AGENT_MODEL")

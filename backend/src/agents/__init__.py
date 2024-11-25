@@ -1,4 +1,5 @@
 from typing import List
+
 from src.utils import Config
 from src.agents.agent import Agent, agent
 from src.agents.datastore_agent import DatastoreAgent
@@ -9,6 +10,7 @@ from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.file_agent import FileAgent
+from src.agents.esg_report_agent import ESGReportAgent
 
 
 config = Config()
@@ -24,6 +26,10 @@ def get_intent_agent() -> Agent:
 
 def get_answer_agent() -> Agent:
     return AnswerAgent(config.answer_agent_llm, config.answer_agent_model)
+
+
+def get_esg_report_agent() -> Agent:
+    return ESGReportAgent(config.esg_agent_llm, config.esg_report_agent_model)
 
 
 def agent_details(agent) -> dict:
