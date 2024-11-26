@@ -14,6 +14,7 @@ from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.suggestions_generator import generate_suggestions
 from src.file_upload_service import handle_file_upload, get_file_upload
+from src.llm.openai import generate_report
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -25,7 +26,8 @@ config = Config()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        await dataset_upload()
+        await generate_report()
+        # await dataset_upload()
     except Exception as e:
         logger.exception(f"Failed to populate database with initial data from file: {e}")
     yield
