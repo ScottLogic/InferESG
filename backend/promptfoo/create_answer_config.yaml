@@ -1,0 +1,71 @@
+description: "Asses Answer Agent on Mistral API"
+
+providers:
+  - id: mistral:mistral-large-latest
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "Test if the output of the Answer Agent using the Data Agent contains the info found"
+    vars:
+      user_prompt: "Can you provide a list of industries with the highest average ESG scores?"
+      system_prompt_template: "create-answer"
+      system_prompt_args:
+        chat_history:
+         [
+           {
+             'role': 'user', 
+             'content': 'Can you provide a list of industries with the highest average ESG scores?'
+            }
+         ]
+        final_scratchpad: 
+         [
+           {
+             'agent_name': 'DatastoreAgent', 
+             'question': 'Can you provide a list of industries with the highest average ESG scores?', 
+             'result': [{'Industry': 'Technology', 'AverageESGScore': 87.91666666666667}, {'Industry': 'Aviation', 'AverageESGScore': 79.53333333333335}, {'Industry': 'Energy', 'AverageESGScore': 72.40000000000002}, {'Industry': 'Construction', 'AverageESGScore': 65.0}], 
+             'error': None
+            }
+          ]
+        datetime: "2024-11-25T09:27:45.761Z"
+    assert: 
+      - type: llm-rubric
+        value: Does the output provide the ESG scores for industries such as technology, aviation, energy, and construction in a natural language format?
+      - type: contains-all
+        value: 
+          - "Technology"
+          - "Aviation"
+          - "Energy"
+          - "Construction"
+          - "87"
+          - "79"
+          - "72"
+          - "65"
+
+  - description: "Test if the output of the Answer Agent using the Web Agent is clear and logical"
+    vars:
+      user_prompt: "How do ESG scores impact investment decisions?"
+      system_prompt_template: "create-answer"
+      system_prompt_args:
+        chat_history: 
+          [
+            {
+              'role': 'user', 
+              'content': 'How do ESG scores impact investment decisions?'
+              }
+          ]
+        final_scratchpad:
+          [
+            {
+              'agent_name': 'WebAgent',
+              'question': 'How do ESG scores impact investment decisions?',
+              'result': 'ESG scores impact investment decisions by providing investors with a framework to evaluate the environmental, social, and governance practices of companies. Higher ESG scores can indicate a company is managing risks and opportunities related to sustainability, which can attract more investment. Investors may prefer companies with strong ESG performance as they are often seen as more resilient and better positioned for long-term success. Additionally, many institutional investors incorporate ESG criteria into their investment strategies, influencing capital allocation towards companies with favorable ESG ratings.',
+              'error': None
+            }
+          ]
+        datetime: "2024-11-25T09:27:45.761Z"
+    assert:  
+      - type: llm-rubric
+        value: "Does the output explain how ESG scores influence investment decisions in clear, concise language ?"
