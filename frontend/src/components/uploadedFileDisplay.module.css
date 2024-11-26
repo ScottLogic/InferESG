@@ -1,0 +1,30 @@
+.uploadedFileContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 36px;
+  width: 50%;
+  margin-bottom: 4px;
+  box-sizing: border-box;
+}
+
+.uploadedFile {
+  font-size: 14px;
+  color: var(--grey-900);
+  background-color: var(--grey-100);
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 65px;
+  border: 1px solid var(--grey-300)
+}
+
+.attachmentIcon {
+  width: 16px; 
+  height: 16px;
+  margin-right: 8px; 
+  margin-bottom: -3px;
+}

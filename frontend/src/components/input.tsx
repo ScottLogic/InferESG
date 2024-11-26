@@ -8,7 +8,8 @@ import React, {
 } from 'react';
 import styles from './input.module.css';
 import RightArrowIcon from '../icons/send.svg';
-import UploadIcon from '../icons/upload.svg';
+import { FileUploader } from './fileUploader';
+import { UploadedFileDisplay } from './uploadedFileDisplay';
 import { Suggestions } from './suggestions';
 import { Button } from './button';
 
@@ -20,6 +21,10 @@ export interface InputProps {
 
 export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
   const [userInput, setUserInput] = useState<string>('');
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isUploaded, setIsUploaded] = useState<boolean>(false);
+  const [fileId, setFileId] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -52,26 +57,60 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
     [sendMessage, userInput, waiting],
   );
 
+  const uploadFile = async (file: File) => {
+    setIsUploading(true);
+    setIsUploaded(false);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await fetch(`${process.env.BACKEND_URL}/uploadfile`, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error(`Upload failed with status ${response.status}`);
+      
+      const { filename, id } = await response.json();
+      console.log(`File uploaded successfully: ${filename} with id ${id}`);
+      setFileId(id);
+      setUploadedFile(file);
+      setIsUploading(false);
+      setIsUploaded(true);
+    } catch (error) {
+      setIsUploading(false);
+      console.error(error);
+    }
+  };
+
+  
   return (
     <>
+      {uploadedFile && <UploadedFileDisplay fileName={uploadedFile.name} />}
       <form onSubmit={onSend} className={styles.inputContainer}>
-        <div className={styles.parentDiv}>
-          <textarea
-            className={styles.textarea}
-            ref={textareaRef}
-            placeholder="Send a Message..."
-            value={userInput}
-            onChange={onChange}
-            rows={1}
-          />
-          <div className={styles.uploadButton_container}>
-            <button className={styles.uploadButton} disabled>
-              <img src={UploadIcon} />
-            </button>
+        
+        <div className={styles.inputRow}>
+          <div className={styles.parentDiv}>
+            <textarea
+              className={styles.textarea}
+              ref={textareaRef}
+              placeholder="Send a Message..."
+              value={userInput}
+              onChange={onChange}
+              rows={1}
+            />
+
+            <FileUploader
+              onFileUpload={uploadFile}
+              isUploading={isUploading}
+              isUploaded={isUploaded}
+              disabled={!!uploadedFile}
+            />
+             
+          </div> 
+          <div className={styles.sendButtonContainer}>
+            <Button icon={RightArrowIcon} disabled={waiting} />
           </div>
-        </div>
-        <div className={styles.sendButtonContainer}>
-          <Button icon={RightArrowIcon} disabled={waiting} />
         </div>
       </form>
       <Suggestions loadPrompt={setUserInput} suggestions={suggestions} />
