@@ -25,7 +25,7 @@ async def solve_all(intent_json) -> None:
             if status == "error":
                 raise Exception(answer)
         except Exception as error:
-            update_scratchpad(error=error)
+            update_scratchpad(error=str(error))
 
 
 async def solve_task(task, scratchpad, attempt=0) -> Tuple[str, str, str]:

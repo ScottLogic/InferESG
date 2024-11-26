@@ -5,6 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 
 logger = logging.getLogger(__name__)
 
+
 class PromptEngine:
     def __init__(self):
         try:

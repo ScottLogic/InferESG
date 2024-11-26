@@ -1,25 +1,11 @@
 from fastapi.testclient import TestClient
 import pytest
+from src.chat_storage_service import ChatResponse
 from src.api import app, healthy_response, unhealthy_neo4j_response, chat_fail_response
 
 client = TestClient(app)
 utterance = "Hello there"
 expected_message = "Hello to you too! From InferESG"
-
-
-@pytest.fixture
-def mock_initial_data(mocker):
-    blob_service_client = mocker.patch("src.api.app.BlobServiceClient", return_value=mocker.Mock())
-    container_client = mocker.Mock()
-    blob_service_client.get_container_client.return_value = container_client
-    blob_client = mocker.Mock()
-    container_client.get_blob_client.return_value = blob_client
-    download_stream = mocker.Mock()
-    blob_client.download_blob.return_value = download_stream
-    mock_data = mocker.Mock()
-    mocker.patch("src.api.app.json.loads", return_value=mock_data)
-
-    return mock_data
 
 
 def test_health_check_response_healthy(mocker):
@@ -73,31 +59,27 @@ def test_chat_delete(mocker):
 
     assert response.status_code == 204
 
+def test_chat_message_success(mocker):
+    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning")
+    mock_get_chat_message = mocker.patch("src.api.app.get_chat_message", return_value=message)
+
+    response = client.get("/chat/123")
+
+    mock_get_chat_message.assert_called_with("123")
+    assert response.status_code == 200
+    assert response.json() == message
+
+def test_chat_message_not_found(mocker):
+    mock_get_chat_message = mocker.patch("src.api.app.get_chat_message", return_value=None)
+
+    response = client.get("/chat/123")
+
+    mock_get_chat_message.assert_called_with("123")
+    assert response.status_code == 404
 
 @pytest.mark.asyncio
-async def test_lifespan_populates_db(mocker, mock_initial_data) -> None:
-    mock_populate_db = mocker.patch("src.api.app.populate_db", return_value=mocker.Mock())
-    mock_import_data_from_csv_script = mocker.patch(
-        "src.api.app.import_data_from_csv_script", return_value=(mocker.Mock())
-    )
-    mock_config = {
-        "azure_initial_data_filename": "test_file",
-        "azure_storage_connection_string": "test_connection_string",
-        "azure_storage_container_name": "test_container",
-    }
-    mocker.patch("src.api.app.config", return_value=mock_config)
+async def test_lifespan_populates_db(mocker) -> None:
+    mock_dataset_upload = mocker.patch("src.api.app.dataset_upload", return_value=mocker.Mock())
 
     with client:
-        mock_populate_db.assert_called_once_with(mock_import_data_from_csv_script, mock_initial_data)
-
-
-@pytest.mark.asyncio
-async def test_lifespan_missing_config_populates_db(mocker) -> None:
-    mock_populate_db = mocker.patch("src.api.app.populate_db", return_value=mocker.Mock())
-    mock_import_data_from_csv_script = mocker.patch(
-        "src.api.app.import_data_from_csv_script", return_value=(mocker.Mock())
-    )
-    mocker.patch("src.api.app.config", None)
-
-    with client:
-        mock_populate_db.assert_called_once_with(mock_import_data_from_csv_script, {})
+        mock_dataset_upload.assert_called_once_with()

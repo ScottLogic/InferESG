@@ -1,6 +1,11 @@
 import { useCallback, useState } from 'react';
 import { Message, Role } from './components/message';
-import { getResponse, getSuggestions, resetChat } from './server';
+import {
+  ChatMessageResponse,
+  getResponse,
+  getSuggestions,
+  resetChat,
+} from './server';
 
 const starterMessage: Message = {
   role: Role.Bot,
@@ -29,20 +34,29 @@ export const useMessages = (): UseMessagesHook => {
     }
   }, []);
 
-  const appendMessage = useCallback((message: string, role: Role) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { role, content: message, time: new Date().toLocaleTimeString() },
-    ]);
-  }, []);
+  const appendMessage = useCallback(
+    (response: ChatMessageResponse, role: Role) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          role,
+          id: response.id,
+          content: response.answer,
+          reasoning: response.reasoning,
+          time: new Date().toLocaleTimeString(),
+        },
+      ]);
+    },
+    [],
+  );
 
   const sendMessage = useCallback(
     async (message: string) => {
-      appendMessage(message, Role.User);
+      appendMessage({ answer: message }, Role.User);
       setWaiting(true);
       const response = await getResponse(message);
       setWaiting(false);
-      appendMessage(response.message, Role.Bot);
+      appendMessage(response, Role.Bot);
       if (message !== 'healthcheck') {
         fetchSuggestions();
       }

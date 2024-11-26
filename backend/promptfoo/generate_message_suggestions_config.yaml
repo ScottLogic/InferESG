@@ -1,16 +1,19 @@
 description: "Generate Message Suggestions"
 
 providers:
-  - id: openai:chat # openai:chat - defaults to gpt-4o-mini
+  - id: openai:gpt-4o-mini
     config:
       temperature: 0
 
-prompts: file://prompt_foo_runner.py:generate_message_suggestions
+prompts: file://promptfoo_test_runner.py:create_prompt
 
 tests:
-  - description: "test the output has the correct format and content when there is no chat history "
+  - description: "test the output has the correct format and content when there is no chat history"
     vars:
-      chatHistory: []
+      user_prompt: "Give me 5 suggestions."
+      system_prompt_template: "generate-message-suggestions"
+      system_prompt_args:
+        chat_history: []
     assert:
       - type: javascript
         value: JSON.parse(output).suggestions.length === 5
@@ -19,11 +22,14 @@ tests:
 
   - description: "test the output has content containing coca-cola when the chat history contains a previous question about coca-cola"
     vars:
-      chatHistory:
-        [
-          "User: Can you find recent news articles discussing the ESG initiatives of Coca-Cola?",
-          "System: In 2023, Coca-Cola HBC has strengthened its commitment to Environmental, Social, and Governance (ESG) initiatives by embedding sustainability into its operations. The company aims for a net zero carbon footprint and net positive biodiversity by 2040, and it has been recognized as the world's most sustainable beverage company by the Dow Jones Sustainability Indices for the seventh consecutive year. Key efforts include collaborating with suppliers to improve sustainability practices, reducing carbon emissions, and promoting responsible sourcing. Additionally, Coca-Cola HBC has expanded its sustainability strategy to Egypt, reflecting its global approach to these initiatives.",
-        ]
+      user_prompt: "Give me 5 suggestions."
+      system_prompt_template: "generate-message-suggestions"
+      system_prompt_args:
+        chat_history:
+          [
+            "User: Can you find recent news articles discussing the ESG initiatives of Coca-Cola?",
+            "System: In 2023, Coca-Cola HBC has strengthened its commitment to Environmental, Social, and Governance (ESG) initiatives by embedding sustainability into its operations. The company aims for a net zero carbon footprint and net positive biodiversity by 2040, and it has been recognized as the world's most sustainable beverage company by the Dow Jones Sustainability Indices for the seventh consecutive year. Key efforts include collaborating with suppliers to improve sustainability practices, reducing carbon emissions, and promoting responsible sourcing. Additionally, Coca-Cola HBC has expanded its sustainability strategy to Egypt, reflecting its global approach to these initiatives.",
+          ]
     assert:
       - type: contains
         value: Coca-Cola

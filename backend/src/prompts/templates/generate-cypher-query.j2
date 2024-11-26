@@ -30,12 +30,6 @@ If you cannot make a query, "query" should just say "None".
     - When querying for a category case-insensitively, use `=~ '(?i)...'`.
     - Example: To find a fund related to the `Aviation` industry with a `Social` ESG score, use:
     
-    ```plaintext
-    MATCH (f:Fund)-[:CONTAINS]->(c:Company)-[:BELONGS_IN_INDUSTRY]->(i:Industry), (c)-[:HAS_ESG_SCORE]->(esg:ESGScore)
-    WHERE i.Name =~ '(?i)Aviation' AND esg.Category =~ '(?i)Social'
-    RETURN ...
-    ```
-    
 6. **Property Matching**: Adhere to exact property values and capitalization in the schema (e.g., 'Aviation' and 'Social').
 
 7. **Single Result for Maximum/Minimum**:

@@ -37,7 +37,7 @@ def get_response(context):
 @then(parsers.parse("the response to this '{prompt}' should match the '{expected_response}'"))
 def check_response_includes_expected_response(context, prompt, expected_response):
     response = send_prompt(prompt)
-    actual_response = response.json()
+    actual_response = response.json()["answer"]
 
     # Allow `expected_response` to be a list of possible valid responses
     possible_responses = [resp.strip() for resp in expected_response.split(",")]
@@ -85,5 +85,5 @@ def check_response_includes_expected_response(context, prompt, expected_response
 @then(parsers.parse("the response to this '{prompt}' should give a confident answer"))
 def check_bot_response_confidence(prompt):
     response = send_prompt(prompt)
-    result = check_response_confidence(prompt, response.json())
+    result = check_response_confidence(prompt, response.json()["answer"])
     assert result["score"] == 1, "The bot response is not confident enough. \nReasoning: " + result["reasoning"]

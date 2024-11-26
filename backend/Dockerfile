@@ -7,6 +7,9 @@ WORKDIR /backend
 # Copy just the requirements into the working directory so it gets cached by itself
 COPY ./requirements.txt ./requirements.txt
 
+# Copy the datasets directory, this should match what local run of application will need
+COPY ./datasets/ ./datasets/
+
 # Install the dependencies from the requirements file
 RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt
 
