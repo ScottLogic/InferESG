@@ -1,0 +1,43 @@
+.iconButton_container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+}
+
+.iconButton {
+  background: transparent;
+  color: var(--grey-900);
+  border: none;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.iconButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.iconButton:not(:disabled):hover {
+  cursor: pointer;
+}
+
+.iconButton:active {
+  background-color: var(--grey-400);
+}
+
+.iconButton_container:has(.iconButton:disabled) {
+  color: var(--grey-900);
+  opacity: 0.5;
+}
+
+.iconButton_container:has(.iconButton:not(:disabled)):hover {
+  background-color: var(--grey-300);
+}
