@@ -62,7 +62,7 @@
   color: #f2f2f2;
   padding: 8px;
   border-radius: 8px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   line-height: 16px;
   text-align: left;
@@ -79,7 +79,7 @@
 }
 
 .tooltip::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 100%;
   left: 50%;

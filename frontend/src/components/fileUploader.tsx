@@ -11,7 +11,12 @@ interface FileUploaderProps {
   disabled: boolean;
 }
 
-export const FileUploader = ({ onFileUpload, isUploading, isUploaded, disabled }: FileUploaderProps) => {
+export const FileUploader = ({
+  onFileUpload,
+  isUploading,
+  isUploaded,
+  disabled,
+}: FileUploaderProps) => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,15 +26,15 @@ export const FileUploader = ({ onFileUpload, isUploading, isUploaded, disabled }
     }
   };
 
-  const tooltipContent = disabled
-    ? (
-      <>
-        <p>You already uploaded one file.</p>
-        <p>You can upload a different file by starting a new chat.</p>
-        <p>Starting a new chat will reset your existing conversation history.</p>
-      </>
-    )
-    : <p>You can only upload one .csv, .pdf or .txt file to this chat.</p>;
+  const tooltipContent = disabled ? (
+    <>
+      <p>You already uploaded one file.</p>
+      <p>You can upload a different file by starting a new chat.</p>
+      <p>Starting a new chat will reset your existing conversation history.</p>
+    </>
+  ) : (
+    <p>You can only upload one .csv, .pdf or .txt file to this chat.</p>
+  );
 
   return (
     <div
@@ -39,11 +44,11 @@ export const FileUploader = ({ onFileUpload, isUploading, isUploaded, disabled }
     >
       <label className={styles.uploadButton}>
         {isUploading ? (
-          <img src={UploadInProgressIcon} alt="Uploading..."/>
+          <img src={UploadInProgressIcon} alt="Uploading..." />
         ) : isUploaded ? (
-          <img src={CheckCircleIcon} alt="Upload Complete"/>
+          <img src={CheckCircleIcon} alt="Upload Complete" />
         ) : (
-          <img src={UploadIcon} alt="Upload"/>
+          <img src={UploadIcon} alt="Upload" />
         )}
         <input
           type="file"

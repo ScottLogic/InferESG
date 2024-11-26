@@ -76,8 +76,6 @@ textarea::placeholder {
   font-family: 'Roboto', sans-serif;
 }
 
-
-
 .sendButtonContainer {
   display: flex;
   align-items: flex-start;

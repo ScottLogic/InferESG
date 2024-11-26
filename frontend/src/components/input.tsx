@@ -70,8 +70,9 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
         body: formData,
         credentials: 'include',
       });
-      if (!response.ok) throw new Error(`Upload failed with status ${response.status}`);
-      
+      if (!response.ok)
+        throw new Error(`Upload failed with status ${response.status}`);
+
       const { filename, id } = await response.json();
       console.log(`File uploaded successfully: ${filename} with id ${id}`);
       // TODO: Set fileId in the state
@@ -85,12 +86,10 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
     }
   };
 
-  
   return (
     <>
       {uploadedFile && <UploadedFileDisplay fileName={uploadedFile.name} />}
       <form onSubmit={onSend} className={styles.inputContainer}>
-        
         <div className={styles.inputRow}>
           <div className={styles.parentDiv}>
             <textarea
@@ -108,8 +107,7 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
               isUploaded={isUploaded}
               disabled={!!uploadedFile}
             />
-             
-          </div> 
+          </div>
           <div className={styles.sendButtonContainer}>
             <Button icon={RightArrowIcon} disabled={waiting} />
           </div>
