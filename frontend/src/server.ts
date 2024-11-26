@@ -77,11 +77,13 @@ export const resetChat = async (): Promise<Response> => {
   });
 };
 
-export const uploadFileToServer = async (file: File): Promise<{ filename: string; id: string }> => {
+export const uploadFileToServer = async (
+  file: File,
+): Promise<{ filename: string; id: string }> => {
   const formData = new FormData();
   formData.append('file', file);
 
-  return await fetch(`${process.env.BACKEND_URL}/uploadfile`, {
+  return await fetch(`${process.env.BACKEND_URL}/report`, {
     method: 'POST',
     body: formData,
     credentials: 'include',

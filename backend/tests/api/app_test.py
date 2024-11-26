@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 import pytest
 from src.chat_storage_service import ChatResponse
+from src.directors.report_director import FileUploadReport
 from src.api import app, healthy_response, unhealthy_neo4j_response, chat_fail_response
 
 client = TestClient(app)
@@ -76,6 +77,16 @@ def test_chat_message_not_found(mocker):
 
     mock_get_chat_message.assert_called_with("123")
     assert response.status_code == 404
+
+def test_report_response_success(mocker):
+    mock_reponse = FileUploadReport(filename="filename", id="1", report="some report md")
+    mock_report = mocker.patch("src.api.app.report_on_file_upload", return_value=mock_reponse)
+
+    response = client.post("/report", files={"file": ("filename", "test data".encode("utf-8"), "text/plain")})
+
+    mock_report.assert_called_once()
+    assert response.status_code == 200
+    assert response.json() == {'filename': 'filename', 'id': '1', 'report': 'some report md'}
 
 @pytest.mark.asyncio
 async def test_lifespan_populates_db(mocker) -> None:

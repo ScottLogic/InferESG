@@ -17,7 +17,7 @@ from src.websockets.connection_manager import connection_manager
 logger = logging.getLogger(__name__)
 config = Config()
 engine = PromptEngine()
-director_prompt = engine.load_prompt("director")
+director_prompt = engine.load_prompt("chat_director")
 
 
 async def question(question: str) -> ChatResponse:
