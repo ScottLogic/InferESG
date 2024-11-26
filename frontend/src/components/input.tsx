@@ -8,10 +8,11 @@ import React, {
 } from 'react';
 import styles from './input.module.css';
 import RightArrowIcon from '../icons/send.svg';
-import { FileUploader } from './fileUploader';
+import { FileUpload } from './fileUpload';
 import { UploadedFileDisplay } from './uploadedFileDisplay';
 import { Suggestions } from './suggestions';
 import { Button } from './button';
+import { uploadFileToServer } from '../server';
 
 export interface InputProps {
   sendMessage: (message: string) => void;
@@ -22,10 +23,7 @@ export interface InputProps {
 export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
   const [userInput, setUserInput] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [isUploaded, setIsUploaded] = useState<boolean>(false);
-  // TODO: Add fileId to the state
-  // const [fileId, setFileId] = useState<string>('');
+  const [uploadInProgress, setUploadInProgress] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -59,30 +57,16 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
   );
 
   const uploadFile = async (file: File) => {
-    setIsUploading(true);
-    setIsUploaded(false);
+    setUploadInProgress(true);
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const response = await fetch(`${process.env.BACKEND_URL}/uploadfile`, {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      });
-      if (!response.ok)
-        throw new Error(`Upload failed with status ${response.status}`);
-
-      const { filename, id } = await response.json();
+      const { filename, id } = await uploadFileToServer(file);
       console.log(`File uploaded successfully: ${filename} with id ${id}`);
-      // TODO: Set fileId in the state
-      // setFileId(id);
       setUploadedFile(file);
-      setIsUploading(false);
-      setIsUploaded(true);
     } catch (error) {
-      setIsUploading(false);
       console.error(error);
+    } finally {
+      setUploadInProgress(false);
     }
   };
 
@@ -100,11 +84,9 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
               onChange={onChange}
               rows={1}
             />
-
-            <FileUploader
+            <FileUpload
               onFileUpload={uploadFile}
-              isUploading={isUploading}
-              isUploaded={isUploaded}
+              uploadInProgress={uploadInProgress}
               disabled={!!uploadedFile}
             />
           </div>

@@ -34,6 +34,7 @@
 
 .uploadButton:active {
   background-color: var(--grey-400);
+  border-radius: 50%;
 }
 
 .uploadButton_container:has(.uploadButton:disabled) {

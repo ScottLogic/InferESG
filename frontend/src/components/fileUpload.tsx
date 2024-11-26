@@ -1,20 +1,18 @@
 import React, { ChangeEvent, useState } from 'react';
-import styles from './fileUploader.module.css';
+import styles from './fileUpload.module.css';
 import UploadIcon from '../icons/upload.svg';
 import UploadInProgressIcon from '../icons/upload-in-progress.svg';
 import CheckCircleIcon from '../icons/check-circle.svg';
 
 interface FileUploaderProps {
   onFileUpload: (file: File) => Promise<void>;
-  isUploading: boolean;
-  isUploaded: boolean;
+  uploadInProgress: boolean;
   disabled: boolean;
 }
 
-export const FileUploader = ({
+export const FileUpload = ({
   onFileUpload,
-  isUploading,
-  isUploaded,
+  uploadInProgress,
   disabled,
 }: FileUploaderProps) => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -43,9 +41,9 @@ export const FileUploader = ({
       onMouseLeave={() => setShowTooltip(false)}
     >
       <label className={styles.uploadButton}>
-        {isUploading ? (
+        {uploadInProgress ? (
           <img src={UploadInProgressIcon} alt="Uploading..." />
-        ) : isUploaded ? (
+        ) : disabled ? (
           <img src={CheckCircleIcon} alt="Upload Complete" />
         ) : (
           <img src={UploadIcon} alt="Upload" />
