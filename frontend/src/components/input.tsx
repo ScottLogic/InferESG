@@ -24,7 +24,8 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [isUploaded, setIsUploaded] = useState<boolean>(false);
-  const [fileId, setFileId] = useState<string>('');
+  // TODO: Add fileId to the state
+  // const [fileId, setFileId] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,7 +74,8 @@ export const Input = ({ sendMessage, waiting, suggestions }: InputProps) => {
       
       const { filename, id } = await response.json();
       console.log(`File uploaded successfully: ${filename} with id ${id}`);
-      setFileId(id);
+      // TODO: Set fileId in the state
+      // setFileId(id);
       setUploadedFile(file);
       setIsUploading(false);
       setIsUploaded(true);
