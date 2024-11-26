@@ -8,7 +8,7 @@ providers:
 prompts: file://promptfoo_test_runner.py:create_prompt
 
 tests:
-  - description: "test model prompt references all csv headers in result using valid json format"
+  - description: "Sample test to aid in ESG report generation development"
     vars:
       user_prompt_template: "create-esg-report-user-prompt"
       system_prompt_template: "create-esg-report-system-prompt"
