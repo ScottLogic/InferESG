@@ -12,28 +12,25 @@ unsolvable_response = "I am sorry, but I was unable to find an answer to this ta
 no_agent_response = "I am sorry, but I was unable to find an agent to solve this task"
 
 
+async def process_question(question) -> None:
+    try:
+        (agent_name, answer, status) = await solve_task(question, get_scratchpad())
+        update_scratchpad(agent_name, question, answer)
+        if status == "error":
+            raise Exception(answer)
+    except Exception as error:
+        update_scratchpad(error=str(error))
+
+
 async def solve_all(intent_json) -> None:
     questions = intent_json["questions"]
 
     if len(questions) == 0:
-        try:
-            question = intent_json["question"]
-            (agent_name, answer, status) = await solve_task(question, get_scratchpad())
-            update_scratchpad(agent_name, question, answer)
-            if status == "error":
-                raise Exception(answer)
-        except Exception as error:
-            update_scratchpad(error=str(error))
+        question = intent_json["question"]
+        await process_question(question)
     else:
         for question in questions:
-            try:
-                (agent_name, answer, status) = await solve_task(question, get_scratchpad())
-                update_scratchpad(agent_name, question, answer)
-                if status == "error":
-                    logger.info("status == error")
-                    raise Exception(answer)
-            except Exception as error:
-                update_scratchpad(error=str(error))
+            await process_question(question)
 
 
 async def solve_task(task, scratchpad, attempt=0) -> Tuple[str, str, str]:

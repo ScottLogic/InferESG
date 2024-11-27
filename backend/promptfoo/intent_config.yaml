@@ -8,7 +8,7 @@ providers:
 prompts: file://promptfoo_test_runner.py:create_prompt
 
 tests:
-  - description: "questions directed towards the database look ups should have only 1 question -1"
+  - description: "questions directed towards the database lookups should have only 1 question -1"
     vars:
       system_prompt_template: "intent-system"
       user_prompt_template: "intent"
@@ -30,7 +30,7 @@ tests:
       - type: javascript
         value: JSON.parse(output).questions.length === 0
 
-  - description: "verify that the correct company name is determinded from the chat history"
+  - description: "verify that the correct company name is determined from the chat history"
     vars:
       system_prompt_template: "intent-system"
       user_prompt_template: "intent"
@@ -51,11 +51,11 @@ tests:
       user_prompt_template: "intent"
       user_prompt_args:
         chat_history: []
-        question: "Compare Ryanair emmissions to other companies in the industry"
+        question: "Compare Ryanair emissions to other companies in the industry"
     assert:
       - type: javascript
         value: JSON.parse(output).questions[0].includes("Ryanair")
       - type: llm-rubric
         value: The 1st item in the questions array contains a question about finding the emissions for Ryanair
       - type: llm-rubric
-        value: The 2nd item in the questions array contains a question about finding the emissions for companiesin the industry
+        value: The 2nd item in the questions array contains a question about finding the emissions for companies in the industry
