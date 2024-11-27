@@ -19,5 +19,8 @@ logger = logging.getLogger(__name__)
 )
 class IntentAgent(Agent):
     async def invoke(self, utterance: str) -> str:
-        user_prompt = engine.load_prompt("intent", question=utterance, chat_history=get_session_chat())
+        session_chat = get_session_chat()
+        user_prompt = engine.load_prompt(
+            "intent", question=utterance, chat_history=session_chat if session_chat else "There is no chat history"
+        )
         return await self.llm.chat(self.model, intent_system, user_prompt=user_prompt, return_json=True)
