@@ -17,20 +17,23 @@ UPLOADS_SESSION_KEY = "file_uploads"
 
 UPLOADS_KEY_PREFIX = "file_upload_"
 
+
 class FileUploadMeta(TypedDict):
     uploadId: str
     filename: str
 
+
 class FileUpload(TypedDict):
     uploadId: str
+    content: str
     filename: str | None
     contentType: str | None
     size: int | None
-    content: str | None
 
 
 def get_session_file_uploads_meta() -> list[FileUploadMeta] | None:
     return get_session(UPLOADS_META_SESSION_KEY, [])
+
 
 def get_session_file_upload(upload_id) -> FileUpload | None:
     value = redis_client.get(UPLOADS_KEY_PREFIX + upload_id)

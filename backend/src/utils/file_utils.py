@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 MAX_FILE_SIZE = 10*1024*1024
 
 
-def handle_file_upload(file:UploadFile) -> FileUpload:
+def handle_file_upload(file: UploadFile) -> FileUpload:
 
     if (file.size or 0) > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
