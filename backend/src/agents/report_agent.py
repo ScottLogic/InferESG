@@ -5,18 +5,16 @@ engine = PromptEngine()
 
 
 @agent(
-    name="ESGReportAgent",
-    description="This agent is responsible for generating an ESG report",
+    name="ReportAgent",
+    description="This agent is responsible for generating an ESG focused report on a narrative document",
     tools=[],
 )
-class ESGReportAgent(Agent):
+class ReportAgent(Agent):
     async def invoke(self, utterance: str) -> str:
         user_prompt = engine.load_prompt(
-            "create-esg-report-user-prompt",
+            "create-report-user-prompt",
             document_text=utterance)
 
-        system_prompt = engine.load_prompt(
-            "create-esg-report-system-prompt",
-        )
+        system_prompt = engine.load_prompt("create-report-system-prompt")
 
         return await self.llm.chat(self.model, system_prompt=system_prompt, user_prompt=user_prompt)
