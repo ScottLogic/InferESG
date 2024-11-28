@@ -18,6 +18,7 @@ export interface Message {
   content: string;
   reasoning?: string;
   time: string;
+  report?: string;
 }
 
 export interface MessageProps {
@@ -47,7 +48,7 @@ export const MessageComponent = ({
   selectMessage,
   selectedMessage,
 }: MessageProps) => {
-  const { content, role, reasoning } = message;
+  const { content, role, reasoning, report } = message;
 
   const { class: roleClass, icon } = roleStyleMap[role];
 
@@ -64,7 +65,7 @@ export const MessageComponent = ({
           <Button
             isOutline
             isPressed={message === selectedMessage}
-            text="Select message"
+            text="View Report"
             icon={OpenGridIcon}
             onClick={() =>
               selectMessage(message === selectedMessage ? null : message)
