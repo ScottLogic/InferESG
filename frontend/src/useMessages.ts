@@ -7,9 +7,20 @@ import {
   resetChat,
 } from './server';
 
+const botMessage = `Hello. I am InferESG and I can help you analyse a company's sustainability messaging and detect potential greenwashing. 
+
+To start, upload a document with corporate sustainability messaging and I will analyse the file and create a report about it. My report will review the Environment, Social and Governance content, surface the sustainability statements that are most relevant to the company's industry and flag possible cases of greenwashing for you to investigate further. 
+
+Notes:  I cannot definitively determine what is or is not greenwashing, it is up to you to determine what is greenwashing based on available evidence.
+
+You will always be able to see how I came to my answers by clicking on the "How I came to this conclusion" button in my answers.
+
+I work best with larger files such as Sustainability Reports.
+`;
+
 const starterMessage: Message = {
   role: Role.Bot,
-  content: 'Hello, how can I help you?',
+  content: botMessage,
   time: new Date().toLocaleTimeString(),
 };
 

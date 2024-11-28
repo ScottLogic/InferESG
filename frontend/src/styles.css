@@ -20,12 +20,6 @@ body,
   --black: #000000;
   --white: #ffffff;
 
-  --background-color-primary: #282828;
-  --blue: #007bff;
-  --border-primary: #424242;
-  --text-color-primary: #ffffff;
-  --text-color-secondary: #899090;
-
   background-color: var(--grey-200);
   color: var(--grey-900);
 }

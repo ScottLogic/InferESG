@@ -1,0 +1,61 @@
+description: "Intent"
+
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "questions directed towards the database lookups should have only 1 question -1"
+    vars:
+      system_prompt_template: "intent-system"
+      user_prompt_template: "intent"
+      user_prompt_args:
+        chat_history: []
+        question: "Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).questions.length === 0
+
+  - description: "questions directed towards the database look ups should have only 1 question -2"
+    vars:
+      system_prompt_template: "intent-system"
+      user_prompt_template: "intent"
+      user_prompt_args:
+        chat_history: []
+        question: "Using Bloomberg.csv dataset give me the company with the best esg score"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).questions.length === 0
+
+  - description: "verify that the correct company name is determined from the chat history"
+    vars:
+      system_prompt_template: "intent-system"
+      user_prompt_template: "intent"
+      user_prompt_args:
+        chat_history: |
+          [
+            "User: When was Coca Cola founded?",
+            "System: Coca-Cola was founded on May 8, 1886.",
+          ]
+        question: "What is their best selling product?"
+    assert:
+      - type: javascript
+        value: output.includes("Coca-Cola") || output.includes("Coca Cola")
+
+  - description: "verify that the question is correctly split up"
+    vars:
+      system_prompt_template: "intent-system"
+      user_prompt_template: "intent"
+      user_prompt_args:
+        chat_history: []
+        question: "Compare Ryanair emissions to other companies in the industry"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).questions[0].includes("Ryanair")
+      - type: llm-rubric
+        value: The 1st item in the questions array contains a question about finding the emissions for Ryanair
+      - type: llm-rubric
+        value: The 2nd item in the questions array contains a question about finding the emissions for companies in the industry

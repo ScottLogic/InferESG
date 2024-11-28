@@ -1,6 +1,11 @@
 .button_container {
   background-color: var(--primary);
   border-radius: 20px;
+  display: inline-block;
+}
+
+.button_container.outline {
+  background-color: transparent;
 }
 
 .button_container:not(:has(.withText)) {
@@ -45,9 +50,29 @@
   background-color: var(--primary-dark);
 }
 
+.outline {
+  .button {
+    border: 1px solid var(--grey-600);
+  }
+
+  .button:not(:disabled):hover {
+    background-color: rgb(224 221 220 / 0.4); /* --grey-300 */
+  }
+
+  .button.pressed,
+  .button:active:enabled {
+    background-color: rgb(224 221 220 / 0.7); /* --grey-300 */
+    border: 1px solid var(--primary);
+  }
+}
+
 .button_container:has(.button:disabled) {
   background-color: var(--grey-400);
   opacity: 0.5;
+}
+
+.button_container.outline:has(.button:disabled) {
+  background-color: transparent;
 }
 
 .iconBaseStyle {

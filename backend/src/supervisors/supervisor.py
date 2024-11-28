@@ -12,20 +12,25 @@ unsolvable_response = "I am sorry, but I was unable to find an answer to this ta
 no_agent_response = "I am sorry, but I was unable to find an agent to solve this task"
 
 
+async def process_question(question) -> None:
+    try:
+        (agent_name, answer, status) = await solve_task(question, get_scratchpad())
+        update_scratchpad(agent_name, question, answer)
+        if status == "error":
+            raise Exception(answer)
+    except Exception as error:
+        update_scratchpad(error=str(error))
+
+
 async def solve_all(intent_json) -> None:
     questions = intent_json["questions"]
 
     if len(questions) == 0:
-        raise Exception(no_questions_response)
-
-    for question in questions:
-        try:
-            (agent_name, answer, status) = await solve_task(question, get_scratchpad())
-            update_scratchpad(agent_name, question, answer)
-            if status == "error":
-                raise Exception(answer)
-        except Exception as error:
-            update_scratchpad(error=str(error))
+        question = intent_json["question"]
+        await process_question(question)
+    else:
+        for question in questions:
+            await process_question(question)
 
 
 async def solve_task(task, scratchpad, attempt=0) -> Tuple[str, str, str]:
@@ -39,10 +44,10 @@ async def solve_task(task, scratchpad, attempt=0) -> Tuple[str, str, str]:
     logger.info(f"Task is {task}")
     answer = await agent.invoke(task)
     parsed_json = json.loads(answer)
-    status = parsed_json.get('status', 'success')
-    ignore_validation = parsed_json.get('ignore_validation', '')
-    answer_content = parsed_json.get('content', '')
-    if(ignore_validation == 'true') or await is_valid_answer(answer_content, task):
+    status = parsed_json.get("status", "success")
+    ignore_validation = parsed_json.get("ignore_validation", "")
+    answer_content = parsed_json.get("content", "")
+    if (ignore_validation == "true") or await is_valid_answer(answer_content, task):
         return (agent.name, answer_content, status)
     return await solve_task(task, scratchpad, attempt + 1)
 

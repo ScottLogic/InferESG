@@ -1,20 +1,97 @@
-.container {
-  align-items: stretch;
+.contentWrapper {
+  position: relative;
   display: flex;
-  flex-direction: row;
   width: 100%;
-  justify-content: space-evenly;
+  overflow: hidden;
+}
+
+.container {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 16px;
+  overflow-x: auto;
+  position: relative;
+  align-items: stretch;
+  width: 100%;
+  padding: 0px 2px 8px 2px;
+}
+
+.suggestionItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--primary);
+  border-radius: 16px;
+  padding: 0;
+  width: 300px;
+  white-space: normal;
+  position: relative;
+}
+
+.suggestionText {
+  background-color: rgb(255 255 255 / 0.8);
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: inherit;
+  font-size: 16px;
+  line-height: 22px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.suggestionText:hover {
+  background-color: rgb(255 255 255 / 0.65);
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 0.2);
   cursor: pointer;
 }
 
-.container > p {
-  background-color: color-mix(
-    in srgb,
-    transparent,
-    var(--text-color-primary) 7%
-  );
-  margin: 15px 5px;
-  padding: 15px;
-  border: 1px solid var(--border-primary);
-  border-radius: 5px;
+.suggestionText:active {
+  background-color: rgb(255 255 255 / 0.4);
+}
+
+.gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: calc(100% - 13px);
+  width: 12px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.gradient.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.container::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 24px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+}
+
+.decorativeText {
+  font-style: italic;
+  color: var(--grey-700);
+  font-size: 12px;
+  padding: 0;
+  margin-top: 16px;
+  line-height: 22px;
 }

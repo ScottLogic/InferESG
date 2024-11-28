@@ -76,3 +76,26 @@ export const resetChat = async (): Promise<Response> => {
     method: 'DELETE',
   });
 };
+
+export const uploadFileToServer = async (
+  file: File,
+): Promise<{ filename: string; id: string }> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return await fetch(`${process.env.BACKEND_URL}/report`, {
+    method: 'POST',
+    body: formData,
+    credentials: 'include',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Upload failed with status : ${response.status}`);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error uploading file:', error);
+      throw error;
+    });
+};

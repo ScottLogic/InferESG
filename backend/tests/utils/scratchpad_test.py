@@ -1,16 +1,7 @@
 from src.utils.scratchpad import clear_scratchpad, get_scratchpad, update_scratchpad
 
 
-question = {
-    "query": "example question",
-    "question_intent": "example intent",
-    "operation": "example operation",
-    "question_category": "example category",
-    "parameters": [{"type": "example type", "value": "example value"}],
-    "aggregation": "none",
-    "sort_order": "none",
-    "timeframe": "none",
-}
+question = "example question"
 
 
 def test_scratchpad():

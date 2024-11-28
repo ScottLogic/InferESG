@@ -6,14 +6,15 @@ from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.chat_storage_service import get_chat_message
+from src.directors.report_director import report_on_file_upload
 from src.session.file_uploads import clear_session_file_uploads
 from src.session.redis_session_middleware import reset_session
 from src.utils import Config, test_connection
-from src.director import question, dataset_upload
+from src.directors.chat_director import question, dataset_upload
 from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.suggestions_generator import generate_suggestions
-from src.file_upload_service import handle_file_upload, get_file_upload
+from src.utils.file_utils import get_file_upload
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -116,12 +117,12 @@ async def suggestions():
         return JSONResponse(status_code=500, content=suggestions_failed_response)
 
 
-@app.post("/uploadfile")
-async def create_upload_file(file: UploadFile):
+@app.post("/report")
+async def report(file: UploadFile):
     logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
     try:
-        upload_id = handle_file_upload(file)
-        return JSONResponse(status_code=200, content={"filename": file.filename, "id": upload_id})
+        processed_upload = await report_on_file_upload(file)
+        return JSONResponse(status_code=200, content=processed_upload)
     except HTTPException as he:
         raise he
     except Exception as e:
