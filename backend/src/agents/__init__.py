@@ -61,6 +61,7 @@ __all__ = [
     "get_intent_agent",
     "get_available_agents",
     "get_validator_agent",
+    "get_esg_report_agent",
     "Parameter",
     "tool",
 ]

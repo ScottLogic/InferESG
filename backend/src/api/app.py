@@ -82,6 +82,7 @@ async def chat(utterance: str):
         logger.exception(e)
         return JSONResponse(status_code=500, content=chat_fail_response)
 
+
 @app.delete("/chat")
 async def clear_chat():
     logger.info("Delete the chat session")
@@ -94,6 +95,7 @@ async def clear_chat():
         logger.exception(e)
         return Response(status_code=500)
 
+
 @app.get("/chat/{id}")
 def chat_message(id: str):
     logger.info(f"Get chat message called with id: {id}")
@@ -105,6 +107,7 @@ def chat_message(id: str):
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=chat_fail_response)
+
 
 @app.get("/suggestions")
 async def suggestions():
