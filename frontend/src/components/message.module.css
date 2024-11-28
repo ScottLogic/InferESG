@@ -71,3 +71,10 @@
   font-size: 16px;
   white-space: pre-wrap;
 }
+
+.selectMessage {
+  margin-left: 72px;
+  margin-bottom: 8px;
+  position: relative;
+  top: -4px;
+}

@@ -4,6 +4,8 @@ import styles from './message.module.css';
 import UserIcon from '../icons/account-circle.svg';
 import BotIcon from '../icons/logomark.svg';
 import ChevronIcon from '../icons/chevron.svg';
+import OpenGridIcon from '../icons/open-grid.svg';
+import { Button } from './button';
 
 export enum Role {
   User = 'User',
@@ -20,6 +22,8 @@ export interface Message {
 
 export interface MessageProps {
   message: Message;
+  selectedMessage: Message | null;
+  selectMessage: (message: Message | null) => void;
 }
 
 export interface MessageStyle {
@@ -38,7 +42,11 @@ const roleStyleMap: Record<Role, MessageStyle> = {
   },
 };
 
-export const MessageComponent = ({ message }: MessageProps) => {
+export const MessageComponent = ({
+  message,
+  selectMessage,
+  selectedMessage,
+}: MessageProps) => {
   const { content, role, reasoning } = message;
 
   const { class: roleClass, icon } = roleStyleMap[role];
@@ -51,6 +59,19 @@ export const MessageComponent = ({ message }: MessageProps) => {
         <img src={icon} className={styles.iconStyle} />
         <p className={styles.messageStyle}>{content}</p>
       </div>
+      {role == Role.Bot && false && (
+        <div className={styles.selectMessage}>
+          <Button
+            isOutline
+            isPressed={message === selectedMessage}
+            text="Select message"
+            icon={OpenGridIcon}
+            onClick={() =>
+              selectMessage(message === selectedMessage ? null : message)
+            }
+          />
+        </div>
+      )}
       {role == Role.Bot && reasoning && (
         <>
           <div

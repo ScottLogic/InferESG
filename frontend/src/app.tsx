@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './app.module.css';
 import { Chat } from './components/chat';
 import { Input } from './components/input';
@@ -15,9 +15,9 @@ export const App = () => {
     suggestions,
     resetMessages,
     initSuggestions,
+    selectMessage,
+    selectedMessage,
   } = useMessages();
-
-  const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
     initSuggestions();
@@ -27,23 +27,30 @@ export const App = () => {
     <>
       <NavBar startNewConversation={resetMessages} />
       <div className={styles.container}>
-        {showSidebar && (
+        {selectedMessage && (
           <div className={styles.column}>
             <div className={styles.sidepanel}>
               <div className={styles.close_container}>
                 <IconButton
                   icon={closeIcon}
                   altText="Close"
-                  onClick={() => setShowSidebar(false)}
+                  onClick={() => selectMessage(null)}
                 />
               </div>
-              <p>Sidebar content</p>
+              <p>id: {selectedMessage.id}</p>
+              <p>message: {selectedMessage.content}</p>
+              <p>time: {selectedMessage.time}</p>
             </div>
           </div>
         )}
         <div className={styles.column}>
           <div className={styles.chatContainer}>
-            <Chat messages={messages} waiting={waiting} />
+            <Chat
+              messages={messages}
+              waiting={waiting}
+              selectedMessage={selectedMessage}
+              selectMessage={selectMessage}
+            />
             <Input
               key={messages?.[0]?.time}
               sendMessage={sendMessage}

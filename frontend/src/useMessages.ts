@@ -28,15 +28,18 @@ export interface UseMessagesHook {
   sendMessage: (message: string) => void;
   resetMessages: () => void;
   initSuggestions: () => void;
+  selectMessage: (message: Message | null) => void;
   messages: Message[];
   suggestions: string[];
   waiting: boolean;
+  selectedMessage: Message | null;
 }
 
 export const useMessages = (): UseMessagesHook => {
   const [waiting, setWaiting] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([starterMessage]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [selectedMessage, selectMessage] = useState<Message | null>(null);
 
   const fetchSuggestions = useCallback(async () => {
     const newSuggestions = await getSuggestions();
@@ -90,5 +93,7 @@ export const useMessages = (): UseMessagesHook => {
     waiting,
     resetMessages,
     initSuggestions: fetchSuggestions,
+    selectedMessage,
+    selectMessage,
   };
 };

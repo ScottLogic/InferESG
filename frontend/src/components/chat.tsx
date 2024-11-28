@@ -8,9 +8,12 @@ import {
   Message as wsMessage,
 } from '../session/websocket-context';
 import { Confirmation, ConfirmModal } from './confirm-modal';
+
 export interface ChatProps {
   messages: Message[];
   waiting: boolean;
+  selectedMessage: Message | null;
+  selectMessage: (message: Message | null) => void;
 }
 
 const mapWsMessageToConfirmation = (
@@ -23,7 +26,12 @@ const mapWsMessageToConfirmation = (
   return { id: parts[0], requestMessage: parts[1], result: null };
 };
 
-export const Chat = ({ messages, waiting }: ChatProps) => {
+export const Chat = ({
+  messages,
+  waiting,
+  selectedMessage,
+  selectMessage,
+}: ChatProps) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { lastMessage, send } = useContext(WebsocketContext);
   const [chart, setChart] = useState<string | undefined>(undefined);
@@ -55,7 +63,12 @@ export const Chat = ({ messages, waiting }: ChatProps) => {
       />
       <div ref={containerRef} className={styles.container}>
         {messages.map((message, index) => (
-          <MessageComponent key={index} message={message} />
+          <MessageComponent
+            key={index}
+            message={message}
+            selectedMessage={selectedMessage}
+            selectMessage={selectMessage}
+          />
         ))}
         {chart && <img src={chart} alt="Generated chart" />}
         {waiting && <Waiting />}
