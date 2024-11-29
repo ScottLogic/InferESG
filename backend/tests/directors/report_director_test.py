@@ -14,7 +14,7 @@ async def test_report_on_file_upload(mocker):
     file_upload = FileUpload(uploadId="1", filename="test.txt", content="test", contentType="text/plain", size=4)
 
     mock_handle_file_upload = mocker.patch("src.directors.report_director.handle_file_upload", return_value=file_upload)
-    mock_llm = mocker.patch("src.llm.factory.get_llm", return_value=MockLLM())
+    mock_llm = mocker.patch("src.llm.get_llm", return_value=MockLLM())
 
     headers = Headers({"content-type": "text/plain"})
     file = BytesIO(b"test content")
