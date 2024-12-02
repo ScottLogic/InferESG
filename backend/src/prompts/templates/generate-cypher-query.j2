@@ -23,7 +23,8 @@ If you cannot make a query, "query" should just say "None".
 3. **Strict Syntax**: Follow Cypher syntax rules. Avoid introducing variables within clauses that do not support them.
 
 4. **Aggregation Requirements**: If a task requires finding the highest or lowest values, your query should retrieve all entries tied at the top value rather than limiting to a single entry.
-    Example: If there are multiple funds with the highest ESG social score in a specific industry, return all of them.
+    - Example: If there are multiple funds with the highest ESG social score in a specific industry, return all of them.
+    - Avoid Null Values: Use `WHERE example.example_field IS NOT NULL`
 
 5. **Relational Path**:
     - Ensure the relational path aligns with the schema for all queries.
@@ -35,6 +36,7 @@ If you cannot make a query, "query" should just say "None".
 7. **Single Result for Maximum/Minimum**:
     - For queries seeking a single result with the "highest" or "lowest" value, use `ORDER BY` and `LIMIT 1` to return only the top result.
     - Example: If finding the fund with the highest ESG social score, sort by `esg.Score DESC` and limit to 1 result.
+    - Avoid Null Values: Use `WHERE example.example_field IS NOT NULL`
 
 8. **Expense Handling**:
     - Expenses are recorded as negative values; a larger negative number represents a higher expense.
