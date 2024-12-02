@@ -1,5 +1,9 @@
 # src/llm/openai_llm.py
 import logging
+
+from openai.types import FileObject
+from openai.types.beta.threads.runs import FileSearchToolCall, ToolCallsStepDetails
+
 from .openai_client import OpenAIClient
 from src.utils import Config
 from .llm import LLM
@@ -9,11 +13,33 @@ logger = logging.getLogger(__name__)
 config = Config()
 
 
-async def generate_report() -> str:
+async def generate_report():
     client = AsyncOpenAI(api_key=config.openai_key)
 
-    assistant = await client.beta.assistants.create(
-        name="Financial Analyst Assistant",
+    citation_assistant = await client.beta.assistants.create(
+        name="Report Citation Analyst",
+        instructions="""You are a expert at cross-referencing reports against source material and validating citations.
+        
+Your task is to review an ESG report and match citations to quotes in the source file.
+Citations will be in the format: 【1:23†file_name】 where "1:23" is an example citation number.
+
+You will output the quote that you find verbatim (copied exactly, without any additional commentary) for each citation.
+
+If you believe that a report statement being cited is innaccurate after searching the file, you will output "False statement".
+
+Output your results as a json object:
+{ "citations": { "CITATION_NUMBER": "QUOTE_FROM_FILE" or "No evidence to support this claim" } }
+
+Do not include any markdown in your output.
+
+Important Notes:
+* Some citation numbers might appear multiple times, you must treat duplicate citation numbers as unique instances.
+         """,
+        model="gpt-4o-mini",
+        tools=[{"type": "file_search"}],
+    )
+    file_assistant = await client.beta.assistants.create(
+        name="ESG Analyst",
         instructions="""The user will provide a report from a company. Your goal is to analyse the document and respond answering the following questions in the format described below:
 
 Basic:
@@ -57,37 +83,97 @@ The report should be formatted as markdown.""",
         tools=[{"type": "file_search"}],
     )
 
-    # assistant = client.beta.assistants.update(
-    #     assistant_id=assistant.id,
-    #     tool_resources={"file_search": {"vector_store_ids": [vector_store_id]}},
+    # sr_file = await client.files.create(
+    #     file=open("./datasets/Astra-Zeneca-Sustainability-Report-2023.pdf", "rb"), purpose="assistants",
+    # )
+    # mm_file = await client.files.create(
+    #     file=open("./datasets/Additional-Sector-Guidance-Biotech-and-Pharma.pdf", "rb"), purpose="assistants",
     # )
 
-# Upload the user provided file to OpenAI
-    message_file = await client.files.create(
-        file=open("./datasets/mcdonalds_2023_esg_report.pdf", "rb"), purpose="assistants",
-    )
-
-    # Create a thread and attach the file to the message
     thread = await client.beta.threads.create(
         messages=[
             {
                 "role": "user",
-                "content": "Can you create an ESG report for this document?",
-                # Attach the new file to the message.
+                "content": "Can you create an ESG report for Astra Zeneca's sustainability report that I have attached?",
                 "attachments": [
-                    { "file_id": message_file.id, "tools": [{"type": "file_search"}] }
+                    {"file_id": "file-BsMEznvJmaRTo2jZnZvf34", "tools": [{"type": "file_search"}]}
+                    # {"file_id": sr_file.id, "tools": [{"type": "file_search"}]}
+                    # {"file_id": mm_file.id, "tools": [{"type": "file_search"}]}
                 ],
             }
         ]
     )
 
     run = await client.beta.threads.runs.create_and_poll(
-        thread_id=thread.id, assistant_id=assistant.id
+        thread_id=thread.id, assistant_id=file_assistant.id
     )
 
-    # The thread now has a vector store with that file in its tool resources.
+    logger.info(run)
+
+    # step_list = await client.beta.threads.runs.steps.list(thread_id=thread.id, run_id=run.id)
+    # logger.info(f"step_list {step_list}")
+    # step = None
+    # for run_step in step_list.data:
+    #     if isinstance(run_step.step_details, ToolCallsStepDetails):
+    #         for tool in run_step.step_details.tool_calls:
+    #             if isinstance(tool, FileSearchToolCall):
+    #                 step = await client.beta.threads.runs.steps.retrieve(
+    #                     step_id=run_step.id,
+    #                     run_id=run.id,
+    #                     thread_id=thread.id,
+    #                     include=["step_details.tool_calls[*].file_search.results[*].content"]
+    #                 )
+    #                 logger.info(f"STEP: {step}")
+    #
+    # if step:
+    #     logger.info(step.step_details.tool_calls[0].file_search.results[0].content)
+
     messages = await client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
+
     logger.info(messages)
+    report = messages.data[0].content[0].text.value
+
+    thread_2 = await client.beta.threads.create(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Can you verify the citations in the following report: \n{report}",
+                "attachments": [
+                    {"file_id": "file-BsMEznvJmaRTo2jZnZvf34", "tools": [{"type": "file_search"}]}
+                ]
+            }
+        ]
+    )
+    run_2 = await client.beta.threads.runs.create_and_poll(
+        thread_id=thread_2.id, assistant_id=citation_assistant.id
+    )
+
+    messages_2 = await client.beta.threads.messages.list(thread_id=thread_2.id, run_id=run_2.id)
+    logger.info(messages_2)
+
+    # message = await client.beta.threads.messages.retrieve(
+    #     thread_id=thread.id,
+    #     message_id=messages.data[0].id
+    # )
+    # logger.info(message)
+
+
+async def upload_files(file_paths: list[str]) -> list[FileObject]:
+    client = AsyncOpenAI(api_key=config.openai_key)
+
+    files = [await client.files.create(file=open(path, "rb"), purpose="assistants") for path in file_paths]
+
+    logger.info(files)
+    return files
+
+
+# async def upload_file_as_vector_store(file_paths: list[str]) -> list[FileObject]:
+#     client = AsyncOpenAI(api_key=config.openai_key)
+#
+#     files = [await client.files.create(file=open(path, "rb"), purpose="assistants") for path in file_paths]
+#
+#     logger.info(files)
+#     return files
 
 
 class OpenAI(LLM):
@@ -125,26 +211,3 @@ class OpenAI(LLM):
         except Exception as e:
             logger.error(f"Error calling OpenAI model: {e}")
             return "An error occurred while processing the request."
-
-    # async def upload_file(self) -> str:
-    #     client = AsyncOpenAI(api_key=config.openai_key)
-    #     try:
-    #         # Create a vector store called "Financial Statements"
-    #         vector_store = AsyncOpenAI.beta.vector_stores.create(name="Sustainability Report")
-    #
-    #         # Ready the files for upload to OpenAI
-    #         file_paths = ["./datasets/mcdonalds_2023_esg_report.pdf"]
-    #         file_streams = [open(path, "rb") for path in file_paths]
-    #
-    #         # Use the upload and poll SDK helper to upload the files, add them to the vector store,
-    #         # and poll the status of the file batch for completion.
-    #         file_batch = client.beta.vector_stores.file_batches.upload_and_poll(
-    #             vector_store_id=vector_store.id, files=file_streams
-    #         )
-    #
-    #         # You can print the status and the file counts of the batch to see the result of this operation.
-    #         print(file_batch.status)
-    #         print(file_batch.file_counts)
-    #     except Exception as e:
-    #         logger.error(f"Error calling OpenAI model: {e}")
-    #         return "An error occurred while processing the request."
