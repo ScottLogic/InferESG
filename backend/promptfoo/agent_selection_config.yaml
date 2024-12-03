@@ -1,0 +1,85 @@
+description: "Agent selection"
+
+define:
+  &list_of_agents [
+    {
+      "name": "DatastoreAgent",
+      "description": "This agent is responsible for handling database queries to the bloomberg.csv dataset. This includes retrieving ESG scores, financial metrics, and other bloomberg-specific information. It interacts with the graph database to extract, process, and return ESG-related information from various sources, such as company sustainability reports or fund portfolios. This agent can not complete any task that is not specifically about the bloomberg.csv dataset.",
+    },
+    {
+      "name": "WebAgent",
+      "description": "This agent can perform general internet searches to complete the task by retrieving and summarizing the results and it can also perform web scrapes to retreive specific inpormation from web pages.",
+    },
+    {
+      "name": "ChartGeneratorAgent",
+      "description": "This agent is responsible for creating charts",
+    },
+  ]
+
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "Test the WebAgent is selected for an ESG data query when not related to bloomberg dataset"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "What are the environmental factors that influence a company's ESG score?"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "WebAgent"
+
+  - description: "Test the WebAgent is selected for queries about the news"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "Are there any recent news articles discussing 3M Co's ESG initiatives?"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "WebAgent"
+
+  - description: "Test the DatastoreAgent is selected for a data query related to the bloomberg dataset"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "Which company name has the highest environmental ESG score in the bloomberg dataset?"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "DatastoreAgent"
+
+  - description: "Test the DatastoreAgent is selected for a data query from the bloomberg.csv"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "From the Bloomberg.csv data show me all the governance scores for american airlines in date order starting in the past."
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "DatastoreAgent"
+
+  - description: "Test the DatastoreAgent is selected for a query of 'the database'"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "Check the database and give me all data for Masco Corp"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "DatastoreAgent"

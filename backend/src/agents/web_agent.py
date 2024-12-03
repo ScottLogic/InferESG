@@ -11,7 +11,7 @@ from src.utils.web_utils import (
     summarise_pdf_content,
     find_info,
     create_search_term,
-    answer_user_question
+    answer_user_question,
 )
 from .validator_agent import ValidatorAgent
 import aiohttp
@@ -32,22 +32,16 @@ async def web_general_search_core(search_query, llm, model) -> str:
         answer_to_user = await answer_user_question(search_query, llm, model)
         answer_result = json.loads(answer_to_user)
         if answer_result["status"] == "error":
-            response = {
-                    "content": "Error in finding the answer.",
-                    "ignore_validation": "false"
-                }
+            response = {"content": "Error in finding the answer.", "ignore_validation": "false"}
             return json.dumps(response, indent=4)
-        logger.info(f'Answer found successfully {answer_result}')
+        logger.info(f"Answer found successfully {answer_result}")
         should_perform_web_search = json.loads(answer_result["response"]).get("should_perform_web_search", "")
         if not should_perform_web_search:
             final_answer = json.loads(answer_result["response"]).get("answer", "")
             if not final_answer:
                 return "No answer found."
-            logger.info(f'Answer found successfully {final_answer}')
-            response = {
-                    "content": final_answer,
-                    "ignore_validation": "false"
-                }
+            logger.info(f"Answer found successfully {final_answer}")
+            response = {"content": final_answer, "ignore_validation": "false"}
             return json.dumps(response, indent=4)
         else:
             search_term_json = await create_search_term(search_query, llm, model)
@@ -55,10 +49,7 @@ async def web_general_search_core(search_query, llm, model) -> str:
 
             # Check if there was an error in generating the search term
             if search_term_result.get("status") == "error":
-                response = {
-                    "content": search_term_result.get("error"),
-                    "ignore_validation": "false"
-                }
+                response = {"content": search_term_result.get("error"), "ignore_validation": "false"}
                 return json.dumps(response, indent=4)
             search_term = json.loads(search_term_result["response"]).get("search_term", "")
 
@@ -83,11 +74,8 @@ async def web_general_search_core(search_query, llm, model) -> str:
                 # Step 5: Validate the summarization
                 is_valid = await is_valid_answer(summary, search_term)
                 if not is_valid:
-                    continue # Skip if the summarization is not valid
-                response = {
-                    "content": summary,
-                    "ignore_validation": "false"
-                }
+                    continue  # Skip if the summarization is not valid
+                response = {"content": summary, "ignore_validation": "false"}
                 return json.dumps(response, indent=4)
             return "No relevant information found on the internet for the given query."
     except Exception as e:
@@ -108,18 +96,16 @@ async def web_pdf_download_core(pdf_url, llm, model) -> str:
                 if not summary:
                     continue
                 parsed_json = json.loads(summary)
-                summary = parsed_json.get('summary', '')
+                summary = parsed_json.get("summary", "")
                 all_content += summary
                 all_content += "\n"
-            logger.info('PDF content extracted successfully')
-            response = {
-                "content": all_content,
-                "ignore_validation": "true"
-            }
+            logger.info("PDF content extracted successfully")
+            response = {"content": all_content, "ignore_validation": "true"}
         return json.dumps(response, indent=4)
     except Exception as e:
         logger.error(f"Error in web_pdf_download_core: {e}")
         return "An error occurred while processing the search query."
+
 
 @tool(
     name="web_general_search",
@@ -136,11 +122,10 @@ async def web_pdf_download_core(pdf_url, llm, model) -> str:
 async def web_general_search(search_query, llm, model) -> str:
     return await web_general_search_core(search_query, llm, model)
 
+
 @tool(
     name="web_pdf_download",
-    description=(
-        "Download the data from the provided pdf url"
-    ),
+    description=("Download the data from the provided pdf url"),
     parameters={
         "pdf_url": Parameter(
             type="string",
@@ -151,6 +136,7 @@ async def web_general_search(search_query, llm, model) -> str:
 async def web_pdf_download(pdf_url, llm, model) -> str:
     return await web_pdf_download_core(pdf_url, llm, model)
 
+
 async def web_scrape_core(url: str) -> str:
     try:
         # Scrape the content from the provided URL
@@ -159,10 +145,7 @@ async def web_scrape_core(url: str) -> str:
             return "No content found at the provided URL."
         logger.info(f"Content scraped successfully: {content}")
         content = content.replace("\n", " ").replace("\r", " ")
-        response = {
-                "content": content,
-                "ignore_validation": "true"
-            }
+        response = {"content": content, "ignore_validation": "true"}
         return json.dumps(response, indent=4)
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)})
@@ -193,14 +176,12 @@ async def find_information_from_content_core(content: str, question, llm, model)
         if not final_info:
             return "No information found from the content."
         logger.info(f"Content scraped successfully: {content}")
-        response = {
-                "content": final_info,
-                "ignore_validation": "true"
-            }
+        response = {"content": final_info, "ignore_validation": "true"}
         return json.dumps(response, indent=4)
     except Exception as e:
         logger.error(f"Error finding information: {e}")
         return ""
+
 
 @tool(
     name="find_information_content",
@@ -214,10 +195,11 @@ async def find_information_from_content_core(content: str, question, llm, model)
             type="string",
             description="The question to find the information from the content.",
         ),
-        },
+    },
 )
 async def find_information_from_content(content: str, question: str, llm, model) -> str:
     return await find_information_from_content_core(content, question, llm, model)
+
 
 def get_validator_agent() -> Agent:
     return ValidatorAgent(config.validator_agent_llm, config.validator_agent_model)
@@ -263,6 +245,7 @@ async def perform_summarization(search_query: str, content: str, llm: Any, model
         logger.error(f"Error summarizing content: {e}")
         return ""
 
+
 async def perform_pdf_summarization(content: str, llm: Any, model: str) -> str:
     try:
         summarise_result_json = await summarise_pdf_content(content, llm, model)
@@ -274,16 +257,10 @@ async def perform_pdf_summarization(content: str, llm: Any, model: str) -> str:
         logger.error(f"Error summarizing content: {e}")
         return ""
 
+
 @agent(
     name="WebAgent",
-    description="""This agent specializes in handling tasks related to web content extraction, search, and
-    summarization.
-    It can perform the following functions:
-    Web scraping: Extracts data from given URLs, enabling tasks like retrieving specific information from web pages.
-    Finding Information from Content: Extracts specific information from the content provided.
-    Internet search: Conducts general online searches based on queries, retrieving and summarizing relevant content from
-    multiple sources.
-    PDF content extraction: Downloads and summarizes the content of PDF documents from provided URLs.""",
+    description="This agent can perform general internet searches to complete the task by retrieving and summarizing the results and it can also perform web scrapes to retreive specific inpormation from web pages.",  # noqa: E501
     tools=[web_general_search, web_pdf_download, web_scrape, find_information_from_content],
 )
 class WebAgent(Agent):
