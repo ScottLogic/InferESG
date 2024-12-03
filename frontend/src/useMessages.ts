@@ -63,6 +63,7 @@ export const useMessages = (): UseMessagesHook => {
           id: response.id,
           content: response.answer,
           reasoning: response.reasoning,
+          dataset: response.dataset,
           time: new Date().toLocaleTimeString(),
           report,
           sidePanelTitle,
