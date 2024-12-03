@@ -50,7 +50,12 @@ export const useMessages = (): UseMessagesHook => {
   }, []);
 
   const appendMessage = useCallback(
-    (response: ChatMessageResponse, role: Role, report?: string) => {
+    (
+      response: ChatMessageResponse,
+      role: Role,
+      report?: string,
+      filename?: string,
+    ) => {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
@@ -60,6 +65,7 @@ export const useMessages = (): UseMessagesHook => {
           reasoning: response.reasoning,
           time: new Date().toLocaleTimeString(),
           report,
+          filename,
         },
       ]);
     },

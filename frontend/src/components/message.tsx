@@ -19,6 +19,7 @@ export interface Message {
   reasoning?: string;
   time: string;
   report?: string;
+  filename?: string;
 }
 
 export interface MessageProps {
@@ -60,7 +61,7 @@ export const MessageComponent = ({
         <img src={icon} className={styles.iconStyle} />
         <p className={styles.messageStyle}>{content}</p>
       </div>
-      {role == Role.Bot && false && (
+      {report && (
         <div className={styles.selectMessage}>
           <Button
             isOutline
