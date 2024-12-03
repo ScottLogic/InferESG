@@ -11,6 +11,7 @@ class ChatResponse(TypedDict):
     id: str
     question:str
     answer: str
+    dataset: str | None
     reasoning: str | None
 
 logger = logging.getLogger(__name__)

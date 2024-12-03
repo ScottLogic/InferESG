@@ -4,9 +4,7 @@ import { Chat } from './components/chat';
 import { Input } from './components/input';
 import { useMessages } from './useMessages';
 import { NavBar } from './components/navbar';
-import closeIcon from './icons/close.svg';
-import { IconButton } from './components/icon-button';
-import Markdown from 'react-markdown';
+import { Sidebar } from './components/sidebar';
 
 export const App = () => {
   const {
@@ -31,20 +29,10 @@ export const App = () => {
       <div className={styles.container}>
         {selectedMessage && (
           <div className={styles.column}>
-            <div className={styles.close_container}>
-              <h1>{selectedMessage.sidePanelTitle}</h1>
-              <IconButton
-                icon={closeIcon}
-                altText="Close"
-                onClick={() => selectMessage(null)}
-              />
-            </div>
-            <hr className={styles.custom_hr} />
-            <div className={styles.sidepanel}>
-              <div className={styles.markdown_container}>
-                <Markdown>{String(selectedMessage.report)}</Markdown>
-              </div>
-            </div>
+            <Sidebar
+              selectedMessage={selectedMessage}
+              selectMessage={selectMessage}
+            />
           </div>
         )}
         <div className={styles.column}>
