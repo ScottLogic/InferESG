@@ -32,7 +32,7 @@ export const App = () => {
         {selectedMessage && (
           <div className={styles.column}>
             <div className={styles.close_container}>
-              <h1>ESG Report - {selectedMessage.filename}</h1>
+              <h1>{selectedMessage.sidePanelTitle}</h1>
               <IconButton
                 icon={closeIcon}
                 altText="Close"

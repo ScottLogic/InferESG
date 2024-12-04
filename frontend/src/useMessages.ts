@@ -54,7 +54,7 @@ export const useMessages = (): UseMessagesHook => {
       response: ChatMessageResponse,
       role: Role,
       report?: string,
-      filename?: string,
+      sidePanelTitle?: string,
     ) => {
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -65,7 +65,7 @@ export const useMessages = (): UseMessagesHook => {
           reasoning: response.reasoning,
           time: new Date().toLocaleTimeString(),
           report,
-          filename,
+          sidePanelTitle,
         },
       ]);
     },

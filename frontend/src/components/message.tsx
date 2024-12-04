@@ -19,7 +19,7 @@ export interface Message {
   reasoning?: string;
   time: string;
   report?: string;
-  filename?: string;
+  sidePanelTitle?: string;
 }
 
 export interface MessageProps {
@@ -66,7 +66,7 @@ export const MessageComponent = ({
           <Button
             isOutline
             isPressed={message === selectedMessage}
-            text="View Report"
+            text={report ? 'View report' : 'View data grid'}
             icon={OpenGridIcon}
             onClick={() =>
               selectMessage(message === selectedMessage ? null : message)

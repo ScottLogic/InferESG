@@ -20,7 +20,7 @@ export interface InputProps {
     response: ChatMessageResponse,
     role: Role,
     report?: string,
-    filename?: string,
+    sidePanelTitle?: string,
   ) => void;
   sendMessage: (message: string) => void;
   waiting: boolean;
@@ -75,10 +75,10 @@ export const Input = ({
       const { filename, report } = await uploadFileToServer(file);
       setUploadedFile(file);
       appendMessage(
-        { answer: 'Your report is ready to view.' },
+        { answer: `Your ESG report for ${filename} is ready to view.` },
         Role.Bot,
         report,
-        filename,
+        `ESG Report - ${filename}`,
       );
     } catch (error) {
       console.error(error);
