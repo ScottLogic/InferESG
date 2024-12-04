@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
 }
 
 .sidepanel {
@@ -50,17 +51,23 @@
   align-items: center;
   justify-content: space-between;
   height: 56px;
-  margin: -16px;
-  padding-left: 24px;
+  padding-left: 32px;
+  padding-right: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .close_container h1 {
   font-size: 24px;
   font-weight: bold;
+  margin: 0;
+  flex-grow: 1;
 }
 
 .custom_hr {
-  margin: 18px -24px 12px -24px;
+  margin: 32px -24px 12px -24px;
   border: none;
   height: 1px;
   background-color: var(--grey-200);
