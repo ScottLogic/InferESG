@@ -89,3 +89,17 @@
   border-style: solid;
   border-color: #333333 transparent transparent transparent;
 }
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.uploadInProgress {
+  animation: pulse 1.5s infinite ease-in-out;
+}

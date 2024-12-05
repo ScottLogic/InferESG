@@ -76,7 +76,6 @@ async def __get_final_answer(question: str, intent_json: dict) -> dict[str, Any]
         datastore_agents = [scratch for scratch in get_scratchpad() if scratch['agent_name'] == 'DatastoreAgent']
         query_result = datastore_agents[-1]['result'] if datastore_agents else None
         if query_result is not None:
-            logger.info(f"query: {query_result}")
             dataset = query_result
 
     message = await get_answer_agent().invoke(question)
