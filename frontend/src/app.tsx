@@ -6,9 +6,11 @@ import { useMessages } from './useMessages';
 import { NavBar } from './components/navbar';
 import closeIcon from './icons/close.svg';
 import { IconButton } from './components/icon-button';
+import Markdown from 'react-markdown';
 
 export const App = () => {
   const {
+    appendMessage,
     sendMessage,
     messages,
     waiting,
@@ -29,17 +31,19 @@ export const App = () => {
       <div className={styles.container}>
         {selectedMessage && (
           <div className={styles.column}>
+            <div className={styles.close_container}>
+              <h1>{selectedMessage.sidePanelTitle}</h1>
+              <IconButton
+                icon={closeIcon}
+                altText="Close"
+                onClick={() => selectMessage(null)}
+              />
+            </div>
+            <hr className={styles.custom_hr} />
             <div className={styles.sidepanel}>
-              <div className={styles.close_container}>
-                <IconButton
-                  icon={closeIcon}
-                  altText="Close"
-                  onClick={() => selectMessage(null)}
-                />
+              <div className={styles.markdown_container}>
+                <Markdown>{String(selectedMessage.report)}</Markdown>
               </div>
-              <p>id: {selectedMessage.id}</p>
-              <p>message: {selectedMessage.content}</p>
-              <p>time: {selectedMessage.time}</p>
             </div>
           </div>
         )}
@@ -56,6 +60,7 @@ export const App = () => {
               sendMessage={sendMessage}
               waiting={waiting}
               suggestions={suggestions}
+              appendMessage={appendMessage}
             />
           </div>
         </div>
