@@ -55,7 +55,7 @@ async def web_general_search_core(search_query, llm, model) -> str:
             is_valid = await is_valid_answer(summary, search_term)
             if not is_valid:
                 continue  # Skip if the summarization is not valid
-            response = {"content": {"content": summary, "url": url}, "ignore_validation": "false"}
+            response = {"content": {"content": summary, "url": url}, "ignore_validation": "true"}
             return json.dumps(response, indent=4)
         return "No relevant information found on the internet for the given query."
     except Exception as e:
