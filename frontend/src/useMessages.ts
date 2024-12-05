@@ -91,6 +91,7 @@ export const useMessages = (): UseMessagesHook => {
     await resetChat();
     setWaiting(false);
     setMessages([{ ...starterMessage, time: new Date().toLocaleTimeString() }]);
+    selectMessage(null);
     setSuggestions([]);
     fetchSuggestions();
   }, []);
