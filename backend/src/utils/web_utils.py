@@ -13,7 +13,7 @@ config = Config()
 engine = PromptEngine()
 
 
-async def search_urls(search_query, num_results=10) -> str:
+async def search_urls(search_query, num_results=30) -> str:
     logger.info(f"Searching the web for: {search_query}")
     try:
         https_urls = [str(url) for url in search(search_query, num_results=num_results) if str(url).startswith("https")]
