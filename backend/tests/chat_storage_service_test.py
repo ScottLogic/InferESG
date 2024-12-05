@@ -15,7 +15,7 @@ def mock_redis():
 def test_store_chat_message(mocker, mock_redis):
     mocker.patch('src.chat_storage_service.redis_client', mock_redis)
 
-    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning")
+    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning", dataset="dataset")
     store_chat_message(message)
 
     mock_redis.set.assert_called_once_with("chat_1", json.dumps(message))
@@ -24,7 +24,7 @@ def test_store_chat_message(mocker, mock_redis):
 def test_get_chat_message(mocker, mock_redis):
     mocker.patch('src.chat_storage_service.redis_client', mock_redis)
 
-    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning")
+    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning", dataset="dataset")
     mock_redis.get.return_value = json.dumps(message)
 
     value = get_chat_message("1")

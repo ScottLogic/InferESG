@@ -61,7 +61,7 @@ def test_chat_delete(mocker):
     assert response.status_code == 204
 
 def test_chat_message_success(mocker):
-    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning")
+    message = ChatResponse(id="1", question="Question", answer="Answer", reasoning="Reasoning", dataset="dataset")
     mock_get_chat_message = mocker.patch("src.api.app.get_chat_message", return_value=message)
 
     response = client.get("/chat/123")
