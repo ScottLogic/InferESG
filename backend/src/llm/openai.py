@@ -2,6 +2,7 @@
 import logging
 from typing import Optional
 from dataclasses import dataclass
+import redis
 
 from src.utils import Config
 from src.llm import LLM, LLMChatWithFile
@@ -10,6 +11,7 @@ from openai import NOT_GIVEN, AsyncOpenAI
 logger = logging.getLogger(__name__)
 config = Config()
 
+redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
 
 @dataclass
 class LLMFile:
@@ -64,12 +66,25 @@ class OpenAIChatWithFile(LLMChatWithFile):
 
         file_ids = []
         for file in files:
+            file_id = redis_client.get(file.file_name)
+            if not file_id:
+                if file.file_path:
+                    file_id = await upload_file(file.file_path)
+                elif file.file_stream:
+                    file_id = await upload_stream(file.file_stream)
+                else:
+                    raise ValueError("LLM must have either file_path or file_stream")
+
+                redis_client.set(file.file_name, file_id)
+            else:
+                logger.info(f"found cached file id for {file.file_name}: {file_id}")
+            file_ids.append(file_id)
+
             # check in Redis if this file exists
                 # if it doesn't exist, upload it and save the file_id
                     # if LLMFile has path to upload use upload_file(file_path)
                     # if LLMFile has stream then upload stream
                 # if it does exist then redis will have the file id uploaded to openai. fetch it
-            file_ids.append("id from logic in pseudo code above")
 
         file_assistant = await client.beta.assistants.create(
             name="ESG Analyst",
@@ -102,4 +117,9 @@ class OpenAIChatWithFile(LLMChatWithFile):
 async def upload_file(file_path: str) -> str:
     client = AsyncOpenAI(api_key=config.openai_key)
     file = await client.files.create(file=open(file_path, "rb"), purpose="assistants")
+    return file.id
+
+async def upload_stream(file_stream: bytes) -> str:
+    client = AsyncOpenAI(api_key=config.openai_key)
+    file = await client.files.create(file=file_stream, purpose="assistants")
     return file.id
