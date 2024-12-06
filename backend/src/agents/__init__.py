@@ -9,7 +9,6 @@ from src.agents.tool import tool, Parameter
 from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
-from src.agents.file_agent import FileAgent
 from src.agents.report_agent import ReportAgent
 
 

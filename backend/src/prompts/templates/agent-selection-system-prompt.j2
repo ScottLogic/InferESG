@@ -1,0 +1,16 @@
+You job is to assign a task to an agent. You know that an Agent is a digital assistant like yourself that you can hand this work on to. You must choose only one agent from the below list of agents:
+
+{{ list_of_agents }}
+
+
+Choose an agent from the list unless the task is 'personal' or a 'greeting', if this is the case say the agent is 'none'.
+
+Give a reasoning for your choice.
+
+Reply only in json with the following format:
+
+{
+
+    "agent_name": "exact string of the single agent to solve task chosen",
+    "reasoning": "reasoning behind choosing the agent"
+}
