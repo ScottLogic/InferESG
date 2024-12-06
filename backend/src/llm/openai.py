@@ -1,17 +1,17 @@
-# src/llm/openai_llm.py
 import logging
 from typing import Optional
 from dataclasses import dataclass
 import redis
 
 from src.utils import Config
-from src.llm import LLM, LLMChatWithFile
+from src.llm import LLM
 from openai import NOT_GIVEN, AsyncOpenAI
 
 logger = logging.getLogger(__name__)
 config = Config()
 
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
+
 
 @dataclass
 class LLMFile:
@@ -21,15 +21,16 @@ class LLMFile:
 
 
 class OpenAI(LLM):
+    client = AsyncOpenAI(api_key=config.openai_key)
+
     async def chat(self, model, system_prompt: str, user_prompt: str, return_json=False) -> str:
         logger.debug(
             "##### Called open ai chat ... llm. Waiting on response model with prompt {0}.".format(
                 str([system_prompt, user_prompt])
             )
         )
-        client = AsyncOpenAI(api_key=config.openai_key)
         try:
-            response = await client.chat.completions.create(
+            response = await self.client.chat.completions.create(
                 model=model,
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -53,8 +54,6 @@ class OpenAI(LLM):
             logger.error(f"Error calling OpenAI model: {e}")
             return "An error occurred while processing the request."
 
-
-class OpenAIChatWithFile(LLMChatWithFile):
     async def chat_with_file(
         self,
         model: str,
@@ -62,38 +61,28 @@ class OpenAIChatWithFile(LLMChatWithFile):
         user_prompt: str,
         files: list[LLMFile]
     ) -> str:
-        client = AsyncOpenAI(api_key=config.openai_key)
-
         file_ids = []
         for file in files:
             file_id = redis_client.get(file.file_name)
             if not file_id:
                 if file.file_path:
-                    file_id = await upload_file(file.file_path)
+                    file_id = await self.__upload_file(file.file_path)
                 elif file.file_stream:
-                    file_id = await upload_stream(file.file_stream)
+                    file_id = await self.__upload_stream(file.file_stream)
                 else:
                     raise ValueError("LLM must have either file_path or file_stream")
-
-                redis_client.set(file.file_name, file_id)
             else:
                 logger.info(f"found cached file id for {file.file_name}: {file_id}")
             file_ids.append(file_id)
 
-            # check in Redis if this file exists
-                # if it doesn't exist, upload it and save the file_id
-                    # if LLMFile has path to upload use upload_file(file_path)
-                    # if LLMFile has stream then upload stream
-                # if it does exist then redis will have the file id uploaded to openai. fetch it
-
-        file_assistant = await client.beta.assistants.create(
+        file_assistant = await self.client.beta.assistants.create(
             name="ESG Analyst",
             instructions=system_prompt,
             model=model,
             tools=[{"type": "file_search"}],
         )
 
-        thread = await client.beta.threads.create(
+        thread = await self.client.beta.threads.create(
             messages=[
                 {
                     "role": "user",
@@ -106,20 +95,17 @@ class OpenAIChatWithFile(LLMChatWithFile):
             ]
         )
 
-        messages = await client.beta.threads.runs.create_and_poll(
+        messages = await self.client.beta.threads.runs.create_and_poll(
             thread_id=thread.id, assistant_id=file_assistant.id
         )
 
         logger.info(messages.data[0])
         return messages.data[0]  # haven't gotten around to checking how to get the content out yet.
 
+    async def __upload_file(self, file_path: str) -> str:
+        file = await self.client.files.create(file=open(file_path, "rb"), purpose="assistants")
+        return file.id
 
-async def upload_file(file_path: str) -> str:
-    client = AsyncOpenAI(api_key=config.openai_key)
-    file = await client.files.create(file=open(file_path, "rb"), purpose="assistants")
-    return file.id
-
-async def upload_stream(file_stream: bytes) -> str:
-    client = AsyncOpenAI(api_key=config.openai_key)
-    file = await client.files.create(file=file_stream, purpose="assistants")
-    return file.id
+    async def __upload_stream(self, file_stream: bytes) -> str:
+        file = await self.client.files.create(file=file_stream, purpose="assistants")
+        return file.id
