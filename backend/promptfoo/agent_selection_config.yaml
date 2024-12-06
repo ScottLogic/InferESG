@@ -48,6 +48,42 @@ tests:
       - type: javascript
         value: JSON.parse(output).agent_name === "WebAgent"
 
+  - description: "Test the WebAgent is selected for queries about todays weather"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "what is todays weather in dublin?"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "WebAgent"
+
+  - description: "Test the WebAgent is selected for a website query"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "What are Ryanair saying they are doing to combat climate change on their website?"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "WebAgent"
+
+  - description: "Test the WebAgent is selected for conversational matters"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        task: "Hello how are you?"
+      system_prompt_template: "agent-selection-system-prompt"
+      system_prompt_args:
+        list_of_agents: *list_of_agents
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent_name === "WebAgent"
+
   - description: "Test the DatastoreAgent is selected for a data query related to the bloomberg dataset"
     vars:
       user_prompt_template: "agent-selection-user-prompt"
