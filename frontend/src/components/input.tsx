@@ -104,7 +104,7 @@ export const Input = ({
             <FileUpload
               onFileUpload={uploadFile}
               uploadInProgress={uploadInProgress}
-              disabled={!!uploadedFile}
+              disabled={!!uploadedFile || uploadInProgress}
             />
           </div>
           <div className={styles.sendButtonContainer}>

@@ -20,6 +20,8 @@ export interface Message {
   time: string;
   report?: string;
   sidePanelTitle?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dataset?: null | any;
 }
 
 export interface MessageProps {
@@ -49,7 +51,7 @@ export const MessageComponent = ({
   selectMessage,
   selectedMessage,
 }: MessageProps) => {
-  const { content, role, reasoning, report } = message;
+  const { content, role, reasoning, report, dataset } = message;
 
   const { class: roleClass, icon } = roleStyleMap[role];
 
@@ -61,7 +63,7 @@ export const MessageComponent = ({
         <img src={icon} className={styles.iconStyle} />
         <p className={styles.messageStyle}>{content}</p>
       </div>
-      {report && (
+      {(report || dataset) && (
         <div className={styles.selectMessage}>
           <Button
             isOutline

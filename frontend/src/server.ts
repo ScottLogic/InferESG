@@ -3,6 +3,8 @@ export interface ChatMessageResponse {
   question?: string;
   answer: string;
   reasoning?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dataset?: any;
 }
 
 function createChatMessageResponse(message: string): ChatMessageResponse {
