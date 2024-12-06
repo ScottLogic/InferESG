@@ -12,22 +12,11 @@ prompt_engine = PromptEngine()
 config = Config()
 
 
-def build_agent_selection_system_prompt(task, scratchpad):
-    agents_details = get_agent_details()
-    print(
-        "_______________________________________________________________________________________________________________________"
-    )
-    print("task", task)
-    print("list_of_agents", agents_details)
-    print("history", scratchpad)
-    return prompt_engine.load_prompt(
-        "agent-selection-system-prompt",
-        list_of_agents=json.dumps(agents_details, indent=4),
-    )
-
-
 async def build_plan(task, llm: LLM, scratchpad, model):
-    agent_selection_system_prompt = build_agent_selection_system_prompt(task, scratchpad)
+    agents_details = get_agent_details()
+    agent_selection_system_prompt = prompt_engine.load_prompt(
+        "agent-selection-system-prompt", list_of_agents=json.dumps(agents_details, indent=4)
+    )
     agent_selection_user_prompt = prompt_engine.load_prompt(
         "agent-selection-user-prompt",
         task=json.dumps(task, indent=4),
