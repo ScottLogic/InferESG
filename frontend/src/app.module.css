@@ -28,15 +28,65 @@
   border-radius: 24px;
   background-color: var(--white);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .sidepanel {
   position: relative;
-  height: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  padding-left: 8px;
+  padding-right: 24px;
+  font-size: 16px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .close_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding-left: 32px;
+  padding-right: 24px;
   position: absolute;
-  top: -32px;
-  right: -16px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.close_container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.custom_hr {
+  margin: 32px -24px 12px -24px;
+  border: none;
+  height: 1px;
+  background-color: var(--grey-200);
+}
+
+.sidepanel::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidepanel::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 24px;
+}
+
+.sidepanel::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+
+.sidepanel::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
 }

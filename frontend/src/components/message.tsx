@@ -18,6 +18,8 @@ export interface Message {
   content: string;
   reasoning?: string;
   time: string;
+  report?: string;
+  sidePanelTitle?: string;
 }
 
 export interface MessageProps {
@@ -47,7 +49,7 @@ export const MessageComponent = ({
   selectMessage,
   selectedMessage,
 }: MessageProps) => {
-  const { content, role, reasoning } = message;
+  const { content, role, reasoning, report } = message;
 
   const { class: roleClass, icon } = roleStyleMap[role];
 
@@ -59,12 +61,12 @@ export const MessageComponent = ({
         <img src={icon} className={styles.iconStyle} />
         <p className={styles.messageStyle}>{content}</p>
       </div>
-      {role == Role.Bot && false && (
+      {report && (
         <div className={styles.selectMessage}>
           <Button
             isOutline
             isPressed={message === selectedMessage}
-            text="Select message"
+            text={report ? 'View report' : 'View data grid'}
             icon={OpenGridIcon}
             onClick={() =>
               selectMessage(message === selectedMessage ? null : message)
