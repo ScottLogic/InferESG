@@ -1,4 +1,4 @@
-description: "Intent"
+description: 'Intent'
 
 providers:
   - id: openai:gpt-4o-mini
@@ -8,50 +8,50 @@ providers:
 prompts: file://promptfoo_test_runner.py:create_prompt
 
 tests:
-  - description: "questions directed towards the database lookups should have only 1 question -1"
+  - description: 'questions directed towards the database lookups should have only 1 question -1'
     vars:
-      system_prompt_template: "intent-system"
-      user_prompt_template: "intent"
+      system_prompt_template: 'intent-system'
+      user_prompt_template: 'intent'
       user_prompt_args:
         chat_history: []
-        question: "Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund"
+        question: 'Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund'
     assert:
       - type: javascript
         value: JSON.parse(output).questions.length === 0
 
-  - description: "questions directed towards the database look ups should have only 1 question -2"
+  - description: 'questions directed towards the database look ups should have only 1 question -2'
     vars:
-      system_prompt_template: "intent-system"
-      user_prompt_template: "intent"
+      system_prompt_template: 'intent-system'
+      user_prompt_template: 'intent'
       user_prompt_args:
         chat_history: []
-        question: "Using Bloomberg.csv dataset give me the company with the best esg score"
+        question: 'Using Bloomberg.csv dataset give me the company with the best esg score'
     assert:
       - type: javascript
         value: JSON.parse(output).questions.length === 0
 
-  - description: "verify that the correct company name is determined from the chat history"
+  - description: 'verify that the correct company name is determined from the chat history'
     vars:
-      system_prompt_template: "intent-system"
-      user_prompt_template: "intent"
+      system_prompt_template: 'intent-system'
+      user_prompt_template: 'intent'
       user_prompt_args:
         chat_history: |
           [
             "User: When was Coca Cola founded?",
             "System: Coca-Cola was founded on May 8, 1886.",
           ]
-        question: "What is their best selling product?"
+        question: 'What is their best selling product?'
     assert:
       - type: javascript
         value: output.includes("Coca-Cola") || output.includes("Coca Cola")
 
-  - description: "verify that the question is correctly split up"
+  - description: 'verify that the question is correctly split up'
     vars:
-      system_prompt_template: "intent-system"
-      user_prompt_template: "intent"
+      system_prompt_template: 'intent-system'
+      user_prompt_template: 'intent'
       user_prompt_args:
         chat_history: []
-        question: "Compare Ryanair emissions to other companies in the industry"
+        question: 'Compare Ryanair emissions to other companies in the industry'
     assert:
       - type: javascript
         value: JSON.parse(output).questions[0].includes("Ryanair")
@@ -59,3 +59,44 @@ tests:
         value: The 1st item in the questions array contains a question about finding the emissions for Ryanair
       - type: llm-rubric
         value: The 2nd item in the questions array contains a question about finding the emissions for companies in the industry
+
+  - description: 'verify intent for finding ESG scores online in the Technology sector'
+    vars:
+      system_prompt_template: 'intent-system'
+      user_prompt_template: 'intent'
+      user_prompt_args:
+        chat_history: []
+        question: 'provide a list of companies with the highest ESG scores in the Technology sector?'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).user_intent.includes("Technology sector")
+      - type: javascript
+        value: JSON.parse(output).questions[0].includes("highest ESG scores")
+      - type: llm-rubric
+        value: The output correctly identifies the intent to search online for companies in the Technology sector with high ESG scores.
+
+  - description: 'Validation - General information is rejected'
+    vars:
+      system_prompt_template: 'validator'
+      user_prompt_template: 'validate'
+      user_prompt_args:
+        task: 'Provide a list of companies with the highest ESG scores in the Technology sector.'
+        answer: "As of the end of 2023, the Technology sector had the highest weighted-average ESG score among all sectors, according to the MSCI ACWI SRI Index. However, I don't have a specific list of individual companies with the highest scores."
+    assert:
+      - type: javascript
+        value: JSON.parse(output).response === "false"
+      - type: llm-rubric
+        value: The reasoning should explain that general sector information is insufficient to fulfill the task.
+
+  - description: 'Validation - Incorrect company is rejected'
+    vars:
+      system_prompt_template: 'validator'
+      user_prompt_template: 'validate'
+      user_prompt_args:
+        task: "What are Apple's ESG scores?"
+        answer: "Microsoft's ESG (Environmental, Social, and Governance) scores are as follows: Environmental Score of 95.0, Social Score of 90.0, Governance Score of 92.0."
+    assert:
+      - type: javascript
+        value: JSON.parse(output).response === "false"
+      - type: llm-rubric
+        value: The reasoning should explain that the scores provided do not match Apple's scores as requested.
