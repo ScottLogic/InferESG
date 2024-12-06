@@ -31,12 +31,6 @@ class LLM(ABC, metaclass=LLMMeta):
     def chat(self, model: str, system_prompt: str, user_prompt: str, return_json=False) -> Coroutine[Any, Any, str]:
         pass
 
-
-class LLMChatWithFile(ABC, metaclass=LLMMeta):
-    @classmethod
-    def get_instances(cls):
-        return cls.instances
-
     @abstractmethod
     def chat_with_file(
         self,
