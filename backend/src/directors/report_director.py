@@ -15,11 +15,7 @@ class FileUploadReport(TypedDict):
 
 async def report_on_file_upload(upload: UploadFile) -> FileUploadReport:
 
-    file = handle_file_upload(upload)
-
-    update_scratchpad(result=file["content"])
-
-    report = await get_report_agent().invoke(file["content"])
+    #rework needed
 
     clear_scratchpad()
 

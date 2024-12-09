@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 import redis
 
 from src.utils import Config
@@ -50,11 +51,11 @@ class OpenAI(LLM):
         model: str,
         system_prompt: str,
         user_prompt: str,
-        file_paths: list[LLMFileFromPath],
-        file_bytes: list[LLMFileFromBytes],
-        return_json: bool = False
+        files_by_path: list[LLMFileFromPath],
+        files_by_stream: list[LLMFileFromBytes],
+        return_json = False
     ) -> str:
-        file_ids = await self.__upload_files(file_paths, file_bytes)
+        file_ids = await self.__upload_files(files_by_path, files_by_stream)
 
         file_assistant = await self.client.beta.assistants.create(
             name="ESG Analyst",

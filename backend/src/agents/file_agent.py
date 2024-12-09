@@ -1,6 +1,6 @@
 import logging
 from .agent_types import Parameter
-from .agent import Agent, agent
+from .agent import ChatAgent, agent
 from .tool import tool
 import json
 import os
@@ -98,5 +98,5 @@ async def write_or_update_file(file_path: str, content: str, update, llm, model)
     description="This agent is responsible for reading from and writing to files.",
     tools=[read_file, write_or_update_file],
 )
-class FileAgent(Agent):
+class FileAgent(ChatAgent):
     pass

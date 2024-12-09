@@ -1,4 +1,4 @@
-from src.agents import Agent, agent
+from src.agents import ChatAgent, agent
 from src.prompts import PromptEngine
 
 engine = PromptEngine()
@@ -9,7 +9,7 @@ engine = PromptEngine()
     description="This agent is responsible for generating an ESG focused report on a narrative document",
     tools=[],
 )
-class ReportAgent(Agent):
+class ReportAgent(ChatAgent):
     async def invoke(self, utterance: str) -> str:
         user_prompt = engine.load_prompt(
             "create-report-user-prompt",

@@ -1,6 +1,6 @@
 from .tool import tool
 from .agent_types import Parameter
-from .agent import Agent, agent
+from .agent import ChatAgent, agent
 import logging
 from src.utils import Config
 from .validator_agent import ValidatorAgent
@@ -59,7 +59,7 @@ async def perform_math_operation_core(math_query, llm, model) -> str:
             }
     return json.dumps(response, indent=4)
 
-def get_validator_agent() -> Agent:
+def get_validator_agent() -> ChatAgent:
     return ValidatorAgent(config.validator_agent_llm, config.validator_agent_model)
 
 async def is_valid_answer(answer, task) -> bool:
@@ -94,5 +94,5 @@ async def perform_math_operation(math_query, llm, model) -> str:
     ),
     tools=[perform_math_operation],
 )
-class MathsAgent(Agent):
+class MathsAgent(ChatAgent):
     pass
