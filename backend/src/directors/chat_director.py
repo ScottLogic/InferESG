@@ -23,7 +23,7 @@ director_prompt = engine.load_prompt("chat_director")
 
 @dataclass
 class FinalAnswer:
-    message: Optional[str] = ""
+    message: str = ""
     dataset: Optional[str] = None
 
 
