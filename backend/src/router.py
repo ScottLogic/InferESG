@@ -4,7 +4,7 @@ from src.llm.llm import LLM
 from src.utils import to_json, Config
 from src.utils.log_publisher import publish_log_info, LogPrefix
 from src.prompts import PromptEngine
-from src.agents import Agent, get_available_agents, get_agent_details
+from src.agents import ChatAgent, get_available_agents, get_agent_details
 from src.llm import get_llm
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ def find_agent_from_name(name):
     return (agent for agent in agents if agent.name == name)
 
 
-async def get_agent_for_task(task, scratchpad) -> Agent | None:
+async def get_agent_for_task(task, scratchpad) -> ChatAgent | None:
     llm = get_llm(config.router_llm)
     model = config.router_model
     plan = await build_plan(task, llm, scratchpad, model)
