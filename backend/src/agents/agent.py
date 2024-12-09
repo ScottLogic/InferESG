@@ -20,7 +20,6 @@ config = Config()
 class Agent(ABC):
     name: str
     description: str
-    tools: List[Tool]
     llm: LLM
     model: str
 
@@ -29,6 +28,10 @@ class Agent(ABC):
         if model is None:
             raise ValueError("LLM Model Not Provided")
         self.model = model
+
+
+class ChatAgent(ABC, Agent):
+    tools: List[Tool]
 
     async def __get_action(self, utterance: str) -> Action_and_args:
         tool_descriptions = create_all_tools_str(self.tools)
@@ -52,7 +55,7 @@ class Agent(ABC):
             validate_args(chosen_tool_parameters, chosen_tool)
         except Exception:
             raise Exception(f"Unable to extract chosen tool and parameters from {response}")
-        return (chosen_tool.action, chosen_tool_parameters)
+        return chosen_tool.action, chosen_tool_parameters
 
     async def invoke(self, utterance: str) -> str:
         (action, args) = await self.__get_action(utterance)
