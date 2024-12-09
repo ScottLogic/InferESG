@@ -30,7 +30,7 @@ class Agent(ABC):
         self.model = model
 
 
-class ChatAgent(ABC, Agent):
+class ChatAgent(Agent):
     tools: List[Tool]
 
     async def __get_action(self, utterance: str) -> Action_and_args:
@@ -65,7 +65,7 @@ class ChatAgent(ABC, Agent):
 
 
 def agent(name: str, description: str, tools: List[Tool]):
-    def decorator(agent: Type[Agent]):
+    def decorator(agent: Type[ChatAgent]):
         agent.name = name
         agent.description = description
         agent.tools = tools

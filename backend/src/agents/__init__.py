@@ -28,11 +28,11 @@ def get_answer_agent() -> ChatAgent:
     return AnswerAgent(config.answer_agent_llm, config.answer_agent_model)
 
 
-def get_report_agent() -> Agent:
+def get_report_agent() -> ReportAgent:
     return ReportAgent(config.report_agent_llm, config.report_agent_model)
 
 
-def get_materiality_agent() -> Agent:
+def get_materiality_agent() -> MaterialityAgent:
     return MaterialityAgent(config.materiality_agent_llm, config.materiality_agent_model)
 
 

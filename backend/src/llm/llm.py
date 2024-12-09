@@ -1,6 +1,6 @@
 from abc import ABC, ABCMeta, abstractmethod
 from os import PathLike
-from typing import Any, Coroutine
+from typing import Any, Coroutine, Optional
 from .count_calls import count_calls
 from dataclasses import dataclass
 
@@ -60,8 +60,8 @@ class LLM(ABC, metaclass=LLMMeta):
         model: str,
         system_prompt: str,
         user_prompt: str,
-        files_by_path: list[LLMFileFromPath],
-        files_by_stream: list[LLMFileFromStream],
+        files_by_path: Optional[list[LLMFileFromPath]] = None,
+        files_by_stream: Optional[list[LLMFileFromBytes]] = None,
         return_json: bool = False
     ) -> Coroutine:
         pass

@@ -4,7 +4,7 @@ from fastapi import UploadFile
 
 from src.utils.scratchpad import clear_scratchpad, update_scratchpad
 from src.utils.file_utils import handle_file_upload
-from src.agents import get_report_agent
+from src.agents import get_report_agent, get_materiality_agent
 
 
 class FileUploadReport(TypedDict):
@@ -19,7 +19,9 @@ async def report_on_file_upload(upload: UploadFile) -> FileUploadReport:
 
     update_scratchpad(result=file["content"])
 
-    report = await get_report_agent().invoke(file["content"])
+    topics = await get_materiality_agent().list_material_topics("Astra Zeneca")
+
+    report = await get_report_agent().create_report(file["content"], topics)
 
     clear_scratchpad()
 
