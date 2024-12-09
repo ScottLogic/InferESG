@@ -7,7 +7,7 @@ from datetime import datetime
 from src.utils import to_json
 from .agent_types import Parameter
 from src.utils.log_publisher import LogPrefix, publish_log_info
-from .agent import Agent, agent
+from .agent import ChatAgent, agent
 from .tool import tool
 from src.utils.semantic_layer_builder import get_semantic_layer
 
@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 engine = PromptEngine()
 
 cache = {}
+
 
 async def generate_cypher_query_core(
     question_intent, operation, question_params, aggregation, sort_order, timeframe, llm: LLM, model
@@ -55,6 +56,7 @@ async def generate_cypher_query_core(
     }
     return json.dumps(response, indent=4)
 
+
 @tool(
     name="generate cypher query",
     description="Generate Cypher query if the category is data driven, based on the operation to be performed",
@@ -88,14 +90,13 @@ async def generate_cypher_query_core(
         ),
     },
 )
-
 async def generate_cypher(question_intent, operation, question_params, aggregation, sort_order,
                           timeframe, llm: LLM, model) -> str:
     return await generate_cypher_query_core(question_intent, operation, question_params, aggregation, sort_order,
                                             timeframe, llm, model)
 
 
-async def get_semantic_layer_cache(llm, model, graph_schema):
+async def get_semantic_layer_cache(llm, model):
     global cache
     if not cache:
         graph_schema = await get_semantic_layer(llm, model)
@@ -103,6 +104,7 @@ async def get_semantic_layer_cache(llm, model, graph_schema):
         return cache
     else:
         return cache
+
 
 @agent(
     name="DatastoreAgent",
@@ -114,5 +116,5 @@ async def get_semantic_layer_cache(llm, model, graph_schema):
     ),
     tools=[generate_cypher],
 )
-class DatastoreAgent(Agent):
+class DatastoreAgent(ChatAgent):
     pass

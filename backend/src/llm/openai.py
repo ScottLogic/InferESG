@@ -1,23 +1,14 @@
 import logging
-from typing import Optional
-from dataclasses import dataclass
 import redis
 
 from src.utils import Config
-from src.llm import LLM
+from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
 from openai import NOT_GIVEN, AsyncOpenAI
 
 logger = logging.getLogger(__name__)
 config = Config()
 
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
-
-
-@dataclass
-class LLMFile:
-    file_name: str
-    file_path: Optional[str] = None  # Materiality docs will be local
-    file_stream: Optional[bytes] = None  # report agent file will be a stream. Not sure bytes is correct, whatever api/app.py is working with
 
 
 class OpenAI(LLM):
@@ -59,21 +50,11 @@ class OpenAI(LLM):
         model: str,
         system_prompt: str,
         user_prompt: str,
-        files: list[LLMFile]
+        file_paths: list[LLMFileFromPath],
+        file_bytes: list[LLMFileFromBytes],
+        return_json: bool = False
     ) -> str:
-        file_ids = []
-        for file in files:
-            file_id = redis_client.get(file.file_name)
-            if not file_id:
-                if file.file_path:
-                    file_id = await self.__upload_file(file.file_path)
-                elif file.file_stream:
-                    file_id = await self.__upload_stream(file.file_stream)
-                else:
-                    raise ValueError("LLM must have either file_path or file_stream")
-            else:
-                logger.info(f"found cached file id for {file.file_name}: {file_id}")
-            file_ids.append(file_id)
+        file_ids = await self.__upload_files(file_paths, file_bytes)
 
         file_assistant = await self.client.beta.assistants.create(
             name="ESG Analyst",
@@ -102,10 +83,15 @@ class OpenAI(LLM):
         logger.info(messages.data[0])
         return messages.data[0]  # haven't gotten around to checking how to get the content out yet.
 
-    async def __upload_file(self, file_path: str) -> str:
-        file = await self.client.files.create(file=open(file_path, "rb"), purpose="assistants")
-        return file.id
-
-    async def __upload_stream(self, file_stream: bytes) -> str:
-        file = await self.client.files.create(file=file_stream, purpose="assistants")
-        return file.id
+    async def __upload_files(self, file_paths: list[LLMFileFromPath], file_bytes: list[LLMFileFromBytes]) -> list[str]:
+        file_ids = []
+        for file in file_paths + file_bytes:
+            file_id = redis_client.get(file.file_name)
+            if not file_id:
+                if isinstance(file, LLMFileFromPath):
+                    file = await self.client.files.create(file=file.file_path, purpose="assistants")
+                else:
+                    file = await self.client.files.create(file=file.file_stream, purpose="assistants")
+                file_id = file.id
+            file_ids.append(file_id)
+        return file_ids

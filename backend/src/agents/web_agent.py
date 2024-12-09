@@ -1,7 +1,7 @@
 import logging
 from src.prompts import PromptEngine
 from .agent_types import Parameter
-from .agent import Agent, agent
+from .agent import ChatAgent, agent
 from .tool import tool
 from src.utils import Config
 from src.utils.web_utils import (
@@ -219,7 +219,7 @@ async def find_information_from_content_core(content: str, question, llm, model)
 async def find_information_from_content(content: str, question: str, llm, model) -> str:
     return await find_information_from_content_core(content, question, llm, model)
 
-def get_validator_agent() -> Agent:
+def get_validator_agent() -> ChatAgent:
     return ValidatorAgent(config.validator_agent_llm, config.validator_agent_model)
 
 
@@ -286,5 +286,5 @@ async def perform_pdf_summarization(content: str, llm: Any, model: str) -> str:
     PDF content extraction: Downloads and summarizes the content of PDF documents from provided URLs.""",
     tools=[web_general_search, web_pdf_download, web_scrape, find_information_from_content],
 )
-class WebAgent(Agent):
+class WebAgent(ChatAgent):
     pass
