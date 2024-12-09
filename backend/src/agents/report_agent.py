@@ -10,10 +10,12 @@ engine = PromptEngine()
     tools=[],
 )
 class ReportAgent(Agent):
-    async def invoke(self, utterance: str) -> str:
+    async def create_report(self, file_content: str, materiality_topics: list[str]) -> str:
         user_prompt = engine.load_prompt(
             "create-report-user-prompt",
-            document_text=utterance)
+            document_text=file_content,
+            materiality_topics=materiality_topics
+        )
 
         system_prompt = engine.load_prompt("create-report-system-prompt")
 
