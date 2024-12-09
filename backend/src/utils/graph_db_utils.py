@@ -56,3 +56,16 @@ def populate_db(query, data) -> None:
         raise
     finally:
         driver.close()
+
+def is_db_populated() -> bool:
+    has_data = False
+    try:
+        db_response = execute_query("MATCH (n) RETURN n LIMIT 1")
+        if len(db_response) > 0:
+            has_data = True
+
+    except Exception as e:
+        logger.exception(f"Database connection failed: {e}")
+
+    finally:
+        return has_data

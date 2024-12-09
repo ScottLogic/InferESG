@@ -11,7 +11,7 @@ from src.utils.dynamic_knowledge_graph import generate_dynamic_knowledge_graph
 from src.prompts import PromptEngine
 from src.supervisors import solve_all
 from src.utils import Config
-from src.utils.graph_db_utils import populate_db
+from src.utils.graph_db_utils import populate_db, is_db_populated
 from src.websockets.connection_manager import connection_manager
 
 logger = logging.getLogger(__name__)
@@ -62,6 +62,10 @@ async def question(question: str) -> ChatResponse:
 
 async def dataset_upload() -> None:
     dataset_file = "./datasets/bloomberg.csv"
+
+    if is_db_populated():
+        logger.info("Skipping database population as already has data")
+        return
 
     with open(dataset_file, 'r') as file:
         csv_data = [
