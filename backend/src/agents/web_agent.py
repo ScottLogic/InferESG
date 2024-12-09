@@ -75,7 +75,10 @@ async def web_general_search_core(search_query, llm, model) -> str:
                 is_valid = await is_valid_answer(summary, search_term)
                 if not is_valid:
                     continue  # Skip if the summarization is not valid
-                response = {"content": summary, "ignore_validation": "false"}
+                response = {
+                    "content": { "content": summary, "url": url },
+                    "ignore_validation": "false"
+                }
                 return json.dumps(response, indent=4)
             return "No relevant information found on the internet for the given query."
     except Exception as e:
@@ -145,7 +148,10 @@ async def web_scrape_core(url: str) -> str:
             return "No content found at the provided URL."
         logger.info(f"Content scraped successfully: {content}")
         content = content.replace("\n", " ").replace("\r", " ")
-        response = {"content": content, "ignore_validation": "true"}
+        response = {
+                "content": { "content": content, "url": url },
+                "ignore_validation": "true"
+            }
         return json.dumps(response, indent=4)
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)})
