@@ -7,7 +7,7 @@ from datetime import datetime
 from src.utils import to_json
 from .agent_types import Parameter
 from src.utils.log_publisher import LogPrefix, publish_log_info
-from .agent import Agent, agent
+from .agent import ChatAgent, agent
 from .tool import tool
 from src.utils.semantic_layer_builder import get_semantic_layer
 
@@ -95,7 +95,7 @@ async def generate_cypher(
     )
 
 
-async def get_semantic_layer_cache(llm, model, graph_schema):
+async def get_semantic_layer_cache(llm, model):
     global cache
     if not cache:
         graph_schema = await get_semantic_layer(llm, model)
@@ -110,5 +110,5 @@ async def get_semantic_layer_cache(llm, model, graph_schema):
     description="This agent is responsible for handling database queries to the bloomberg.csv dataset. This includes retrieving ESG scores, financial metrics, and other bloomberg-specific information. It interacts with the graph database to extract, process, and return ESG-related information from various sources, such as company sustainability reports or fund portfolios. This agent can not complete any task that is not specifically about the bloomberg.csv dataset.",  # noqa: E501
     tools=[generate_cypher],
 )
-class DatastoreAgent(Agent):
+class DatastoreAgent(ChatAgent):
     pass
