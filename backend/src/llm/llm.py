@@ -46,11 +46,7 @@ class LLM(ABC, metaclass=LLMMeta):
 
     @abstractmethod
     def chat(
-        self,
-        model: str,
-        system_prompt: str,
-        user_prompt: str,
-        return_json: bool = False
+        self, model: str, system_prompt: str, user_prompt: str, return_json: bool = False
     ) -> Coroutine[Any, Any, str]:
         pass
 
@@ -62,6 +58,5 @@ class LLM(ABC, metaclass=LLMMeta):
         user_prompt: str,
         files_by_path: list[LLMFileFromPath],
         files_by_stream: list[LLMFileFromBytes],
-        return_json: bool = False
     ) -> Coroutine:
         pass

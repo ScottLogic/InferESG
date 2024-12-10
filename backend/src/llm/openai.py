@@ -1,7 +1,9 @@
 import logging
+import re
 from typing import Optional
 import redis
 
+from src.utils.scratchpad import update_scratchpad
 from src.utils import Config
 from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
 from openai import NOT_GIVEN, AsyncOpenAI
@@ -29,8 +31,7 @@ class OpenAI(LLM):
                     {"role": "user", "content": user_prompt},
                 ],
                 temperature=0,
-                response_format={
-                    "type": "json_object"} if return_json else NOT_GIVEN,
+                response_format={"type": "json_object"} if return_json else NOT_GIVEN,
             )
             content = response.choices[0].message.content
             logger.info(f"OpenAI response: Finish reason: {response.choices[0].finish_reason}, Content: {content}")
@@ -51,9 +52,8 @@ class OpenAI(LLM):
         model: str,
         system_prompt: str,
         user_prompt: str,
-        files_by_path: list[LLMFileFromPath],
-        files_by_stream: list[LLMFileFromBytes],
-        return_json = False
+        files_by_path: Optional[list[LLMFileFromPath]] = None,
+        files_by_stream: Optional[list[LLMFileFromBytes]] = None,
     ) -> str:
         file_ids = await self.__upload_files(files_by_path, files_by_stream)
 
@@ -69,30 +69,34 @@ class OpenAI(LLM):
                 {
                     "role": "user",
                     "content": user_prompt,
-                    "attachments": [
-                        {"file_id": file_id, "tools": [{"type": "file_search"}]}
-                        for file_id in file_ids
-                    ],
+                    "attachments": [{"file_id": file_id, "tools": [{"type": "file_search"}]} for file_id in file_ids],
                 }
             ]
         )
 
-        messages = await self.client.beta.threads.runs.create_and_poll(
-            thread_id=thread.id, assistant_id=file_assistant.id
-        )
+        update_scratchpad(result=thread)
+        run = await self.client.beta.threads.runs.create_and_poll(thread_id=thread.id, assistant_id=file_assistant.id)
 
-        logger.info(messages.data[0])
-        return messages.data[0]  # haven't gotten around to checking how to get the content out yet.
+        messages = await self.client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 
-    async def __upload_files(self, file_paths: list[LLMFileFromPath], file_bytes: list[LLMFileFromBytes]) -> list[str]:
+        logger.info(messages)
+        return re.sub("【.*?†source】", "", messages.data[0].content[0].text.value)
+
+    async def __upload_files(
+        self, files_by_path: Optional[list[LLMFileFromPath]], files_by_stream: Optional[list[LLMFileFromBytes]]
+    ) -> list[str]:
         file_ids = []
-        for file in file_paths + file_bytes:
+
+        files_by_path = files_by_path if files_by_path is not None else []
+        files_by_stream = files_by_stream if files_by_stream is not None else []
+
+        for file in files_by_path + files_by_stream:
             file_id = redis_client.get(file.file_name)
             if not file_id:
                 if isinstance(file, LLMFileFromPath):
                     file = await self.client.files.create(file=file.file_path, purpose="assistants")
                 else:
-                    file = await self.client.files.create(file=file.file_stream, purpose="assistants")
+                    file = await self.client.files.create(file=(file.file_name, file.file_stream), purpose="assistants")
                 file_id = file.id
             file_ids.append(file_id)
         return file_ids

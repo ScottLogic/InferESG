@@ -10,7 +10,6 @@ config = Config()
 
 
 class Mistral(LLM):
-
     client = MistralApi(api_key=config.mistral_key)
 
     async def chat(self, model, system_prompt: str, user_prompt: str, return_json=False) -> str:
@@ -37,12 +36,12 @@ class Mistral(LLM):
         return content
 
     def chat_with_file(
-            self,
-            model: str,
-            system_prompt: str,
-            user_prompt: str,
-            files_by_path: list[LLMFileFromPath],
-            files_by_stream: list[LLMFileFromBytes],
-            return_json=False
-            ) -> Coroutine:
+        self,
+        model: str,
+        system_prompt: str,
+        user_prompt: str,
+        files_by_path: list[LLMFileFromPath],
+        files_by_stream: list[LLMFileFromBytes],
+        return_json=False,
+    ) -> Coroutine:
         raise Exception("Mistral does not support chat_with_file")
