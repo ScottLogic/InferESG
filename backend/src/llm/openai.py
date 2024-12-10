@@ -5,11 +5,19 @@ from typing import Optional
 from src.utils import Config
 from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
 from openai import NOT_GIVEN, AsyncOpenAI
+from openai.types.beta.threads import Text
 
 logger = logging.getLogger(__name__)
 config = Config()
 
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
+
+
+def remove_citations(message: Text):
+    value = message.value
+    for annotation in message.annotations:
+        value = value.replace(annotation.text, "")
+    return value
 
 
 class OpenAI(LLM):
@@ -29,8 +37,7 @@ class OpenAI(LLM):
                     {"role": "user", "content": user_prompt},
                 ],
                 temperature=0,
-                response_format={
-                    "type": "json_object"} if return_json else NOT_GIVEN,
+                response_format={"type": "json_object"} if return_json else NOT_GIVEN
             )
             content = response.choices[0].message.content
             logger.info(f"OpenAI response: Finish reason: {response.choices[0].finish_reason}, Content: {content}")
@@ -52,8 +59,7 @@ class OpenAI(LLM):
         system_prompt: str,
         user_prompt: str,
         files_by_path: Optional[list[LLMFileFromPath]] = None,
-        files_by_stream: Optional[list[LLMFileFromBytes]] = None,
-        return_json: bool = False
+        files_by_stream: Optional[list[LLMFileFromBytes]] = None
     ) -> str:
         file_ids = await self.__upload_files(files_by_path, files_by_stream)
 
@@ -83,8 +89,10 @@ class OpenAI(LLM):
 
         messages = await self.client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 
-        logger.info(messages)
-        return messages.data[0].content[0].text.value
+        message = messages.data[0].content[0].text
+
+        logger.info(f"OpenAI response: {message}")
+        return remove_citations(message)
 
     async def __upload_files(
         self,

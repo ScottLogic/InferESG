@@ -61,7 +61,6 @@ class LLM(ABC, metaclass=LLMMeta):
         system_prompt: str,
         user_prompt: str,
         files_by_path: Optional[list[LLMFileFromPath]] = None,
-        files_by_stream: Optional[list[LLMFileFromBytes]] = None,
-        return_json: bool = False
+        files_by_stream: Optional[list[LLMFileFromBytes]] = None
     ) -> Coroutine:
         pass

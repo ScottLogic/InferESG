@@ -72,14 +72,9 @@ export const Input = ({
     setUploadInProgress(true);
 
     try {
-      const { filename, report } = await uploadFileToServer(file);
+      const { filename, report, answer } = await uploadFileToServer(file);
       setUploadedFile(file);
-      appendMessage(
-        { answer: `Your ESG report for ${filename} is ready to view.` },
-        Role.Bot,
-        report,
-        `ESG Report - ${filename}`,
-      );
+      appendMessage({ answer }, Role.Bot, report, `ESG Report - ${filename}`);
     } catch (error) {
       console.error(error);
     } finally {
