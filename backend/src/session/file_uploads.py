@@ -16,6 +16,7 @@ UPLOADS_META_SESSION_KEY = "file_uploads_meta"
 UPLOADS_SESSION_KEY = "file_uploads"
 
 UPLOADS_KEY_PREFIX = "file_upload_"
+REPORT_KEY_PREFIX = "report_"
 
 
 class FileUploadMeta(TypedDict):
@@ -30,18 +31,25 @@ class FileUpload(TypedDict):
     contentType: str | None
     size: int | None
 
+class FileUploadReport(TypedDict):
+    id: str
+    filename: str | None
+    report: str | None
 
 def get_session_file_uploads_meta() -> list[FileUploadMeta] | None:
     return get_session(UPLOADS_META_SESSION_KEY, [])
 
 
-def get_session_file_upload(upload_id) -> FileUpload | None:
-    value = redis_client.get(UPLOADS_KEY_PREFIX + upload_id)
+def _get_key(key):
+    value = redis_client.get(key)
     if value and isinstance(value, str):
-        parsed_session_data = try_parse_to_json(value)
-        if parsed_session_data:
+        if parsed_session_data := try_parse_to_json(value):
             return parsed_session_data
     return None
+
+
+def get_session_file_upload(upload_id) -> FileUpload | None:
+    return _get_key(UPLOADS_KEY_PREFIX + upload_id)
 
 
 def update_session_file_uploads(file_upload:FileUpload):
@@ -55,15 +63,26 @@ def update_session_file_uploads(file_upload:FileUpload):
 
 
 def clear_session_file_uploads():
-    logger.info("Clearing file uploads from session")
+    logger.info("Clearing file uploads and reports from session")
 
     meta_list = get_session(UPLOADS_META_SESSION_KEY, [])
 
-    keys = [ UPLOADS_KEY_PREFIX + meta["uploadId"] for meta in meta_list ]
+    keys = []
+    for meta in meta_list:
+        keys.append(UPLOADS_KEY_PREFIX + meta["uploadId"])
+        keys.append(REPORT_KEY_PREFIX + meta["uploadId"])
 
-    keystr = " ".join(keys)
-    logger.info("Deleting keys " + keystr)
-    redis_client.delete(keystr)
+    if keys:
+        keystr = " ".join(keys)
+        logger.info("Deleting keys " + keystr)
+        redis_client.delete(keystr)
 
     set_session(UPLOADS_META_SESSION_KEY, [])
 
+
+def store_report(report:FileUploadReport):
+    redis_client.set(REPORT_KEY_PREFIX + report["id"], json.dumps(report))
+
+
+def get_report(id: str) -> FileUploadReport | None:
+    return _get_key(REPORT_KEY_PREFIX + id)

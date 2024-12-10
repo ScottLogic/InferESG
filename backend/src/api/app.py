@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.chat_storage_service import get_chat_message
 from src.directors.report_director import report_on_file_upload
-from src.session.file_uploads import clear_session_file_uploads
+from src.session.file_uploads import clear_session_file_uploads, get_report
 from src.session.redis_session_middleware import reset_session
 from src.utils import Config, test_connection
 from src.directors.chat_director import question, dataset_upload
@@ -57,6 +57,7 @@ chat_fail_response = "Unable to generate a response. Check the service by using 
 suggestions_failed_response = "Unable to generate suggestions. Check the service by using the keyphrase 'healthcheck'"
 file_upload_failed_response = "Unable to upload file. Check the service by using the keyphrase 'healthcheck'"
 file_get_upload_failed_response = "Unable to get uploaded file. Check the service by using the keyphrase 'healthcheck'"
+report_get_upload_failed_response = "Unable to download report. Check the service by using the keyphrase 'healthcheck'"
 
 
 @app.get("/health")
@@ -132,6 +133,18 @@ async def report(file: UploadFile):
         logger.exception(e)
         return JSONResponse(status_code=500, content=file_upload_failed_response)
 
+@app.get("/report/{id}")
+def download_report(id: str):
+    logger.info(f"Get report download called for id: {id}")
+    try:
+        final_result = get_report(id)
+        if final_result is None:
+            return JSONResponse(status_code=404, content=f"Message with id {id} not found")
+        headers = {'Content-Disposition': 'attachment; filename="report.md"'}
+        return Response(final_result.get("report"), headers=headers, media_type='text/markdown')
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=report_get_upload_failed_response)
 
 @app.get("/uploadfile")
 async def fetch_file(id: str):

@@ -5,6 +5,7 @@ import UserIcon from '../icons/account-circle.svg';
 import BotIcon from '../icons/logomark.svg';
 import ChevronIcon from '../icons/chevron.svg';
 import OpenGridIcon from '../icons/open-grid.svg';
+import DownloadIcon from '../icons/download.svg';
 import { Button } from './button';
 
 export enum Role {
@@ -74,6 +75,17 @@ export const MessageComponent = ({
               selectMessage(message === selectedMessage ? null : message)
             }
           />
+          {report && (
+            <>
+              <span className={styles.button_spacer} />
+              <Button
+                isDownload
+                text="Download report"
+                icon={DownloadIcon}
+                href={`${process.env.BACKEND_URL}/report/${message.id}`}
+              />
+            </>
+          )}
         </div>
       )}
       {role == Role.Bot && reasoning && (

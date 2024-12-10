@@ -78,3 +78,8 @@
   position: relative;
   top: -4px;
 }
+
+.button_spacer {
+  display: inline-block;
+  width: 16px;
+}

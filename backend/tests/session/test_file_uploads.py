@@ -3,8 +3,10 @@ import pytest
 from unittest.mock import patch, MagicMock
 from starlette.requests import Request
 from starlette.responses import Response
-from src.session.file_uploads import (FileUpload, clear_session_file_uploads, get_session_file_upload,
-                                       get_session_file_uploads_meta, update_session_file_uploads)
+from src.session.file_uploads import (FileUpload, FileUploadReport, clear_session_file_uploads,
+                                       get_report, get_session_file_upload,
+                                       get_session_file_uploads_meta, store_report,
+                                       update_session_file_uploads)
 
 @pytest.fixture
 def mock_redis():
@@ -75,7 +77,7 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
 
     clear_session_file_uploads()
     assert get_session_file_uploads_meta() == []
-    mock_redis.delete.assert_called_with("file_upload_1234")
+    mock_redis.delete.assert_called_with("file_upload_1234 report_1234")
 
     update_session_file_uploads(file_upload=file)
     update_session_file_uploads(file_upload=file2)
@@ -84,6 +86,24 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
 
     clear_session_file_uploads()
     assert get_session_file_uploads_meta() == []
-    mock_redis.delete.assert_called_with("file_upload_1234 file_upload_12345")
+    mock_redis.delete.assert_called_with("file_upload_1234 report_1234 file_upload_12345 report_12345")
 
 
+def test_store_report(mocker, mock_redis):
+    mocker.patch("src.session.file_uploads.redis_client", mock_redis)
+    report = FileUploadReport(filename="test.txt", id="12", report="test report")
+
+    store_report(report)
+
+    mock_redis.set.assert_called_with("report_12", json.dumps(report))
+
+def test_get_report(mocker, mock_redis):
+    mocker.patch("src.session.file_uploads.redis_client", mock_redis)
+
+    report = FileUploadReport(filename="test.txt", id="12", report="test report")
+    mock_redis.get.return_value = json.dumps(report)
+
+    value = get_report("12")
+
+    assert value == report
+    mock_redis.get.assert_called_with("report_12")

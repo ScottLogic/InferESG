@@ -3,7 +3,7 @@ from fastapi import UploadFile
 from fastapi.datastructures import Headers
 import pytest
 
-from src.session.file_uploads import FileUpload
+from src.session.file_uploads import FileUpload, FileUploadReport
 from src.directors.report_director import report_on_file_upload
 
 
@@ -15,11 +15,17 @@ async def test_report_on_file_upload(mocker):
     mock_agent.invoke.return_value = "#Report on upload as markdown"
     mocker.patch("src.directors.report_director.get_report_agent", return_value=mock_agent)
     mock_handle_file_upload = mocker.patch("src.directors.report_director.handle_file_upload", return_value=file_upload)
+    mock_store_report = mocker.patch("src.directors.report_director.store_report", return_value=file_upload)
 
     headers = Headers({"content-type": "text/plain"})
     file = BytesIO(b"test content")
     request_upload_file = UploadFile(file=file, size=12, headers=headers, filename="test.txt")
     response = await report_on_file_upload(request_upload_file)
 
+    report_upload = FileUploadReport(filename=file_upload["filename"],
+                                     id=file_upload["uploadId"],
+                                     report="#Report on upload as markdown")
     mock_handle_file_upload.assert_called_once_with(request_upload_file)
+    mock_store_report.assert_called_once_with(report_upload)
+
     assert response == {"filename": "test.txt", "id": "1", "report": "#Report on upload as markdown"}
