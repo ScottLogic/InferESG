@@ -1,6 +1,6 @@
 import pytest
 from src.llm.count_calls import Counter
-from src.llm import MockLLM
+from tests.llm.mock_llm import MockLLM
 
 model = MockLLM()
 

@@ -45,7 +45,7 @@ def create_report_chat_message(file_name: str, company_name: str, topics: dict[s
     ]
     return f"""Your report for {file_name} is ready to view.
 
-The following materiality topics were identified for {company_name} and are focused on in the report:
+The following materiality topics were identified for {company_name} which the report focuses on:
 
 {"\n\n".join(topics_with_markdown)}
 """
