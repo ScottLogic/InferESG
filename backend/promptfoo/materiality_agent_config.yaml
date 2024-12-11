@@ -19,6 +19,10 @@ tests:
         value:
           - "Additional-Sector-Guidance-Oil-and-gas.pdf"
           - "GRI 11_ Oil and Gas Sector 2021.pdf"
+      - type: javascript
+        value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
+      - type: javascript
+        value: JSON.parse(output).files[1] === "GRI 11_ Oil and Gas Sector 2021.pdf"
 
   - description: "test list material topics for Astra Zeneca with file"
     vars:
