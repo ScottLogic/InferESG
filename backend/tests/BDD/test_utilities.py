@@ -19,7 +19,7 @@ def app_healthcheck():
     return healthcheck_response
 
 
-def send_prompt(prompt: str):
+async def send_prompt(prompt: str):
     start_response = client.get(START_ENDPOINT_URL.format(utterance=prompt))
     return start_response
 
