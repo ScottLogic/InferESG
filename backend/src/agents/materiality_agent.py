@@ -31,10 +31,7 @@ class MaterialityAgent(Agent):
 
             materiality_topics = await self.llm.chat_with_file(
                 self.model,
-                system_prompt=engine.load_prompt(
-                    "list-material-topics-system-prompt",
-                    catalogue=catalogue
-                ),
+                system_prompt=engine.load_prompt("list-material-topics-system-prompt"),
                 user_prompt=f"What topics are material for {company_name}?",
                 files_by_path=[
                     LLMFileFromPath(

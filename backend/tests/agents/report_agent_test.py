@@ -17,4 +17,3 @@ async def test_invoke_calls_llm(mocker):
     response = await report_agent.create_report("Test Document", materiality_topics={"abc": "123"})
 
     assert response == mock_response
-
