@@ -94,3 +94,22 @@ async def test_lifespan_populates_db(mocker) -> None:
 
     with client:
         mock_dataset_upload.assert_called_once_with()
+
+def test_get_report_success(mocker):
+    report = FileUploadReport(id="12", filename="test.pdf", report="test report")
+    mock_get_report = mocker.patch("src.api.app.get_report", return_value=report)
+
+    response = client.get("/report/12")
+
+    mock_get_report.assert_called_with("12")
+    assert response.status_code == 200
+    assert response.headers.get('Content-Disposition') == 'attachment; filename="report.md"'
+    assert response.headers.get('Content-Type') == 'text/markdown; charset=utf-8'
+
+def test_get_report_not_found(mocker):
+    mock_get_report = mocker.patch("src.api.app.get_report", return_value=None)
+
+    response = client.get("/report/12")
+
+    mock_get_report.assert_called_with("12")
+    assert response.status_code == 404

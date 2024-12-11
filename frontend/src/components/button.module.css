@@ -8,6 +8,10 @@
   background-color: transparent;
 }
 
+.button_container.download {
+  background-color: var(--grey-900);
+}
+
 .button_container:not(:has(.withText)) {
   border-radius: 24px;
 }
@@ -63,6 +67,17 @@
   .button:active:enabled {
     background-color: rgb(224 221 220 / 0.7); /* --grey-300 */
     border: 1px solid var(--primary);
+  }
+}
+
+.download {
+  .button {
+    color: var(--grey-50);
+  }
+
+  .button.pressed,
+  .button:active:enabled {
+    background-color: var(--black);
   }
 }
 
