@@ -1,6 +1,7 @@
 # tests/test_openai_llm.py
 import pytest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, Mock
+from src.llm.openai import remove_citations
 from src.utils import Config
 
 mock_config = MagicMock(spec=Config)
@@ -14,6 +15,16 @@ openapi_response = "Hello! How can I assist you today?"
 def create_mock_chat_response(content):
     return {"choices": [{"message": {"role": "system", "content": content}}]}
 
+def test_remove_citations():
+    mock_annotation = Mock()
+    mock_annotation.text = "[1]"
+
+    mock_message = Mock()
+    mock_message.value = "This is a test [1]."
+    mock_message.annotations = [mock_annotation]
+
+    result = remove_citations(mock_message)
+    assert result == "This is a test ."
 
 # @patch("src.llm.openai.OpenAI")
 # def test_chat_content_string_returns_string(mock_create):
