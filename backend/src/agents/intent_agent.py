@@ -1,5 +1,5 @@
 from src.prompts import PromptEngine
-from src.agents import Agent, agent
+from src.agents import ChatAgent, agent
 from src.session import get_session_chat
 import logging
 from src.utils.config import Config
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
     description="This agent is responsible for determining the intent of the user's utterance",
     tools=[],
 )
-class IntentAgent(Agent):
+class IntentAgent(ChatAgent):
     async def invoke(self, utterance: str) -> str:
         session_chat = get_session_chat()
         user_prompt = engine.load_prompt(

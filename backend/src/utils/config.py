@@ -21,6 +21,7 @@ class Config(object):
         self.answer_agent_llm = None
         self.intent_agent_llm = None
         self.report_agent_llm = None
+        self.materiality_agent_llm = None
         self.validator_agent_llm = None
         self.datastore_agent_llm = None
         self.web_agent_llm = None
@@ -32,6 +33,7 @@ class Config(object):
         self.intent_agent_model = None
         self.answer_agent_model = None
         self.report_agent_model = None
+        self.materiality_agent_model = None
         self.datastore_agent_model = None
         self.chart_generator_model = None
         self.web_agent_model = None
@@ -61,6 +63,7 @@ class Config(object):
             self.answer_agent_llm = os.getenv("ANSWER_AGENT_LLM")
             self.intent_agent_llm = os.getenv("INTENT_AGENT_LLM")
             self.report_agent_llm = os.getenv("REPORT_AGENT_LLM")
+            self.materiality_agent_llm = os.getenv("MATERIALITY_AGENT_LLM")
             self.validator_agent_llm = os.getenv("VALIDATOR_AGENT_LLM")
             self.datastore_agent_llm = os.getenv("DATASTORE_AGENT_LLM")
             self.chart_generator_llm = os.getenv("CHART_GENERATOR_LLM")
@@ -71,6 +74,7 @@ class Config(object):
             self.answer_agent_model = os.getenv("ANSWER_AGENT_MODEL")
             self.intent_agent_model = os.getenv("INTENT_AGENT_MODEL")
             self.report_agent_model = os.getenv("REPORT_AGENT_MODEL")
+            self.materiality_agent_model = os.getenv("MATERIALITY_AGENT_MODEL")
             self.validator_agent_model = os.getenv("VALIDATOR_AGENT_MODEL")
             self.datastore_agent_model = os.getenv("DATASTORE_AGENT_MODEL")
             self.web_agent_model = os.getenv("WEB_AGENT_MODEL")

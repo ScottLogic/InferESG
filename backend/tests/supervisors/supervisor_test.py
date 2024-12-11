@@ -1,5 +1,5 @@
 import pytest
-from tests.agents import MockAgent
+from tests.agents import MockChatAgent
 import json
 from src.supervisors import solve_all, solve_task, no_questions_response, unsolvable_response, no_agent_response
 
@@ -25,7 +25,7 @@ intent_json = {
     ],
 }
 
-agent = MockAgent("mockllm", mock_model)
+chat_agent = MockChatAgent("mockllm", mock_model)
 
 
 @pytest.mark.asyncio
@@ -57,14 +57,14 @@ async def test_solve_task_first_attempt_solves(mocker):
         "content": "the answer is 42",
         "ignore_validation": "false"
     })
-    agent.invoke = mocker.AsyncMock(return_value=mock_answer)
-    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=agent)
+    chat_agent.invoke = mocker.AsyncMock(return_value=mock_answer)
+    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
     mocker.patch("src.supervisors.supervisor.is_valid_answer", return_value=True)
     answer = await solve_task(task, scratchpad)
     mock_answer_json = json.loads(mock_answer)
 
     # Ensure that the result is returned directly without validation
-    assert answer == (agent.name, mock_answer_json.get('content', ''), "success")
+    assert answer == (chat_agent.name, mock_answer_json.get('content', ''), "success")
 
 
 @pytest.mark.asyncio
@@ -74,8 +74,8 @@ async def test_solve_task_ignore_validation(mocker):
         "content": "the answer is 42",
         "ignore_validation": "true"
     })
-    agent.invoke = mocker.AsyncMock(return_value=mock_answer)
-    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=agent)
+    chat_agent.invoke = mocker.AsyncMock(return_value=mock_answer)
+    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
     mock_is_valid_answer = mocker.patch("src.supervisors.supervisor.is_valid_answer")
 
     # Run the solve_task function
@@ -83,13 +83,13 @@ async def test_solve_task_ignore_validation(mocker):
     mock_answer_json = json.loads(mock_answer)
 
     # Ensure that the result is returned directly without validation
-    assert answer == (agent.name, mock_answer_json.get('content', ''), "success")
+    assert answer == (chat_agent.name, mock_answer_json.get('content', ''), "success")
     mock_is_valid_answer.assert_not_called()  # Validation should not be called
 
 @pytest.mark.asyncio
 async def test_solve_task_unsolvable(mocker):
-    agent.invoke = mocker.MagicMock(return_value=mock_answer)
-    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=agent)
+    chat_agent.invoke = mocker.MagicMock(return_value=mock_answer)
+    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
     mocker.patch("src.supervisors.supervisor.is_valid_answer", return_value=False)
 
     with pytest.raises(Exception) as error:

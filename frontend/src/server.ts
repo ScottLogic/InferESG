@@ -81,7 +81,12 @@ export const resetChat = async (): Promise<Response> => {
 
 export const uploadFileToServer = async (
   file: File,
-): Promise<{ filename: string; id: string; report: string }> => {
+): Promise<{
+  filename: string;
+  id: string;
+  report: string;
+  answer: string;
+}> => {
   const formData = new FormData();
   formData.append('file', file);
 
