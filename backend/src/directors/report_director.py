@@ -1,13 +1,14 @@
+import logging
 from typing import TypedDict
 from src.llm.llm import LLMFileFromBytes
 from fastapi import UploadFile
 
-from src.utils.scratchpad import clear_scratchpad, update_scratchpad
+from src.utils.scratchpad import clear_scratchpad
 from src.agents import get_report_agent
 from src.prompts import PromptEngine
 
 engine = PromptEngine()
-
+logger = logging.getLogger(__name__)
 
 class FileUploadReport(TypedDict):
     filename: str | None

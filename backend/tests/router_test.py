@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from src.llm import MockLLM
+from tests.llm.mock_llm import MockLLM
 from src.agents import agent_details
 from tests.agents import MockAgent, mock_agent_name
 from src.router import get_agent_for_task

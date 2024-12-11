@@ -1,5 +1,4 @@
 import logging
-import re
 from typing import Optional
 import redis
 
@@ -7,12 +6,18 @@ from src.utils.scratchpad import update_scratchpad
 from src.utils import Config
 from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
 from openai import NOT_GIVEN, AsyncOpenAI
+from openai.types.beta.threads import Text
 
 logger = logging.getLogger(__name__)
 config = Config()
 
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
 
+def remove_citations(message: Text):
+    value = message.value
+    for annotation in message.annotations:
+        value = value.replace(annotation.text, "")
+    return value
 
 class OpenAI(LLM):
     client = AsyncOpenAI(api_key=config.openai_key)
@@ -79,8 +84,9 @@ class OpenAI(LLM):
 
         messages = await self.client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 
-        logger.info(messages)
-        return re.sub("【.*?†source】", "", messages.data[0].content[0].text.value)
+        message = messages.data[0].content[0].text
+        logger.info(f"OpenAI response: {message}")
+        return remove_citations(message)
 
     async def __upload_files(
         self, files_by_path: Optional[list[LLMFileFromPath]], files_by_stream: Optional[list[LLMFileFromBytes]]

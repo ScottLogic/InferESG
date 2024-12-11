@@ -1,5 +1,6 @@
 from pytest import raises
 import pytest
+from tests.llm.mock_llm import MockLLM
 from src.llm.factory import get_llm
 from tests.agents import MockAgent, mock_agent_description, mock_agent_name, mock_tools
 
@@ -17,6 +18,7 @@ def test_agent_metadata_tools():
 
 
 mock_model = "mockmodel"
+MockLLM()
 mock_llm = get_llm("mockllm")
 mock_agent_instance = MockAgent("mockllm", mock_model)
 
