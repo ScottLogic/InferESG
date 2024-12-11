@@ -15,10 +15,6 @@ tests:
       system_prompt_args:
         catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
     assert:
-      - type: contains-all
-        value:
-          - "Additional-Sector-Guidance-Oil-and-gas.pdf"
-          - "GRI 11_ Oil and Gas Sector 2021.pdf"
       - type: javascript
         value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
       - type: javascript
