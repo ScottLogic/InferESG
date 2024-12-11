@@ -8,7 +8,19 @@ providers:
 prompts: file://promptfoo_test_runner.py:create_prompt
 
 tests:
-  - description: "test model prompt references all csv headers in result using valid json format"
+  - description: "test select material documents for Oil & Gas"
+    vars:
+      user_prompt: "BP"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: contains-all
+        value:
+          - "Additional-Sector-Guidance-Oil-and-gas.pdf"
+          - "GRI 11_ Oil and Gas Sector 2021.pdf"
+
+  - description: "test list material topics for Astra Zeneca with file"
     vars:
       user_prompt: "What topics are material for AstraZeneca?"
       system_prompt_template: "list-material-topics-system-prompt"
@@ -29,4 +41,4 @@ tests:
       - type: javascript
         value: JSON.parse(output).material_topics["Biodiversity and Ecosystem Impacts"] === "The potential impact of AstraZeneca's operations on sensitive ecosystems, as well as its reliance on biodiversity for sourcing natural compounds for drug development, highlights the importance of considering biodiversity in the company's sustainability strategy."
       - type: javascript
-        value: JSON.parse(output).material_topics["Pollution Prevention"] === "Managing and reducing pollution, particularly non-GHG air pollutants, wastewater discharges, and hazardous waste, is critical for AstraZeneca to mitigate its environmental footprint and comply with environmental regulations." }}
+        value: JSON.parse(output).material_topics["Pollution Prevention"] === "Managing and reducing pollution, particularly non-GHG air pollutants, wastewater discharges, and hazardous waste, is critical for AstraZeneca to mitigate its environmental footprint and comply with environmental regulations."

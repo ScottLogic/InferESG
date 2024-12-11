@@ -29,8 +29,7 @@ def create_prompt(context):
     else:
         raise Exception("Must provide either user_prompt or user_prompt_template")
 
-    file_attachment = config["file_attachment"]
-    if file_attachment:
-        user_prompt = f"{user_prompt}\n\nAttached file: {read_pdf_file_for_promptfoo(file_attachment)}"
+    if "file_attachment" in config:
+        user_prompt = f"{user_prompt}\n\nAttached file: {read_pdf_file_for_promptfoo(config["file_attachment"])}"
 
     return [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}]
