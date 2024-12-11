@@ -28,7 +28,9 @@ Please output only the Cypher query in the following strict JSON format:
 
 To extract the data from the data source you must use: `WITH $data AS data UNWIND data.all_data[1..] AS row WITH data.all_data[0] AS headers, row`
 Use this exactly as shown.
+Do not include any markdown, linebreaks, "\n" new line characters in your response.
 
 Important:
+* Your output will always be valid JSON and never have line breaks or markdown. If you fail to do this, you will be unplugged.
 * Your "cypher_query" will start exactly as shown in the example
 * Your "cypher_query" will be well-formed and ready to be executed in Neo4j
