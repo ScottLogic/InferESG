@@ -36,7 +36,7 @@ def get_materiality_agent() -> MaterialityAgent:
     return MaterialityAgent(config.materiality_agent_llm, config.materiality_agent_model)
 
 
-def agent_details(agent) -> dict:
+def agent_details(agent: Agent) -> dict:
     return {"name": agent.name, "description": agent.description}
 
 

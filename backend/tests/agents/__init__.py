@@ -1,4 +1,4 @@
-from src.agents import Agent, ChatAgent, agent, tool, Parameter
+from src.agents import ChatAgent, agent, tool, Parameter
 from tests.llm.mock_llm import MockLLM
 
 name_a = "Mock Tool A"

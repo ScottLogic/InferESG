@@ -26,8 +26,7 @@ config = Config()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        # await dataset_upload()
-        logger.info("skip dkg")
+        await dataset_upload()
     except Exception as e:
         logger.exception(f"Failed to populate database with initial data from file: {e}")
     yield

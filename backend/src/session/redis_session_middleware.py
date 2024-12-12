@@ -19,6 +19,7 @@ SESSION_TTL = int(config.redis_cache_duration) # config value or default to 1 ho
 request_context = contextvars.ContextVar(REQUEST_CONTEXT_KEY)
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
 
+
 class RedisSessionMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         request_context.set(request)
@@ -56,10 +57,12 @@ def set_session(key: str, value):
     request: Request = request_context.get()
     request.state.session[key] = value
 
+
 def reset_session():
     logger.info("Reset chat session")
     request: Request = request_context.get()
     request.state.session = {}
+
 
 def get_redis_session(request: Request):
     session_id = request.cookies.get(SESSION_COOKIE_NAME)
