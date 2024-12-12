@@ -1,3 +1,5 @@
+from unittest.mock import patch, mock_open
+
 import pytest
 import json
 
@@ -14,6 +16,10 @@ mock_materiality_topics = {"material_topics": {"topic1": "topic1 description", "
 @pytest.mark.asyncio
 async def test_invoke_calls_llm(mocker):
     agent = MaterialityAgent(llm_name="mockllm", model=mock_model)
+
+    with patch("builtins.open", mock_open(read_data="data")) as mock_file:
+        assert open("./library/catalogue.json").read() == "data"
+    mock_file.assert_called_with("./library/catalogue.json")
 
     mock_llm.chat = mocker.AsyncMock(return_value=json.dumps(mock_selected_files))
     mock_llm.chat_with_file = mocker.AsyncMock(return_value=json.dumps(mock_materiality_topics))
