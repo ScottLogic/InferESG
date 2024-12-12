@@ -105,15 +105,10 @@ class OpenAI(LLM):
 
         file_ids = []
         for file in files_by_stream + files_by_path:
-            file_id = redis_client.get(file.file_name)
-            if not file_id:
-                logger.info(f"Uploading file '{file.file_name}' to OpenAI")
-                file = await self.client.files.create(
-                    file=file.file_path if isinstance(file, LLMFileFromPath) else file.file_stream,
-                    purpose="assistants"
-                )
-                file_id = file.id
-            else:
-                logger.info(f"File '{file.file_name}' has already been uploaded to openai with file-id: {file_id}")
-            file_ids.append(file_id)
+            logger.info(f"Uploading file '{file.file_name}' to OpenAI")
+            file = await self.client.files.create(
+                file=file.file_path if isinstance(file, LLMFileFromPath) else file.file_stream,
+                purpose="assistants"
+            )
+            file_ids.append(file.id)
         return file_ids
