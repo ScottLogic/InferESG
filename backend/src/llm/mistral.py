@@ -10,7 +10,6 @@ config = Config()
 
 
 class Mistral(LLM):
-
     client = MistralApi(api_key=config.mistral_key)
 
     async def chat(self, model, system_prompt: str, user_prompt: str, return_json=False) -> str:

@@ -10,10 +10,9 @@ from src.llm import LLMFileFromPath
 from src.llm.openai import OpenAI
 
 
-def mock_openai_object(id_value: str) -> AsyncMock:
-    mock_obj = AsyncMock()
-    mock_obj.id = id_value
-    return AsyncMock(return_value=mock_obj)
+@dataclass
+class MockResponse:
+    id: str
 
 
 @dataclass
@@ -48,18 +47,25 @@ class MockListResponse:
 
 mock_message_list = {"data"}
 
+# @pytest.fixture
+# def mock_openai():
+#     with patch('src.llm.openai.AsyncOpenAI', new_callable=AsyncMock) as mock:
+#         yield mock
+
 
 @pytest.mark.asyncio
-@patch("src.llm.openai.OpenAI.client")
-async def test_chat_with_file_removes_citations(mock_client):
-    mock_client.files.create = mock_openai_object(id_value="file-id")
-    mock_client.beta.assistants.create = mock_openai_object(id_value="assistant-id")
-    mock_client.beta.threads.create = mock_openai_object(id_value="thread-id")
-    mock_client.beta.threads.runs.create_and_poll = mock_openai_object(id_value="run-id")
-    mock_client.beta.threads.messages.list = AsyncMock(return_value=MockListResponse)
+@patch("src.llm.openai.AsyncOpenAI")  # Ensure this matches the import path in your module
+async def test_chat_with_file_removes_citations(mock_async_openai):
+    mock_instance = mock_async_openai.return_value
 
-    client = OpenAI()
-    response = await client.chat_with_file(
+    mock_instance.files.create = AsyncMock(return_value=MockResponse(id="file-id"))
+    mock_instance.beta.assistants.create = AsyncMock(return_value=MockResponse(id="assistant-id"))
+    mock_instance.beta.threads.create = AsyncMock(return_value=MockResponse(id="thread-id"))
+    mock_instance.beta.threads.runs.create_and_poll = AsyncMock(return_value=MockResponse(id="run-id"))
+    mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse)
+
+    client  = OpenAI()
+    response = await client .chat_with_file(
         model="",
         user_prompt="",
         system_prompt="",

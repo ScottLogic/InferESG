@@ -18,7 +18,6 @@ def remove_citations(message: Text):
 
 
 class OpenAI(LLM):
-    client = AsyncOpenAI(api_key=config.openai_key)
 
     async def chat(self, model, system_prompt: str, user_prompt: str, return_json=False) -> str:
         logger.debug(
@@ -27,7 +26,8 @@ class OpenAI(LLM):
             )
         )
         try:
-            response = await self.client.chat.completions.create(
+            client = AsyncOpenAI(api_key=config.openai_key)
+            response = await client.chat.completions.create(
                 model=model,
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -57,16 +57,17 @@ class OpenAI(LLM):
         files_by_path: Optional[list[LLMFileFromPath]] = None,
         files_by_stream: Optional[list[LLMFileFromBytes]] = None
     ) -> str:
+        client = AsyncOpenAI(api_key=config.openai_key)
         file_ids = await self.__upload_files(files_by_path, files_by_stream)
 
-        file_assistant = await self.client.beta.assistants.create(
+        file_assistant = await client.beta.assistants.create(
             name="ESG Analyst",
             instructions=system_prompt,
             model=model,
             tools=[{"type": "file_search"}],
         )
 
-        thread = await self.client.beta.threads.create(
+        thread = await client.beta.threads.create(
             messages=[
                 {
                     "role": "user",
@@ -79,11 +80,11 @@ class OpenAI(LLM):
             ]
         )
 
-        run = await self.client.beta.threads.runs.create_and_poll(
+        run = await client.beta.threads.runs.create_and_poll(
             thread_id=thread.id, assistant_id=file_assistant.id
         )
 
-        messages = await self.client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
+        messages = await client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 
         message = messages.data[0].content[0].text
 
@@ -95,6 +96,7 @@ class OpenAI(LLM):
         files_by_path: Optional[list[LLMFileFromPath]],
         files_by_stream: Optional[list[LLMFileFromBytes]]
     ) -> list[str]:
+        client = AsyncOpenAI(api_key=config.openai_key)
         if not files_by_path:
             files_by_path = []
         if not files_by_stream:
@@ -103,7 +105,7 @@ class OpenAI(LLM):
         file_ids = []
         for file in files_by_stream + files_by_path:
             logger.info(f"Uploading file '{file.file_name}' to OpenAI")
-            file = await self.client.files.create(
+            file = await client.files.create(
                 file=file.file_path if isinstance(file, LLMFileFromPath) else file.file_stream,
                 purpose="assistants"
             )
