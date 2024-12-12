@@ -31,7 +31,7 @@ async def generate_cypher_query_core(
         timeframe=timeframe,
     )
     try:
-        graph_schema = await get_semantic_layer_cache(llm, model, cache)
+        graph_schema = await get_semantic_layer_cache(llm, model)
         graph_schema = json.dumps(graph_schema, separators=(",", ":"))
 
         generate_cypher_query_prompt = engine.load_prompt(
