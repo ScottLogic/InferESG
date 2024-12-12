@@ -5,6 +5,7 @@ from typing import NoReturn
 from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from src.utils.scratchpad import ScratchPadMiddleware
 from src.chat_storage_service import get_chat_message
 from src.directors.report_director import report_on_file_upload
 from src.session.file_uploads import clear_session_file_uploads
@@ -45,6 +46,7 @@ app.add_middleware(
 )
 
 app.add_middleware(RedisSessionMiddleware)
+app.add_middleware(ScratchPadMiddleware)
 
 health_prefix = "InferESG healthcheck: "
 further_guidance = "Please check the README files for further guidance."
