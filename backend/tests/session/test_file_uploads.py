@@ -77,7 +77,8 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
 
     clear_session_file_uploads()
     assert get_session_file_uploads_meta() == []
-    mock_redis.delete.assert_called_with("file_upload_1234 report_1234")
+    mock_redis.delete.assert_any_call("file_upload_1234")
+    mock_redis.delete.assert_any_call("report_1234")
 
     update_session_file_uploads(file_upload=file)
     update_session_file_uploads(file_upload=file2)
@@ -86,8 +87,10 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
 
     clear_session_file_uploads()
     assert get_session_file_uploads_meta() == []
-    mock_redis.delete.assert_called_with("file_upload_1234 report_1234 file_upload_12345 report_12345")
-
+    mock_redis.delete.assert_any_call("file_upload_1234")
+    mock_redis.delete.assert_any_call("report_1234")
+    mock_redis.delete.assert_any_call("file_upload_12345")
+    mock_redis.delete.assert_any_call("report_12345")
 
 def test_store_report(mocker, mock_redis):
     mocker.patch("src.session.file_uploads.redis_client", mock_redis)

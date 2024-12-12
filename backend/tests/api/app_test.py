@@ -53,9 +53,13 @@ def test_chat_response_failure(mocker):
 def test_chat_delete(mocker):
     mock_reset_session = mocker.patch("src.api.app.reset_session")
     mock_clear_files = mocker.patch("src.api.app.clear_session_file_uploads")
+    mock_clear_chat_messages = mocker.patch("src.api.app.clear_chat_messages")
+    mock_get_session_chat_response_ids = mocker.patch("src.api.app.get_session_chat_response_ids")
 
     response = client.delete("/chat")
 
+    mock_clear_chat_messages.assert_called_once()
+    mock_get_session_chat_response_ids.assert_called_once()
     mock_clear_files.assert_called_once()
     mock_reset_session.assert_called_once()
 

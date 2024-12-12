@@ -4,6 +4,7 @@ import logging
 from typing import Optional
 from uuid import uuid4
 
+from src.session.chat_response import update_session_chat_response_ids
 from src.utils.json import try_pretty_print
 from src.chat_storage_service import ChatResponse, store_chat_message
 from src.utils import clear_scratchpad, update_scratchpad, get_scratchpad
@@ -69,6 +70,7 @@ async def question(question: str) -> ChatResponse:
                             reasoning=try_pretty_print(current_scratchpad))
 
     store_chat_message(response)
+    update_session_chat_response_ids(response.get("id"))
 
     clear_scratchpad()
 

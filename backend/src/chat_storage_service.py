@@ -1,5 +1,6 @@
 
 import json
+import logging
 from typing import TypedDict
 import redis
 
@@ -14,6 +15,7 @@ class ChatResponse(TypedDict):
     reasoning: str | None
 
 config = Config()
+logger = logging.getLogger(__name__)
 
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
 
@@ -29,3 +31,9 @@ def get_chat_message(id: str) -> ChatResponse | None:
         if parsed_session_data := try_parse_to_json(value):
             return parsed_session_data
     return None
+
+def clear_chat_messages(ids:list[str]):
+    if ids:
+        logger.info(f"Clearing chat message keys {ids}")
+        for id in ids:
+            redis_client.delete(CHAT_KEY_PREFIX + id)

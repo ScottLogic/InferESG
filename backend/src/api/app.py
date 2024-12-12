@@ -6,7 +6,8 @@ from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.utils.scratchpad import ScratchPadMiddleware
-from src.chat_storage_service import get_chat_message
+from src.session.chat_response import get_session_chat_response_ids
+from src.chat_storage_service import clear_chat_messages, get_chat_message
 from src.directors.report_director import report_on_file_upload
 from src.session.file_uploads import clear_session_file_uploads, get_report
 from src.session.redis_session_middleware import reset_session
@@ -90,7 +91,8 @@ async def chat(utterance: str):
 async def clear_chat():
     logger.info("Delete the chat session")
     try:
-        # clear files first as need session data for file keys
+        # clear chatresponses and files first as need session data for keys
+        clear_chat_messages(get_session_chat_response_ids())
         clear_session_file_uploads()
         reset_session()
         return Response(status_code=204)

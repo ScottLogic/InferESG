@@ -76,9 +76,9 @@ def clear_session_file_uploads():
         keys.append(REPORT_KEY_PREFIX + meta["uploadId"])
 
     if keys:
-        keystr = " ".join(keys)
-        logger.info("Deleting keys " + keystr)
-        redis_client.delete(keystr)
+        logger.info(f"Deleting keys {keys}")
+        for key in keys:
+            redis_client.delete(key)
 
     set_session(UPLOADS_META_SESSION_KEY, [])
 

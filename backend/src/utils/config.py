@@ -5,7 +5,6 @@ default_frontend_url = "http://localhost:8650"
 default_neo4j_uri = "bolt://localhost:7687"
 default_files_directory = "files"
 default_redis_host = "localhost"
-default_redis_cache_duration = 3600
 
 
 class Config(object):
@@ -40,7 +39,6 @@ class Config(object):
         self.router_model = None
         self.files_directory = default_files_directory
         self.redis_host = default_redis_host
-        self.redis_cache_duration = default_redis_cache_duration
         self.suggestions_model = None
         self.dynamic_knowledge_graph_model = None
         self.load_env()
@@ -81,7 +79,6 @@ class Config(object):
             self.chart_generator_model = os.getenv("CHART_GENERATOR_MODEL")
             self.router_model = os.getenv("ROUTER_MODEL")
             self.redis_host = os.getenv("REDIS_HOST", default_redis_host)
-            self.redis_cache_duration = os.getenv("REDIS_CACHE_DURATION", default_redis_cache_duration)
             self.suggestions_model = os.getenv("SUGGESTIONS_MODEL")
             self.dynamic_knowledge_graph_model = os.getenv("DYNAMIC_KNOWLEDGE_GRAPH_MODEL")
         except FileNotFoundError:
