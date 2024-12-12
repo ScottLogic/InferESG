@@ -8,7 +8,7 @@ providers:
 prompts: file://promptfoo_test_runner.py:create_prompt
 
 tests:
-  - description: "test select material documents for Oil & Gas"
+  - description: "test select material documents for BP"
     vars:
       user_prompt: "BP"
       system_prompt_template: "select-material-files-system-prompt"
@@ -19,6 +19,18 @@ tests:
         value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
       - type: javascript
         value: JSON.parse(output).files[1] === "GRI 11_ Oil and Gas Sector 2021.pdf"
+
+  - description: "test select material documents for BP with focus on nature"
+    vars:
+      user_prompt: "BP with focus on Nature materiality topics"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
+      - type: javascript
+        value: JSON.parse(output).files.length === 1
 
   - description: "test list material topics for Astra Zeneca with file"
     vars:

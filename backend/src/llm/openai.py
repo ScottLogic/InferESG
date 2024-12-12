@@ -1,5 +1,4 @@
 import logging
-import redis
 from typing import Optional
 
 from src.utils import Config
@@ -9,8 +8,6 @@ from openai.types.beta.threads import Text
 
 logger = logging.getLogger(__name__)
 config = Config()
-
-redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
 
 
 def remove_citations(message: Text):
