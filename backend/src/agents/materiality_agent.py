@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
     tools=[],
 )
 class MaterialityAgent(Agent):
-    async def list_material_topics(self, company_name: str):
+    async def list_material_topics(self, company_name: str) -> dict[str, str]:
         with open('./library/catalogue.json') as file:
             catalogue = json.load(file)
             files_json = await self.llm.chat(
@@ -42,7 +42,6 @@ class MaterialityAgent(Agent):
                         file_path=Path(f"./library/{file_name}")
                     )
                     for file_name in json.loads(files_json)["files"]
-                ],
-                return_json=True
+                ]
             )
-            return materiality_topics
+            return json.loads(materiality_topics)["material_topics"]
