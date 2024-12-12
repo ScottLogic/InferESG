@@ -77,11 +77,11 @@ export const Input = ({
       appendMessage(
         {
           id,
-          answer
+          answer,
         },
         Role.Bot,
         report,
-        `ESG Report - ${filename}`
+        `ESG Report - ${filename}`,
       );
     } catch (error) {
       console.error(error);

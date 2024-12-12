@@ -1,18 +1,8 @@
-from typing import TypedDict, Optional
 from fastapi import UploadFile
-from dataclasses import dataclass
 
 from src.session.file_uploads import FileUploadReport, store_report
 from src.utils.file_utils import handle_file_upload
 from src.agents import get_report_agent, get_materiality_agent
-
-
-@dataclass
-class FileUploadReport(TypedDict):
-    id: str
-    answer: str
-    filename: Optional[str]
-    report: Optional[str]
 
 
 async def report_on_file_upload(upload: UploadFile) -> FileUploadReport:

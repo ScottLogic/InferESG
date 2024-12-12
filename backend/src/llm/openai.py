@@ -4,7 +4,7 @@ from typing import Optional
 from src.utils import Config
 from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
 from openai import NOT_GIVEN, AsyncOpenAI
-from openai.types.beta.threads import Text
+from openai.types.beta.threads import Text, TextContentBlock
 
 logger = logging.getLogger(__name__)
 config = Config()
@@ -86,10 +86,14 @@ class OpenAI(LLM):
 
         messages = await client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 
-        message = messages.data[0].content[0].text
+        if isinstance(messages.data[0].content[0], TextContentBlock):
+            message = remove_citations(messages.data[0].content[0].text)
+        else:
+            message = messages.data[0].content[0].to_json()
 
         logger.info(f"OpenAI response: {message}")
-        return remove_citations(message)
+        return message
+
 
     async def __upload_files(
         self,

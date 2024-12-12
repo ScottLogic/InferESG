@@ -1,5 +1,5 @@
 import json
-from typing import TypedDict
+from typing import TypedDict, Optional
 import logging
 import redis
 
@@ -27,14 +27,17 @@ class FileUploadMeta(TypedDict):
 class FileUpload(TypedDict):
     uploadId: str
     content: str
-    filename: str | None
-    contentType: str | None
-    size: int | None
+    filename: str
+    contentType: Optional[str]
+    size: Optional[int]
+
 
 class FileUploadReport(TypedDict):
     id: str
-    filename: str | None
-    report: str | None
+    answer: str
+    filename: Optional[str]
+    report: Optional[str]
+
 
 def get_session_file_uploads_meta() -> list[FileUploadMeta] | None:
     return get_session(UPLOADS_META_SESSION_KEY, [])
@@ -52,7 +55,7 @@ def get_session_file_upload(upload_id) -> FileUpload | None:
     return _get_key(UPLOADS_KEY_PREFIX + upload_id)
 
 
-def update_session_file_uploads(file_upload:FileUpload):
+def update_session_file_uploads(file_upload: FileUpload):
     file_uploads_meta_session = get_session(UPLOADS_META_SESSION_KEY, [])
     if not file_uploads_meta_session:
         # initialise the session object
@@ -80,7 +83,7 @@ def clear_session_file_uploads():
     set_session(UPLOADS_META_SESSION_KEY, [])
 
 
-def store_report(report:FileUploadReport):
+def store_report(report: FileUploadReport):
     redis_client.set(REPORT_KEY_PREFIX + report["id"], json.dumps(report))
 
 

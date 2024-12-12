@@ -1,7 +1,7 @@
 from abc import ABC
 import json
 import logging
-from typing import List, Type, Union
+from typing import List, Type, TypeVar, Optional
 from src.llm import LLM, get_llm
 from src.utils.log_publisher import LogPrefix, publish_log_info
 
@@ -64,11 +64,14 @@ class ChatAgent(Agent):
         return result_of_action
 
 
-def agent(name: str, description: str, tools: List[Tool] = None):
-    def decorator(agent: Type[Union[Agent, ChatAgent]]):
+T = TypeVar('T', bound=Agent)
+
+
+def agent(name: str, description: str, tools: Optional[List[Tool]] = None):
+    def decorator(agent: Type[T]) -> Type[T]:
         agent.name = name
         agent.description = description
-        if tools is not None:
+        if tools:
             agent.tools = tools
         return agent
 

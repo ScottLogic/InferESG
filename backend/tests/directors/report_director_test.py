@@ -3,7 +3,7 @@ from fastapi import UploadFile
 from fastapi.datastructures import Headers
 import pytest
 
-from src.session.file_uploads import FileUpload, FileUploadReport
+from src.session.file_uploads import FileUpload
 from src.directors.report_director import report_on_file_upload
 
 

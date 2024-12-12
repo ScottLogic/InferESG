@@ -11,7 +11,7 @@ engine = PromptEngine()
 
 @agent(
     name="ReportAgent",
-    description="This agent is responsible for generating an ESG focused report on a narrative document"
+    description="This agent is responsible for creating ESG reports on narrative documents"
 )
 class ReportAgent(Agent):
     async def create_report(self, file_content: str, materiality_topics: dict[str, str]) -> str:
