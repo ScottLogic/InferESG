@@ -47,11 +47,6 @@ class MockListResponse:
 
 mock_message_list = {"data"}
 
-# @pytest.fixture
-# def mock_openai():
-#     with patch('src.llm.openai.AsyncOpenAI', new_callable=AsyncMock) as mock:
-#         yield mock
-
 
 @pytest.mark.asyncio
 @patch("src.llm.openai.AsyncOpenAI")  # Ensure this matches the import path in your module
@@ -64,7 +59,7 @@ async def test_chat_with_file_removes_citations(mock_async_openai):
     mock_instance.beta.threads.runs.create_and_poll = AsyncMock(return_value=MockResponse(id="run-id"))
     mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse)
 
-    client  = OpenAI()
+    client = OpenAI()
     response = await client .chat_with_file(
         model="",
         user_prompt="",

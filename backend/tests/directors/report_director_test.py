@@ -37,12 +37,12 @@ async def test_report_on_file_upload(mocker):
     )
     response = await report_on_file_upload(request_upload_file)
 
-    report_upload = FileUploadReport(filename=file_upload["filename"],
-                                     id=file_upload["uploadId"],
-                                     report="#Report on upload as markdown")
-    mock_handle_file_upload.assert_called_once_with(request_upload_file)
-    mock_store_report.assert_called_once_with(report_upload)
+    expected_response = {"filename": "test.txt", "id": "1", "report": mock_report, "answer": expected_answer}
 
     mock_report_agent.get_company_name.assert_called_once_with("test")
+    mock_handle_file_upload.assert_called_once_with(request_upload_file)
+    mock_store_report.assert_called_once_with(expected_response)
+
     mock_materiality_agent.list_material_topics.assert_called_once_with("CompanyABC")
-    assert response == {"filename": "test.txt", "id": "1", "report": mock_report, "answer": expected_answer}
+
+    assert response == expected_response
