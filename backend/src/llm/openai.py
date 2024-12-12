@@ -43,12 +43,11 @@ class OpenAI(LLM):
             logger.info(f"OpenAI response: Finish reason: {response.choices[0].finish_reason}, Content: {content}")
             logger.debug(f"Token data: {response.usage}")
 
-            if isinstance(content, str):
-                return content
-            elif isinstance(content, list):
-                return " ".join(content)
-            else:
-                return "Unexpected content format"
+            if not content:
+                logger.error("Call to Mistral API failed: message content is None")
+                return "An error occurred while processing the request."
+
+            return content
         except Exception as e:
             logger.error(f"Error calling OpenAI model: {e}")
             return "An error occurred while processing the request."
