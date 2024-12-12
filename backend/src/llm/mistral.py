@@ -1,7 +1,10 @@
-from typing import Coroutine, Optional
+from typing import Optional
 
+from fastapi import HTTPException
 from mistralai import Mistral as MistralApi, UserMessage, SystemMessage
 import logging
+
+from src.utils.file_utils import handle_file_upload
 from src.utils import Config
 from .llm import LLM, LLMFileFromBytes, LLMFileFromPath
 
@@ -35,12 +38,29 @@ class Mistral(LLM):
         logger.debug('{0} response : "{1}"'.format(model, content))
         return content
 
-    def chat_with_file(
+    async def chat_with_file(
         self,
         model: str,
         system_prompt: str,
         user_prompt: str,
         files_by_path: Optional[list[LLMFileFromPath]] = None,
         files_by_stream: Optional[list[LLMFileFromBytes]] = None,
-    ) -> Coroutine:
-        raise Exception("Mistral does not support chat_with_file")
+    ) -> str:
+       if files_by_stream:
+            try:
+                file = handle_file_upload(files_by_stream[0])
+                extracted_content = file["content"]
+
+                user_prompt += f"\n\nDocument:\n{extracted_content}"
+
+                return await self.chat(model, system_prompt, user_prompt)
+            except Exception as file_error:
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to process files: {str(file_error)}"
+                ) from file_error
+       else:
+            raise HTTPException(
+                status_code=400,
+                detail="Mistral does not support chat_with_file"
+            )
