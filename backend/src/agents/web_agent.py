@@ -1,7 +1,7 @@
 import logging
 from src.prompts import PromptEngine
 from .agent_types import Parameter
-from .agent import ChatAgent, agent
+from .agent import ChatAgent, chat_agent
 from .tool import tool
 from src.utils import Config
 from src.utils.web_utils import (
@@ -258,7 +258,7 @@ async def perform_pdf_summarization(content: str, llm: Any, model: str) -> str:
         return ""
 
 
-@agent(
+@chat_agent(
     name="WebAgent",
     description="This agent can perform general internet searches to complete the task by retrieving and summarizing the results and it can also perform web scrapes to retreive specific inpormation from web pages.",  # noqa: E501
     tools=[web_general_search, web_pdf_download, web_scrape, find_information_from_content],

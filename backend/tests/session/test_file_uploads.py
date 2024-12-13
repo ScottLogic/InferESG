@@ -91,16 +91,17 @@ def test_clear_session_file_uploads_meta(mocker, mock_redis, mock_request_contex
 
 def test_store_report(mocker, mock_redis):
     mocker.patch("src.session.file_uploads.redis_client", mock_redis)
-    report = FileUploadReport(filename="test.txt", id="12", report="test report")
+    report = FileUploadReport(filename="test.txt", id="12", report="test report", answer="chat message")
 
     store_report(report)
 
     mock_redis.set.assert_called_with("report_12", json.dumps(report))
 
+
 def test_get_report(mocker, mock_redis):
     mocker.patch("src.session.file_uploads.redis_client", mock_redis)
 
-    report = FileUploadReport(filename="test.txt", id="12", report="test report")
+    report = FileUploadReport(filename="test.txt", id="12", report="test report", answer="chat message")
     mock_redis.get.return_value = json.dumps(report)
 
     value = get_report("12")

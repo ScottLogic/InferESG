@@ -1,4 +1,4 @@
-description: "Test Report Prompt"
+description: "Test Report Agent Prompts"
 
 providers:
   - id: mistral:mistral-large-latest

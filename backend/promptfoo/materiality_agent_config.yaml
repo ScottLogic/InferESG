@@ -1,4 +1,4 @@
-description: "Test Dynamic Knowledge Graph Prompts"
+description: "Test Materiality Agent Prompts"
 
 providers:
   - id: openai:gpt-4o

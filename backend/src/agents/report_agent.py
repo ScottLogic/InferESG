@@ -1,7 +1,6 @@
 import json
 import logging
 
-from src.agents import agent
 from src.agents import Agent
 from src.prompts import PromptEngine
 
@@ -9,10 +8,6 @@ logger = logging.getLogger(__name__)
 engine = PromptEngine()
 
 
-@agent(
-    name="ReportAgent",
-    description="This agent is responsible for creating ESG reports on narrative documents"
-)
 class ReportAgent(Agent):
     async def create_report(self, file_content: str, materiality_topics: dict[str, str]) -> str:
         user_prompt = engine.load_prompt(

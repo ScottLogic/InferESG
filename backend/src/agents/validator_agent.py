@@ -1,6 +1,6 @@
 import logging
 from src.prompts import PromptEngine
-from src.agents import ChatAgent, agent
+from src.agents import ChatAgent, chat_agent
 from src.utils.log_publisher import LogPrefix, publish_log_info
 import json
 
@@ -9,7 +9,7 @@ engine = PromptEngine()
 validator_prompt = engine.load_prompt("validator")
 
 
-@agent(
+@chat_agent(
     name="ValidatorAgent",
     description="This agent is responsible for validating the answers to the tasks",
     tools=[],

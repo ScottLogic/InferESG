@@ -1,7 +1,7 @@
 from typing import List
 
 from src.utils import Config
-from src.agents.agent import Agent, ChatAgent, agent
+from src.agents.agent import Agent, ChatAgent, chat_agent
 from src.agents.datastore_agent import DatastoreAgent
 from src.agents.web_agent import WebAgent
 from src.agents.intent_agent import IntentAgent
@@ -36,7 +36,7 @@ def get_materiality_agent() -> MaterialityAgent:
     return MaterialityAgent(config.materiality_agent_llm, config.materiality_agent_model)
 
 
-def agent_details(agent: Agent) -> dict:
+def agent_details(agent: ChatAgent) -> dict:
     return {"name": agent.name, "description": agent.description}
 
 
@@ -54,9 +54,9 @@ def get_agent_details():
 
 
 __all__ = [
-    "agent",
     "Agent",
     "ChatAgent",
+    "chat_agent",
     "agent_details",
     "get_agent_details",
     "get_answer_agent",

@@ -18,8 +18,6 @@ config = Config()
 
 
 class Agent(ABC):
-    name: str
-    description: str
     llm: LLM
     model: str
 
@@ -31,6 +29,8 @@ class Agent(ABC):
 
 
 class ChatAgent(Agent):
+    name: str
+    description: str
     tools: List[Tool]
 
     async def __get_action(self, utterance: str) -> Action_and_args:
@@ -64,15 +64,17 @@ class ChatAgent(Agent):
         return result_of_action
 
 
-T = TypeVar('T', bound=Agent)
+T = TypeVar('T', bound=ChatAgent)
 
 
-def agent(name: str, description: str, tools: Optional[List[Tool]] = None):
-    def decorator(agent: Type[T]) -> Type[T]:
-        agent.name = name
-        agent.description = description
-        if tools:
-            agent.tools = tools
-        return agent
+def chat_agent(name: str, description: str, tools: Optional[List[Tool]] = None):
+    if not tools:
+        tools = []
+
+    def decorator(chat_agent: Type[T]) -> Type[T]:
+        chat_agent.name = name
+        chat_agent.description = description
+        chat_agent.tools = tools
+        return chat_agent
 
     return decorator
