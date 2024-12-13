@@ -16,7 +16,7 @@ def test_handle_file_upload_size():
     assert err.value.detail == 'File upload must be less than 10485760 bytes'
 
 
-def test_handle_file_upload_missing_file_name():
+def test_handle_file_upload_unsupported_type():
     headers = Headers({"content-type": "text/html"})
     with pytest.raises(HTTPException) as err:
         handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024, headers=headers, filename="test.txt"))
@@ -25,7 +25,7 @@ def test_handle_file_upload_missing_file_name():
     assert err.value.detail == 'File upload must be supported type (text/plain or application/pdf)'
 
 
-def test_handle_file_upload_unsupported_type():
+def test_handle_file_upload_missing_file_name():
     headers = Headers({"content-type": "text/html"})
     with pytest.raises(HTTPException) as err:
         handle_file_upload(UploadFile(file=BytesIO(b"test content"), size=12, headers=headers))

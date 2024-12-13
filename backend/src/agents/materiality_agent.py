@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import logging
 
-from src.llm import LLMFileFromPath
+from src.llm import LLMFile
 from src.agents import Agent
 from src.prompts import PromptEngine
 
@@ -28,11 +28,8 @@ class MaterialityAgent(Agent):
                 self.model,
                 system_prompt=engine.load_prompt("list-material-topics-system-prompt"),
                 user_prompt=f"What topics are material for {company_name}?",
-                files_by_path=[
-                    LLMFileFromPath(
-                        file_name=file_name,
-                        file_path=Path(f"./library/{file_name}")
-                    )
+                files=[
+                    LLMFile(file_name=file_name, file=Path(f"./library/{file_name}"))
                     for file_name in json.loads(files_json)["files"]
                 ]
             )

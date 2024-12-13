@@ -1,8 +1,7 @@
 import logging
-from typing import Optional
 
 from src.utils import Config
-from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
+from src.llm import LLM, LLMFile
 from openai import NOT_GIVEN, AsyncOpenAI
 from openai.types.beta.threads import Text, TextContentBlock
 
@@ -54,11 +53,10 @@ class OpenAI(LLM):
         model: str,
         system_prompt: str,
         user_prompt: str,
-        files_by_path: Optional[list[LLMFileFromPath]] = None,
-        files_by_stream: Optional[list[LLMFileFromBytes]] = None
+        files: list[LLMFile]
     ) -> str:
         client = AsyncOpenAI(api_key=config.openai_key)
-        file_ids = await self.__upload_files(files_by_path, files_by_stream)
+        file_ids = await self.__upload_files(files)
 
         file_assistant = await client.beta.assistants.create(
             name="ESG Analyst",
@@ -94,24 +92,12 @@ class OpenAI(LLM):
         logger.info(f"OpenAI response: {message}")
         return message
 
-
-    async def __upload_files(
-        self,
-        files_by_path: Optional[list[LLMFileFromPath]],
-        files_by_stream: Optional[list[LLMFileFromBytes]]
-    ) -> list[str]:
+    async def __upload_files(self, files: list[LLMFile]) -> list[str]:
         client = AsyncOpenAI(api_key=config.openai_key)
-        if not files_by_path:
-            files_by_path = []
-        if not files_by_stream:
-            files_by_stream = []
 
         file_ids = []
-        for file in files_by_stream + files_by_path:
+        for file in files:
             logger.info(f"Uploading file '{file.file_name}' to OpenAI")
-            file = await client.files.create(
-                file=file.file_path if isinstance(file, LLMFileFromPath) else file.file_stream,
-                purpose="assistants"
-            )
+            file = await client.files.create(file=file.file, purpose="assistants")
             file_ids.append(file.id)
         return file_ids

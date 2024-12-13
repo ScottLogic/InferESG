@@ -6,7 +6,7 @@ from unittest.mock import patch, AsyncMock
 from openai.types.beta.threads import Text, FileCitationAnnotation, TextContentBlock
 from openai.types.beta.threads.file_citation_annotation import FileCitation
 
-from src.llm import LLMFileFromPath
+from src.llm import LLMFile
 from src.llm.openai import OpenAI
 
 
@@ -49,7 +49,7 @@ mock_message_list = {"data"}
 
 
 @pytest.mark.asyncio
-@patch("src.llm.openai.AsyncOpenAI")  # Ensure this matches the import path in your module
+@patch("src.llm.openai.AsyncOpenAI")
 async def test_chat_with_file_removes_citations(mock_async_openai):
     mock_instance = mock_async_openai.return_value
 
@@ -64,6 +64,6 @@ async def test_chat_with_file_removes_citations(mock_async_openai):
         model="",
         user_prompt="",
         system_prompt="",
-        files_by_path=[LLMFileFromPath("file_name", Path("file/path"))]
+        files=[LLMFile("file_name", Path("file/path"))]
     )
     assert response == "Response with quote"

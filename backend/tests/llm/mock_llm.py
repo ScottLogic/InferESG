@@ -1,6 +1,4 @@
-from typing import Optional
-
-from src.llm import LLM, LLMFileFromPath, LLMFileFromBytes
+from src.llm import LLM, LLMFile
 
 
 class MockLLM(LLM):
@@ -12,7 +10,6 @@ class MockLLM(LLM):
         model: str,
         system_prompt: str,
         user_prompt: str,
-        files_by_path: Optional[list[LLMFileFromPath]] = None,
-        files_by_stream: Optional[list[LLMFileFromBytes]] = None
+        files: list[LLMFile]
     ) -> str:
         return "mocked response"
