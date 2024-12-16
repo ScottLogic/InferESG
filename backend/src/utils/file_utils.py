@@ -1,52 +1,78 @@
-from io import TextIOWrapper
+from io import BytesIO, TextIOWrapper
+from pathlib import Path
 import time
-from fastapi import HTTPException, UploadFile
+from fastapi import HTTPException
 import logging
 import uuid
-
+from os import PathLike
 from pypdf import PdfReader
-from src.session.file_uploads import FileUpload, update_session_file_uploads, get_session_file_upload
+from src.llm.llm import LLMFile
+from src.session.file_uploads import FileUpload, get_session_file_upload, update_session_file_uploads
 
 logger = logging.getLogger(__name__)
 
 MAX_FILE_SIZE = 10*1024*1024
 
 
-def handle_file_upload(file: UploadFile) -> FileUpload:
+def handle_file_upload(file: LLMFile) -> FileUpload:
+    if isinstance(file.file, (PathLike, str)):
+        file_path = Path(file.file)
+        with file_path.open("rb") as f:
+            file_bytes = f.read()
+    elif isinstance(file.file, bytes):
+        file_bytes = file.file
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="File must be provided as bytes or a valid file path."
+        )
 
-    if (file.size or 0) > MAX_FILE_SIZE:
-        raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
+    file_stream = BytesIO(file_bytes)
+    file_size = len(file_bytes)
 
-    if not file.filename:
-        raise HTTPException(status_code=400, detail="Filename missing from file upload")
+    if file_size > MAX_FILE_SIZE:
+        raise HTTPException(
+            status_code=413,
+            detail=f"File upload must be less than {MAX_FILE_SIZE} bytes"
+        )
 
-    if "application/pdf" == file.content_type:
+    all_content = ""
+    content_type = "unknown"
+
+    try:
+        pdf_file = PdfReader(file_stream)
+        content_type = "application/pdf"
+
         start_time = time.time()
-        pdf_file = PdfReader(file.file)
-        all_content = ""
         for page_num in range(len(pdf_file.pages)):
             page_text = pdf_file.pages[page_num].extract_text()
             all_content += page_text
             all_content += "\n"
-
         end_time = time.time()
 
-        logger.debug(f'PDF content {all_content}')
-        logger.info(f"PDF content extracted successfully in {(end_time - start_time)}")
+        logger.info(f"PDF content extracted successfully in {(end_time - start_time):.2f} seconds")
 
-    elif "text/plain" == file.content_type:
-        all_content = TextIOWrapper(file.file, encoding='utf-8').read()
-        logger.debug(f'Text content {all_content}')
-    else:
-        raise HTTPException(status_code=400,
-                            detail="File upload must be supported type (text/plain or application/pdf)")
+    except Exception as pdf_error:
+        logger.warning(f"Failed to parse file as PDF: {pdf_error}")
+        file_stream.seek(0)
+
+        try:
+            content_type = "text/plain"
+            all_content = TextIOWrapper(file_stream, encoding="utf-8").read()
+            logger.debug(f"Text content extracted: {all_content[:100]}...")
+
+        except Exception as text_error:
+            raise HTTPException(
+                status_code=400,
+                detail="File upload must be a supported type text or pdf)"
+            ) from text_error
 
     session_file = FileUpload(
         uploadId=str(uuid.uuid4()),
-        contentType=file.content_type,
-        filename=file.filename,
+        contentType=content_type,
+        filename=file.file_name,
         content=all_content,
-        size=file.size
+        size=file_size,
     )
 
     update_session_file_uploads(session_file)
