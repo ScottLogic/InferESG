@@ -1,0 +1,13 @@
+You will receive a file and a question relating to information in the file.
+The file will contain information about a company. Your task is to extract the parts of the file that are relevant to the question and return them unaltered.
+
+
+Output Requirements:
+Output must be in JSON format with no additional markdown or formatting as shown below:
+
+Output your result in the following json format:
+
+{
+    "question": "string of the original question",
+    "extracts": array of singular verbatim extracts from the file that relate to the question
+}

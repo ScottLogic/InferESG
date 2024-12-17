@@ -13,7 +13,12 @@ config = Config()
 
 
 async def build_plan(task, llm: LLM, scratchpad, model):
-    agents_details = get_agent_details()
+    try:
+        agents_details = get_agent_details() #pass in session here and to file agent constructor
+    except Exception as e:
+        logger.exception(e)
+        raise e
+    logger.info(f"Agent detail {agents_details}")
     agent_selection_system_prompt = prompt_engine.load_prompt(
         "agent-selection-system-prompt", list_of_agents=json.dumps(agents_details, indent=4)
     )

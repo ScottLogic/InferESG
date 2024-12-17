@@ -1,7 +1,7 @@
 from abc import ABC
 import json
 import logging
-from typing import List, Type, TypeVar, Optional
+from typing import Callable, List, Type, TypeVar, Optional
 from src.llm import LLM, get_llm
 from src.utils.log_publisher import LogPrefix, publish_log_info
 
@@ -31,6 +31,7 @@ class Agent(ABC):
 class ChatAgent(Agent):
     name: str
     description: str
+    description_gen: Optional[Callable]
     tools: List[Tool]
 
     async def __get_action(self, utterance: str) -> Action_and_args:
@@ -67,13 +68,15 @@ class ChatAgent(Agent):
 T = TypeVar('T', bound=ChatAgent)
 
 
-def chat_agent(name: str, description: str, tools: Optional[List[Tool]] = None):
+def chat_agent(name: str, description: str, tools: Optional[List[Tool]] = None,
+                 description_gen: Optional[Callable] = None):
     if not tools:
         tools = []
 
     def decorator(chat_agent: Type[T]) -> Type[T]:
         chat_agent.name = name
         chat_agent.description = description
+        chat_agent.description_gen = description_gen
         chat_agent.tools = tools
         return chat_agent
 

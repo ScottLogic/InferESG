@@ -8,6 +8,7 @@ from src.agents.intent_agent import IntentAgent
 from src.agents.tool import tool, Parameter
 from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
+from src.agents.file_agent import FileAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.report_agent import ReportAgent
 from src.agents.materiality_agent import MaterialityAgent
@@ -42,7 +43,8 @@ def get_generalist_agent() -> GeneralistAgent:
 
 
 def agent_details(agent: ChatAgent) -> dict:
-    return {"name": agent.name, "description": agent.description}
+    description = agent.description_gen() if agent.description_gen else agent.description
+    return {"name": agent.name, "description": description}
 
 
 def get_available_agents() -> List[ChatAgent]:
@@ -50,6 +52,7 @@ def get_available_agents() -> List[ChatAgent]:
         DatastoreAgent(config.datastore_agent_llm, config.datastore_agent_model),
         WebAgent(config.web_agent_llm, config.web_agent_model),
         ChartGeneratorAgent(config.chart_generator_llm, config.chart_generator_model),
+        FileAgent(config.file_agent_llm, config.file_agent_model),
     ]
 
 

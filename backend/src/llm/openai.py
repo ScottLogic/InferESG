@@ -1,5 +1,6 @@
 import logging
 
+from src.session.file_uploads import get_session_file_upload_id_for_llm, set_session_file_upload_id_for_llm
 from src.utils import Config
 from src.llm import LLM, LLMFile
 from openai import NOT_GIVEN, AsyncOpenAI
@@ -85,9 +86,16 @@ class OpenAI(LLM):
 
         file_ids = []
         for file in files:
-            logger.info(f"Uploading file '{file.file_name}' to OpenAI")
-            file = (file.file_name, file.file) if isinstance(file.file, bytes) else file.file
-            response = await client.files.create(file=file, purpose="assistants")
-            file_ids.append(response.id)
+            upload_id = get_session_file_upload_id_for_llm(file.id or "")
+            if upload_id:
+                logger.info(f"Using previously upload file '{file.file_name}' {upload_id}")
+                file_ids.append(upload_id)
+            else:
+                logger.info(f"Uploading file '{file.file_name}' to OpenAI")
+                file_for_create = (file.file_name, file.file) if isinstance(file.file, bytes) else file.file
+                response = await client.files.create(file=file_for_create, purpose="assistants")
+                file_ids.append(response.id)
+                if file.id:
+                    set_session_file_upload_id_for_llm(file.id, response.id)
 
         return file_ids

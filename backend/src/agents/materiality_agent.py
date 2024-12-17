@@ -29,7 +29,7 @@ class MaterialityAgent(Agent):
                 system_prompt=engine.load_prompt("list-material-topics-system-prompt"),
                 user_prompt=f"What topics are material for {company_name}?",
                 files=[
-                    LLMFile(file_name=file_name, file=Path(f"./library/{file_name}"))
+                    LLMFile(file_name=file_name, file=Path(f"./library/{file_name}"), id=None)
                     for file_name in json.loads(files_json)["files"]
                 ]
             )
