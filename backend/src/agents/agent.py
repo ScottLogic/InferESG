@@ -2,7 +2,7 @@ import json
 from abc import ABC, abstractmethod
 import logging
 from dataclasses import dataclass
-from typing import List, Type, TypeVar, Tuple, Any
+from typing import Callable, List, Type, TypeVar, Tuple, Any
 
 from src.llm import LLM, get_llm
 from src.agents.adapters import create_all_tools_str, extract_tool, validate_args
@@ -41,7 +41,7 @@ class ChatAgentFailure:
 
 class ChatAgent(Agent):
     name: str
-    description: str
+    description: str | Callable[[], str]
     tools: List[Tool]
 
     async def __select_tool(self, utterance: str) -> Tuple[Tool, Any]:
@@ -97,7 +97,7 @@ class ChatAgent(Agent):
 T = TypeVar('T', bound=ChatAgent)
 
 
-def chat_agent(name: str, description: str, tools: List[Tool | ParameterisedTool]):
+def chat_agent(name: str, description: str | Callable, tools: List[Tool | ParameterisedTool]):
 
     def decorator(_chat_agent: Type[T]) -> Type[T]:
         _chat_agent.name = name

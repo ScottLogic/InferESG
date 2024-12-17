@@ -8,6 +8,7 @@ from src.agents.intent_agent import IntentAgent
 from src.agents.tool import utterance_tool, parameterised_tool, Parameter
 from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
+from src.agents.file_agent import FileAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.report_agent import ReportAgent
 from src.agents.materiality_agent import MaterialityAgent
@@ -46,7 +47,8 @@ def get_chat_agents() -> List[ChatAgent]:
         DatastoreAgent(config.datastore_agent_llm, config.datastore_agent_model),
         WebAgent(config.web_agent_llm, config.web_agent_model),
         ChartGeneratorAgent(config.chart_generator_llm, config.chart_generator_model),
-        get_materiality_agent()
+        get_materiality_agent(),
+        FileAgent(config.file_agent_llm, config.file_agent_model)
     ]
 
 

@@ -25,11 +25,12 @@ async def select_agent_for_task(
         excluded_agents = []
 
     agents = [
-        {"name": agent.name, "description": agent.description}
+        {"name": agent.name, "description": agent.description() if callable(agent.description) else agent.description}
         for agent in get_chat_agents() if agent.name not in excluded_agents
     ]
     logger.info("#####  ~  Calling LLM for next best step  ~  #####")
     logger.info(f"Scratchpad so far: {scratchpad}")
+    logger.info(f"Agents: {agents}")
 
     if not config.router_model:
         raise Exception("Router config model missing")

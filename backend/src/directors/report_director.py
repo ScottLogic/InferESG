@@ -3,7 +3,13 @@ import uuid
 from fastapi import UploadFile, HTTPException
 
 from src.llm.llm import LLMFile
-from src.session.file_uploads import ReportResponse, store_report
+from src.session.file_uploads import (
+    FileUpload,
+    ReportResponse,
+    store_report,
+    update_session_file_upload_with_company,
+    update_session_file_uploads
+)
 from src.agents import get_report_agent, get_materiality_agent
 
 MAX_FILE_SIZE = 10 * 1024 * 1024
@@ -19,12 +25,23 @@ async def create_report_from_file(upload: UploadFile) -> ReportResponse:
     if file_size > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
 
-    file = LLMFile(filename=upload.filename, file=file_stream)
     file_id = str(uuid.uuid4())
+    file = LLMFile(id=file_id, filename=upload.filename, file=file_stream)
+
+    session_file = FileUpload(
+        id=file_id,
+        filename=file.filename,
+        upload_id=None,
+        content=None
+    )
+
+    update_session_file_uploads(session_file)
 
     report_agent = get_report_agent()
 
     company_name = await report_agent.get_company_name(file)
+
+    update_session_file_upload_with_company(session_file, company_name)
 
     topics = await get_materiality_agent().list_material_topics_for_company(company_name)
 

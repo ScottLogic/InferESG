@@ -1,0 +1,47 @@
+description: "Test File Agent Prompts"
+
+providers:
+  - id: openai:gpt-4o
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "test find report year"
+    vars:
+      user_prompt: "What year was the report on AstraZeneca about?"
+      system_prompt_template: "extract-text-from-file-system-prompt"
+      file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).extracts[0] === "This is our ninth annual Sustainability Report, outlining our approach and progress from 1 January to 31 December 2023, unless otherwise stated."
+
+  - description: "test find nature initiatives"
+    vars:
+      user_prompt: "From the report what initiatives around nature does AstraZeneca have?"
+      system_prompt_template: "extract-text-from-file-system-prompt"
+      file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
+    assert:
+      - type: contains
+        value: "In 2023, we announced an expansion of our AZ Forest programme, raising our commitment to plant and ensure the long-term survival of 200 million trees by 2030, bringing our investment to $400m. This includes new or expanded projects in Brazil, India, Vietnam, Ghana, Rwanda and Kenya that will contribute to our climate action, restore nature, promote biodiversity and build ecological and community resilience, spanning over 100,000 hectares worldwide."
+
+  - description: "test find WWF collaboration - single match"
+    vars:
+      user_prompt: "From the report does AstraZeneca work with WWF?"
+      system_prompt_template: "extract-text-from-file-system-prompt"
+      file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).extracts.length === 1
+      - type: javascript
+        value: JSON.parse(output).extracts[0] === "Moving beyond efficiency within our direct operations, we are working in collaboration with key stakeholders, including our ongoing collaboration with the World Wide Fund for Nature (WWF) Sweden, to make positive contributions to nature and local communities near our sites while mitigating risks from a changing climate."
+
+  - description: "test find none existant collaboration - no match"
+    vars:
+      user_prompt: "From the report does AstraZeneca work with MyMadeUpCompany?"
+      system_prompt_template: "extract-text-from-file-system-prompt"
+      file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).extracts.length === 0

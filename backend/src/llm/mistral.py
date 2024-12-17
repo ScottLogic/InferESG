@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from mistralai import Mistral as MistralApi, UserMessage, SystemMessage
 import logging
-from src.utils.file_utils import handle_file_upload
+from src.session.file_uploads import get_file_content_for_llm, set_file_content_for_llm
+from src.utils.file_utils import extract_text
 from src.utils import Config
 from .llm import LLM, LLMFile
 
@@ -40,8 +41,13 @@ class Mistral(LLM):
     ) -> str:
         try:
             for file in files:
-                file = handle_file_upload(file)
-                extracted_content = file["content"]
+                extracted_content = ""
+                if file.id:
+                    extracted_content = get_file_content_for_llm(file.id)
+                if not extracted_content:
+                    extracted_content = extract_text(file)
+                if file.id:
+                    set_file_content_for_llm(file.id, extracted_content)
                 user_prompt += f"\n\nDocument:\n{extracted_content}"
             return await self.chat(model, system_prompt, user_prompt, return_json)
         except Exception as file_error:

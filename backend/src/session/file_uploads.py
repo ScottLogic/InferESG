@@ -1,8 +1,9 @@
 import json
-from typing import TypedDict, Optional
+from typing import List, TypedDict, Optional
 import logging
 import redis
 
+from src.llm.llm import LLMFile
 from src.utils.json import try_parse_to_json
 from .redis_session_middleware import get_session, set_session
 from src.utils import Config
@@ -20,16 +21,17 @@ REPORT_KEY_PREFIX = "report_"
 
 
 class FileUploadMeta(TypedDict):
-    uploadId: str
+    id: str
     filename: str
+    company_name: Optional[str]
+    upload_id: Optional[str]
 
 
 class FileUpload(TypedDict):
-    uploadId: str
-    content: str
+    id: str
     filename: str
-    contentType: Optional[str]
-    size: Optional[int]
+    upload_id: Optional[str]
+    content: Optional[str]
 
 
 class ReportResponse(TypedDict):
@@ -51,8 +53,8 @@ def _get_key(key):
     return None
 
 
-def get_session_file_upload(upload_id) -> FileUpload | None:
-    return _get_key(UPLOADS_KEY_PREFIX + upload_id)
+def get_session_file_upload(id) -> FileUpload | None:
+    return _get_key(UPLOADS_KEY_PREFIX + id)
 
 
 def update_session_file_uploads(file_upload: FileUpload):
@@ -61,9 +63,35 @@ def update_session_file_uploads(file_upload: FileUpload):
         # initialise the session object
         set_session(UPLOADS_META_SESSION_KEY, file_uploads_meta_session)
 
-    file_uploads_meta_session.append({"uploadId": file_upload["uploadId"], "filename": file_upload["filename"]})
-    redis_client.set(UPLOADS_KEY_PREFIX + file_upload["uploadId"], json.dumps(file_upload))
+    file_uploads_meta_session.append({"id": file_upload["id"], "filename": file_upload["filename"]})
+    redis_client.set(UPLOADS_KEY_PREFIX + file_upload["id"], json.dumps(file_upload))
 
+def update_session_file_upload_with_company(file_upload: FileUpload, company_name:str):
+    file_uploads_meta_session = get_session(UPLOADS_META_SESSION_KEY, [])
+    for file in file_uploads_meta_session or []:
+        if file["id"] == file_upload["id"]:
+            file["company_name"] = company_name
+
+def get_file_content_for_llm(id: str) -> str | None:
+    file = get_session_file_upload(id)
+    return file["content"] if file else None
+
+def set_file_content_for_llm(id: str, content:str):
+    file = _get_key(UPLOADS_KEY_PREFIX + id)
+    if file:
+        file["content"] = content
+        redis_client.set(UPLOADS_KEY_PREFIX + id, json.dumps(file))
+    else:
+        logger.warning(f"set file content for missing id {id}")
+
+def get_llm_files_for_company_name(name:str) -> List[LLMFile]:
+    file_uploads_meta_session = get_session_file_uploads_meta()
+    results = []
+    for file in file_uploads_meta_session or []:
+        if file.get("company_name") == name:
+            logger.info(f"found match for company {name} {file}")
+            results.append(LLMFile(filename=file["filename"],file=bytes(), id=file["id"]))
+    return results
 
 def clear_session_file_uploads():
     logger.info("Clearing file uploads and reports from session")
@@ -72,8 +100,8 @@ def clear_session_file_uploads():
 
     keys = []
     for meta in meta_list:
-        keys.append(UPLOADS_KEY_PREFIX + meta["uploadId"])
-        keys.append(REPORT_KEY_PREFIX + meta["uploadId"])
+        keys.append(UPLOADS_KEY_PREFIX + meta["id"])
+        keys.append(REPORT_KEY_PREFIX + meta["id"])
 
     if keys:
         logger.info(f"Deleting keys {keys}")

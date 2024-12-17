@@ -19,7 +19,7 @@ expected_answer = (
 
 @pytest.mark.asyncio
 async def test_create_report_from_file(mocker):
-    file_upload = FileUpload(uploadId="1", filename="test.txt", content="test", contentType="text/plain", size=4)
+    file_upload = FileUpload(id="1", filename="test.txt", content="test", upload_id=None)
 
     mock_id = uuid.uuid4()
     mocker.patch("uuid.uuid4", return_value=mock_id)
@@ -35,6 +35,17 @@ async def test_create_report_from_file(mocker):
     mock_materiality_agent.list_material_topics_for_company.return_value = mock_topics
     mocker.patch("src.directors.report_director.get_materiality_agent", return_value=mock_materiality_agent)
 
+    session_file = FileUpload(
+        id=str(mock_id),
+        filename=file_upload["filename"],
+        upload_id=None,
+        content=None
+    )
+
+
+    mock_update_session_file_uploads = mocker.patch("src.directors.report_director.update_session_file_uploads")
+    mock_update_session_file_upload_with_company = mocker.patch(
+        "src.directors.report_director.update_session_file_upload_with_company")
     mock_store_report = mocker.patch("src.directors.report_director.store_report", return_value=file_upload)
 
     file = UploadFile(
@@ -44,6 +55,8 @@ async def test_create_report_from_file(mocker):
 
     expected_response = {"filename": "test.txt", "id": str(mock_id), "report": mock_report, "answer": expected_answer}
 
+    mock_update_session_file_uploads.assert_called_once_with(session_file)
+    mock_update_session_file_upload_with_company.assert_called_once_with(session_file, "CompanyABC")
     mock_store_report.assert_called_once_with(expected_response)
 
     mock_materiality_agent.list_material_topics_for_company.assert_called_once_with("CompanyABC")

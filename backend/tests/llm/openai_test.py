@@ -69,6 +69,7 @@ async def test_chat_with_file_removes_citations(upload_files_method, mock_async_
     mock_instance.beta.threads.create = AsyncMock(return_value=MockResponse(id="thread-id"))
     mock_instance.beta.threads.runs.create_and_poll = AsyncMock(return_value=MockResponse(id="run-id"))
     mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse())
+    mock_instance.beta.threads.delete = AsyncMock()
 
     client = OpenAI()
     response = await client.chat_with_file(
