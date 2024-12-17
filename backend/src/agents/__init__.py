@@ -11,6 +11,7 @@ from src.agents.answer_agent import AnswerAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.report_agent import ReportAgent
 from src.agents.materiality_agent import MaterialityAgent
+from src.agents.generalist_agent import GeneralistAgent
 
 
 config = Config()
@@ -34,6 +35,10 @@ def get_report_agent() -> ReportAgent:
 
 def get_materiality_agent() -> MaterialityAgent:
     return MaterialityAgent(config.materiality_agent_llm, config.materiality_agent_model)
+
+
+def get_generalist_agent() -> GeneralistAgent:
+    return GeneralistAgent(config.intent_agent_llm, config.intent_agent_model)
 
 
 def agent_details(agent: ChatAgent) -> dict:

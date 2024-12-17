@@ -60,6 +60,7 @@ async def scrape_content(url, limit=100000) -> str:
             }
         )
 
+
 async def create_search_term(search_query, llm, model) -> str:
     try:
         summariser_prompt = engine.load_prompt("create-search-term", question=search_query)
@@ -81,10 +82,11 @@ async def create_search_term(search_query, llm, model) -> str:
             }
         )
 
+
 async def answer_user_question(search_query, llm, model) -> str:
     try:
         summariser_prompt = engine.load_prompt("answer-user-question", question=search_query)
-        response = await llm.chat(model, summariser_prompt, "", return_json=True)
+        response = await llm.chat(model, summariser_prompt, "")
         return json.dumps(
             {
                 "status": "success",
@@ -101,6 +103,7 @@ async def answer_user_question(search_query, llm, model) -> str:
                 "error": str(e),
             }
         )
+
 
 async def summarise_content(search_query, contents, llm, model) -> str:
     try:
@@ -123,6 +126,7 @@ async def summarise_content(search_query, contents, llm, model) -> str:
             }
         )
 
+
 async def summarise_pdf_content(contents, llm, model) -> str:
     try:
         summariser_prompt = engine.load_prompt("pdf-summariser", content=contents)
@@ -143,6 +147,7 @@ async def summarise_pdf_content(contents, llm, model) -> str:
                 "error": str(e),
             }
         )
+
 
 async def perform_math_operation_util(math_query, llm, model) -> str:
     try:

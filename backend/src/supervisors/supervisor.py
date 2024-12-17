@@ -2,7 +2,7 @@ from typing import Tuple
 import logging
 from src.utils import get_scratchpad, update_scratchpad
 from src.router import get_agent_for_task
-from src.agents import get_validator_agent
+from src.agents import get_validator_agent, get_generalist_agent
 import json
 
 logger = logging.getLogger(__name__)
@@ -34,10 +34,10 @@ async def solve_all(intent_json) -> None:
 
 
 async def solve_task(task, scratchpad, attempt=0) -> Tuple[str, str, str]:
-    if attempt == 5:
-        raise Exception(unsolvable_response)
-
-    agent = await get_agent_for_task(task, scratchpad)
+    if attempt == 3:
+        agent = get_generalist_agent()
+    else:
+        agent = await get_agent_for_task(task, scratchpad)
     if agent is None:
         raise Exception(no_agent_response)
     logger.info(f"Agent selected: {agent.name}")
