@@ -1,5 +1,6 @@
 import pytest
 
+from src.llm.llm import LLMFile
 from src.agents.report_agent import ReportAgent
 from src.llm.factory import get_llm
 
@@ -14,6 +15,9 @@ async def test_invoke_calls_llm(mocker):
 
     mock_llm.chat = mocker.AsyncMock(return_value=mock_response)
 
-    response = await report_agent.create_report("Test Document", materiality_topics={"abc": "123"})
+    response = await report_agent.create_report(
+        LLMFile(file_name="test", file=b"Sample text content"),
+        materiality_topics={"abc": "123"}
+        )
 
     assert response == mock_response

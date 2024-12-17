@@ -64,7 +64,7 @@ def handle_file_upload(file: LLMFile) -> FileUpload:
         except Exception as text_error:
             raise HTTPException(
                 status_code=400,
-                detail="File upload must be a supported type text or pdf)"
+                detail="File upload must be a supported type text or pdf"
             ) from text_error
 
     session_file = FileUpload(
