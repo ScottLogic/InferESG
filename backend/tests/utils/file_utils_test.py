@@ -7,8 +7,8 @@ import pytest
 
 from src.utils.file_utils import handle_file_upload
 
-def test_handle_file_upload_size():
 
+def test_handle_file_upload_size():
     with pytest.raises(HTTPException) as err:
         handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024*1024))
 
@@ -17,16 +17,24 @@ def test_handle_file_upload_size():
 
 
 def test_handle_file_upload_unsupported_type():
-
     headers = Headers({"content-type": "text/html"})
     with pytest.raises(HTTPException) as err:
-        handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024, headers=headers))
+        handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024, headers=headers, filename="test.txt"))
 
     assert err.value.status_code == 400
     assert err.value.detail == 'File upload must be supported type (text/plain or application/pdf)'
 
-def test_handle_file_upload_text(mocker):
 
+def test_handle_file_upload_missing_file_name():
+    headers = Headers({"content-type": "text/html"})
+    with pytest.raises(HTTPException) as err:
+        handle_file_upload(UploadFile(file=BytesIO(b"test content"), size=12, headers=headers))
+
+    assert err.value.status_code == 400
+    assert err.value.detail == 'Filename missing from file upload'
+
+
+def test_handle_file_upload_text(mocker):
     mock = mocker.patch("src.utils.file_utils.update_session_file_uploads", MagicMock())
 
     headers = Headers({"content-type": "text/plain"})
@@ -37,7 +45,6 @@ def test_handle_file_upload_text(mocker):
 
 
 def test_handle_file_upload_pdf(mocker):
-
     mock = mocker.patch("src.utils.file_utils.update_session_file_uploads", MagicMock())
     pdf_mock = mocker.patch("src.utils.file_utils.PdfReader", MagicMock())
 

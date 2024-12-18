@@ -3,6 +3,8 @@ export interface ChatMessageResponse {
   question?: string;
   answer: string;
   reasoning?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dataset?: any;
 }
 
 function createChatMessageResponse(message: string): ChatMessageResponse {
@@ -79,7 +81,12 @@ export const resetChat = async (): Promise<Response> => {
 
 export const uploadFileToServer = async (
   file: File,
-): Promise<{ filename: string; id: string; report: string }> => {
+): Promise<{
+  filename: string;
+  id: string;
+  report: string;
+  answer: string;
+}> => {
   const formData = new FormData();
   formData.append('file', file);
 

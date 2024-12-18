@@ -1,0 +1,56 @@
+description: "Test Materiality Agent Prompts"
+
+providers:
+  - id: openai:gpt-4o
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "test select material documents for BP"
+    vars:
+      user_prompt: "BP"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
+      - type: javascript
+        value: JSON.parse(output).files[1] === "GRI 11_ Oil and Gas Sector 2021.pdf"
+
+  - description: "test select material documents for BP with focus on nature"
+    vars:
+      user_prompt: "BP with focus on Nature materiality topics"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
+      - type: javascript
+        value: JSON.parse(output).files.length === 1
+
+  - description: "test list material topics for Astra Zeneca with file"
+    vars:
+      user_prompt: "What topics are material for AstraZeneca?"
+      system_prompt_template: "list-material-topics-system-prompt"
+      file_attachment: "../library/Additional-Sector-Guidance-Biotech-and-Pharma.pdf"
+    assert:
+      - type: is-json
+        value:
+          required: ["material_topics"]
+          type: object
+      - type: javascript
+        value: JSON.parse(output).material_topics["Environmental Stewardship"] === "AstraZeneca, like other companies in the biotechnology and pharmaceuticals sector, has significant dependencies and impacts on natural ecosystems. The company relies on biomass provisioning, genetic material for drug development, and water resources for manufacturing. The management of these dependencies and mitigating environmental impacts such as water and soil pollution is crucial for sustainable operations."
+      - type: javascript
+        value: JSON.parse(output).material_topics["Climate Change and GHG Emissions"] === "As part of a sector that is intensive in resource and energy use, managing greenhouse gas emissions and transitioning to sustainable energy sources is essential for AstraZeneca to address climate change risks and opportunities, comply with global regulatory standards and meet the expectations of stakeholders."
+      - type: javascript
+        value: JSON.parse(output).material_topics["Product Stewardship and Safety"] === "Given the nature of pharmaceuticals, AstraZeneca must ensure the safe production, handling, and disposal of products, preventing environmental contamination, and addressing the issue of pharmaceuticals in the environment, including environmentally persistent pharmaceutical pollutants (EPPPs)."
+      - type: javascript
+        value: JSON.parse(output).material_topics["Supply Chain Management"] === "AstraZeneca sources various inorganic and organic feedstock and raw materials that may pose environmental risks if not managed sustainably. Effective supply chain management, including traceability and engagement with suppliers on nature-related impacts, is essential to minimize dependencies and risks."
+      - type: javascript
+        value: JSON.parse(output).material_topics["Biodiversity and Ecosystem Impacts"] === "The potential impact of AstraZeneca's operations on sensitive ecosystems, as well as its reliance on biodiversity for sourcing natural compounds for drug development, highlights the importance of considering biodiversity in the company's sustainability strategy."
+      - type: javascript
+        value: JSON.parse(output).material_topics["Pollution Prevention"] === "Managing and reducing pollution, particularly non-GHG air pollutants, wastewater discharges, and hazardous waste, is critical for AstraZeneca to mitigate its environmental footprint and comply with environmental regulations."

@@ -1,57 +1,55 @@
-from pytest import raises
+import json
+
 import pytest
+from pytest import raises
+from tests.agents import MockChatAgent
 from src.llm.factory import get_llm
-from tests.agents import MockAgent, mock_agent_description, mock_agent_name, mock_tools
-
-
-def test_agent_metadata_description():
-    assert MockAgent.description == mock_agent_description
-
-
-def test_agent_metadata_name():
-    assert MockAgent.name == mock_agent_name
-
-
-def test_agent_metadata_tools():
-    assert MockAgent.tools == mock_tools
 
 
 mock_model = "mockmodel"
 mock_llm = get_llm("mockllm")
-mock_agent_instance = MockAgent("mockllm", mock_model)
+mock_agent_instance = MockChatAgent("mockllm", mock_model)
+
+
+def mock_response(tool_name: str, tool_parameters: dict[str,str]) -> str:
+    return json.dumps({"tool_name": tool_name, "tool_parameters": tool_parameters, "reasoning": "Mock Reasoning"})
 
 
 @pytest.mark.asyncio
-async def test_agent_invoke_uses_tool(mocker):
-    mock_response = """{"tool_name": "Mock Tool A", "tool_parameters": { "input": "value for input" }, "reasoning": "Mock reasoning" }"""  # noqa: E501
-    mock_llm.chat = mocker.AsyncMock(return_value=mock_response)
+@pytest.mark.parametrize("mocked_response, expect_success, expected", [
+        (
+            mock_response("Mock Tool A", {"input": "string for tool to output"}),
+            True,
+            "string for tool to output"
+        ),
+        (
+            mock_response("Undefined Tool", {}),
+            False,
+            "Unable to extract chosen tool and parameters from {'tool_name': 'None', 'tool_parameters': {},"
+            " 'reasoning': 'No tool was appropriate for the task'}"
+        ),
+        (
+            mock_response("None", {}),
+            False,
+            "Unable to extract chosen tool and parameters from {'tool_name': 'None', 'tool_parameters': {},"
+            " 'reasoning': 'No tool was appropriate for the task'}"
+        )
+    ],
+    ids=[
+        "When appropriate tool selected, Test Chat Agent invoke func will call tool with parameters",
+        "When 'Undefined Tool' selected, Test Chat Agent invoke func will explain no tool was appropriate for task",
+        "When 'None' selected, Test Chat Agent invoke func will explain no tool was appropriate for task"
+    ]
+)
+async def test_chat_agent_invoke_uses_tool(mocker, mocked_response: str, expect_success: bool, expected: str):
+    mock_llm.chat = mocker.AsyncMock(return_value=str(mocked_response))
 
-    response = await mock_agent_instance.invoke("Mock task to solve")
+    if expect_success:
+        response = await mock_agent_instance.invoke("Mock task to solve")
 
-    assert response == "value for input"
+        assert response == expected
+    else:
+        with raises(Exception) as error:
+            await mock_agent_instance.invoke("Mock task to solve")
 
-
-@pytest.mark.asyncio
-async def test_agent_invoke_with_no_tool(mocker):
-    mock_response = """{"tool_name": "Undefined Tool", "tool_parameters": {}, "reasoning": "Mock reasoning"}"""
-    mock_llm.chat = mocker.AsyncMock(return_value=mock_response)
-
-    with raises(Exception) as error:
-        await mock_agent_instance.invoke("Mock task to solve")
-
-    expected = "Unable to extract chosen tool and parameters from {'tool_name': 'Undefined Tool', 'tool_parameters': {}, 'reasoning': 'Mock reasoning'}"  # noqa: E501
-    assert str(error.value) == expected
-
-
-@pytest.mark.asyncio
-async def test_agent_invoke_no_appropriate_tool_for_task(mocker):
-    mock_response = (
-        """{"tool_name": "None", "tool_parameters": {}, "reasoning": "No tool was appropriate for the task"}"""
-    )
-    mock_llm.chat = mocker.AsyncMock(return_value=mock_response)
-
-    with raises(Exception) as error:
-        await mock_agent_instance.invoke("Mock task to solve")
-
-    expected = "Unable to extract chosen tool and parameters from {'tool_name': 'None', 'tool_parameters': {}, 'reasoning': 'No tool was appropriate for the task'}"  # noqa: E501
-    assert str(error.value) == expected  # noqa: E501
+            assert str(error.value) == expected

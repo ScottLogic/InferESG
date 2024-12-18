@@ -1,7 +1,9 @@
+from typing import Coroutine
+
 from mistralai import Mistral as MistralApi, UserMessage, SystemMessage
 import logging
 from src.utils import Config
-from .llm import LLM
+from .llm import LLM, LLMFile
 
 logger = logging.getLogger(__name__)
 config = Config()
@@ -32,3 +34,12 @@ class Mistral(LLM):
 
         logger.debug('{0} response : "{1}"'.format(model, content))
         return content
+
+    def chat_with_file(
+        self,
+        model: str,
+        system_prompt: str,
+        user_prompt: str,
+        files: list[LLMFile]
+    ) -> Coroutine:
+        raise Exception("Mistral does not support chat_with_file")

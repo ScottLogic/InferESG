@@ -1,18 +1,18 @@
 from datetime import datetime
 from src.utils import get_scratchpad
 from src.prompts import PromptEngine
-from src.agents import Agent, agent
+from src.agents import ChatAgent, chat_agent
 from src.session import get_session_chat
 
 engine = PromptEngine()
 
 
-@agent(
+@chat_agent(
     name="AnswerAgent",
     description="This agent is responsible for generating an answer for the user, based on results in the scratchpad",
     tools=[],
 )
-class AnswerAgent(Agent):
+class AnswerAgent(ChatAgent):
     async def invoke(self, utterance: str) -> str:
         final_scratchpad = get_scratchpad()
         create_answer = engine.load_prompt(

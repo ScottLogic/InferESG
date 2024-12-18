@@ -1,7 +1,7 @@
 from abc import ABC
 import json
 import logging
-from typing import List, Type
+from typing import List, Type, TypeVar, Optional
 from src.llm import LLM, get_llm
 from src.utils.log_publisher import LogPrefix, publish_log_info
 
@@ -18,9 +18,6 @@ config = Config()
 
 
 class Agent(ABC):
-    name: str
-    description: str
-    tools: List[Tool]
     llm: LLM
     model: str
 
@@ -29,6 +26,12 @@ class Agent(ABC):
         if model is None:
             raise ValueError("LLM Model Not Provided")
         self.model = model
+
+
+class ChatAgent(Agent):
+    name: str
+    description: str
+    tools: List[Tool]
 
     async def __get_action(self, utterance: str) -> Action_and_args:
         tool_descriptions = create_all_tools_str(self.tools)
@@ -52,7 +55,7 @@ class Agent(ABC):
             validate_args(chosen_tool_parameters, chosen_tool)
         except Exception:
             raise Exception(f"Unable to extract chosen tool and parameters from {response}")
-        return (chosen_tool.action, chosen_tool_parameters)
+        return chosen_tool.action, chosen_tool_parameters
 
     async def invoke(self, utterance: str) -> str:
         (action, args) = await self.__get_action(utterance)
@@ -61,11 +64,17 @@ class Agent(ABC):
         return result_of_action
 
 
-def agent(name: str, description: str, tools: List[Tool]):
-    def decorator(agent: Type[Agent]):
-        agent.name = name
-        agent.description = description
-        agent.tools = tools
-        return agent
+T = TypeVar('T', bound=ChatAgent)
+
+
+def chat_agent(name: str, description: str, tools: Optional[List[Tool]] = None):
+    if not tools:
+        tools = []
+
+    def decorator(chat_agent: Type[T]) -> Type[T]:
+        chat_agent.name = name
+        chat_agent.description = description
+        chat_agent.tools = tools
+        return chat_agent
 
     return decorator

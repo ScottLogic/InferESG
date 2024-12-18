@@ -1,9 +1,11 @@
-from src.agents import Agent, agent, tool, Parameter
+from src.agents import ChatAgent, chat_agent, tool, Parameter
+from tests.llm.mock_llm import MockLLM
 
 name_a = "Mock Tool A"
 name_b = "Mock Tool B"
 description = "A test tool"
 param_description = "A string"
+MockLLM()  # initialise MockLLM so future calls to get_llm will return this object
 
 
 @tool(
@@ -37,9 +39,9 @@ mock_prompt = "You are a bot!"
 mock_tools = [mock_tool_a, mock_tool_b]
 
 
-@agent(name=mock_agent_name, description=mock_agent_description, tools=mock_tools)
-class MockAgent(Agent):
+@chat_agent(name=mock_agent_name, description=mock_agent_description, tools=mock_tools)
+class MockChatAgent(ChatAgent):
     pass
 
 
-__all__ = ["MockAgent", "mock_agent_description", "mock_agent_name", "mock_tools", "mock_tool_a", "mock_tool_b"]
+__all__ = ["MockChatAgent", "mock_agent_description", "mock_agent_name", "mock_tools", "mock_tool_a", "mock_tool_b"]

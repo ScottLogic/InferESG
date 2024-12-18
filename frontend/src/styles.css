@@ -22,4 +22,17 @@ body,
 
   background-color: var(--grey-200);
   color: var(--grey-900);
+
+  .ag-theme-quartz {
+    --ag-header-background-color: var(--grey-50);
+    --ag-border-color: var(--grey-300);
+    --ag-row-hover-color: var(--grey-50);
+    --ag-range-selection-border-color: var(--grey-700);
+    --ag-icon-font-color: var(--grey-900);
+    --ag-active-color: var(--primary);
+    --ag-input-focus-border-color: var(--primary);
+    --ag-font-size: 16px;
+    --ag-font-family: 'Roboto', sans-serif;
+    --ag-wrapper-border-radius: 16px;
+  }
 }

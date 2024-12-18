@@ -17,6 +17,9 @@ def handle_file_upload(file: UploadFile) -> FileUpload:
     if (file.size or 0) > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
 
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="Filename missing from file upload")
+
     if "application/pdf" == file.content_type:
         start_time = time.time()
         pdf_file = PdfReader(file.file)

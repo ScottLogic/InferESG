@@ -8,6 +8,8 @@ interface ButtonProps {
   disabled?: boolean;
   isOutline?: boolean;
   isPressed?: boolean;
+  isDownload?: boolean;
+  href?: string;
   onClick?: () => void;
 }
 
@@ -17,14 +19,17 @@ export const Button = ({
   disabled,
   isOutline,
   isPressed,
+  isDownload,
+  href,
   onClick,
 }: ButtonProps) => {
   const isIconOnly = !text && icon;
 
-  return (
+  const content = (
     <div
       className={classNames(styles.button_container, {
         [styles.outline]: isOutline,
+        [styles.download]: isDownload,
       })}
     >
       <button
@@ -48,4 +53,6 @@ export const Button = ({
       </button>
     </div>
   );
+
+  return href ? <a href={href}>{content}</a> : content;
 };
