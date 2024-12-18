@@ -17,7 +17,7 @@ import aiohttp
 import io
 from pypdf import PdfReader
 import json
-from typing import Dict, Any
+from typing import Any
 
 logger = logging.getLogger(__name__)
 config = Config()
@@ -29,32 +29,29 @@ async def web_general_search_core(search_query, llm, model) -> str:
     try:
         search_term_json = await create_search_term(search_query, llm, model)
         search_term_result = json.loads(search_term_json)
-
-        # Step 1: Check if there was an error in generating the search term
-        if search_term_result.get("status") == "error":
-            response = {"content": search_term_result.get("error"), "ignore_validation": "false"}
-            return json.dumps(response, indent=4)
         search_term = json.loads(search_term_result["response"]).get("search_term", "")
 
-        # Step 2: Perform the search using the generated search term
-        search_result = await perform_search(search_term, num_results=15)
+        # Step 1: Perform the search using the generated search term
+        search_result_json = await search_urls(search_query, num_results=15)
+        search_result = json.loads(search_result_json)
+
         if search_result.get("status") == "error":
             return "No relevant information found on the internet for the given query."
         urls = search_result.get("urls", [])
         logger.info(f"URLs found: {urls}")
 
-        # Step 3: Scrape content from the URLs found
+        # Step 2: Scrape content from the URLs found
         for url in urls:
             content = await perform_scrape(url)
             if not content:
                 continue  # Skip to the next URL if no content is found
-            # logger.info(f"Content scraped successfully: {content}")
-            # Step 4: Summarize the scraped content based on the search term
+            logger.info(f"Content scraped successfully: {content}")
+            # Step 3: Summarize the scraped content based on the search term
             summary = await perform_summarization(search_term, content, llm, model)
             if not summary:
                 continue  # Skip if no summary was generated
 
-            # Step 5: Validate the summarization
+            # Step 4: Validate the summarization
             is_valid = await is_valid_answer(summary, search_term)
             if not is_valid:
                 continue  # Skip if the summarization is not valid
@@ -191,15 +188,6 @@ def get_validator_agent() -> ChatAgent:
 async def is_valid_answer(answer, task) -> bool:
     is_valid = (await get_validator_agent().invoke(f"Task: {task}  Answer: {answer}")).lower() == "true"
     return is_valid
-
-
-async def perform_search(search_query: str, num_results: int) -> Dict[str, Any]:
-    try:
-        search_result_json = await search_urls(search_query, num_results=num_results)
-        return json.loads(search_result_json)
-    except Exception as e:
-        logger.error(f"Error during web search: {e}")
-        return {"status": "error", "urls": []}
 
 
 async def perform_scrape(url: str) -> str:

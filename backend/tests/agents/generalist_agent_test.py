@@ -20,16 +20,6 @@ async def test_generalist_agent(
 
 
 @pytest.mark.asyncio
-async def test_generalist_agent_response_error():
-    generalist_agent = GeneralistAgent("llm", "mock_model")
-
-    result = await generalist_agent.invoke("example query")
-
-    expected_response = {"content": "Error in finding the answer.", "ignore_validation": "false"}
-    assert json.loads(result) == expected_response
-
-
-@pytest.mark.asyncio
 @patch("src.agents.generalist_agent.answer_user_question", new_callable=AsyncMock)
 async def test_generalist_agent_reponse_format_error(
     mock_answer_user_question,

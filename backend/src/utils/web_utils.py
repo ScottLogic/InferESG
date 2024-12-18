@@ -83,28 +83,6 @@ async def create_search_term(search_query, llm, model) -> str:
         )
 
 
-async def answer_user_question(search_query, llm, model) -> str:
-    try:
-        summariser_prompt = engine.load_prompt("answer-user-question", question=search_query)
-        response = await llm.chat(model, summariser_prompt, "")
-        return json.dumps(
-            {
-                "status": "success",
-                "response": response,
-                "error": None,
-            }
-        )
-    except Exception as e:
-        logger.error(f"Error during create search term: {e}")
-        return json.dumps(
-            {
-                "status": "error",
-                "response": None,
-                "error": str(e),
-            }
-        )
-
-
 async def summarise_content(search_query, contents, llm, model) -> str:
     try:
         summariser_prompt = engine.load_prompt("summariser", question=search_query, content=contents)
