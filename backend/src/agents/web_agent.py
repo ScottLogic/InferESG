@@ -77,7 +77,7 @@ async def web_general_search_core(search_query, llm, model) -> str:
                     continue  # Skip if the summarization is not valid
                 response = {
                     "content": { "content": summary, "url": url },
-                    "ignore_validation": "false"
+                    "ignore_validation": "true" # This is to ignore the validation of the answer again by the supervisor
                 }
                 return json.dumps(response, indent=4)
             return "No relevant information found on the internet for the given query."
