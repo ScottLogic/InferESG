@@ -10,11 +10,11 @@ from src.directors.report_director import create_report_from_file
 
 mock_topics = {"topic1": "topic1 description", "topic2": "topic2 description"}
 mock_report = "#Report on upload as markdown"
-expected_answer = (
-    "Your report for test.txt is ready to view.\n\nThe following materiality topics were identified for "
-    "CompanyABC:\n\ntopic1\ntopic1 description\n\ntopic2\ntopic2 "
-    "description"
-)
+expected_answer = ("Your report for test.txt is ready to view.\n\n"
+                   "The following materiality topics were identified for "
+                   "CompanyABC which the report focuses on:\n\n"
+                   "topic1\ntopic1 description\n\n"
+                   "topic2\ntopic2 description")
 
 
 @pytest.mark.asyncio

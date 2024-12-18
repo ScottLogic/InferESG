@@ -3,7 +3,7 @@ from typing import List
 from src.llm.factory import get_llm
 from src.prompts.prompting import PromptEngine
 from src.session import Message, get_session_chat
-from src.session.file_uploads import get_uploaded_file_content
+from src.session.file_uploads import get_uploaded_report_content
 from src.utils.config import Config
 import logging
 
@@ -18,10 +18,10 @@ async def generate_suggestions() -> List[str]:
     llm = get_llm(config.suggestions_llm)
     model = get_suggestions_model()
     chat_history = get_chat_history()
-    session_file_content = get_uploaded_file_content()
+    session_report_content = get_uploaded_report_content()
     suggestions_prompt = engine.load_prompt(
-        "generate-message-suggestions", chat_history=chat_history, uploaded_file_content=session_file_content
-        if session_file_content else "There are no file uploads")
+        "generate-message-suggestions", chat_history=chat_history, report_content=session_report_content
+        if session_report_content else "There is no report content")
     response = await llm.chat(model, suggestions_prompt, user_prompt="Give me 5 suggestions.", return_json=True)
     try:
         response_json = json.loads(response)
