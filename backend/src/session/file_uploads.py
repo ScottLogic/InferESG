@@ -107,6 +107,20 @@ def clear_session_file_uploads():
     set_session(UPLOADS_META_SESSION_KEY, [])
 
 
+def get_uploaded_file_content() -> str | None:
+    session_file_meta = get_session_file_uploads_meta()
+    if session_file_meta:
+        upload_id = session_file_meta[0]['uploadId']
+        session_file_data = get_session_file_upload(upload_id)
+        if session_file_data:
+            session_file_content = session_file_data.get('content')
+            return session_file_content
+        else:
+            logger.warning("No session file data found.")
+    else:
+        logger.warning("No session file uploads found.")
+    return None
+
 def store_report(report: ReportResponse):
     redis_client.set(REPORT_KEY_PREFIX + report["id"], json.dumps(report))
 
