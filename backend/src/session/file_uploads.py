@@ -83,18 +83,18 @@ def clear_session_file_uploads():
     set_session(UPLOADS_META_SESSION_KEY, [])
 
 
-def get_uploaded_file_content() -> str | None:
+def get_uploaded_report_content() -> str | None:
     session_file_meta = get_session_file_uploads_meta()
     if session_file_meta:
         upload_id = session_file_meta[0]['uploadId']
-        session_file_data = get_session_file_upload(upload_id)
-        if session_file_data:
-            session_file_content = session_file_data.get('content')
-            return session_file_content
+        session_report_data = get_report(upload_id)
+        if session_report_data:
+            session_report_content = session_report_data.get('content')
+            return session_report_content
         else:
-            logger.warning("No session file data found.")
+            logger.warning("No session report data found.")
     else:
-        logger.warning("No session file uploads found.")
+        logger.warning("No session report uploads found.")
     return None
 
 def store_report(report: FileUploadReport):

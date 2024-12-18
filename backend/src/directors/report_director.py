@@ -33,9 +33,10 @@ def create_report_chat_message(file_name: str, company_name: str, topics: dict[s
     topics_with_markdown = [
         f"{key}\n{value}" for key, value in topics.items()
     ]
-    return f"""Your report for {file_name} is ready to view.
+    topics_summary = "\n\n".join(topics_with_markdown)
 
-The following materiality topics were identified for {company_name} which the report focuses on:
-
-{"\n\n".join(topics_with_markdown)}
-"""
+    return (
+        f"Your report for {file_name} is ready to view.\n\n"
+        f"The following materiality topics were identified for {company_name} which the report focuses on:\n\n"
+        f"{topics_summary}"
+    )
