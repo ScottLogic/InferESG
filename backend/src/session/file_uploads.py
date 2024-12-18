@@ -32,7 +32,7 @@ class FileUpload(TypedDict):
     size: Optional[int]
 
 
-class FileUploadReport(TypedDict):
+class ReportResponse(TypedDict):
     id: str
     answer: str
     filename: Optional[str]
@@ -83,9 +83,9 @@ def clear_session_file_uploads():
     set_session(UPLOADS_META_SESSION_KEY, [])
 
 
-def store_report(report: FileUploadReport):
+def store_report(report: ReportResponse):
     redis_client.set(REPORT_KEY_PREFIX + report["id"], json.dumps(report))
 
 
-def get_report(id: str) -> FileUploadReport | None:
+def get_report(id: str) -> ReportResponse | None:
     return _get_key(REPORT_KEY_PREFIX + id)

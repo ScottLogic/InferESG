@@ -21,28 +21,34 @@ class MockMessage:
 
 
 class MockListResponse:
-    data = [MockMessage(content=[TextContentBlock(
-        text=Text(
-            annotations=[
-                FileCitationAnnotation(
-                    file_citation=FileCitation(file_id="123"),
-                    text="【7†source】",
-                    end_index=1,
-                    start_index=2,
-                    type="file_citation"
-                ),
-                FileCitationAnnotation(
-                    file_citation=FileCitation(file_id="123"),
-                    text="【1:9†source】",
-                    end_index=1,
-                    start_index=2,
-                    type="file_citation"
+    data = [
+        MockMessage(
+            content=[
+                TextContentBlock(
+                    text=Text(
+                        annotations=[
+                            FileCitationAnnotation(
+                                file_citation=FileCitation(file_id="123"),
+                                text="【7†source】",
+                                end_index=1,
+                                start_index=2,
+                                type="file_citation",
+                            ),
+                            FileCitationAnnotation(
+                                file_citation=FileCitation(file_id="123"),
+                                text="【1:9†source】",
+                                end_index=1,
+                                start_index=2,
+                                type="file_citation",
+                            ),
+                        ],
+                        value="Response with quote【7†source】【1:9†source】",
+                    ),
+                    type="text",
                 )
-            ],
-            value="Response with quote【7†source】【1:9†source】"
-        ),
-        type="text"
-    )])]
+            ]
+        )
+    ]
 
 
 mock_message_list = {"data"}
@@ -60,10 +66,12 @@ async def test_chat_with_file_removes_citations(mock_async_openai):
     mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse)
 
     client = OpenAI()
-    response = await client .chat_with_file(
+    response = await client.chat_with_file(
         model="",
         user_prompt="",
         system_prompt="",
-        files=[LLMFile("file_name", Path("file/path"))]
+        files=[
+            LLMFile("file_name", Path("./library/AstraZeneca-Sustainability-Report-2023.pdf"))
+        ],  # This path only works if you run this test from the backend folder
     )
     assert response == "Response with quote"

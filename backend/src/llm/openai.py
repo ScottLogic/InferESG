@@ -19,7 +19,6 @@ def remove_citations(message: Text):
 
 
 class OpenAI(LLM):
-
     async def chat(self, model, system_prompt: str, user_prompt: str, return_json=False) -> str:
         logger.debug(
             "##### Called open ai chat ... llm. Waiting on response model with prompt {0}.".format(
@@ -35,7 +34,7 @@ class OpenAI(LLM):
                     {"role": "user", "content": user_prompt},
                 ],
                 temperature=0,
-                response_format={"type": "json_object"} if return_json else NOT_GIVEN
+                response_format={"type": "json_object"} if return_json else NOT_GIVEN,
             )
             content = response.choices[0].message.content
             logger.info(f"OpenAI response: Finish reason: {response.choices[0].finish_reason}, Content: {content}")
@@ -50,13 +49,7 @@ class OpenAI(LLM):
             logger.error(f"Error calling OpenAI model: {e}")
             return "An error occurred while processing the request."
 
-    async def chat_with_file(
-        self,
-        model: str,
-        system_prompt: str,
-        user_prompt: str,
-        files: list[LLMFile]
-    ) -> str:
+    async def chat_with_file(self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile]) -> str:
         client = AsyncOpenAI(api_key=config.openai_key)
         file_ids = await self.__upload_files(files)
 
@@ -72,17 +65,12 @@ class OpenAI(LLM):
                 {
                     "role": "user",
                     "content": user_prompt,
-                    "attachments": [
-                        {"file_id": file_id, "tools": [{"type": "file_search"}]}
-                        for file_id in file_ids
-                    ],
+                    "attachments": [{"file_id": file_id, "tools": [{"type": "file_search"}]} for file_id in file_ids],
                 }
             ]
         )
 
-        run = await client.beta.threads.runs.create_and_poll(
-            thread_id=thread.id, assistant_id=file_assistant.id
-        )
+        run = await client.beta.threads.runs.create_and_poll(thread_id=thread.id, assistant_id=file_assistant.id)
 
         messages = await client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 
@@ -110,6 +98,7 @@ class OpenAI(LLM):
                 logger.error(f"Unsupported file type for '{file.file_name}'")
                 continue
             file = await client.files.create(file=(file.file_name, file_bytes), purpose="assistants")
+            # file = await client.files.create(file=(file.file_name, file.file), purpose="assistants")
             file_ids.append(file.id)
 
         return file_ids

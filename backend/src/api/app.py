@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.utils.scratchpad import ScratchPadMiddleware
 from src.session.chat_response import get_session_chat_response_ids
 from src.chat_storage_service import clear_chat_messages, get_chat_message
-from src.directors.report_director import report_on_file_upload
+from src.directors.report_director import create_report_from_file
 from src.session.file_uploads import clear_session_file_uploads, get_report
 from src.session.redis_session_middleware import reset_session
 from src.utils import Config, test_connection
@@ -129,13 +129,14 @@ async def suggestions():
 async def report(file: UploadFile):
     logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
     try:
-        processed_upload = await report_on_file_upload(file)
+        processed_upload = await create_report_from_file(file)
         return JSONResponse(status_code=200, content=processed_upload)
     except HTTPException as he:
         raise he
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=file_upload_failed_response)
+
 
 @app.get("/report/{id}")
 def download_report(id: str):
@@ -144,11 +145,12 @@ def download_report(id: str):
         final_result = get_report(id)
         if final_result is None:
             return JSONResponse(status_code=404, content=f"Message with id {id} not found")
-        headers = {'Content-Disposition': 'attachment; filename="report.md"'}
-        return Response(final_result.get("report"), headers=headers, media_type='text/markdown')
+        headers = {"Content-Disposition": 'attachment; filename="report.md"'}
+        return Response(final_result.get("report"), headers=headers, media_type="text/markdown")
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=report_get_upload_failed_response)
+
 
 @app.get("/uploadfile")
 async def fetch_file(id: str):

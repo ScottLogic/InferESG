@@ -1,5 +1,6 @@
 from io import BytesIO, TextIOWrapper
 from pathlib import Path
+import sys
 import time
 from fastapi import HTTPException
 import logging
@@ -11,8 +12,6 @@ from src.session.file_uploads import FileUpload, get_session_file_upload, update
 
 logger = logging.getLogger(__name__)
 
-MAX_FILE_SIZE = 10*1024*1024
-
 
 def handle_file_upload(file: LLMFile) -> FileUpload:
     if isinstance(file.file, (PathLike, str)):
@@ -22,19 +21,10 @@ def handle_file_upload(file: LLMFile) -> FileUpload:
     elif isinstance(file.file, bytes):
         file_bytes = file.file
     else:
-        raise HTTPException(
-            status_code=400,
-            detail="File must be provided as bytes or a valid file path."
-        )
+        raise HTTPException(status_code=400, detail="File must be provided as bytes or a valid file path.")
 
     file_stream = BytesIO(file_bytes)
-    file_size = len(file_bytes)
-
-    if file_size > MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=413,
-            detail=f"File upload must be less than {MAX_FILE_SIZE} bytes"
-        )
+    file_size = sys.getsizeof(file_bytes)
 
     all_content = ""
     content_type = "unknown"
@@ -63,8 +53,7 @@ def handle_file_upload(file: LLMFile) -> FileUpload:
 
         except Exception as text_error:
             raise HTTPException(
-                status_code=400,
-                detail="File upload must be a supported type text or pdf"
+                status_code=400, detail="File upload must be a supported type text or pdf"
             ) from text_error
 
     session_file = FileUpload(
@@ -82,6 +71,3 @@ def handle_file_upload(file: LLMFile) -> FileUpload:
 
 def get_file_upload(upload_id) -> FileUpload | None:
     return get_session_file_upload(upload_id)
-
-
-

@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 import pytest
 from src.chat_storage_service import ChatResponse
-from src.directors.report_director import FileUploadReport
+from src.directors.report_director import ReportResponse
 from src.api import app, healthy_response, unhealthy_neo4j_response, chat_fail_response
 
 client = TestClient(app)
@@ -87,14 +87,14 @@ def test_chat_message_not_found(mocker):
 
 
 def test_report_response_success(mocker):
-    mock_response = FileUploadReport(filename="filename", id="1", report="some report md", answer="chat message")
-    mock_report = mocker.patch("src.api.app.report_on_file_upload", return_value=mock_response)
+    mock_response = ReportResponse(filename="filename", id="1", report="some report md", answer="chat message")
+    mock_report = mocker.patch("src.api.app.create_report_from_file", return_value=mock_response)
 
     response = client.post("/report", files={"file": ("filename", "test data".encode("utf-8"), "text/plain")})
 
     mock_report.assert_called_once()
     assert response.status_code == 200
-    assert response.json() == {'filename': 'filename', 'id': '1', 'report': 'some report md', 'answer': 'chat message'}
+    assert response.json() == {"filename": "filename", "id": "1", "report": "some report md", "answer": "chat message"}
 
 
 @pytest.mark.asyncio
@@ -106,15 +106,15 @@ async def test_lifespan_populates_db(mocker) -> None:
 
 
 def test_get_report_success(mocker):
-    report = FileUploadReport(id="12", filename="test.pdf", report="test report", answer='chat message')
+    report = ReportResponse(id="12", filename="test.pdf", report="test report", answer="chat message")
     mock_get_report = mocker.patch("src.api.app.get_report", return_value=report)
 
     response = client.get("/report/12")
 
     mock_get_report.assert_called_with("12")
     assert response.status_code == 200
-    assert response.headers.get('Content-Disposition') == 'attachment; filename="report.md"'
-    assert response.headers.get('Content-Type') == 'text/markdown; charset=utf-8'
+    assert response.headers.get("Content-Disposition") == 'attachment; filename="report.md"'
+    assert response.headers.get("Content-Type") == "text/markdown; charset=utf-8"
 
 
 def test_get_report_not_found(mocker):
