@@ -54,13 +54,14 @@ async def create_report_from_file(file_contents: bytes, filename: str | None, fi
     return report_response
 
 
-def create_report_chat_message(filename: str, company_name: str, topics: dict[str, str]) -> str:
-    report_chat_message = f"Your report for {filename} is ready to view."
-    if topics:
-        topics_with_markdown = [f"{key}\n{value}" for key, value in topics.items()]
-        report_chat_message += f"""
+def create_report_chat_message(file_name: str, company_name: str, topics: dict[str, str]) -> str:
+    topics_with_markdown = [
+        f"{key}\n{value}" for key, value in topics.items()
+    ]
+    topics_summary = "\n\n".join(topics_with_markdown)
 
-The following materiality topics were identified for {company_name}:
-
-{"\n\n".join(topics_with_markdown)}"""
-    return report_chat_message
+    return (
+        f"Your report for {file_name} is ready to view.\n\n"
+        f"The following materiality topics were identified for {company_name} which the report focuses on:\n\n"
+        f"{topics_summary}"
+    )
