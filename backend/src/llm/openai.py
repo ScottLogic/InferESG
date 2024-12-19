@@ -1,6 +1,4 @@
 import logging
-from os import PathLike
-from pathlib import Path
 
 from src.utils import Config
 from src.llm import LLM, LLMFile
@@ -88,17 +86,8 @@ class OpenAI(LLM):
         file_ids = []
         for file in files:
             logger.info(f"Uploading file '{file.file_name}' to OpenAI")
-            if isinstance(file.file, (PathLike, str)):
-                file_path = Path(file.file)
-                with file_path.open("rb") as f:
-                    file_bytes = f.read()
-            elif isinstance(file.file, bytes):
-                file_bytes = file.file
-            else:
-                logger.error(f"Unsupported file type for '{file.file_name}'")
-                continue
-            file = await client.files.create(file=(file.file_name, file_bytes), purpose="assistants")
-            # file = await client.files.create(file=(file.file_name, file.file), purpose="assistants")
-            file_ids.append(file.id)
+            file = (file.file_name, file.file) if isinstance(file.file, bytes) else file.file
+            response = await client.files.create(file=file, purpose="assistants")
+            file_ids.append(response.id)
 
         return file_ids
