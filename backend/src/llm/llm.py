@@ -54,3 +54,11 @@ class LLM(ABC, metaclass=LLMMeta):
         files: list[LLMFile]
     ) -> Coroutine:
         pass
+
+
+class LLMFileUploadManager(ABC):
+    async def upload_files(self, files: list[LLMFile]):
+        pass
+
+    async def delete_all_files(self):
+        pass

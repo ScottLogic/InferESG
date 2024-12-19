@@ -3,8 +3,7 @@ import logging
 import time
 
 from src.utils import Config
-from src.llm import LLM, LLMFile
-from src.llm.llm_file_upload_manager import LLMFileUploadManager
+from src.llm.llm import LLM, LLMFile, LLMFileUploadManager
 from src.session.llm_file_upload import (
     add_llm_file_upload,
     get_llm_file_upload,
