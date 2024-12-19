@@ -26,7 +26,7 @@ async def create_report_from_file(upload: UploadFile) -> ReportResponse:
 
     company_name = await report_agent.get_company_name(file)
 
-    topics = await get_materiality_agent().list_material_topics(company_name)
+    topics = await get_materiality_agent().list_material_topics_for_company(company_name)
 
     report = await report_agent.create_report(file, topics)
 

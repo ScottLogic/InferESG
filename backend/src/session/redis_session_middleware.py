@@ -47,11 +47,15 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
 
         return response
 
-def ignore_request(request:Request) -> bool:
+
+def ignore_request(request: Request) -> bool:
     # prevent generating new session for each health check request
     return request.url.path == '/health' or request.method == 'OPTIONS'
 
-def get_session(key: str, default=[]):
+
+def get_session(key: str, default: list = None):
+    if not default:
+        default = []
     request: Request = request_context.get()
     return request.state.session.get(key, default)
 

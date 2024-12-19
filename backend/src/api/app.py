@@ -17,6 +17,7 @@ from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.suggestions_generator import generate_suggestions
 from src.utils.file_utils import get_file_upload
+from src.llm.openai import OpenAILLMFileUploadManager
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -27,11 +28,17 @@ config = Config()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # start up
     try:
         await dataset_upload()
     except Exception as e:
         logger.exception(f"Failed to populate database with initial data from file: {e}")
     yield
+    # shut down
+    # If running app with docker compose, Ctrl+C will detach from container immediately,
+    # meaning no graceful shutdown logs will be seen
+    openai_file_manager = OpenAILLMFileUploadManager()
+    await openai_file_manager.delete_all_files()
 
 
 app = FastAPI(lifespan=lifespan)

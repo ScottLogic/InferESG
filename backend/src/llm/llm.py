@@ -10,7 +10,7 @@ count_calls_of_functions = ["chat", "chat_with_file"]
 
 @dataclass
 class LLMFile(ABC):
-    file_name: str
+    filename: str
     file: PathLike[str] | bytes
 
 

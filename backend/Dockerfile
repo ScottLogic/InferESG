@@ -22,4 +22,4 @@ COPY ./src/. ./src
 EXPOSE 8250
 
 # Run our entry file, which will start the server
-CMD ["python", "-m", "src.main", "--host", "0.0.0.0"]
+ENTRYPOINT ["python", "-m", "src.main", "--host", "0.0.0.0"]

@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def create_llm_files(file_names: list[str]) -> list[LLMFile]:
     return [
-        LLMFile(file_name=file_name, file=Path(f"./library/{file_name}"))
+        LLMFile(filename=file_name, file=Path(f"./library/{file_name}"))
         for file_name in file_names
     ]
 
@@ -42,11 +42,11 @@ class MaterialityAgent(ChatAgent):
         )
         return json.dumps({"content": answer, "ignore_validation": False})
 
-    async def list_material_topics_for_company(self, company_name: str) -> str:
+    async def list_material_topics_for_company(self, company_name: str) -> dict[str, str]:
         materiality_files = await self.select_material_files(company_name)
         if not materiality_files:
             logger.info(f"No materiality reference documents could be found for {company_name}")
-            return f"No Materiality reference documents could be found for {company_name}"
+            return {}
         materiality_topics = await self.llm.chat_with_file(
             self.model,
             system_prompt=engine.load_prompt("list-material-topics-system-prompt"),

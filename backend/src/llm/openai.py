@@ -1,8 +1,16 @@
+import asyncio
 import logging
+import time
 
 from src.utils import Config
 from src.llm import LLM, LLMFile
-from openai import NOT_GIVEN, AsyncOpenAI
+from src.llm.llm_file_upload_manager import LLMFileUploadManager
+from src.session.llm_file_upload import (
+    add_llm_file_upload,
+    get_llm_file_upload,
+    get_all_files
+)
+from openai import NOT_GIVEN, AsyncOpenAI, OpenAIError
 from openai.types.beta.threads import Text, TextContentBlock
 
 logger = logging.getLogger(__name__)
@@ -49,7 +57,8 @@ class OpenAI(LLM):
 
     async def chat_with_file(self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile]) -> str:
         client = AsyncOpenAI(api_key=config.openai_key)
-        file_ids = await self.__upload_files(files)
+        file_upload_manager = OpenAILLMFileUploadManager()
+        file_ids = await file_upload_manager.upload_files(files)
 
         file_assistant = await client.beta.assistants.create(
             name="ESG Analyst",
@@ -80,14 +89,42 @@ class OpenAI(LLM):
         logger.info(f"OpenAI response: {message}")
         return message
 
-    async def __upload_files(self, files: list[LLMFile]) -> list[str]:
+
+class OpenAILLMFileUploadManager(LLMFileUploadManager):
+    async def upload_files(self, files: list[LLMFile]) -> list[str]:
         client = AsyncOpenAI(api_key=config.openai_key)
 
         file_ids = []
+        files_to_upload = []
+        start_time = time.time()
         for file in files:
-            logger.info(f"Uploading file '{file.file_name}' to OpenAI")
-            file = (file.file_name, file.file) if isinstance(file.file, bytes) else file.file
-            response = await client.files.create(file=file, purpose="assistants")
-            file_ids.append(response.id)
+            file_id = get_llm_file_upload(file.filename)
+            if not file_id:
+                logger.info(f"Open AI: Preparing to upload '{file.filename}'")
+                file = (file.filename, file.file) if isinstance(file.file, bytes) else file.file
+                files_to_upload.append(client.files.create(file=file, purpose="assistants"))
+            else:
+                file_ids.append(file_id)
+                logger.info(f"Open AI: {file.filename} already uploaded to OpenAI with id '{file_id}'")
 
+        uploaded_files = await asyncio.gather(*files_to_upload)
+
+        for file in uploaded_files:
+            add_llm_file_upload(file.id, file.filename)
+            file_ids.append(file.id)
+            logger.info(f"Open AI: File '{file.filename}' uploaded with id '{file.id}'")
+
+        if uploaded_files:
+            logger.info(f"Open AI: Time to upload files {time.time() - start_time}")
         return file_ids
+
+    async def delete_all_files(self):
+        try:
+            client = AsyncOpenAI(api_key=config.openai_key)
+            files = get_all_files()
+            logger.info(f"Open AI: deleting files {files}")
+            delete_tasks = [client.files.delete(file_id=file["file_id"]) for file in files]
+            await asyncio.gather(*delete_tasks)
+            logger.info(f"Open AI: Files deleted")
+        except OpenAIError:
+            logger.info("OpenAI not configured")

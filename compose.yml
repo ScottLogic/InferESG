@@ -61,6 +61,29 @@ services:
       timeout: 10s
       retries: 5
 
+  redis-insight:
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - "5540:5540"
+    networks:
+      - network
+
+  # This will set up the connection to redis-insight
+  redis-insight-setup:
+    build:
+      context: redis-insight
+      dockerfile: ./Dockerfile
+    command: sh -c "/usr/local/bin/setup-connection.sh"
+    environment:
+      REDIS_CONNECTION_HOST: "host.docker.internal"
+      REDIS_CONNECTION_PORT: "6379"
+    networks:
+      - network
+    depends_on:
+      - redis-insight
+      - redis-cache
+
   # InferESG Backend
   backend:
     env_file:
