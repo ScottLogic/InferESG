@@ -56,8 +56,7 @@ class OpenAI(LLM):
 
     async def chat_with_file(self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile]) -> str:
         client = AsyncOpenAI(api_key=config.openai_key)
-        file_upload_manager = OpenAILLMFileUploadManager()
-        file_ids = await file_upload_manager.upload_files(files)
+        file_ids = await OpenAILLMFileUploadManager().upload_files(files)
 
         file_assistant = await client.beta.assistants.create(
             name="ESG Analyst",
