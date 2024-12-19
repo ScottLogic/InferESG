@@ -67,9 +67,7 @@ class ChatAgent(Agent):
 T = TypeVar('T', bound=ChatAgent)
 
 
-def chat_agent(name: str, description: str, tools: Optional[List[Tool]] = None):
-    if not tools:
-        tools = []
+def chat_agent(name: str, description: str, tools: List[Tool]):
 
     def decorator(chat_agent: Type[T]) -> Type[T]:
         chat_agent.name = name

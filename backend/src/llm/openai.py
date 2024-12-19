@@ -39,7 +39,7 @@ class OpenAI(LLM):
             logger.debug(f"Token data: {response.usage}")
 
             if not content:
-                logger.error("Call to Mistral API failed: message content is None")
+                logger.error("Call to Open API failed: message content is None")
                 return "An error occurred while processing the request."
 
             return content

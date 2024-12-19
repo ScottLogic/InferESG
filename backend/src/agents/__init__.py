@@ -50,6 +50,7 @@ def get_available_agents() -> List[ChatAgent]:
         DatastoreAgent(config.datastore_agent_llm, config.datastore_agent_model),
         WebAgent(config.web_agent_llm, config.web_agent_model),
         ChartGeneratorAgent(config.chart_generator_llm, config.chart_generator_model),
+        get_materiality_agent()
     ]
 
 

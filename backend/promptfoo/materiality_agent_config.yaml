@@ -19,6 +19,9 @@ tests:
         value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
       - type: javascript
         value: JSON.parse(output).files[1] === "GRI 11_ Oil and Gas Sector 2021.pdf"
+      - type: javascript
+        value: JSON.parse(output).files.length === 2
+
 
   - description: "test select material documents for BP with focus on nature"
     vars:
@@ -31,6 +34,40 @@ tests:
         value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Oil-and-gas.pdf"
       - type: javascript
         value: JSON.parse(output).files.length === 1
+
+  - description: "test select material documents for Astra Zeneca with user question"
+    vars:
+      user_prompt: "What activities are part of Astra Zeneca's value chain?"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).files[0] === "Additional-Sector-Guidance-Biotech-and-Pharma.pdf"
+      - type: javascript
+        value: JSON.parse(output).files.length === 1
+
+  - description: "test select material documents for BP with user question and ESG focus"
+    vars:
+      user_prompt: "What social topics are material to BP?"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).files[0] === "GRI 11_ Oil and Gas Sector 2021.pdf"
+      - type: javascript
+        value: JSON.parse(output).files.length === 1
+
+  - description: "test no material documents are selected for NASA "
+    vars:
+      user_prompt: "What topics are material to NASA?"
+      system_prompt_template: "select-material-files-system-prompt"
+      system_prompt_args:
+        catalogue: '{"library":{"TFND":[{"name":"Additional-Sector-Guidance-Biotech-and-Pharma.pdf","sector-label":"Biotechnology and Pharmaceuticals","esg-labels":["Environment","Nature"]},{"name":"Additional-Sector-Guidance-Oil-and-gas.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Nature"]}],"GRI":[{"name":"GRI 11_ Oil and Gas Sector 2021.pdf","sector-label":"Oil and Gas","esg-labels":["Environment","Social","Governance"]}]}}'
+    assert:
+      - type: javascript
+        value: JSON.parse(output).files.length === 0
 
   - description: "test list material topics for Astra Zeneca with file"
     vars:
@@ -54,3 +91,123 @@ tests:
         value: JSON.parse(output).material_topics["Biodiversity and Ecosystem Impacts"] === "The potential impact of AstraZeneca's operations on sensitive ecosystems, as well as its reliance on biodiversity for sourcing natural compounds for drug development, highlights the importance of considering biodiversity in the company's sustainability strategy."
       - type: javascript
         value: JSON.parse(output).material_topics["Pollution Prevention"] === "Managing and reducing pollution, particularly non-GHG air pollutants, wastewater discharges, and hazardous waste, is critical for AstraZeneca to mitigate its environmental footprint and comply with environmental regulations."
+
+  - description: "test materiality agent can answer questions about materiality for Astra Zeneca"
+    vars:
+      user_prompt: "What topics are material for AstraZeneca?"
+      system_prompt_template: "answer-materiality-question"
+      file_attachment: "../library/Additional-Sector-Guidance-Biotech-and-Pharma.pdf"
+    assert:
+      - type: javascript
+        value: |
+          var expected = `
+          AstraZeneca, as part of the biotechnology and pharmaceuticals sector, should consider several ESG topics as material based on the provided guidance. These topics include:
+
+          1. **Land/Freshwater/Ocean-use Change:**
+             - Extent of land/freshwater/ocean ecosystem use change by business activity.
+             - Total spatial footprint covering total surface area controlled, disturbed, and rehabilitated.
+
+          2. **Pollution/Pollution Removal:**
+             - Hazardous waste management, both in production and end-of-life treatment, including recycling rates.
+             - Non-compliance incidents with soil and water quality regulations.
+             - Persistent ingredients related to antimicrobial resistance (AMR).
+
+          3. **Resource Use/Replenishment:**
+             - Water withdrawal and consumption from areas of water scarcity.
+             - Quantity and sustainable management of high-risk natural commodities sourced.
+
+          4. **Climate Change:**
+             - Greenhouse Gas (GHG) emissions, especially non-GHG pollutants such as particulate matter, nitrogen oxides, and others.
+
+          5. **State of Nature and Biodiversity:**
+             - Placeholder metrics for ecosystem condition and species extinction risk, indicating monitoring of biodiversity impacts.
+
+          These material topics emphasize the environmental impacts and dependencies AstraZeneca may have, focusing on sustainable management and reduction of negative impacts in their operations and supply chain.
+          `;
+
+          // promptfoo is bad at ignoring whitespace
+          expected_trimmed = expected.replace(/(?:\r\n|\r|\n|\s)/g, '');
+          output = output.replace(/(?:\r\n|\r|\n|\s)/g, '');
+          if (output === expected_trimmed) {
+            return {
+              pass: true,
+              score: 0.5,
+              reason: 'Output matched Expected (whitespace trimmed): ' + expected,
+            };
+          }
+          return {
+            pass: false,
+            score: 0,
+            reason: 'Output: \n' + output + '\n\n did not equal \n\n' + expected_trimmed,
+          };
+
+  - description: "test materiality agent can answer questions about materiality for Astra Zeneca"
+    vars:
+      user_prompt: "What topics are material for AstraZeneca?"
+      system_prompt_template: "answer-materiality-question"
+      file_attachment: "../library/Additional-Sector-Guidance-Biotech-and-Pharma.pdf"
+    assert:
+      - type: llm-rubric
+        value: |
+          Answer matches the following - every word is in the correct order with none missing and no new words added:
+
+          AstraZeneca, as part of the biotechnology and pharmaceuticals sector, should consider several ESG topics as material based on the provided guidance. These topics include:
+
+          1. **Land/Freshwater/Ocean-use Change:**
+             - Extent of land/freshwater/ocean ecosystem use change by business activity.
+             - Total spatial footprint covering total surface area controlled, disturbed, and rehabilitated.
+
+          2. **Pollution/Pollution Removal:**
+             - Hazardous waste management, both in production and end-of-life treatment, including recycling rates.
+             - Non-compliance incidents with soil and water quality regulations.
+             - Persistent ingredients related to antimicrobial resistance (AMR).
+
+          3. **Resource Use/Replenishment:**
+             - Water withdrawal and consumption from areas of water scarcity.
+             - Quantity and sustainable management of high-risk natural commodities sourced.
+
+          4. **Climate Change:**
+             - Greenhouse Gas (GHG) emissions, especially non-GHG pollutants such as particulate matter, nitrogen oxides, and others.
+
+          5. **State of Nature and Biodiversity:**
+             - Placeholder metrics for ecosystem condition and species extinction risk, indicating monitoring of biodiversity impacts.
+
+          These material topics emphasize the environmental impacts and dependencies AstraZeneca may have, focusing on sustainable management and reduction of negative impacts in their operations and supply chain.
+
+  - description: "test materiality agent can answer question about value chain of Biotech & Pharma"
+    vars:
+      user_prompt: "What business activities are typically found in Biotech and Pharma companies?"
+      system_prompt_template: "answer-materiality-question"
+      file_attachment: "../library/Additional-Sector-Guidance-Biotech-and-Pharma.pdf"
+    assert:
+      - type: llm-rubric
+        value: |
+          Answer matches the following - every word is in the correct order with none missing and no new words added:
+
+          Biotechnology and pharmaceuticals companies typically engage in various business activities across their value chains. These activities include:
+
+          1. **Inorganic and Organic Feedstock and Raw Materials**:
+            - Sourcing materials like forestry products, natural substances, agricultural products, fossil fuels, commodity chemicals, metals, minerals, and renewable raw materials.
+
+          2. **Manufacturing, Processing, and Synthesis**:
+            - Producing pharmaceutical products and their packaging.
+
+          3. **Product Design and Research and Development (R&D)**:
+            - Involves pre-clinical trials, clinical trials, and obtaining regulatory approvals.
+            - Prioritizes safe and sustainable by design approaches for product development.
+
+          4. **Distribution**:
+            - Concerned with transporting products to consumers or other locations in the value chain.
+
+          5. **Utilities and Energy Use**:
+            - Employs energy consumption, excess heat management, wastewater management, and energy and water supply management in operations.
+
+          6. **Use of Genetically Modified Organisms (GMOs) and Biofuels**:
+            - Includes utilization of GM cell cultures, GM crops, healthcare products, biodegradable plastics, and other bio-based products.
+
+          7. **End-of-Life Treatment**:
+            - Activities related to recycling, waste management, and final disposal of products.
+
+          Each of these activities has specific dependencies and impacts on nature, such as the requirement for water in manufacturing or the risk of pollutants impacting environmental quality during waste disposal stages.
+
+          These components of the biotech and pharma value chain are critical for organizations when considering ESG materiality, particularly regarding nature-related dependencies, impacts, risks, and opportunities.
