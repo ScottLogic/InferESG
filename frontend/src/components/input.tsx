@@ -103,6 +103,11 @@ export const Input = ({
               value={userInput}
               onChange={onChange}
               rows={1}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' && event.shiftKey == false) {
+                  onSend(event);
+                }
+              }}
             />
             <FileUpload
               onFileUpload={uploadFile}
