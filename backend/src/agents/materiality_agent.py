@@ -10,10 +10,10 @@ engine = PromptEngine()
 logger = logging.getLogger(__name__)
 
 
-def create_llm_files(file_names: list[str]) -> list[LLMFile]:
+def create_llm_files(filenames: list[str]) -> list[LLMFile]:
     return [
-        LLMFile(filename=file_name, file=Path(f"./library/{file_name}"))
-        for file_name in file_names
+        LLMFile(filename=filename, file=Path(f"./library/{filename}"))
+        for filename in filenames
     ]
 
 

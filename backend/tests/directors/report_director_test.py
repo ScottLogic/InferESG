@@ -68,7 +68,7 @@ async def test_create_report_from_file_throws_when_file_size_too_large():
 
 
 @pytest.mark.asyncio
-async def test_create_report_from_file_throws_when_missing_file_name():
+async def test_create_report_from_file_throws_when_missing_filename():
     with pytest.raises(HTTPException) as error:
         file = UploadFile(
             file=BytesIO(b"Sample text content"),

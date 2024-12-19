@@ -19,7 +19,7 @@ async def create_report_from_file(upload: UploadFile) -> ReportResponse:
     if file_size > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
 
-    file = LLMFile(file_name=upload.filename, file=file_stream)
+    file = LLMFile(filename=upload.filename, file=file_stream)
     file_id = str(uuid.uuid4())
 
     report_agent = get_report_agent()
@@ -31,10 +31,10 @@ async def create_report_from_file(upload: UploadFile) -> ReportResponse:
     report = await report_agent.create_report(file, topics)
 
     report_response = ReportResponse(
-        filename=file.file_name,
+        filename=file.filename,
         id=file_id,
         report=report,
-        answer=create_report_chat_message(file.file_name, company_name, topics),
+        answer=create_report_chat_message(file.filename, company_name, topics),
     )
 
     store_report(report_response)
@@ -42,9 +42,9 @@ async def create_report_from_file(upload: UploadFile) -> ReportResponse:
     return report_response
 
 
-def create_report_chat_message(file_name: str, company_name: str, topics: dict[str, str]) -> str:
+def create_report_chat_message(filename: str, company_name: str, topics: dict[str, str]) -> str:
     topics_with_markdown = [f"{key}\n{value}" for key, value in topics.items()]
-    return f"""Your report for {file_name} is ready to view.
+    return f"""Your report for {filename} is ready to view.
 
 The following materiality topics were identified for {company_name} which the report focuses on:
 

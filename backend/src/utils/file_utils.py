@@ -59,7 +59,7 @@ def handle_file_upload(file: LLMFile) -> FileUpload:
     session_file = FileUpload(
         uploadId=str(uuid.uuid4()),
         contentType=content_type,
-        filename=file.file_name,
+        filename=file.filename,
         content=all_content,
         size=file_size,
     )

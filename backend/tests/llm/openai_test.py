@@ -70,6 +70,6 @@ async def test_chat_with_file_removes_citations(mock_async_openai):
         model="",
         user_prompt="",
         system_prompt="",
-        files=[LLMFile("file_name", Path("./backend/library/AstraZeneca-Sustainability-Report-2023.pdf"))],
+        files=[LLMFile("filename", Path("./backend/library/AstraZeneca-Sustainability-Report-2023.pdf"))],
     )
     assert response == "Response with quote"
