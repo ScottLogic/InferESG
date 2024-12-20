@@ -57,7 +57,7 @@ class LLM(ABC, metaclass=LLMMeta):
 
 
 class LLMFileUploadManager(ABC):
-    async def upload_files(self, files: list[LLMFile]):
+    async def upload_files(self, files: list[LLMFile]) -> list[str]:
         pass
 
     async def delete_all_files(self):
