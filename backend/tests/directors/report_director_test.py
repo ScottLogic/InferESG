@@ -32,7 +32,7 @@ async def test_create_report_from_file(mocker):
 
     # Mock materiality agent
     mock_materiality_agent = mocker.AsyncMock()
-    mock_materiality_agent.list_material_topics.return_value = mock_topics
+    mock_materiality_agent.list_material_topics_for_company.return_value = mock_topics
     mocker.patch("src.directors.report_director.get_materiality_agent", return_value=mock_materiality_agent)
 
     mock_store_report = mocker.patch("src.directors.report_director.store_report", return_value=file_upload)
@@ -46,7 +46,7 @@ async def test_create_report_from_file(mocker):
 
     mock_store_report.assert_called_once_with(expected_response)
 
-    mock_materiality_agent.list_material_topics.assert_called_once_with("CompanyABC")
+    mock_materiality_agent.list_material_topics_for_company.assert_called_once_with("CompanyABC")
 
     assert response == expected_response
 

@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 from uuid import uuid4
 import redis
 from src.utils import test_redis_connection
@@ -53,7 +54,7 @@ def ignore_request(request: Request) -> bool:
     return request.url.path == '/health' or request.method == 'OPTIONS'
 
 
-def get_session(key: str, default: list = None):
+def get_session(key: str, default: Optional[list] = None):
     if not default:
         default = []
     request: Request = request_context.get()

@@ -28,6 +28,6 @@ async def test_invoke_calls_llm(mocker):
         mock_llm.chat = mocker.AsyncMock(return_value=json.dumps(mock_selected_files))
         mock_llm.chat_with_file = mocker.AsyncMock(return_value=json.dumps(mock_materiality_topics))
 
-        response = await agent.list_material_topics("AstraZeneca")
+        response = await agent.list_material_topics_for_company("AstraZeneca")
 
         assert response == mock_materiality_topics["material_topics"]

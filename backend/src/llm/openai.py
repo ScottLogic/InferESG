@@ -123,6 +123,6 @@ class OpenAILLMFileUploadManager(LLMFileUploadManager):
             logger.info(f"Open AI: deleting files {files}")
             delete_tasks = [client.files.delete(file_id=file["file_id"]) for file in files]
             await asyncio.gather(*delete_tasks)
-            logger.info(f"Open AI: Files deleted")
+            logger.info("Open AI: Files deleted")
         except OpenAIError:
             logger.info("OpenAI not configured")
