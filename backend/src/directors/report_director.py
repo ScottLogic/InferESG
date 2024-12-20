@@ -47,8 +47,8 @@ def create_report_chat_message(filename: str, company_name: str, topics: dict[st
     if topics:
         topics_with_markdown = [f"{key}\n{value}" for key, value in topics.items()]
         report_chat_message += f"""
-        
-The following materiality topics were identified for {company_name} which the report focuses on:
+
+The following materiality topics were identified for {company_name}:
 
 {"\n\n".join(topics_with_markdown)}"""
     return report_chat_message

@@ -27,14 +27,15 @@ def create_llm_files(filenames: list[str]) -> list[LLMFile]:
 class MaterialityAgent(ChatAgent):
     async def invoke(self, utterance: str) -> str:
         materiality_files = await self.select_material_files(utterance)
-        if not materiality_files:
-            return f"Materiality Agent cannot find suitable reference documents to answer the question: {utterance}"
-        answer = await self.llm.chat_with_file(
-            self.model,
-            system_prompt=engine.load_prompt("answer-materiality-question"),
-            user_prompt=utterance,
-            files=create_llm_files(materiality_files)
-        )
+        if materiality_files:
+            answer = await self.llm.chat_with_file(
+                self.model,
+                system_prompt=engine.load_prompt("answer-materiality-question"),
+                user_prompt=utterance,
+                files=create_llm_files(materiality_files)
+            )
+        else:
+            answer = f"Materiality Agent cannot find suitable reference documents to answer the question: {utterance}"
         return json.dumps({"content": answer, "ignore_validation": False})
 
     async def list_material_topics_for_company(self, company_name: str) -> dict[str, str]:
