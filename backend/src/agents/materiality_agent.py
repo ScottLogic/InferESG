@@ -42,7 +42,7 @@ class MaterialityAgent(ChatAgent):
         materiality_files = await self.select_material_files(company_name)
         if not materiality_files:
             logger.info(f"No materiality reference documents could be found for {company_name}")
-            return {}  # TODO this needs fixing
+            return {}
         materiality_topics = await self.llm.chat_with_file(
             self.model,
             system_prompt=engine.load_prompt("list-material-topics-system-prompt"),
