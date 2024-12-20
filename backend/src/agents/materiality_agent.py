@@ -25,11 +25,6 @@ def create_llm_files(filenames: list[str]) -> list[LLMFile]:
     tools=[]
 )
 class MaterialityAgent(ChatAgent):
-    # todo
-    # store file ids in redis, make sure we are pulling those back
-    # split materiality into new invoke function for handling "utterances"
-    # handle no materiality files available + tests
-
     async def invoke(self, utterance: str) -> str:
         materiality_files = await self.select_material_files(utterance)
         if not materiality_files:
@@ -46,7 +41,7 @@ class MaterialityAgent(ChatAgent):
         materiality_files = await self.select_material_files(company_name)
         if not materiality_files:
             logger.info(f"No materiality reference documents could be found for {company_name}")
-            return {}
+            return {}  # TODO this needs fixing
         materiality_topics = await self.llm.chat_with_file(
             self.model,
             system_prompt=engine.load_prompt("list-material-topics-system-prompt"),

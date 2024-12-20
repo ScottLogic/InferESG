@@ -11,10 +11,11 @@ engine = PromptEngine()
 
 class ReportAgent(Agent):
     async def create_report(self, file: LLMFile, materiality_topics: dict[str, str]) -> str:
+        materiality = materiality_topics if materiality_topics else "No Materiality topics identified."
         return await self.llm.chat_with_file(
             self.model,
             system_prompt=engine.load_prompt("create-report-system-prompt"),
-            user_prompt=engine.load_prompt("create-report-user-prompt", materiality_topics=materiality_topics),
+            user_prompt=engine.load_prompt("create-report-user-prompt", materiality=materiality),
             files=[file],
         )
 
