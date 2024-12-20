@@ -12,8 +12,8 @@ mock_topics = {"topic1": "topic1 description", "topic2": "topic2 description"}
 mock_report = "#Report on upload as markdown"
 expected_answer = (
     "Your report for test.txt is ready to view.\n\nThe following materiality topics were identified for "
-    "CompanyABC which the report focuses on:\n\ntopic1\ntopic1 description\n\ntopic2\ntopic2 "
-    "description\n"
+    "CompanyABC:\n\ntopic1\ntopic1 description\n\ntopic2\ntopic2 "
+    "description"
 )
 
 
