@@ -57,19 +57,18 @@ class MockListResponse:
     ]
 
 
-mock_message_list = {"data"}
-
-
 @pytest.mark.asyncio
 @patch("src.llm.openai.AsyncOpenAI")
-async def test_chat_with_file_removes_citations(mock_async_openai):
+@patch("src.llm.openai.OpenAILLMFileUploadManager.upload_files")
+async def test_chat_with_file_removes_citations(upload_files_method, mock_async_openai):
+    upload_files_method.return_value = AsyncMock(return_value=["file_id_1"])
+
     mock_instance = mock_async_openai.return_value
 
-    mock_instance.files.create = AsyncMock(return_value=MockFileResponse(id="file-id", filename="file.pdf"))
     mock_instance.beta.assistants.create = AsyncMock(return_value=MockResponse(id="assistant-id"))
     mock_instance.beta.threads.create = AsyncMock(return_value=MockResponse(id="thread-id"))
     mock_instance.beta.threads.runs.create_and_poll = AsyncMock(return_value=MockResponse(id="run-id"))
-    mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse)
+    mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse())
 
     client = OpenAI()
     response = await client.chat_with_file(
