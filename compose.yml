@@ -72,7 +72,7 @@ services:
   # This will set up the connection to redis-insight
   redis-insight-setup:
     build:
-      context: redis-insight
+      context: redis-insight-setup
       dockerfile: ./Dockerfile
     command: sh -c "/usr/local/bin/setup-connection.sh"
     environment:
