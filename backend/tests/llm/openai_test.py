@@ -16,6 +16,12 @@ class MockResponse:
 
 
 @dataclass
+class MockFileResponse:
+    id: str
+    filename: str
+
+
+@dataclass
 class MockMessage:
     content: list[TextContentBlock]
 
@@ -59,7 +65,7 @@ mock_message_list = {"data"}
 async def test_chat_with_file_removes_citations(mock_async_openai):
     mock_instance = mock_async_openai.return_value
 
-    mock_instance.files.create = AsyncMock(return_value=MockResponse(id="file-id"))
+    mock_instance.files.create = AsyncMock(return_value=MockFileResponse(id="file-id", filename="file.pdf"))
     mock_instance.beta.assistants.create = AsyncMock(return_value=MockResponse(id="assistant-id"))
     mock_instance.beta.threads.create = AsyncMock(return_value=MockResponse(id="thread-id"))
     mock_instance.beta.threads.runs.create_and_poll = AsyncMock(return_value=MockResponse(id="run-id"))

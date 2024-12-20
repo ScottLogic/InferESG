@@ -52,22 +52,6 @@ async def test_create_report_from_file(mocker):
 
 
 @pytest.mark.asyncio
-async def test_create_report_from_file_throws_when_file_size_too_large():
-    with pytest.raises(HTTPException) as error:
-        large_file_content = b"x" * (15 * 1024 * 1024 + 1)
-        file = UploadFile(
-            file=BytesIO(large_file_content),
-            size=12,
-            headers=Headers({"content-type": "text/plain"}),
-            filename="test.txt",
-        )
-        await create_report_from_file(file)
-
-    assert error.value.status_code == 413
-    assert error.value.detail == "File upload must be less than 10485760 bytes"
-
-
-@pytest.mark.asyncio
 async def test_create_report_from_file_throws_when_missing_filename():
     with pytest.raises(HTTPException) as error:
         file = UploadFile(

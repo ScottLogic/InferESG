@@ -57,8 +57,10 @@ class LLM(ABC, metaclass=LLMMeta):
 
 
 class LLMFileUploadManager(ABC):
+    @abstractmethod
     async def upload_files(self, files: list[LLMFile]) -> list[str]:
         pass
 
+    @abstractmethod
     async def delete_all_files(self):
         pass
