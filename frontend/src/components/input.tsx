@@ -72,10 +72,13 @@ export const Input = ({
     setUploadInProgress(true);
 
     try {
-      const { filename, report } = await uploadFileToServer(file);
+      const { filename, report, id, answer } = await uploadFileToServer(file);
       setUploadedFile(file);
       appendMessage(
-        { answer: `Your ESG report for ${filename} is ready to view.` },
+        {
+          id,
+          answer,
+        },
         Role.Bot,
         report,
         `ESG Report - ${filename}`,
@@ -104,7 +107,7 @@ export const Input = ({
             <FileUpload
               onFileUpload={uploadFile}
               uploadInProgress={uploadInProgress}
-              disabled={!!uploadedFile}
+              disabled={!!uploadedFile || uploadInProgress}
             />
           </div>
           <div className={styles.sendButtonContainer}>

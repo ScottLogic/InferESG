@@ -1,6 +1,6 @@
 import logging
 from src.prompts import PromptEngine
-from .agent import Agent, agent
+from .agent import ChatAgent, chat_agent
 from .tool import tool
 from src.llm.llm import LLM
 from .agent_types import Parameter
@@ -91,10 +91,10 @@ async def generate_code_chart(question_intent, data_provided, question_params, l
     return await generate_chart(question_intent, data_provided, question_params, llm, model)
 
 
-@agent(
+@chat_agent(
     name="ChartGeneratorAgent",
     description="This agent is responsible for creating charts",
     tools=[generate_code_chart],
 )
-class ChartGeneratorAgent(Agent):
+class ChartGeneratorAgent(ChatAgent):
     pass

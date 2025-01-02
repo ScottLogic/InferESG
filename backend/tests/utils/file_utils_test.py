@@ -1,50 +1,36 @@
-from io import BytesIO
-from typing import BinaryIO
 from unittest.mock import MagicMock
-from fastapi import HTTPException, UploadFile
-from fastapi.datastructures import Headers
+from fastapi import HTTPException
+
 import pytest
 
+from src.llm.llm import LLMFile
 from src.utils.file_utils import handle_file_upload
-
-def test_handle_file_upload_size():
-
-    with pytest.raises(HTTPException) as err:
-        handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024*1024))
-
-    assert err.value.status_code == 413
-    assert err.value.detail == 'File upload must be less than 10485760 bytes'
 
 
 def test_handle_file_upload_unsupported_type():
-
-    headers = Headers({"content-type": "text/html"})
+    file_content = b"\x89PNG\r\n\x1a\n\x00\x00\x00IHDR"
     with pytest.raises(HTTPException) as err:
-        handle_file_upload(UploadFile(file=BinaryIO(), size=15*1024, headers=headers))
+        handle_file_upload(LLMFile(filename="test.png", file=file_content))
 
     assert err.value.status_code == 400
-    assert err.value.detail == 'File upload must be supported type (text/plain or application/pdf)'
+    assert err.value.detail == "File upload must be a supported type text or pdf"
+
 
 def test_handle_file_upload_text(mocker):
-
     mock = mocker.patch("src.utils.file_utils.update_session_file_uploads", MagicMock())
 
-    headers = Headers({"content-type": "text/plain"})
-    file = BytesIO(b"test content")
-    session_file = handle_file_upload(UploadFile(file=file, size=12, headers=headers, filename="test.txt"))
+    file_content = b"Sample text content"
+    session_file = handle_file_upload(LLMFile(filename="test.txt", file=file_content))
 
     mock.assert_called_with(session_file)
 
 
 def test_handle_file_upload_pdf(mocker):
-
     mock = mocker.patch("src.utils.file_utils.update_session_file_uploads", MagicMock())
     pdf_mock = mocker.patch("src.utils.file_utils.PdfReader", MagicMock())
+    file_content = b"%PDF-1.4"
 
-
-    headers = Headers({"content-type": "application/pdf"})
-    session_file = handle_file_upload(UploadFile(file=BytesIO(), size=12, headers=headers, filename="test.pdf"))
+    session_file = handle_file_upload(LLMFile(filename="test.pdf", file=file_content))
 
     pdf_mock.assert_called_once()
     mock.assert_called_with(session_file)
-

@@ -74,5 +74,5 @@ def test_reset_session(mocker, mock_request_context):
     assert get_session("key2") == "value2"
 
     reset_session()
-    assert get_session("key1", None) is None
-    assert get_session("key2", None) is None
+    assert get_session("key1") == []
+    assert get_session("key2") == []

@@ -1,0 +1,23 @@
+{
+  "library": {
+    "TFND": [
+      {
+        "name": "Additional-Sector-Guidance-Biotech-and-Pharma.pdf",
+        "sector-label": "Biotechnology and Pharmaceuticals",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Additional-Sector-Guidance-Oil-and-gas.pdf",
+        "sector-label": "Oil and Gas",
+        "esg-labels": ["Environment", "Nature"]
+      }
+    ],
+    "GRI": [
+      {
+        "name": "GRI 11_ Oil and Gas Sector 2021.pdf",
+        "sector-label": "Oil and Gas",
+        "esg-labels": ["Environment", "Social", "Governance"]
+      }
+    ]
+  }
+}

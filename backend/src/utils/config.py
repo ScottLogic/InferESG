@@ -5,7 +5,6 @@ default_frontend_url = "http://localhost:8650"
 default_neo4j_uri = "bolt://localhost:7687"
 default_files_directory = "files"
 default_redis_host = "localhost"
-default_redis_cache_duration = 3600
 
 
 class Config(object):
@@ -21,12 +20,11 @@ class Config(object):
         self.answer_agent_llm = None
         self.intent_agent_llm = None
         self.report_agent_llm = None
+        self.materiality_agent_llm = None
         self.validator_agent_llm = None
         self.datastore_agent_llm = None
-        self.maths_agent_llm = None
         self.web_agent_llm = None
         self.chart_generator_llm = None
-        self.file_agent_llm = None
         self.router_llm = None
         self.suggestions_llm = None
         self.dynamic_knowledge_graph_llm = None
@@ -34,14 +32,13 @@ class Config(object):
         self.intent_agent_model = None
         self.answer_agent_model = None
         self.report_agent_model = None
+        self.materiality_agent_model = None
         self.datastore_agent_model = None
         self.chart_generator_model = None
         self.web_agent_model = None
         self.router_model = None
         self.files_directory = default_files_directory
-        self.file_agent_model = None
         self.redis_host = default_redis_host
-        self.redis_cache_duration = default_redis_cache_duration
         self.suggestions_model = None
         self.dynamic_knowledge_graph_model = None
         self.load_env()
@@ -64,27 +61,24 @@ class Config(object):
             self.answer_agent_llm = os.getenv("ANSWER_AGENT_LLM")
             self.intent_agent_llm = os.getenv("INTENT_AGENT_LLM")
             self.report_agent_llm = os.getenv("REPORT_AGENT_LLM")
+            self.materiality_agent_llm = os.getenv("MATERIALITY_AGENT_LLM")
             self.validator_agent_llm = os.getenv("VALIDATOR_AGENT_LLM")
             self.datastore_agent_llm = os.getenv("DATASTORE_AGENT_LLM")
             self.chart_generator_llm = os.getenv("CHART_GENERATOR_LLM")
-            self.file_agent_llm = os.getenv("FILE_AGENT_LLM")
             self.web_agent_llm = os.getenv("WEB_AGENT_LLM")
-            self.maths_agent_llm = os.getenv("MATHS_AGENT_LLM")
             self.router_llm = os.getenv("ROUTER_LLM")
             self.suggestions_llm = os.getenv("SUGGESTIONS_LLM")
             self.dynamic_knowledge_graph_llm = os.getenv("DYNAMIC_KNOWLEDGE_GRAPH_LLM")
             self.answer_agent_model = os.getenv("ANSWER_AGENT_MODEL")
             self.intent_agent_model = os.getenv("INTENT_AGENT_MODEL")
             self.report_agent_model = os.getenv("REPORT_AGENT_MODEL")
+            self.materiality_agent_model = os.getenv("MATERIALITY_AGENT_MODEL")
             self.validator_agent_model = os.getenv("VALIDATOR_AGENT_MODEL")
             self.datastore_agent_model = os.getenv("DATASTORE_AGENT_MODEL")
             self.web_agent_model = os.getenv("WEB_AGENT_MODEL")
             self.chart_generator_model = os.getenv("CHART_GENERATOR_MODEL")
-            self.maths_agent_model = os.getenv("MATHS_AGENT_MODEL")
             self.router_model = os.getenv("ROUTER_MODEL")
-            self.file_agent_model = os.getenv("FILE_AGENT_MODEL")
             self.redis_host = os.getenv("REDIS_HOST", default_redis_host)
-            self.redis_cache_duration = os.getenv("REDIS_CACHE_DURATION", default_redis_cache_duration)
             self.suggestions_model = os.getenv("SUGGESTIONS_MODEL")
             self.dynamic_knowledge_graph_model = os.getenv("DYNAMIC_KNOWLEDGE_GRAPH_MODEL")
         except FileNotFoundError:

@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
-from neo4j import Driver, Session
-from src.utils.graph_db_utils import populate_db
+from neo4j import Driver, Record, Session
+from src.utils.graph_db_utils import is_db_populated, populate_db
 from src.utils import test_connection as verify_connection
 
 
@@ -74,5 +74,29 @@ def test_populate_db_throws_exception(mocker, mock_driver, mock_session):
     with pytest.raises(Exception, match="Test exception"):
         populate_db(query, data)
 
+    mock_driver.session.return_value.__exit__.assert_called_once()
+    mock_driver.close.assert_called_once()
+
+def test_is_db_populated_returns_true(mocker, mock_driver, mock_session):
+    mocker.patch("src.utils.graph_db_utils.driver", mock_driver)
+
+    class RecordEntryMock:
+        def data(self):
+            return {"key": "value"}
+
+    record = Record([("a", RecordEntryMock())])
+
+    mock_session.run.return_value = record
+
+    assert is_db_populated()
+    mock_driver.session.return_value.__exit__.assert_called_once()
+    mock_driver.close.assert_called_once()
+
+def test_is_db_populated_returns_false(mocker, mock_driver, mock_session):
+    mocker.patch("src.utils.graph_db_utils.driver", mock_driver)
+
+    mock_session.run.return_value = Record([])
+
+    assert not is_db_populated()
     mock_driver.session.return_value.__exit__.assert_called_once()
     mock_driver.close.assert_called_once()

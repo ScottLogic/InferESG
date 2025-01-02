@@ -63,6 +63,7 @@ export const useMessages = (): UseMessagesHook => {
           id: response.id,
           content: response.answer,
           reasoning: response.reasoning,
+          dataset: response.dataset,
           time: new Date().toLocaleTimeString(),
           report,
           sidePanelTitle,
@@ -90,6 +91,7 @@ export const useMessages = (): UseMessagesHook => {
     await resetChat();
     setWaiting(false);
     setMessages([{ ...starterMessage, time: new Date().toLocaleTimeString() }]);
+    selectMessage(null);
     setSuggestions([]);
     fetchSuggestions();
   }, []);

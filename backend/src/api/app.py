@@ -5,9 +5,11 @@ from typing import NoReturn
 from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from src.chat_storage_service import get_chat_message
-from src.directors.report_director import report_on_file_upload
-from src.session.file_uploads import clear_session_file_uploads
+from src.utils.scratchpad import ScratchPadMiddleware
+from src.session.chat_response import get_session_chat_response_ids
+from src.chat_storage_service import clear_chat_messages, get_chat_message
+from src.directors.report_director import create_report_from_file
+from src.session.file_uploads import clear_session_file_uploads, get_report
 from src.session.redis_session_middleware import reset_session
 from src.utils import Config, test_connection
 from src.directors.chat_director import question, dataset_upload
@@ -15,6 +17,7 @@ from src.websockets.connection_manager import connection_manager, parse_message
 from src.session import RedisSessionMiddleware
 from src.suggestions_generator import generate_suggestions
 from src.utils.file_utils import get_file_upload
+from src.llm.openai import OpenAILLMFileUploadManager
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -25,11 +28,17 @@ config = Config()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # start up
     try:
         await dataset_upload()
     except Exception as e:
         logger.exception(f"Failed to populate database with initial data from file: {e}")
     yield
+    # shut down
+    # If running app with docker compose, Ctrl+C will detach from container immediately,
+    # meaning no graceful shutdown logs will be seen
+    openai_file_manager = OpenAILLMFileUploadManager()
+    await openai_file_manager.delete_all_files()
 
 
 app = FastAPI(lifespan=lifespan)
@@ -45,6 +54,7 @@ app.add_middleware(
 )
 
 app.add_middleware(RedisSessionMiddleware)
+app.add_middleware(ScratchPadMiddleware)
 
 health_prefix = "InferESG healthcheck: "
 further_guidance = "Please check the README files for further guidance."
@@ -57,6 +67,7 @@ chat_fail_response = "Unable to generate a response. Check the service by using 
 suggestions_failed_response = "Unable to generate suggestions. Check the service by using the keyphrase 'healthcheck'"
 file_upload_failed_response = "Unable to upload file. Check the service by using the keyphrase 'healthcheck'"
 file_get_upload_failed_response = "Unable to get uploaded file. Check the service by using the keyphrase 'healthcheck'"
+report_get_upload_failed_response = "Unable to download report. Check the service by using the keyphrase 'healthcheck'"
 
 
 @app.get("/health")
@@ -87,7 +98,8 @@ async def chat(utterance: str):
 async def clear_chat():
     logger.info("Delete the chat session")
     try:
-        # clear files first as need session data for file keys
+        # clear chatresponses and files first as need session data for keys
+        clear_chat_messages(get_session_chat_response_ids())
         clear_session_file_uploads()
         reset_session()
         return Response(status_code=204)
@@ -124,13 +136,27 @@ async def suggestions():
 async def report(file: UploadFile):
     logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
     try:
-        processed_upload = await report_on_file_upload(file)
+        processed_upload = await create_report_from_file(file)
         return JSONResponse(status_code=200, content=processed_upload)
     except HTTPException as he:
         raise he
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=file_upload_failed_response)
+
+
+@app.get("/report/{id}")
+def download_report(id: str):
+    logger.info(f"Get report download called for id: {id}")
+    try:
+        final_result = get_report(id)
+        if final_result is None:
+            return JSONResponse(status_code=404, content=f"Message with id {id} not found")
+        headers = {"Content-Disposition": 'attachment; filename="report.md"'}
+        return Response(final_result.get("report"), headers=headers, media_type="text/markdown")
+    except Exception as e:
+        logger.exception(e)
+        return JSONResponse(status_code=500, content=report_get_upload_failed_response)
 
 
 @app.get("/uploadfile")

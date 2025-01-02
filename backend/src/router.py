@@ -4,7 +4,7 @@ from src.llm.llm import LLM
 from src.utils import to_json, Config
 from src.utils.log_publisher import publish_log_info, LogPrefix
 from src.prompts import PromptEngine
-from src.agents import Agent, get_available_agents, get_agent_details
+from src.agents import ChatAgent, get_available_agents, get_agent_details
 from src.llm import get_llm
 
 logger = logging.getLogger(__name__)
@@ -12,26 +12,20 @@ prompt_engine = PromptEngine()
 config = Config()
 
 
-def build_best_next_step_prompt(task, scratchpad):
-    agents_details = get_agent_details()
-    return prompt_engine.load_prompt(
-        "best-next-step",
-        task=json.dumps(task, indent=4),
-        list_of_agents=json.dumps(agents_details, indent=4),
-        history=json.dumps(scratchpad, indent=4),
-    )
-
-
-response_format_prompt = prompt_engine.load_prompt("agent-selection-format")
-
-
 async def build_plan(task, llm: LLM, scratchpad, model):
-    best_next_step_prompt = build_best_next_step_prompt(task, scratchpad)
+    agents_details = get_agent_details()
+    agent_selection_system_prompt = prompt_engine.load_prompt(
+        "agent-selection-system-prompt", list_of_agents=json.dumps(agents_details, indent=4)
+    )
+    agent_selection_user_prompt = prompt_engine.load_prompt(
+        "agent-selection-user-prompt",
+        task=json.dumps(task, indent=4),
+    )
 
     # Call model to choose agent
     logger.info("#####  ~  Calling LLM for next best step  ~  #####")
     await publish_log_info(LogPrefix.USER, f"Scratchpad so far: {scratchpad}", __name__)
-    best_next_step = await llm.chat(model, response_format_prompt, best_next_step_prompt, return_json=True)
+    best_next_step = await llm.chat(model, agent_selection_system_prompt, agent_selection_user_prompt, return_json=True)
 
     return to_json(best_next_step, "Failed to interpret LLM next step format from step string")
 
@@ -41,7 +35,7 @@ def find_agent_from_name(name):
     return (agent for agent in agents if agent.name == name)
 
 
-async def get_agent_for_task(task, scratchpad) -> Agent | None:
+async def get_agent_for_task(task, scratchpad) -> ChatAgent | None:
     llm = get_llm(config.router_llm)
     model = config.router_model
     plan = await build_plan(task, llm, scratchpad, model)

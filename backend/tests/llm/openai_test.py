@@ -1,67 +1,80 @@
-# tests/test_openai_llm.py
 import pytest
-from unittest.mock import MagicMock, patch
-from src.llm.openai_client import OpenAIClient
-from src.utils import Config
+from dataclasses import dataclass
+from pathlib import Path
 
-mock_config = MagicMock(spec=Config)
-mock_config.openai_model = "gpt-3.5-turbo"
-system_prompt = "system_prompt"
-user_prompt = "user_prompt"
-content_response = "Hello there"
-openapi_response = "Hello! How can I assist you today?"
+from unittest.mock import patch, AsyncMock
+from openai.types.beta.threads import Text, FileCitationAnnotation, TextContentBlock
+from openai.types.beta.threads.file_citation_annotation import FileCitation
 
-
-def create_mock_chat_response(content):
-    return {"choices": [{"message": {"role": "system", "content": content}}]}
+from src.llm import LLMFile
+from src.llm.openai import OpenAI
 
 
-@patch("src.llm.openai_client.openai.ChatCompletion.create")
-def test_chat_content_string_returns_string(mock_create):
-    mock_create.return_value = create_mock_chat_response(content_response)
-    client = OpenAIClient()
-    response = client.chat(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
+@dataclass
+class MockResponse:
+    id: str
+
+
+@dataclass
+class MockFileResponse:
+    id: str
+    filename: str
+
+
+@dataclass
+class MockMessage:
+    content: list[TextContentBlock]
+
+
+class MockListResponse:
+    data = [
+        MockMessage(
+            content=[
+                TextContentBlock(
+                    text=Text(
+                        annotations=[
+                            FileCitationAnnotation(
+                                file_citation=FileCitation(file_id="123"),
+                                text="【7†source】",
+                                end_index=1,
+                                start_index=2,
+                                type="file_citation",
+                            ),
+                            FileCitationAnnotation(
+                                file_citation=FileCitation(file_id="123"),
+                                text="【1:9†source】",
+                                end_index=1,
+                                start_index=2,
+                                type="file_citation",
+                            ),
+                        ],
+                        value="Response with quote【7†source】【1:9†source】",
+                    ),
+                    type="text",
+                )
+            ]
+        )
+    ]
+
+
+@pytest.mark.asyncio
+@patch("src.llm.openai.AsyncOpenAI")
+@patch("src.llm.openai.OpenAILLMFileUploadManager.upload_files")
+async def test_chat_with_file_removes_citations(upload_files_method, mock_async_openai):
+    upload_files_method.return_value = AsyncMock(return_value=["file_id_1"])
+
+    mock_instance = mock_async_openai.return_value
+
+    mock_instance.beta.assistants.create = AsyncMock(return_value=MockResponse(id="assistant-id"))
+    mock_instance.beta.threads.create = AsyncMock(return_value=MockResponse(id="thread-id"))
+    mock_instance.beta.threads.runs.create_and_poll = AsyncMock(return_value=MockResponse(id="run-id"))
+    mock_instance.beta.threads.messages.list = AsyncMock(return_value=MockListResponse())
+
+    client = OpenAI()
+    response = await client.chat_with_file(
+        model="",
+        user_prompt="",
+        system_prompt="",
+        files=[LLMFile("filename", Path("./backend/library/AstraZeneca-Sustainability-Report-2023.pdf"))],
     )
-    assert response == content_response
-
-
-@patch("src.llm.openai_client.openai.ChatCompletion.create")
-def test_chat_content_list_returns_string(mock_create):
-    content_list = ["Hello", "there"]
-    mock_create.return_value = create_mock_chat_response(content_list)
-
-    client = OpenAIClient()
-    response = client.chat(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-    )
-
-    assert " ".join(response) == content_response
-
-
-@patch("src.llm.openai_client.openai.ChatCompletion.create")
-def test_chat_handles_exception(mock_create):
-    mock_create.side_effect = Exception("API error")
-
-    client = OpenAIClient()
-    response = client.chat(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-    )
-
-    assert response == "An error occurred while processing the request."
-
-
-if __name__ == "__main__":
-    pytest.main()
+    assert response == "Response with quote"

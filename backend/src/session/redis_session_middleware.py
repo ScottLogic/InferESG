@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 from uuid import uuid4
 import redis
 from src.utils import test_redis_connection
@@ -14,17 +15,18 @@ logger = logging.getLogger(__name__)
 
 REQUEST_CONTEXT_KEY = "redis_session_context"
 SESSION_COOKIE_NAME = "session_id"
-SESSION_TTL = int(config.redis_cache_duration) # config value or default to 1 hour
 
 request_context = contextvars.ContextVar(REQUEST_CONTEXT_KEY)
 redis_client = redis.Redis(host=config.redis_host, port=6379, decode_responses=True)
+
 
 class RedisSessionMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         request_context.set(request)
 
         redis_healthy = test_redis_connection()
-        if (not redis_healthy):
+
+        if (not redis_healthy or ignore_request(request)):
             response = await call_next(request)
         else:
             session_data = get_redis_session(request)
@@ -36,18 +38,25 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
             response.set_cookie(
                 SESSION_COOKIE_NAME,
                 session_id,
-                max_age=SESSION_TTL,
                 domain=request.url.hostname,
                 samesite='strict',
                 httponly=True,
                 secure=config.redis_host != "redis"
             )
 
-            redis_client.set(session_id, json.dumps(request.state.session), ex=SESSION_TTL)
+            redis_client.set(session_id, json.dumps(request.state.session))
+
         return response
 
 
-def get_session(key: str, default=[]):
+def ignore_request(request: Request) -> bool:
+    # prevent generating new session for each health check request
+    return request.url.path == '/health' or request.method == 'OPTIONS'
+
+
+def get_session(key: str, default: Optional[list] = None):
+    if not default:
+        default = []
     request: Request = request_context.get()
     return request.state.session.get(key, default)
 
@@ -56,10 +65,13 @@ def set_session(key: str, value):
     request: Request = request_context.get()
     request.state.session[key] = value
 
+
 def reset_session():
     logger.info("Reset chat session")
     request: Request = request_context.get()
     request.state.session = {}
+    logger.info(f"db size {redis_client.dbsize()}")
+
 
 def get_redis_session(request: Request):
     session_id = request.cookies.get(SESSION_COOKIE_NAME)

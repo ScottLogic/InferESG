@@ -42,7 +42,11 @@ export const FileUpload = ({
     >
       <label className={styles.uploadButton}>
         {uploadInProgress ? (
-          <img src={UploadInProgressIcon} alt="Uploading..." />
+          <img
+            className={styles.uploadInProgress}
+            src={UploadInProgressIcon}
+            alt="Uploading..."
+          />
         ) : disabled ? (
           <img src={CheckCircleIcon} alt="Upload Complete" />
         ) : (

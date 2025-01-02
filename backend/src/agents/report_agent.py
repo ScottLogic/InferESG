@@ -1,20 +1,29 @@
-from src.agents import Agent, agent
+import json
+import logging
+
+from src.llm.llm import LLMFile
+from src.agents import Agent
 from src.prompts import PromptEngine
 
+logger = logging.getLogger(__name__)
 engine = PromptEngine()
 
 
-@agent(
-    name="ReportAgent",
-    description="This agent is responsible for generating an ESG focused report on a narrative document",
-    tools=[],
-)
 class ReportAgent(Agent):
-    async def invoke(self, utterance: str) -> str:
-        user_prompt = engine.load_prompt(
-            "create-report-user-prompt",
-            document_text=utterance)
+    async def create_report(self, file: LLMFile, materiality_topics: dict[str, str]) -> str:
+        materiality = materiality_topics if materiality_topics else "No Materiality topics identified."
+        return await self.llm.chat_with_file(
+            self.model,
+            system_prompt=engine.load_prompt("create-report-system-prompt"),
+            user_prompt=engine.load_prompt("create-report-user-prompt", materiality=materiality),
+            files=[file],
+        )
 
-        system_prompt = engine.load_prompt("create-report-system-prompt")
-
-        return await self.llm.chat(self.model, system_prompt=system_prompt, user_prompt=user_prompt)
+    async def get_company_name(self, file: LLMFile) -> str:
+        response = await self.llm.chat_with_file(
+            self.model,
+            system_prompt=engine.load_prompt("find-company-name-from-file-system-prompt"),
+            user_prompt=engine.load_prompt("find-company-name-from-file-user-prompt"),
+            files=[file],
+        )
+        return json.loads(response)["company_name"]
