@@ -10,31 +10,39 @@ prompts: file://promptfoo_test_runner.py:create_prompt
 tests:
   - description: "Test if the output of the Answer Agent using the Data Agent contains the info found"
     vars:
-      user_prompt: "Can you provide a list of industries with the highest average ESG scores?"
-      system_prompt_template: "create-answer"
-      system_prompt_args:
-        chat_history:
-         [
-           {
-             'role': 'user', 
-             'content': 'Can you provide a list of industries with the highest average ESG scores?'
-            }
-         ]
-        final_scratchpad: 
-         [
-           {
-             'agent_name': 'DatastoreAgent', 
-             'question': 'Can you provide a list of industries with the highest average ESG scores?', 
-             'result': [{'Industry': 'Technology', 'AverageESGScore': 87.91666666666667}, {'Industry': 'Aviation', 'AverageESGScore': 79.53333333333335}, {'Industry': 'Energy', 'AverageESGScore': 72.40000000000002}, {'Industry': 'Construction', 'AverageESGScore': 65.0}], 
-             'error': None
-            }
+      user_prompt_template: "create-answer-user-prompt"
+      user_prompt_args:
+        question: "Can you provide a list of industries with the highest average ESG scores?"
+        final_scratchpad:
+          [
+            {
+              "agent_name": "DatastoreAgent",
+              "question": "Can you provide a list of industries with the highest average ESG scores?",
+              "result":
+                [
+                  {
+                    "Industry": "Technology",
+                    "AverageESGScore": 87.91666666666667,
+                  },
+                  {
+                    "Industry": "Aviation",
+                    "AverageESGScore": 79.53333333333335,
+                  },
+                  {
+                    "Industry": "Energy",
+                    "AverageESGScore": 72.40000000000002,
+                  },
+                  { "Industry": "Construction", "AverageESGScore": 65.0 },
+                ],
+              "error": None,
+            },
           ]
-        datetime: "2024-11-25T09:27:45.761Z"
-    assert: 
+      system_prompt_template: "create-answer-system-prompt"
+    assert:
       - type: llm-rubric
         value: Does the output provide the ESG scores for industries such as technology, aviation, energy, and construction in a natural language format?
       - type: contains-all
-        value: 
+        value:
           - "Technology"
           - "Aviation"
           - "Energy"
@@ -46,26 +54,41 @@ tests:
 
   - description: "Test if the output of the Answer Agent using the Web Agent is clear and logical"
     vars:
-      user_prompt: "How do ESG scores impact investment decisions?"
-      system_prompt_template: "create-answer"
-      system_prompt_args:
-        chat_history: 
-          [
-            {
-              'role': 'user', 
-              'content': 'How do ESG scores impact investment decisions?'
-              }
-          ]
+      user_prompt_template: "create-answer-user-prompt"
+      user_prompt_args:
+        question: "How do ESG scores impact investment decisions?"
         final_scratchpad:
           [
             {
-              'agent_name': 'WebAgent',
-              'question': 'How do ESG scores impact investment decisions?',
-              'result': 'ESG scores impact investment decisions by providing investors with a framework to evaluate the environmental, social, and governance practices of companies. Higher ESG scores can indicate a company is managing risks and opportunities related to sustainability, which can attract more investment. Investors may prefer companies with strong ESG performance as they are often seen as more resilient and better positioned for long-term success. Additionally, many institutional investors incorporate ESG criteria into their investment strategies, influencing capital allocation towards companies with favorable ESG ratings.',
-              'error': None
-            }
+              "agent_name": "WebAgent",
+              "question": "How do ESG scores impact investment decisions?",
+              "result": "ESG scores impact investment decisions by providing investors with a framework to evaluate the environmental, social, and governance practices of companies. Higher ESG scores can indicate a company is managing risks and opportunities related to sustainability, which can attract more investment. Investors may prefer companies with strong ESG performance as they are often seen as more resilient and better positioned for long-term success. Additionally, many institutional investors incorporate ESG criteria into their investment strategies, influencing capital allocation towards companies with favorable ESG ratings.",
+              "error": None,
+            },
           ]
-        datetime: "2024-11-25T09:27:45.761Z"
-    assert:  
+      system_prompt_template: "create-answer-system-prompt"
+    assert:
       - type: llm-rubric
         value: "Does the output explain how ESG scores influence investment decisions in clear, concise language ?"
+  - description: "Test if a list is provided when asking for a list"
+    vars:
+      user_prompt_template: "create-answer-user-prompt"
+      user_prompt_args:
+        question: "List the controversies surrounding AstraZeneca in 2024"
+        final_scratchpad:
+          [
+            {
+              "agent_name": "WebAgent",
+              "question": "List the controversies surrounding AstraZeneca in 2024",
+              "result":
+                {
+                  "content": "In 2024, AstraZeneca faces controversies primarily related to claims of serious side effects from its Covid vaccine, particularly rare blood clots. Approximately 50 families have initiated legal action for compensation, arguing that the vaccine was not as safe as expected. The Vaccine Damage Payment Scheme (VDPS) has been criticized for being inadequate and slow in processing claims, with many affected individuals feeling neglected. Experts have called for reforms to the VDPS, including adjusting compensation amounts and thresholds for claims, as the current system is seen as failing those harmed by the vaccine.",
+                  "url": "https://www.bbc.co.uk/news/articles/c1d5d6nng67o",
+                },
+              "error": null,
+            },
+          ]
+      system_prompt_template: "create-answer-system-prompt"
+    assert:
+      - type: llm-rubric
+        value: "The output contains a numbered or bullet point list"

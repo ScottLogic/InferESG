@@ -1,8 +1,6 @@
-from datetime import datetime
 from src.utils import get_scratchpad
 from src.prompts import PromptEngine
 from src.agents import ChatAgent, chat_agent
-from src.session import get_session_chat
 
 engine = PromptEngine()
 
@@ -15,11 +13,9 @@ engine = PromptEngine()
 class AnswerAgent(ChatAgent):
     async def invoke(self, utterance: str) -> str:
         final_scratchpad = get_scratchpad()
-        create_answer = engine.load_prompt(
-            "create-answer",
-            chat_history=get_session_chat(),
-            final_scratchpad=final_scratchpad,
-            datetime=datetime.now()
-        )
 
-        return await self.llm.chat(self.model, create_answer, user_prompt=utterance)
+        return await self.llm.chat(
+            self.model,
+            engine.load_prompt("create-answer-system-prompt"),
+            engine.load_prompt("create-answer-user-prompt", question=utterance, final_scratchpad=final_scratchpad),
+        )
