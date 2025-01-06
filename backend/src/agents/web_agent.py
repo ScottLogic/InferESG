@@ -1,18 +1,15 @@
 import logging
 from src.prompts import PromptEngine
-from .agent_types import Parameter
-from .agent import ChatAgent, chat_agent
-from .tool import tool
+from src.agents.agent import chat_agent
+from src.agents.base_chat_agent import BaseChatAgent
+from src.agents.tool import parameterised_tool, Parameter, ToolActionSuccess, ToolActionFailure
 from src.utils import Config
 from src.utils.web_utils import (
     search_urls,
     scrape_content,
     summarise_content,
-    summarise_pdf_content,
-    find_info,
-    create_search_term,
+    summarise_pdf_content
 )
-from .validator_agent import ValidatorAgent
 import aiohttp
 import io
 from pypdf import PdfReader
@@ -25,45 +22,34 @@ config = Config()
 engine = PromptEngine()
 
 
-async def web_general_search_core(search_query, llm, model) -> str:
-    try:
-        search_term_json = await create_search_term(search_query, llm, model)
-        search_term_result = json.loads(search_term_json)
-        search_term = json.loads(search_term_result["response"]).get("search_term", "")
+async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess | ToolActionFailure:
+    search_result_json = await search_urls(search_query, num_results=15)
+    search_result = json.loads(search_result_json)
 
-        # Step 1: Perform the search using the generated search term
-        search_result_json = await search_urls(search_query, num_results=15)
-        search_result = json.loads(search_result_json)
+    if search_result.get("status") == "error":
+        return ToolActionFailure("No relevant information found on the internet for the given query.")
+    urls = search_result.get("urls", [])
+    logger.info(f"URLs found: {urls}")
 
-        if search_result.get("status") == "error":
-            return "No relevant information found on the internet for the given query."
-        urls = search_result.get("urls", [])
-        logger.info(f"URLs found: {urls}")
+    # Step 2: Scrape content from the URLs found
+    for url in urls:
+        content = await perform_scrape(url)
+        if not content:
+            continue  # Skip to the next URL if no content is found
+        logger.info(f"Content scraped for url: {url}")
+        logger.info(f"Content scraped successfully: {content}")
+        # Step 3: Summarize the scraped content based on the search term
+        summary = await summarise_content(search_query, content, llm, model)
 
-        # Step 2: Scrape content from the URLs found
-        for url in urls:
-            content = await perform_scrape(url)
-            if not content:
-                continue  # Skip to the next URL if no content is found
-            logger.info(f"Content scraped successfully: {content}")
-            # Step 3: Summarize the scraped content based on the search term
-            summary = await perform_summarization(search_term, content, llm, model)
-            if not summary:
-                continue  # Skip if no summary was generated
-
-            # Step 4: Validate the summarization
-            is_valid = await is_valid_answer(summary, search_term)
-            if not is_valid:
-                continue  # Skip if the summarization is not valid
-            response = {"content": {"content": summary, "url": url}, "ignore_validation": "false"}
-            return json.dumps(response, indent=4)
-        return "No relevant information found on the internet for the given query."
-    except Exception as e:
-        logger.error(f"Error in web_general_search_core: {e}")
-        return "An error occurred while processing the search query."
+        if summary:
+            response = {"content": {"content": summary, "url": url}}
+            return ToolActionSuccess(json.dumps(response, indent=4))
+        else:
+            logger.info(f"No relevant content found for url: {url}")
+    return ToolActionFailure("No relevant information found on the internet for the given query.")
 
 
-async def web_pdf_download_core(pdf_url, llm, model) -> str:
+async def web_pdf_download_core(pdf_url, llm, model) -> ToolActionSuccess | ToolActionFailure:
     try:
         async with aiohttp.request("GET", url=pdf_url) as response:
             content = await response.read()
@@ -81,13 +67,13 @@ async def web_pdf_download_core(pdf_url, llm, model) -> str:
                 all_content += "\n"
             logger.info("PDF content extracted successfully")
             response = {"content": all_content, "ignore_validation": "true"}
-        return json.dumps(response, indent=4)
+        return ToolActionSuccess(json.dumps(response, indent=4))
     except Exception as e:
         logger.error(f"Error in web_pdf_download_core: {e}")
-        return "An error occurred while processing the search query."
+        return ToolActionFailure("An error occurred while processing the search query.")
 
 
-@tool(
+@parameterised_tool(
     name="web_general_search",
     description=(
         "Search the internet based on the query provided and then get the meaningful answer from the content found"
@@ -99,11 +85,11 @@ async def web_pdf_download_core(pdf_url, llm, model) -> str:
         ),
     },
 )
-async def web_general_search(search_query, llm, model) -> str:
+async def web_general_search(search_query, llm, model) -> ToolActionSuccess | ToolActionFailure:
     return await web_general_search_core(search_query, llm, model)
 
 
-@tool(
+@parameterised_tool(
     name="web_pdf_download",
     description=("Download the data from the provided pdf url"),
     parameters={
@@ -113,25 +99,25 @@ async def web_general_search(search_query, llm, model) -> str:
         ),
     },
 )
-async def web_pdf_download(pdf_url, llm, model) -> str:
+async def web_pdf_download(pdf_url, llm, model) -> ToolActionSuccess | ToolActionFailure:
     return await web_pdf_download_core(pdf_url, llm, model)
 
 
-async def web_scrape_core(url: str) -> str:
+async def web_scrape_core(url: str) -> ToolActionSuccess | ToolActionFailure:
     try:
         # Scrape the content from the provided URL
         content = await perform_scrape(url)
         if not content:
-            return "No content found at the provided URL."
+            return ToolActionFailure("No content found at the provided URL.", retry=False)
         logger.info(f"Content scraped successfully: {content}")
         content = content.replace("\n", " ").replace("\r", " ")
         response = {"content": {"content": content, "url": url}, "ignore_validation": "true"}
-        return json.dumps(response, indent=4)
+        return ToolActionSuccess(json.dumps(response, indent=4))
     except Exception as e:
-        return json.dumps({"status": "error", "error": str(e)})
+        return ToolActionFailure(json.dumps({"status": "error", "error": str(e)}))
 
 
-@tool(
+@parameterised_tool(
     name="web_scrape",
     description="Scrapes the content from the given URL.",
     parameters={
@@ -141,53 +127,9 @@ async def web_scrape_core(url: str) -> str:
         ),
     },
 )
-async def web_scrape(url: str, llm, model) -> str:
+async def web_scrape(url: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
     logger.info(f"Scraping the content from URL: {url}")
     return await web_scrape_core(url)
-
-
-async def find_information_from_content_core(content: str, question, llm, model) -> str:
-    try:
-        find_info_json = await find_info(content, question, llm, model)
-        info_result = json.loads(find_info_json)
-        if info_result["status"] == "error":
-            return ""
-        final_info = info_result["response"]
-        if not final_info:
-            return "No information found from the content."
-        logger.info(f"Content scraped successfully: {content}")
-        response = {"content": final_info, "ignore_validation": "true"}
-        return json.dumps(response, indent=4)
-    except Exception as e:
-        logger.error(f"Error finding information: {e}")
-        return ""
-
-
-@tool(
-    name="find_information_content",
-    description="Finds the information from the content.",
-    parameters={
-        "content": Parameter(
-            type="string",
-            description="The content to find the information from.",
-        ),
-        "question": Parameter(
-            type="string",
-            description="The question to find the information from the content.",
-        ),
-    },
-)
-async def find_information_from_content(content: str, question: str, llm, model) -> str:
-    return await find_information_from_content_core(content, question, llm, model)
-
-
-def get_validator_agent() -> ChatAgent:
-    return ValidatorAgent(config.validator_agent_llm, config.validator_agent_model)
-
-
-async def is_valid_answer(answer, task) -> bool:
-    is_valid = (await get_validator_agent().invoke(f"Task: {task}  Answer: {answer}")).lower() == "true"
-    return is_valid
 
 
 async def perform_scrape(url: str) -> str:
@@ -201,19 +143,6 @@ async def perform_scrape(url: str) -> str:
         return scrape_result["content"]
     except Exception as e:
         logger.error(f"Error scraping content from {url}: {e}")
-        return ""
-
-
-async def perform_summarization(search_query: str, content: str, llm: Any, model: str) -> str:
-    try:
-        summarise_result_json = await summarise_content(search_query, content, llm, model)
-        summarise_result = json.loads(summarise_result_json)
-        if summarise_result["status"] == "error":
-            return ""
-        logger.info(f"Content summarized successfully: {summarise_result['response']}")
-        return json.loads(summarise_result["response"])["summary"]
-    except Exception as e:
-        logger.error(f"Error summarizing content: {e}")
         return ""
 
 
@@ -232,7 +161,7 @@ async def perform_pdf_summarization(content: str, llm: Any, model: str) -> str:
 @chat_agent(
     name="WebAgent",
     description="This agent can perform general internet searches to complete the task by retrieving and summarizing the results and it can also perform web scrapes to retreive specific inpormation from web pages.",  # noqa: E501
-    tools=[web_general_search, web_pdf_download, web_scrape, find_information_from_content],
+    tools=[web_general_search, web_pdf_download, web_scrape],
 )
-class WebAgent(ChatAgent):
+class WebAgent(BaseChatAgent):
     pass

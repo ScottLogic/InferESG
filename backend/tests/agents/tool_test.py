@@ -5,7 +5,7 @@ name = "Mock Tool"
 description = "A test tool"
 
 
-@tool(
+@parameterised_tool(
     description=description,
     name=name,
     parameters={

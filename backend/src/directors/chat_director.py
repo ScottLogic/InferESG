@@ -12,7 +12,7 @@ from src.session import update_session_chat
 from src.agents import get_intent_agent, get_answer_agent
 from src.utils.dynamic_knowledge_graph import generate_dynamic_knowledge_graph
 from src.prompts import PromptEngine
-from src.supervisors import solve_all
+from src.supervisors.supervisor import solve_questions
 from src.utils import Config
 from src.utils.graph_db_utils import populate_db, is_db_populated
 from src.websockets.connection_manager import connection_manager
@@ -29,13 +29,14 @@ class FinalAnswer:
 
 
 async def question(question: str) -> ChatResponse:
-    intent = await get_intent_agent().invoke(question)
+    intent = await get_intent_agent().determine_intent(question)
     intent_json = json.loads(intent)
     update_session_chat(role="user", content=question)
     logger.info(f"Intent determined: {intent}")
 
     try:
-        await solve_all(intent_json)
+        questions = intent_json["questions"]
+        await solve_questions(questions if len(questions) > 0 else [intent_json["question"]])
     except Exception as error:
         logger.error(f"Error during task solving: {error}")
         update_scratchpad(error=str(error))
@@ -86,7 +87,7 @@ async def __create_final_answer(question: str, intent_json: dict) -> FinalAnswer
         if query_result is not None:
             dataset = query_result
 
-    message = await get_answer_agent().invoke(question)
+    message = await get_answer_agent().create_answer(question)
 
     return FinalAnswer(message, dataset)
 

@@ -1,14 +1,13 @@
 import logging
 from src.prompts import PromptEngine
-from .agent import ChatAgent, chat_agent
-from .tool import tool
+from src.agents.agent import chat_agent
+from src.agents.base_chat_agent import BaseChatAgent
+from src.agents.tool import Parameter, parameterised_tool, ToolActionSuccess, ToolActionFailure
 from src.llm.llm import LLM
-from .agent_types import Parameter
 from io import BytesIO
 import base64
 from src.utils import scratchpad
 from PIL import Image
-import json
 # from src.websockets.user_confirmer import UserConfirmer
 # from src.websockets.confirmations_manager import confirmations_manager
 
@@ -17,7 +16,12 @@ logger = logging.getLogger(__name__)
 engine = PromptEngine()
 
 
-async def generate_chart(question_intent, data_provided, question_params, llm: LLM, model) -> str:
+async def generate_chart(
+    question_intent,
+    data_provided,
+    question_params,
+    llm: LLM, model
+) -> ToolActionSuccess | ToolActionFailure:
     details_to_generate_chart_code = engine.load_prompt(
         "details-to-generate-chart-code",
         question_intent=question_intent,
@@ -50,11 +54,7 @@ async def generate_chart(question_intent, data_provided, question_params, llm: L
     except Exception as e:
         logger.error(f"Error during chart generation or saving: {e}")
         raise
-    response = {
-        "content": image_data,
-        "ignore_validation": "true",
-    }
-    return json.dumps(response, indent=4)
+    return ToolActionSuccess(image_data)
 
 
 def sanitise_script(script: str) -> str:
@@ -66,7 +66,7 @@ def sanitise_script(script: str) -> str:
     return script.strip()
 
 
-@tool(
+@parameterised_tool(
     name="generate_code_chart",
     description="Generate Matplotlib bar chart code if the user's query involves creating a chart",
     parameters={
@@ -87,7 +87,13 @@ def sanitise_script(script: str) -> str:
         ),
     },
 )
-async def generate_code_chart(question_intent, data_provided, question_params, llm: LLM, model) -> str:
+async def generate_code_chart(
+    question_intent,
+    data_provided,
+    question_params,
+    llm: LLM,
+    model
+) -> ToolActionSuccess | ToolActionFailure:
     return await generate_chart(question_intent, data_provided, question_params, llm, model)
 
 
@@ -96,5 +102,6 @@ async def generate_code_chart(question_intent, data_provided, question_params, l
     description="This agent is responsible for creating charts",
     tools=[generate_code_chart],
 )
-class ChartGeneratorAgent(ChatAgent):
-    pass
+class ChartGeneratorAgent(BaseChatAgent):
+    async def validate(self, utterance: str, answer: str):
+        return True

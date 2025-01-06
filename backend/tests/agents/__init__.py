@@ -1,4 +1,4 @@
-from src.agents import ChatAgent, chat_agent, tool, Parameter
+from src.agents import ChatAgent, chat_agent, parameterised_tool, Parameter
 from tests.llm.mock_llm import MockLLM
 
 name_a = "Mock Tool A"
@@ -8,7 +8,7 @@ param_description = "A string"
 MockLLM()  # initialise MockLLM so future calls to get_llm will return this object
 
 
-@tool(
+@parameterised_tool(
     name=name_a,
     description=description,
     parameters={
@@ -21,7 +21,7 @@ async def mock_tool_a(input: str, llm, model):
     return input
 
 
-@tool(
+@parameterised_tool(
     name=name_b,
     description=description,
     parameters={

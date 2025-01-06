@@ -61,48 +61,19 @@ async def scrape_content(url, limit=100000) -> str:
         )
 
 
-async def create_search_term(search_query, llm, model) -> str:
-    try:
-        summariser_prompt = engine.load_prompt("create-search-term", question=search_query)
-        response = await llm.chat(model, summariser_prompt, "", return_json=True)
-        return json.dumps(
-            {
-                "status": "success",
-                "response": response,
-                "error": None,
-            }
-        )
-    except Exception as e:
-        logger.error(f"Error during create search term: {e}")
-        return json.dumps(
-            {
-                "status": "error",
-                "response": None,
-                "error": str(e),
-            }
-        )
-
-
-async def summarise_content(search_query, contents, llm, model) -> str:
-    try:
-        summariser_prompt = engine.load_prompt("summariser", question=search_query, content=contents)
-        response = await llm.chat(model, summariser_prompt, "", return_json=True)
-        return json.dumps(
-            {
-                "status": "success",
-                "response": response,
-                "error": None,
-            }
-        )
-    except Exception as e:
-        logger.error(f"Error during summarisation: {e}")
-        return json.dumps(
-            {
-                "status": "error",
-                "response": None,
-                "error": str(e),
-            }
-        )
+async def summarise_content(search_query, contents, llm, model) -> str | None:
+    response = json.loads(await llm.chat(
+        model,
+        engine.load_prompt("web_page_scrape_summary_system_prompt", question=search_query, content=contents),
+        "",
+        return_json=True
+    ))
+    logger.info(f"relevant in response {"relevant" in response}")
+    logger.info(f"relevant is True {response["relevant"].lower() == "true"}")
+    logger.info(f"summary is response {"summary" in response}")
+    if "relevant" in response and response["relevant"].lower() == "true" and "summary" in response:
+        return response
+    return None
 
 
 async def summarise_pdf_content(contents, llm, model) -> str:
@@ -141,28 +112,6 @@ async def perform_math_operation_util(math_query, llm, model) -> str:
         )
     except Exception as e:
         logger.error(f"Error during math operation: {e}")
-        return json.dumps(
-            {
-                "status": "error",
-                "response": None,
-                "error": str(e),
-            }
-        )
-
-
-async def find_info(content, question, llm, model) -> str:
-    try:
-        find_info_prompt = engine.load_prompt("find-info", question=question, content=content)
-        response = await llm.chat(model, find_info_prompt, "", return_json=True)
-        return json.dumps(
-            {
-                "status": "success",
-                "response": response,
-                "error": None,
-            }
-        )
-    except Exception as e:
-        logger.error(f"Error during finding info operation: {e}")
         return json.dumps(
             {
                 "status": "error",

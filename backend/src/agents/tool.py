@@ -1,32 +1,56 @@
-import json
-from typing import Callable
-from .agent_types import Action, Parameter
+from typing import Callable, Coroutine, Any
+from dataclasses import dataclass, field
 
 
+@dataclass
+class ToolActionSuccess:
+    content: str
+
+
+@dataclass
+class ToolActionFailure:
+    reason: str
+    retry: bool = True
+
+
+ToolAction = Callable[..., Coroutine[Any, Any, ToolActionSuccess | ToolActionFailure]]
+
+
+@dataclass
 class Tool:
-    def __init__(self, name: str, description: str, parameters: dict[str, Parameter], action: Action):
-        self.name = name
-        self.description = description
-        self.parameters = parameters
-        self.action = action
-
-    def to_str(self) -> str:
-        obj = {
-            "description": self.description,
-            "name": self.name,
-            "parameters": {
-                key: {
-                    "type": inner_dict.type,
-                    "description": inner_dict.description,
-                }
-                for key, inner_dict in self.parameters.items()
-            },
-        }
-        return json.dumps(obj)
+    name: str
+    description: str
+    action: ToolAction
 
 
-def tool(name: str, description: str, parameters: dict[str, Parameter]) -> Callable[[Action], Tool]:
-    def create_tool_from(action: Action) -> Tool:
-        return Tool(name, description, parameters, action)
+@dataclass
+class Parameter:
+    type: str
+    description: str
+    required: bool = True
+
+
+@dataclass
+class ParameterisedTool:
+    name: str
+    description: str
+    action: ToolAction
+    parameters: dict[str, Parameter] = field(default_factory=lambda: {})
+
+
+def tool(name: str, description: str) -> Callable[[ToolAction], Tool]:
+    def create_tool_from(action: ToolAction) -> Tool:
+        return Tool(name, description, action)
+
+    return create_tool_from
+
+
+def parameterised_tool(
+    name: str,
+    description: str,
+    parameters: dict[str, Parameter]
+) -> Callable[[ToolAction], ParameterisedTool]:
+    def create_tool_from(action: ToolAction) -> ParameterisedTool:
+        return ParameterisedTool(name, description, action, parameters)
 
     return create_tool_from

@@ -1,9 +1,10 @@
 from typing import List
-from .tool import Parameter, Tool
+from src.agents.tool import Parameter, Tool, ParameterisedTool
+import dataclasses
 
 
 def create_all_tools_str(tools: List[Tool]) -> str:
-    return "".join(tool.to_str() + "\n\n" for tool in tools)
+    return "".join(str(dataclasses.asdict(tool)) + "\n\n" for tool in tools)
 
 
 def extract_tool(chosen_tool_name: str, agent_tools: List[Tool]) -> Tool:
@@ -16,7 +17,7 @@ def extract_tool(chosen_tool_name: str, agent_tools: List[Tool]) -> Tool:
     return tool
 
 
-def get_required_args(tool: Tool) -> dict[str, Parameter]:
+def get_required_args(tool: ParameterisedTool) -> dict[str, Parameter]:
     parameters_no_optional_args = tool.parameters.copy()
     for key, param in tool.parameters.items():
         if not param.required:
@@ -24,14 +25,14 @@ def get_required_args(tool: Tool) -> dict[str, Parameter]:
     return parameters_no_optional_args
 
 
-def validate_args(chosen_tool_args: dict, defined_tool: Tool):
+def validate_args(tool: ParameterisedTool, parameters: dict):
     # Get just the required arguments
-    all_args_set = set(defined_tool.parameters.keys())
-    required_args_set = set(get_required_args(defined_tool).keys())
-    passed_args_set = set(chosen_tool_args.keys())
+    all_args_set = set(tool.parameters.keys())
+    required_args_set = set(get_required_args(tool).keys())
+    passed_args_set = set(parameters.keys())
 
     if len(passed_args_set) > len(all_args_set):
-        raise Exception(f"Unable to fit parameters {chosen_tool_args} to Tool arguments {all_args_set}: Extra params")
+        raise Exception(f"Unable to fit parameters {parameters} to Tool arguments {all_args_set}: Extra params")
 
     if not required_args_set.issubset(passed_args_set):
-        raise Exception(f"Unable to fit parameters {chosen_tool_args} to Tool arguments {all_args_set}: Wrong params")
+        raise Exception(f"Unable to fit parameters {parameters} to Tool arguments {all_args_set}: Wrong params")

@@ -1,19 +1,17 @@
-from abc import ABC
 import json
+from abc import ABC, abstractmethod
 import logging
-from typing import List, Type, TypeVar
-from src.llm import LLM, get_llm
-from src.utils.log_publisher import LogPrefix, publish_log_info
+from dataclasses import dataclass
+from typing import List, Type, TypeVar, Tuple, Any
 
-from .adapters import create_all_tools_str, extract_tool, validate_args
+from src.llm import LLM, get_llm
+from src.agents.adapters import create_all_tools_str, extract_tool, validate_args
 from src.utils import get_scratchpad, Config
 from src.prompts import PromptEngine
-from .tool import Tool
-from .agent_types import Action_and_args
+from src.agents.tool import Tool, ParameterisedTool, ToolActionSuccess, ToolActionFailure
 
 logger = logging.getLogger(__name__)
 engine = PromptEngine()
-format_prompt = engine.load_prompt("tool-selection-format")
 config = Config()
 
 
@@ -28,51 +26,82 @@ class Agent(ABC):
         self.model = model
 
 
+@dataclass
+class ChatAgentSuccess:
+    agent_name: str
+    content: str
+
+
+@dataclass
+class ChatAgentFailure:
+    agent_name: str
+    reason: str
+    retry: bool = False
+
+
 class ChatAgent(Agent):
     name: str
     description: str
     tools: List[Tool]
 
-    async def __get_action(self, utterance: str) -> Action_and_args:
-        tool_descriptions = create_all_tools_str(self.tools)
+    async def __select_tool(self, utterance: str) -> Tuple[Tool | ParameterisedTool, Any]:
+        if len(self.tools) == 1 and isinstance(self.tools[0], Tool):
+            return self.tools[0], {"utterance": utterance}
 
-        tools_available = engine.load_prompt(
-            "best-tool",
-            task=utterance,
-            scratchpad=get_scratchpad(),
-            tools=tool_descriptions,
-        )
+        select_tool_response = json.loads(await self.llm.chat(
+            self.model,
+            engine.load_prompt("tool-selection-format"),
+            engine.load_prompt(
+                "best-tool",
+                task=utterance,
+                scratchpad=get_scratchpad(),
+                tools=create_all_tools_str(self.tools),
+            ),
+            return_json=True
+        ))
 
-        logger.debug(f"List of tools: {tool_descriptions}")
-        response = json.loads(await self.llm.chat(self.model, format_prompt, tools_available, return_json=True))
+        tool = extract_tool(select_tool_response["tool_name"], self.tools)
+        if isinstance(tool, ParameterisedTool):
+            tool_parameters = select_tool_response["tool_parameters"]
+            validate_args(tool, tool_parameters)
+            return tool, tool_parameters
 
-        await publish_log_info(LogPrefix.USER, f"Tool chosen: {json.dumps(response)}", __name__)
+        return tool, {"utterance": utterance}
+
+    async def invoke(self, utterance: str) -> ChatAgentSuccess | ChatAgentFailure:
+        name = self.__class__.__name__
+        if len(self.tools) < 1:
+            return ChatAgentFailure(name, f"{name} has no tools")
 
         try:
-            chosen_tool = extract_tool(response["tool_name"], self.tools)
-            logger.info(f"USER - Chosen tool: {chosen_tool.name}")
-            chosen_tool_parameters = response["tool_parameters"]
-            validate_args(chosen_tool_parameters, chosen_tool)
-        except Exception:
-            raise Exception(f"Unable to extract chosen tool and parameters from {response}")
-        return chosen_tool.action, chosen_tool_parameters
+            (tool, parameters) = await self.__select_tool(utterance)
+            logger.info(f"{name} selected tool [{tool.name}] with parameters [{parameters}]")
+        except Exception as e:
+            return ChatAgentFailure(name, f"{name} raised the following exception: {e}")
 
-    async def invoke(self, utterance: str) -> str:
-        (action, args) = await self.__get_action(utterance)
-        result_of_action = await action(**args, llm=self.llm, model=self.model)
-        await publish_log_info(LogPrefix.USER, f"Action gave result: {result_of_action}", __name__)
-        return result_of_action
+        result = await tool.action(**parameters, llm=self.llm, model=self.model)
+
+        if isinstance(result, ToolActionFailure):
+            return ChatAgentFailure(name, f"{name} tool failed with: {result.reason}", result.retry)
+        if await self.validate(utterance, result.content):
+            return ChatAgentSuccess(name, result.content)
+
+        return ChatAgentFailure(name, f"{name} failed to create a response that would pass validation", True)
+
+    @abstractmethod
+    async def validate(self, utterance: str, answer: str) -> bool:
+        pass
 
 
 T = TypeVar('T', bound=ChatAgent)
 
 
-def chat_agent(name: str, description: str, tools: List[Tool]):
+def chat_agent(name: str, description: str, tools: List[Tool | ParameterisedTool]):
 
-    def decorator(chat_agent: Type[T]) -> Type[T]:
-        chat_agent.name = name
-        chat_agent.description = description
-        chat_agent.tools = tools
-        return chat_agent
+    def decorator(_chat_agent: Type[T]) -> Type[T]:
+        _chat_agent.name = name
+        _chat_agent.description = description
+        _chat_agent.tools = tools
+        return _chat_agent
 
     return decorator
