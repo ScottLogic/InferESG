@@ -34,12 +34,8 @@ async def question(question: str) -> ChatResponse:
     update_session_chat(role="user", content=question)
     logger.info(f"Intent determined: {intent}")
 
-    try:
-        questions = intent_json["questions"]
-        await solve_questions(questions if len(questions) > 0 else [intent_json["question"]])
-    except Exception as error:
-        logger.error(f"Error during task solving: {error}")
-        update_scratchpad(error=str(error))
+    questions = intent_json["questions"]
+    await solve_questions(questions if len(questions) > 0 else [intent_json["question"]])
 
     current_scratchpad = get_scratchpad()
 

@@ -4,7 +4,7 @@ import logging
 
 from src.agents.tool import ToolActionSuccess, ToolActionFailure
 from src.llm import LLM
-from src.agents import tool
+from src.agents import utterance_tool
 from src.llm import LLMFile
 from src.agents import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
@@ -36,7 +36,7 @@ async def select_material_files(utterance, llm: LLM, model) -> list[str]:
         return json.loads(files_json)["files"]
 
 
-@tool(
+@utterance_tool(
     name="answer materiality question",
     description="This tool can help answer questions about ESG Materiality, what topics are relevant to a company"
                 "or sector and explain materiality topics in detail. The Materiality Agent can also answer"

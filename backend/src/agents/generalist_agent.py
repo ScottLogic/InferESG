@@ -4,7 +4,7 @@ from src.llm import LLM
 from src.prompts import PromptEngine
 from src.agents import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
-from src.agents.tool import tool, ToolActionSuccess, ToolActionFailure
+from src.agents.tool import utterance_tool, ToolActionSuccess, ToolActionFailure
 from src.utils import Config
 
 logger = logging.getLogger(__name__)
@@ -13,7 +13,7 @@ config = Config()
 engine = PromptEngine()
 
 
-@tool(
+@utterance_tool(
     name="find_information_content",
     description="Finds the information from the content."
 )

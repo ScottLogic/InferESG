@@ -5,7 +5,7 @@ from src.agents.agent import Agent, ChatAgent, chat_agent
 from src.agents.datastore_agent import DatastoreAgent
 from src.agents.web_agent import WebAgent
 from src.agents.intent_agent import IntentAgent
-from src.agents.tool import tool, parameterised_tool, Parameter
+from src.agents.tool import utterance_tool, parameterised_tool, Parameter
 from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
 from src.agents.chart_generator_agent import ChartGeneratorAgent
@@ -62,6 +62,6 @@ __all__ = [
     "get_materiality_agent",
     "get_generalist_agent",
     "Parameter",
-    "tool",
+    "utterance_tool",
     "parameterised_tool"
 ]

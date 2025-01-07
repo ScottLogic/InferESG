@@ -40,9 +40,9 @@ class ParameterisedTool(Tool):
     parameters: dict[str, Parameter] = field(default_factory=lambda: {})
 
 
-def tool(name: str, description: str) -> Callable[[ToolAction], Tool]:
-    def create_tool_from(action: ToolAction) -> Tool:
-        return Tool(name, description, action)
+def utterance_tool(name: str, description: str) -> Callable[[ToolAction], UtteranceTool]:
+    def create_tool_from(action: ToolAction) -> UtteranceTool:
+        return UtteranceTool(name, description, action)
 
     return create_tool_from
 

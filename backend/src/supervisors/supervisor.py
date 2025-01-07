@@ -14,6 +14,9 @@ number_of_attempts = 4
 
 
 async def solve_questions(questions: list[str]) -> None:
+    if len(questions) == 0:
+        Exception(no_questions_response)
+
     for question in questions:
         try:
             result = await solve_question(question, get_scratchpad())

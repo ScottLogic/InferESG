@@ -1,4 +1,4 @@
-from src.agents import ChatAgent, chat_agent, tool, parameterised_tool, Parameter
+from src.agents import ChatAgent, chat_agent, utterance_tool, parameterised_tool, Parameter
 from src.agents.tool import ToolActionSuccess, ToolActionFailure
 from tests.llm.mock_llm import MockLLM
 
@@ -9,7 +9,7 @@ MockLLM()  # initialise MockLLM so future calls to get_llm will return this obje
 mock_tool_a_name = "Mock Parameterised Tool A"
 mock_tool_b_name = "Mock Parameterised Tool B"
 mock_tool_failure_name = "Mock Parameterised Failure Tool"
-mock_base_tool_name = "Mock Base Tool"
+mock_utterance_tool_name = "Mock Utterance Tool"
 
 
 @parameterised_tool(
@@ -49,18 +49,18 @@ async def mock_tool_failure(input: str, retry: bool, llm, model) -> ToolActionSu
     return ToolActionFailure(input) if retry else ToolActionFailure(input, False)
 
 
-@tool(
-    name=mock_base_tool_name,
+@utterance_tool(
+    name=mock_utterance_tool_name,
     description="Used for mocking a failure response from the tool",
 )
-async def mock_base_tool(utterance: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
+async def mock_utterance_tool(utterance: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
     return ToolActionSuccess(content=utterance)
 
 
 mock_agent_description = "A test agent"
 mock_agent_name = "Mock Agent"
 mock_prompt = "You are a bot!"
-mock_tools = [mock_tool_a, mock_tool_b, mock_tool_failure, mock_base_tool]
+mock_tools = [mock_tool_a, mock_tool_b, mock_tool_failure, mock_utterance_tool]
 
 
 @chat_agent(name=mock_agent_name, description=mock_agent_description, tools=mock_tools)
@@ -77,9 +77,9 @@ __all__ = [
     "mock_tool_a",
     "mock_tool_b",
     "mock_tool_failure",
-    "mock_base_tool",
+    "mock_utterance_tool",
     "mock_tool_a_name",
     "mock_tool_b_name",
     "mock_tool_failure_name",
-    "mock_base_tool_name"
+    "mock_utterance_tool_name"
 ]

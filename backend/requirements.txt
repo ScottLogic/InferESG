@@ -26,6 +26,6 @@ hiredis==3.0.0
 redis==5.0.8
 
 # tests
-pytest==8.1.1
+pytest==8.3.4
 pytest-mock==3.14.0
-pytest-asyncio==0.23.7
+pytest-asyncio==0.25.1

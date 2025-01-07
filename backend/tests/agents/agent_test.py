@@ -6,10 +6,10 @@ from pytest import raises
 from src.agents.agent import chat_agent, ChatAgent, ChatAgentSuccess, ChatAgentFailure
 from tests.agents import (
     MockChatAgent,
-    mock_base_tool_name,
+    mock_utterance_tool_name,
     mock_tool_a_name,
     mock_tool_failure_name,
-    mock_base_tool,
+    mock_utterance_tool,
     mock_tool_a
 )
 from src.llm.factory import get_llm
@@ -125,9 +125,9 @@ async def test_chat_agent_tool_failure(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("tools, mocked_response, expected", [
-        ([mock_base_tool, mock_tool_a], mock_response(mock_base_tool_name, {}), "Mock task to solve"),
+        ([mock_utterance_tool, mock_tool_a], mock_response(mock_utterance_tool_name, {}), "Mock task to solve"),
         (
-            [mock_base_tool, mock_tool_a],
+            [mock_utterance_tool, mock_tool_a],
             mock_response(mock_tool_a_name, {"input": tool_input}),
             tool_input
         )
@@ -158,7 +158,7 @@ async def test_chat_agent_tool_selection(
 
 @pytest.mark.asyncio
 async def test_chat_agent_with_one_tool_of_type_base_tool(mocker):
-    @chat_agent(name="mock_chat_agent", description="mock_description", tools=[mock_base_tool])
+    @chat_agent(name="mock_chat_agent", description="mock_description", tools=[mock_utterance_tool])
     class MockChatAgentWithTools(ChatAgent):
         async def validate(self, utterance: str, answer: str) -> bool:
             return True
