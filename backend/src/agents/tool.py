@@ -31,6 +31,11 @@ class Tool:
 
 
 @dataclass
+class UtteranceTool(Tool):
+    """This class represents tools which require utterance only"""
+
+
+@dataclass
 class ParameterisedTool(Tool):
     parameters: dict[str, Parameter] = field(default_factory=lambda: {})
 

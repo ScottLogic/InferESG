@@ -8,7 +8,7 @@ from src.llm import LLM, get_llm
 from src.agents.adapters import create_all_tools_str, extract_tool, validate_args
 from src.utils import get_scratchpad, Config
 from src.prompts import PromptEngine
-from src.agents.tool import Tool, ParameterisedTool, ToolActionFailure
+from src.agents.tool import Tool, ParameterisedTool, UtteranceTool, ToolActionFailure
 
 logger = logging.getLogger(__name__)
 engine = PromptEngine()
@@ -45,8 +45,7 @@ class ChatAgent(Agent):
     tools: List[Tool]
 
     async def __select_tool(self, utterance: str) -> Tuple[Tool, Any]:
-        # Using 'type' over 'isinstance' to identify base class only
-        if len(self.tools) == 1 and type(self.tools[0]) == Tool:
+        if len(self.tools) == 1 and isinstance(self.tools[0], UtteranceTool):
             return self.tools[0], {"utterance": utterance}
 
         select_tool_response = json.loads(await self.llm.chat(
