@@ -51,16 +51,16 @@ async def web_general_search_core(search_query, llm, model) -> str:
             if not summary:
                 continue  # Skip if no summary was generated
 
-                # Step 5: Validate the summarization
-                is_valid = await is_valid_answer(summary, search_term)
-                if not is_valid:
-                    continue  # Skip if the summarization is not valid
-                response = {
-                    "content": { "content": summary, "url": url },
-                    "ignore_validation": "true" # This is to ignore the validation of the answer again by the supervisor
-                }
-                return json.dumps(response, indent=4)
-            return "No relevant information found on the internet for the given query."
+            # Step 5: Validate the summarization
+            is_valid = await is_valid_answer(summary, search_term)
+            if not is_valid:
+                continue  # Skip if the summarization is not valid
+            response = {
+                "content": { "content": summary, "url": url },
+                "ignore_validation": "true" # This is to ignore the validation of the answer again by the supervisor
+            }
+            return json.dumps(response, indent=4)
+        return "No relevant information found on the internet for the given query."
     except Exception as e:
         logger.error(f"Error in web_general_search_core: {e}")
         return "An error occurred while processing the search query."
