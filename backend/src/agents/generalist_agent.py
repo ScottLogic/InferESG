@@ -1,4 +1,3 @@
-import json
 import logging
 
 from src.llm import LLM
@@ -19,9 +18,8 @@ engine = PromptEngine()
     description="Finds the information from the content."
 )
 async def generalist_answer(utterance: str, llm: LLM, model: str) -> ToolActionSuccess | ToolActionFailure:
-    summariser_prompt = engine.load_prompt("generalist-answer", question=utterance)
-    response = await llm.chat(model, summariser_prompt, "")
-    return ToolActionSuccess(json.dumps({"content": response, "ignore_validation": "false"}, indent=4))
+    response = await llm.chat(model, engine.load_prompt("generalist-answer", question=utterance), "")
+    return ToolActionSuccess(response)
 
 
 @chat_agent(

@@ -3,6 +3,13 @@ from dataclasses import dataclass, field
 
 
 @dataclass
+class Parameter:
+    type: str
+    description: str
+    required: bool = True
+
+
+@dataclass
 class ToolActionSuccess:
     content: str
 
@@ -24,17 +31,7 @@ class Tool:
 
 
 @dataclass
-class Parameter:
-    type: str
-    description: str
-    required: bool = True
-
-
-@dataclass
-class ParameterisedTool:
-    name: str
-    description: str
-    action: ToolAction
+class ParameterisedTool(Tool):
     parameters: dict[str, Parameter] = field(default_factory=lambda: {})
 
 

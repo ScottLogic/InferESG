@@ -1,5 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
+
+from src.agents.tool import ToolActionSuccess
 from src.agents.datastore_agent import generate_cypher_query_core
 
 @pytest.mark.asyncio
@@ -34,7 +36,7 @@ async def test_generate_query_success(mock_load_prompt, mock_publish_log_info,
     result = await generate_cypher_query_core(question_intent, operation, question_params, aggregation, sort_order,
                                               timeframe, llm, model)
 
-    assert result == '{\n    "content": "Mocked response from the database",\n    "ignore_validation": "false"\n}'
+    assert result == ToolActionSuccess("Mocked response from the database")
     mock_load_prompt.assert_called()
     llm.chat.assert_called_once_with(
         model,

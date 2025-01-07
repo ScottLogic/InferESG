@@ -1,5 +1,5 @@
 import pytest
-from src.agents import Parameter, tool
+from src.agents import Parameter, parameterised_tool
 
 name = "Mock Tool"
 description = "A test tool"
@@ -52,10 +52,3 @@ def test_tool_optional_required():
 @pytest.mark.asyncio
 async def test_tool_action():
     assert await mock_tool.action() == "Hello, World!"
-
-
-expected_tools_object = """{"description": "A test tool", "name": "Mock Tool", "parameters": {"input": {"type": "string", "description": "A string"}, "optional": {"type": "string", "description": "A string"}}}"""  # noqa: E501
-
-
-def test_to_object():
-    assert mock_tool.to_str() == expected_tools_object

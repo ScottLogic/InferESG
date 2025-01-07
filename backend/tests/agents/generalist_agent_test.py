@@ -1,6 +1,8 @@
-import pytest
-import json
+from unittest.mock import AsyncMock, patch
 
+import pytest
+
+from src.agents.agent import ChatAgentSuccess
 from src.llm.factory import get_llm
 from src.agents.generalist_agent import GeneralistAgent
 
@@ -10,11 +12,13 @@ mock_llm = get_llm("mockllm")
 
 
 @pytest.mark.asyncio
-async def test_generalist_agent(mocker):
+@patch('src.agents.base_chat_agent.BaseChatAgent.validate', new_callable=AsyncMock)
+async def test_generalist_agent(mock_validate, mocker):
+    mock_validate.return_value = True
+
     mock_llm.chat = mocker.AsyncMock(return_value="Example summary.")
 
     agent = GeneralistAgent(llm_name="mockllm", model=mock_model)
 
     result = await agent.invoke("example query")
-    expected_response = {"content": "Example summary.", "ignore_validation": "false"}
-    assert json.loads(result) == expected_response
+    assert result == ChatAgentSuccess("GeneralistAgent", "Example summary.")
