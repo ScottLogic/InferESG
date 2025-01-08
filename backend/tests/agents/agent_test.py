@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 import pytest
 from pytest import raises
@@ -21,7 +22,7 @@ mock_agent_instance = MockChatAgent("mockllm", mock_model)
 tool_input = "string for tool to output"
 
 
-def mock_response(tool_name: str, tool_parameters: dict[str,str]) -> str:
+def mock_response(tool_name: str, tool_parameters: dict[str, Any]) -> str:
     return json.dumps({"tool_name": tool_name, "tool_parameters": tool_parameters, "reasoning": "Mock Reasoning"})
 
 

@@ -1,6 +1,7 @@
-import dataclasses
 import json
 import logging
+from typing import Optional
+
 from src.utils import to_json, Config, Scratchpad
 from src.prompts import PromptEngine
 from src.agents import ChatAgent, get_chat_agents
@@ -15,7 +16,11 @@ def find_agent_from_name(name):
     return next((agent for agent in get_chat_agents() if agent.name == name), None)
 
 
-async def get_agent_for_task(task: str, scratchpad: Scratchpad, excluded_agents: list[str] = None) -> ChatAgent | None:
+async def get_agent_for_task(
+    task: str,
+    scratchpad: Scratchpad,
+    excluded_agents: Optional[list[str]] = None
+) -> ChatAgent | None:
     if excluded_agents is None:
         excluded_agents = []
 
@@ -25,6 +30,10 @@ async def get_agent_for_task(task: str, scratchpad: Scratchpad, excluded_agents:
     ]
     logger.info("#####  ~  Calling LLM for next best step  ~  #####")
     logger.info(f"Scratchpad so far: {scratchpad}")
+
+    if not config.router_model:
+        raise Exception("Router config model missing")
+
     best_next_step_response = await get_llm(config.router_llm).chat(
         config.router_model,
         prompt_engine.load_prompt(

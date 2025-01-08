@@ -1,6 +1,8 @@
 from io import BytesIO
 from unittest.mock import patch, AsyncMock, MagicMock
 import pytest
+
+from src.agents.tool import ToolActionSuccess
 from src.agents.chart_generator_agent import generate_chart
 import base64
 import matplotlib.pyplot as plt
@@ -38,6 +40,9 @@ plt.plot([1, 2, 3], [4, 5, 6])
 
     with patch("builtins.exec", side_effect=mock_exec_side_effect):
         result = await generate_chart("question_intent", "data_provided", "question_params", llm, model)
+
+        if not isinstance(result, ToolActionSuccess):
+            raise Exception("generate_chart returned an unexpected failure in test")
 
         image_data = result.content
         decoded_image = base64.b64decode(image_data)

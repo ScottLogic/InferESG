@@ -1,4 +1,6 @@
 import pytest
+
+from src.agents.tool import ToolActionSuccess
 from src.agents import Parameter, parameterised_tool
 
 name = "Mock Tool"
@@ -13,8 +15,8 @@ description = "A test tool"
         "optional": Parameter(description="A string", required=False, type="string"),
     },
 )
-async def mock_tool():
-    return "Hello, World!"
+async def mock_tool(input: str, optional: str):
+    return ToolActionSuccess("Hello, World!")
 
 
 def test_tool_name():

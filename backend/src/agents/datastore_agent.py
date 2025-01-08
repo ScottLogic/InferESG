@@ -50,7 +50,7 @@ async def generate_cypher_query_core(
     except Exception as e:
         logger.error(f"Error during data retrieval: {e}")
         raise
-    return ToolActionSuccess(response)
+    return ToolActionSuccess(str(response))
 
 
 @parameterised_tool(
