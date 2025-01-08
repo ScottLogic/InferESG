@@ -1,4 +1,4 @@
-fastapi==0.110.0
+fastapi==0.115.6
 uvicorn==0.29.0
 mistralai==1.1.0
 pycodestyle==2.11.1

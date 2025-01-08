@@ -2,9 +2,7 @@ import pytest
 
 from src.agents.agent import ChatAgentFailure, ChatAgentSuccess
 from tests.agents import MockChatAgent
-import json
 from src.supervisors import solve_questions, solve_question, no_questions_response, unsolvable_response, no_agent_response
-from src.utils import update_scratchpad
 
 mock_model = "mockmodel"
 mock_answer = "answer"

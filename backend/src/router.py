@@ -1,6 +1,7 @@
+import dataclasses
 import json
 import logging
-from src.utils import to_json, Config
+from src.utils import to_json, Config, Scratchpad
 from src.prompts import PromptEngine
 from src.agents import ChatAgent, get_chat_agents
 from src.llm import get_llm
@@ -14,7 +15,7 @@ def find_agent_from_name(name):
     return next((agent for agent in get_chat_agents() if agent.name == name), None)
 
 
-async def get_agent_for_task(task: str, scratchpad: str, excluded_agents: list[str] = None) -> ChatAgent | None:
+async def get_agent_for_task(task: str, scratchpad: Scratchpad, excluded_agents: list[str] = None) -> ChatAgent | None:
     if excluded_agents is None:
         excluded_agents = []
 
