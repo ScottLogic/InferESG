@@ -53,4 +53,4 @@ def test_tool_optional_required():
 
 @pytest.mark.asyncio
 async def test_tool_action():
-    assert await mock_tool.action() == "Hello, World!"
+    assert await mock_tool.action() == ToolActionSuccess("Hello, World!")
