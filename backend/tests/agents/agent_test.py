@@ -108,7 +108,7 @@ async def test_chat_agent_tool_selection_failure(
     ],
     ids=[
         "When mock failure tool selected, Chat Agent will return failure result with retry option",
-        "When mock failure tool selected with no retry option, Chat Agent will return failure result with retry option",
+        "When mock failure tool selected (no retry), Chat Agent will return failure result with no retry",
     ]
 )
 async def test_chat_agent_tool_failure(
