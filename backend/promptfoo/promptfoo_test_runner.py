@@ -1,5 +1,6 @@
 import sys
 from pypdf import PdfReader
+
 sys.path.append("../")
 from src.prompts.prompting import PromptEngine  # noqa: E402
 
@@ -8,18 +9,19 @@ engine = PromptEngine()
 
 def read_pdf_file_for_promptfoo(file_path: str) -> str:
     pdf_file = PdfReader(file_path)
-    content = "\n".join([
-        page.extract_text() for page in pdf_file.pages
-    ])
+    content = "\n".join([page.extract_text() for page in pdf_file.pages])
     return content
 
 
 def create_prompt(context):
     config = context["vars"]
 
-    system_prompt_args = config["system_prompt_args"] if "system_prompt_args" in config else {}
+    if "system_prompt" in config:
+        system_prompt = config["system_prompt"]
+    else:
+        system_prompt_args = config["system_prompt_args"] if "system_prompt_args" in config else {}
 
-    system_prompt = engine.load_prompt(template_name=config["system_prompt_template"], **system_prompt_args)
+        system_prompt = engine.load_prompt(template_name=config["system_prompt_template"], **system_prompt_args)
 
     if "user_prompt" in config:
         user_prompt = config["user_prompt"]
