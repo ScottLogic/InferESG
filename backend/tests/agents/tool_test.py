@@ -15,7 +15,7 @@ description = "A test tool"
         "optional": Parameter(description="A string", required=False, type="string"),
     },
 )
-async def mock_tool(input: str, optional: str):
+async def mock_tool():
     return ToolActionSuccess("Hello, World!")
 
 
