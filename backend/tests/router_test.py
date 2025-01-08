@@ -2,22 +2,17 @@ import json
 from unittest.mock import MagicMock
 
 import pytest
+
+from tests.agents import MockChatAgent
 from tests.llm.mock_llm import MockLLM
-from src.agents.agent import chat_agent, ChatAgent
 from src.router import get_agent_for_task
 
 
 mock_model = "mockmodel"
 mock_llm = MockLLM()
-
-
-class MockChatAgent(ChatAgent):
-    async def validate(self, utterance: str, answer: str) -> bool:
-        pass
-
-
-mock_agent_1 = chat_agent("chat_agent_1", "description_1", [])(MockChatAgent("mockllm", mock_model))
-mock_agent_2 = chat_agent("chat_agent_2", "description_2", [])(MockChatAgent("mockllm", mock_model))
+mock_agent_1 = MockChatAgent("mockllm", mock_model)
+mock_agent_2 = MockChatAgent("mockllm", mock_model)
+mock_agent_2.name = "mock_agent_2"
 mock_agents = [mock_agent_1, mock_agent_2]
 
 
