@@ -1,0 +1,27 @@
+description: "Test Report Materiality Prompt"
+
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "Test materiality report generation"
+    vars:
+      user_prompt_template: "create-report-materiality-user-prompt"
+      materiality:
+        {
+          "Climate Change": "AstraZeneca must consider its greenhouse gas (GHG) emissions throughout its value chain, including manufacturing and logistics, which are typical high-impact areas in the pharmaceutical sector.",
+          "Water Use and Pollution": "The pharmaceutical industry heavily relies on water for manufacturing processes and must manage water use efficiently and reduce contaminants from entering water sources.",
+          "Environmental Impact of Products": "Pharmaceuticals can cause environmental harm if they enter ecosystems; this has led to regulations mandating waste treatment improvements.",
+          "Resource Efficiency": "There is an emphasis on sustainable sourcing and efficient use of raw materials, including addressing market risks due to scarcity of bio-feedstocks.",
+          "Community and Human Rights": "Pharmaceutical companies face significant reputational risks if they disrespect Indigenous Peoples' rights during resource sourcing.",
+          "Waste Management": "Given the intensive use of materials and chemicals, effective waste management, including recycling and disposal, is crucial.",
+        }
+      system_prompt_template: "create-report-materiality"
+      file_attachment: "../library/AZ-Impact-Publication-2024.pdf"
+    assert:
+      - type: icontains
+        value: "material"

@@ -1,0 +1,25 @@
+description: "Test Report Agent Basic Prompt"
+
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "Sample test to aid in ESG report generation development"
+    vars:
+      user_prompt: ""
+      system_prompt_template: "create-report-basic"
+      file_attachment: "../library/AZ-Impact-Publication-2024.pdf"
+    assert:
+      - type: contains-all
+        value:
+          - "# Basic"
+          - "### 1. What is the name of the company that this document refers to?"
+          - "### 2. What year or years does the information refer too?"
+          - "### 3. Summarise in one sentence what the document is about?"
+          - "# ESG (Environment, Social, Governance)"
+          - "### 1. Which aspects of ESG does this document primarily discuss, respond with a percentage of each topic covered by the document."
+          - "### 2. What aspects of ESG are not discussed in the document?"

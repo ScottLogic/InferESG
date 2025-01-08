@@ -1,0 +1,64 @@
+description: "Test Report Agent Environmental Q1 Prompt"
+
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+
+prompts: file://promptfoo_test_runner.py:create_prompt
+
+tests:
+  - description: "test report questions are formatted correctly"
+    vars:
+      user_prompt: |
+        ## What environmental goals does this document describe?
+        Extract and analyze all environmental goals described in the document, including:
+
+        ### Emissions and climate:
+        * Specific greenhouse gas reduction targets with baseline years
+        * Scope 1, 2, and 3 emissions coverage
+        * Science-based targets alignment details
+        * Energy efficiency goals with metrics
+        * Renewable energy adoption targets
+
+        ### Resource management:
+        * Water usage reduction goals with specific metrics
+        * Waste reduction and recycling targets
+        * Raw material sourcing commitments
+        * Circular economy initiatives with measurable outcomes
+        * Resource efficiency metrics and deadlines
+
+        ### Biodiversity and ecosystems:
+        * Land use and restoration targets
+        * Species protection commitments
+        * Habitat conservation goals
+        * Environmental impact reduction metrics
+        * Ecosystem services preservation plans
+
+        ### Implementation framework:
+        * Specific milestone dates
+        * Investment commitments
+        * Measurement methodologies
+        * Verification processes
+        * Progress tracking mechanisms
+
+        Please identify any environmental goals that:
+        * Lack specific numerical targets
+        * Have undefined timelines
+        * Missing baseline measurements
+        * Need verification methods
+        * Have unclear scope definitions
+      system_prompt: |
+        The user will provide a report from a company. Your goal is to analyse the document and respond answering the following question in a consise manner.
+        Include all points that are relivent to the question, be thorough. For each point include as much detail as possible, focus on statistics and evidence from the report in the points.
+
+        Format your answer in markdown
+        Your answer should not contain any headings, instead use bold text
+      file_attachment: "../library/AZ-Impact-Publication-2024.pdf"
+    assert:
+      - type: not-contains
+        value: "#"
+      - type: contains
+        value: "**"
+      - type: contains
+        value: "- "
