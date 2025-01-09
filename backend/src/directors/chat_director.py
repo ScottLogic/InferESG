@@ -78,7 +78,7 @@ async def __create_final_answer(question: str, intent_json: dict) -> FinalAnswer
     dataset = None
     if intent_json['result_type'] == 'dataset':
         # get the last DatastoreAgent result dataset from the scratchpad
-        datastore_agents = [scratch for scratch in get_scratchpad() if scratch['agent_name'] == 'DatastoreAgent']
+        datastore_agents = [answer for answer in get_scratchpad() if answer['agent_name'] == 'DatastoreAgent']
         query_result = datastore_agents[-1]['result'] if datastore_agents else None
         if query_result is not None:
             dataset = query_result

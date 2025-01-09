@@ -46,7 +46,7 @@ async def mock_tool_b(input: str, llm, model) -> ToolActionSuccess | ToolActionF
     },
 )
 async def mock_tool_failure(input: str, retry: bool, llm, model) -> ToolActionSuccess | ToolActionFailure:
-    return ToolActionFailure(input) if retry else ToolActionFailure(input, False)
+    return ToolActionFailure(input, True) if retry else ToolActionFailure(input)
 
 
 @utterance_tool(

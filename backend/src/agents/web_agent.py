@@ -42,8 +42,7 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
         summary = await summarise_content(search_query, content, llm, model)
 
         if summary:
-            response = {"content": {"content": summary, "url": url}}
-            return ToolActionSuccess(json.dumps(response, indent=4))
+            return ToolActionSuccess({"answer": summary, "citation_url": url})
         else:
             logger.info(f"No relevant content found for url: {url}")
     return ToolActionFailure("No relevant information found on the internet for the given query.")
@@ -67,7 +66,7 @@ async def web_pdf_download_core(pdf_url, llm, model) -> ToolActionSuccess | Tool
                 all_content += "\n"
             logger.info("PDF content extracted successfully")
             response = {"content": all_content, "ignore_validation": "true"}
-        return ToolActionSuccess(json.dumps(response, indent=4))
+        return ToolActionSuccess(response)
     except Exception as e:
         logger.error(f"Error in web_pdf_download_core: {e}")
         return ToolActionFailure("An error occurred while processing the search query.")
@@ -108,13 +107,13 @@ async def web_scrape_core(url: str) -> ToolActionSuccess | ToolActionFailure:
         # Scrape the content from the provided URL
         content = await perform_scrape(url)
         if not content:
-            return ToolActionFailure("No content found at the provided URL.", retry=False)
+            return ToolActionFailure("No content found at the provided URL.")
         logger.info(f"Content scraped successfully: {content}")
         content = content.replace("\n", " ").replace("\r", " ")
         response = {"content": {"content": content, "url": url}, "ignore_validation": "true"}
-        return ToolActionSuccess(json.dumps(response, indent=4))
+        return ToolActionSuccess(response)
     except Exception as e:
-        return ToolActionFailure(json.dumps({"status": "error", "error": str(e)}))
+        return ToolActionFailure(str(e))
 
 
 @parameterised_tool(

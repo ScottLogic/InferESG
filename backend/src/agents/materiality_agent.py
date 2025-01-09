@@ -53,8 +53,7 @@ async def answer_materiality_question(utterance: str, llm: LLM, model) -> ToolAc
         )
     else:
         return ToolActionFailure(
-            f"Materiality Agent cannot find suitable reference documents to answer: {utterance}",
-            retry=False
+            f"Materiality Agent cannot find suitable reference documents to answer: {utterance}"
         )
     return ToolActionSuccess(answer)
 

@@ -68,11 +68,8 @@ async def summarise_content(search_query, contents, llm, model) -> str | None:
         "",
         return_json=True
     ))
-    logger.info(f"relevant in response {"relevant" in response}")
-    logger.info(f"relevant is True {response["relevant"].lower() == "true"}")
-    logger.info(f"summary is response {"summary" in response}")
     if "relevant" in response and response["relevant"].lower() == "true" and "summary" in response:
-        return response
+        return response["summary"]
     return None
 
 

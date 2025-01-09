@@ -11,13 +11,13 @@ class Parameter:
 
 @dataclass
 class ToolActionSuccess:
-    content: str
+    content: str | dict[str, Any]
 
 
 @dataclass
 class ToolActionFailure:
     reason: str
-    retry: bool = True
+    retry: bool = False
 
 
 ToolAction = Callable[..., Coroutine[Any, Any, ToolActionSuccess | ToolActionFailure]]
