@@ -1,4 +1,5 @@
 from src.agents import ChatAgent
+from src.agents.tool import ToolActionSuccess
 from src.utils import Config
 from src.agents.validator_agent import ValidatorAgent
 
@@ -6,7 +7,7 @@ config = Config()
 
 
 class BaseChatAgent(ChatAgent):
-    async def validate(self, utterance: str, answer: str) -> bool:
+    async def validate(self, utterance: str, answer: ToolActionSuccess) -> bool:
         validator_agent = ValidatorAgent(config.validator_agent_llm, config.validator_agent_model)
-        validation = (await validator_agent.validate(f"Task: {utterance}  Answer: {answer}")).lower() == "true"
+        validation = (await validator_agent.validate(f"Task: {utterance}  Answer: {answer.content}")).lower() == "true"
         return validation

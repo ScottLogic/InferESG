@@ -103,5 +103,5 @@ async def generate_code_chart(
     tools=[generate_code_chart],
 )
 class ChartGeneratorAgent(BaseChatAgent):
-    async def validate(self, utterance: str, answer: str):
+    async def validate(self, utterance: str, answer: ToolActionSuccess):
         return True

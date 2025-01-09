@@ -9,9 +9,12 @@ class Parameter:
     required: bool = True
 
 
+DataResponse = list[Any] | dict[str, Any]
+
+
 @dataclass
 class ToolActionSuccess:
-    content: str | dict[str, Any]
+    content: str | DataResponse
 
 
 @dataclass

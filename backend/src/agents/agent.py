@@ -8,7 +8,7 @@ from src.llm import LLM, get_llm
 from src.agents.adapters import create_all_tools_str, extract_tool, validate_args
 from src.utils import get_scratchpad, Config
 from src.prompts import PromptEngine
-from src.agents.tool import Tool, ParameterisedTool, UtteranceTool, ToolActionFailure
+from src.agents.tool import Tool, ParameterisedTool, UtteranceTool, ToolActionFailure, ToolActionSuccess
 
 logger = logging.getLogger(__name__)
 engine = PromptEngine()
@@ -90,7 +90,7 @@ class ChatAgent(Agent):
         return ChatAgentFailure(name, f"{name} failed to create a response that would pass validation", True)
 
     @abstractmethod
-    async def validate(self, utterance: str, answer: str) -> bool:
+    async def validate(self, utterance: str, answer: ToolActionSuccess) -> bool:
         pass
 
 
