@@ -3,7 +3,6 @@ import pytest
 from unittest.mock import patch, MagicMock
 from starlette.requests import Request
 from starlette.responses import Response
-from src.llm.llm import LLMFile
 from src.session.file_uploads import (
     FileUpload,
     ReportResponse,
@@ -11,9 +10,7 @@ from src.session.file_uploads import (
     get_report,
     get_session_file_upload,
     get_session_file_uploads_meta,
-    get_llm_files_for_company_name,
     store_report,
-    update_session_file_upload_with_company,
     update_session_file_uploads,
 )
 
@@ -130,34 +127,3 @@ def test_get_report(mocker, mock_redis):
 
     assert value == report
     mock_redis.get.assert_called_with("report_12")
-
-def test_get_llm_files_for_company_name(mocker, mock_redis, mock_request_context):
-    mocker.patch("src.session.redis_session_middleware.request_context", mock_request_context)
-    mocker.patch("src.session.file_uploads.redis_client", mock_redis)
-    file = FileUpload(content="test", id="1234", filename="test.txt", upload_id=None)
-    file2 = FileUpload(content="test2", id="12345", filename="test2.txt", upload_id=None)
-    file3 = FileUpload(content="test3", id="123456", filename="test3.txt", upload_id=None)
-
-    update_session_file_uploads(file_upload=file)
-    update_session_file_uploads(file_upload=file2)
-    update_session_file_uploads(file_upload=file3)
-    assert get_session_file_uploads_meta() == [
-        {"filename": "test.txt", "id": "1234"},
-        {"filename": "test2.txt", "id": "12345"},
-        {"filename": "test3.txt", "id": "123456"},
-    ]
-
-    update_session_file_upload_with_company(file, "comp A")
-    update_session_file_upload_with_company(file2, "comp B")
-    update_session_file_upload_with_company(file3, "comp A")
-
-    assert get_session_file_uploads_meta() == [
-        {"filename": "test.txt", "id": "1234", "company_name": "comp A"},
-        {"filename": "test2.txt", "id": "12345", "company_name": "comp B"},
-        {"filename": "test3.txt", "id": "123456", "company_name": "comp A"},
-    ]
-
-    assert get_llm_files_for_company_name("comp A") == [LLMFile(id="1234", file=bytes(), filename="test.txt"),
-                                                    LLMFile(id="123456", file=bytes(), filename="test3.txt")]
-    assert get_llm_files_for_company_name("comp B") == [LLMFile(id="12345", file=bytes(), filename="test2.txt")]
-    assert get_llm_files_for_company_name("comp C") == []

@@ -1,6 +1,6 @@
 from abc import ABC, ABCMeta, abstractmethod
 from os import PathLike
-from typing import Any, Coroutine, Optional
+from typing import Any, Coroutine
 from .count_calls import count_calls
 from dataclasses import dataclass
 
@@ -12,7 +12,6 @@ count_calls_of_functions = ["chat", "chat_with_file"]
 class LLMFile(ABC):
     filename: str
     file: PathLike[str] | bytes
-    id: Optional[str] = None
 
 
 class LLMMeta(ABCMeta):

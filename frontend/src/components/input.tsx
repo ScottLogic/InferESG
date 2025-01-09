@@ -42,6 +42,10 @@ export const Input = ({
     setUserInput(event.target.value);
   }, []);
 
+  const onSelectedUploadedFile = useCallback(() => {
+    if (uploadedFile) setUserInput(userInput + uploadedFile.name);
+  }, [uploadedFile, userInput, setUserInput]);
+
   useLayoutEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -92,7 +96,12 @@ export const Input = ({
 
   return (
     <>
-      {uploadedFile && <UploadedFileDisplay fileName={uploadedFile.name} />}
+      {uploadedFile && (
+        <UploadedFileDisplay
+          fileName={uploadedFile.name}
+          onClick={onSelectedUploadedFile}
+        />
+      )}
       <form onSubmit={onSend} className={styles.inputContainer}>
         <div className={styles.inputRow}>
           <div className={styles.parentDiv}>

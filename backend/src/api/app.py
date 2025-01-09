@@ -139,6 +139,7 @@ async def report(file: UploadFile):
         processed_upload = await create_report_from_file(file)
         return JSONResponse(status_code=200, content=processed_upload)
     except HTTPException as he:
+        logger.exception(he)
         raise he
     except Exception as e:
         logger.exception(e)

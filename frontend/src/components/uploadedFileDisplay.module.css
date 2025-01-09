@@ -18,6 +18,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 65px;
+  cursor: pointer;
 }
 
 .attachmentIcon {

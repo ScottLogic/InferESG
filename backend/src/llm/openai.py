@@ -6,8 +6,8 @@ from src.utils import Config
 from src.llm.llm import LLM, LLMFile, LLMFileUploadManager
 from src.session.llm_file_upload import (
     add_llm_file_upload,
-    get_llm_file_upload,
     get_all_files,
+    get_llm_file_upload_id,
     reset_llm_file_uploads
 )
 from openai import NOT_GIVEN, AsyncOpenAI, OpenAIError
@@ -104,7 +104,7 @@ class OpenAILLMFileUploadManager(LLMFileUploadManager):
         files_to_upload = []
         start_time = time.time()
         for file in files:
-            file_id = get_llm_file_upload(file.filename)
+            file_id = get_llm_file_upload_id(file.filename)
             if not file_id:
                 logger.info(f"Open AI: Preparing to upload '{file.filename}'")
                 file = (file.filename, file.file) if isinstance(file.file, bytes) else file.file

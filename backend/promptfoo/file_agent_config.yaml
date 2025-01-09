@@ -10,7 +10,7 @@ prompts: file://promptfoo_test_runner.py:create_prompt
 tests:
   - description: "test find report year"
     vars:
-      user_prompt: "What year was the report on AstraZeneca about?"
+      user_prompt: "What year was the AstraZeneca-Sustainability-Report-2023.pdf report on AstraZeneca about?"
       system_prompt_template: "extract-text-from-file-system-prompt"
       file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
     assert:
@@ -19,7 +19,7 @@ tests:
 
   - description: "test find nature initiatives"
     vars:
-      user_prompt: "From the report what initiatives around nature does AstraZeneca have?"
+      user_prompt: "From the AstraZeneca-Sustainability-Report-2023.pdf file what initiatives around nature does AstraZeneca have?"
       system_prompt_template: "extract-text-from-file-system-prompt"
       file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
     assert:
@@ -28,7 +28,7 @@ tests:
 
   - description: "test find WWF collaboration - single match"
     vars:
-      user_prompt: "From the report does AstraZeneca work with WWF?"
+      user_prompt: "From the AstraZeneca-Sustainability-Report-2023.pdf report does AstraZeneca work with WWF?"
       system_prompt_template: "extract-text-from-file-system-prompt"
       file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
     assert:
@@ -39,7 +39,7 @@ tests:
 
   - description: "test find none existant collaboration - no match"
     vars:
-      user_prompt: "From the report does AstraZeneca work with MyMadeUpCompany?"
+      user_prompt: "From the AstraZeneca-Sustainability-Report-2023.pdf file does AstraZeneca work with MyMadeUpCompany?"
       system_prompt_template: "extract-text-from-file-system-prompt"
       file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
     assert:

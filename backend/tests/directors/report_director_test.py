@@ -44,8 +44,6 @@ async def test_create_report_from_file(mocker):
 
 
     mock_update_session_file_uploads = mocker.patch("src.directors.report_director.update_session_file_uploads")
-    mock_update_session_file_upload_with_company = mocker.patch(
-        "src.directors.report_director.update_session_file_upload_with_company")
     mock_store_report = mocker.patch("src.directors.report_director.store_report", return_value=file_upload)
 
     file = UploadFile(
@@ -56,7 +54,6 @@ async def test_create_report_from_file(mocker):
     expected_response = {"filename": "test.txt", "id": str(mock_id), "report": mock_report, "answer": expected_answer}
 
     mock_update_session_file_uploads.assert_called_once_with(session_file)
-    mock_update_session_file_upload_with_company.assert_called_once_with(session_file, "CompanyABC")
     mock_store_report.assert_called_once_with(expected_response)
 
     mock_materiality_agent.list_material_topics_for_company.assert_called_once_with("CompanyABC")
