@@ -45,7 +45,7 @@ plt.plot([1, 2, 3], [4, 5, 6])
             raise Exception("generate_chart returned an unexpected failure in test")
 
         image_data = result.answer
-        decoded_image = base64.b64decode(image_data)
+        decoded_image = base64.b64decode(str(image_data))
 
         image = Image.open(BytesIO(decoded_image))
         image.verify()
