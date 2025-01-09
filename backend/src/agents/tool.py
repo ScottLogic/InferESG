@@ -9,12 +9,12 @@ class Parameter:
     required: bool = True
 
 
-DataResponse = list[Any] | dict[str, Any]
+ToolAnswerType = str | list[Any] | dict[str, Any]
 
 
 @dataclass
 class ToolActionSuccess:
-    content: str | DataResponse
+    answer: ToolAnswerType
 
 
 @dataclass

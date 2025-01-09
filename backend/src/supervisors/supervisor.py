@@ -20,7 +20,7 @@ async def solve_questions(questions: list[str]) -> None:
     for question in questions:
         try:
             result = await solve_question(question, get_scratchpad())
-            update_scratchpad(result.agent_name, question, result.content)
+            update_scratchpad(result.agent_name, question, result.answer)
         except Exception as error:
             update_scratchpad(error=str(error))
 

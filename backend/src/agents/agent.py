@@ -8,7 +8,7 @@ from src.llm import LLM, get_llm
 from src.agents.adapters import create_all_tools_str, extract_tool, validate_args
 from src.utils import get_scratchpad, Config
 from src.prompts import PromptEngine
-from src.agents.tool import Tool, ParameterisedTool, UtteranceTool, ToolActionFailure, ToolActionSuccess
+from src.agents.tool import Tool, ParameterisedTool, UtteranceTool, ToolActionFailure, ToolAnswerType
 
 logger = logging.getLogger(__name__)
 engine = PromptEngine()
@@ -29,7 +29,7 @@ class Agent(ABC):
 @dataclass
 class ChatAgentSuccess:
     agent_name: str
-    content: str
+    answer: ToolAnswerType
 
 
 @dataclass
@@ -84,13 +84,13 @@ class ChatAgent(Agent):
         if isinstance(result, ToolActionFailure):
             return ChatAgentFailure(name, f"{name} tool failed with: {result.reason}", result.retry)
 
-        if await self.validate(utterance, result.content):
-            return ChatAgentSuccess(name, result.content)
+        if await self.validate(utterance, result.answer):
+            return ChatAgentSuccess(name, result.answer)
 
         return ChatAgentFailure(name, f"{name} failed to create a response that would pass validation", True)
 
     @abstractmethod
-    async def validate(self, utterance: str, answer: ToolActionSuccess) -> bool:
+    async def validate(self, utterance: str, answer: ToolAnswerType) -> bool:
         pass
 
 

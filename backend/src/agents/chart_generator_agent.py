@@ -2,7 +2,7 @@ import logging
 from src.prompts import PromptEngine
 from src.agents.agent import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
-from src.agents.tool import Parameter, parameterised_tool, ToolActionSuccess, ToolActionFailure
+from src.agents.tool import Parameter, parameterised_tool, ToolActionSuccess, ToolActionFailure, ToolAnswerType
 from src.llm.llm import LLM
 from io import BytesIO
 import base64
@@ -103,5 +103,5 @@ async def generate_code_chart(
     tools=[generate_code_chart],
 )
 class ChartGeneratorAgent(BaseChatAgent):
-    async def validate(self, utterance: str, answer: ToolActionSuccess):
+    async def validate(self, utterance: str, answer: ToolAnswerType):
         return True
