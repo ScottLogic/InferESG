@@ -1,5 +1,5 @@
 from src.agents import ChatAgent, chat_agent, utterance_tool, parameterised_tool, Parameter
-from src.agents.tool import ToolActionSuccess, ToolActionFailure
+from src.agents.tool import ToolActionSuccess, ToolActionFailure, ToolAnswerType
 from tests.llm.mock_llm import MockLLM
 
 description = "A test tool"
@@ -54,7 +54,7 @@ async def mock_tool_failure(input: str, retry: bool, llm, model) -> ToolActionSu
     description="Used for mocking a failure response from the tool",
 )
 async def mock_utterance_tool(utterance: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
-    return ToolActionSuccess(content=utterance)
+    return ToolActionSuccess(utterance)
 
 
 mock_agent_description = "A test agent"
@@ -65,7 +65,7 @@ mock_tools = [mock_tool_a, mock_tool_b, mock_tool_failure, mock_utterance_tool]
 
 @chat_agent(name=mock_agent_name, description=mock_agent_description, tools=mock_tools)
 class MockChatAgent(ChatAgent):
-    async def validate(self, utterance: str, answer: str) -> bool:
+    async def validate(self, utterance: str, answer: ToolAnswerType) -> bool:
         return True
 
 

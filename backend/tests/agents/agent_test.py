@@ -4,6 +4,7 @@ from typing import Any
 import pytest
 from pytest import raises
 
+from src.agents.tool import ToolAnswerType
 from src.agents.agent import chat_agent, ChatAgent, ChatAgentSuccess, ChatAgentFailure
 from tests.agents import (
     MockChatAgent,
@@ -47,7 +48,7 @@ async def test_chat_agent_invoke_tool(
 ):
     @chat_agent(name="mock_chat_agent", description="mock_description", tools=[mock_tool_a])
     class MockChatAgentWithValidation(ChatAgent):
-        async def validate(self, utterance: str, answer: str) -> bool:
+        async def validate(self, utterance: str, answer: ToolAnswerType) -> bool:
             return pass_validation
 
     mocked_response = mock_response(mock_tool_a_name, {"input": tool_input})
@@ -146,7 +147,7 @@ async def test_chat_agent_tool_selection(
 ):
     @chat_agent(name="mock_chat_agent", description="mock_description", tools=tools)
     class MockChatAgentWithTools(ChatAgent):
-        async def validate(self, utterance: str, answer: str) -> bool:
+        async def validate(self, utterance: str, answer: ToolAnswerType) -> bool:
             return True
 
     mock_llm.chat = mocker.AsyncMock(return_value=str(mocked_response))
@@ -161,7 +162,7 @@ async def test_chat_agent_tool_selection(
 async def test_chat_agent_with_one_tool_of_type_base_tool(mocker):
     @chat_agent(name="mock_chat_agent", description="mock_description", tools=[mock_utterance_tool])
     class MockChatAgentWithTools(ChatAgent):
-        async def validate(self, utterance: str, answer: str) -> bool:
+        async def validate(self, utterance: str, answer: ToolAnswerType) -> bool:
             return True
 
     mock_chat_agent = MockChatAgentWithTools("mockllm", mock_model)

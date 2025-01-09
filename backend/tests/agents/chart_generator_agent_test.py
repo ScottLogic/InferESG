@@ -44,7 +44,7 @@ plt.plot([1, 2, 3], [4, 5, 6])
         if not isinstance(result, ToolActionSuccess):
             raise Exception("generate_chart returned an unexpected failure in test")
 
-        image_data = result.content
+        image_data = result.answer
         decoded_image = base64.b64decode(image_data)
 
         image = Image.open(BytesIO(decoded_image))
