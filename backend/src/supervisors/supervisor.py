@@ -30,7 +30,7 @@ async def solve_question(task, scratchpad) -> ChatAgentSuccess:
     unsuccessful_agents = []
     for attempt in range(number_of_attempts):
         if agent is None:
-            raise Exception(unsolvable_response if unsuccessful_agents else no_agent_response)
+            break
 
         logger.info(f"Agent selected: {agent.name}. Task is: {task}")
         answer = await agent.invoke(task)
@@ -38,10 +38,13 @@ async def solve_question(task, scratchpad) -> ChatAgentSuccess:
         if isinstance(answer, ChatAgentSuccess):
             return answer
         else:
-            is_final_attempt = attempt >= number_of_attempts - 2
-            if is_final_attempt:
-                agent = get_generalist_agent()
-            elif not answer.retry:
+            if not answer.retry:
                 unsuccessful_agents.append(answer.agent_name)
                 agent = await select_agent_for_task(task, scratchpad, unsuccessful_agents)
+
+    logger.info("Defaulting to Generalist Agent")
+    answer = await get_generalist_agent().invoke(task)
+    if isinstance(answer, ChatAgentSuccess):
+        return answer
+
     raise Exception(unsolvable_response)
