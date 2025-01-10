@@ -49,7 +49,8 @@ async def test_create_report_from_file(mocker):
     file = UploadFile(
         file=BytesIO(b"test"), size=12, headers=Headers({"content-type": "text/plain"}), filename="test.txt"
     )
-    response = await create_report_from_file(file)
+    file_contents = await file.read()
+    response = await create_report_from_file(file_contents, file.filename)
 
     expected_response = {"filename": "test.txt", "id": str(mock_id), "report": mock_report, "answer": expected_answer}
 
@@ -70,7 +71,8 @@ async def test_create_report_from_file_throws_when_missing_filename():
             headers=Headers({"content-type": "text/plain"}),
             filename="",
         )
-        await create_report_from_file(file)
+        file_contents = await file.read()
+        await create_report_from_file(file_contents, file.filename)
 
     assert error.value.status_code == 400
     assert error.value.detail == "Filename missing from file upload"

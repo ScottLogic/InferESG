@@ -87,14 +87,17 @@ def test_chat_message_not_found(mocker):
 
 
 def test_report_response_success(mocker):
-    mock_response = ReportResponse(filename="filename", id="1", report="some report md", answer="chat message")
-    mock_report = mocker.patch("src.api.app.create_report_from_file", return_value=mock_response)
+    mock_generate_report = mocker.patch("src.api.app.generate_report")
+    mock_check_file = mocker.patch("src.api.app.check_if_file_exists_in_openai", return_value=None)
+    mocker.patch("uuid.uuid4", return_value="mock-uuid")
 
     response = client.post("/report", files={"file": ("filename", "test data".encode("utf-8"), "text/plain")})
 
-    mock_report.assert_called_once()
     assert response.status_code == 200
-    assert response.json() == {"filename": "filename", "id": "1", "report": "some report md", "answer": "chat message"}
+    assert response.json() == {"message": "File uploaded successfully", "id": "mock-uuid"}
+
+    mock_generate_report.assert_called_once_with(b"test data", "filename", "mock-uuid")
+    mock_check_file.assert_called_once_with("filename")
 
 
 @pytest.mark.asyncio

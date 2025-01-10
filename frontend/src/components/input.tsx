@@ -5,6 +5,8 @@ import React, {
   useState,
   useLayoutEffect,
   useRef,
+  useContext,
+  useEffect,
 } from 'react';
 import styles from './input.module.css';
 import RightArrowIcon from '../icons/send.svg';
@@ -14,6 +16,7 @@ import { Suggestions } from './suggestions';
 import { Button } from './button';
 import { ChatMessageResponse, uploadFileToServer } from '../server';
 import { Role } from './message';
+import { MessageType, WebsocketContext } from '../session/websocket-context';
 
 export interface InputProps {
   appendMessage: (
@@ -23,7 +26,8 @@ export interface InputProps {
     sidePanelTitle?: string,
   ) => void;
   sendMessage: (message: string) => void;
-  waiting: boolean;
+  waiting: (isWaiting: boolean) => void;
+  isWaiting: boolean;
   suggestions: string[];
 }
 
@@ -32,11 +36,15 @@ export const Input = ({
   sendMessage,
   waiting,
   suggestions,
+  isWaiting,
 }: InputProps) => {
   const [userInput, setUserInput] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadInProgress, setUploadInProgress] = useState<boolean>(false);
+  const [uploadComplete, setUploadComplete] = useState<boolean>(false);
+  const { lastMessage } = useContext(WebsocketContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [currentReportId, setCurrentReportId] = useState<string | null>(null);
 
   const onChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
     setUserInput(event.target.value);
@@ -62,37 +70,68 @@ export const Input = ({
   }, [userInput]);
 
   const onSend = useCallback(
-    (event: FormEvent<HTMLElement>) => {
+    async (event: FormEvent<HTMLElement>) => {
       event.preventDefault();
-      if (!waiting && userInput.trim().length > 0) {
-        sendMessage(userInput);
+      if (!isWaiting && userInput.trim().length > 0) {
         setUserInput('');
+        waiting(true);
+
+        try {
+          await sendMessage(userInput);
+          waiting(false);
+        } catch (error) {
+          console.error(error);
+          waiting(false);
+        }
       }
     },
-    [sendMessage, userInput, waiting],
+    [sendMessage, userInput, isWaiting, waiting],
   );
 
   const uploadFile = async (file: File) => {
     setUploadInProgress(true);
+    setUploadComplete(false);
 
     try {
-      const { filename, report, id, answer } = await uploadFileToServer(file);
+      const { id } = await uploadFileToServer(file);
+      setCurrentReportId(id);
       setUploadedFile(file);
-      appendMessage(
-        {
-          id,
-          answer,
-        },
-        Role.Bot,
-        report,
-        `ESG Report - ${filename}`,
-      );
+      setUploadComplete(true);
+      waiting(true);
     } catch (error) {
+      waiting(false);
       console.error(error);
     } finally {
       setUploadInProgress(false);
     }
   };
+
+  useEffect(() => {
+    if (lastMessage) {
+      const actualType = Array.isArray(lastMessage.type)
+        ? lastMessage.type[0]
+        : lastMessage.type;
+
+      if (
+        actualType === MessageType.REPORT_COMPLETE &&
+        lastMessage.data &&
+        currentReportId
+      ) {
+        const reportData = JSON.parse(lastMessage.data);
+        appendMessage(
+          {
+            id: reportData.id,
+            answer: reportData.answer,
+          },
+          Role.Bot,
+          reportData.report,
+          `ESG Report - ${reportData.filename}`,
+        );
+        waiting(false);
+        setCurrentReportId(null);
+      }
+    }
+  }, [lastMessage, currentReportId, appendMessage, waiting]);
 
   return (
     <>
@@ -122,10 +161,11 @@ export const Input = ({
               onFileUpload={uploadFile}
               uploadInProgress={uploadInProgress}
               disabled={!!uploadedFile || uploadInProgress}
+              uploadComplete={uploadComplete}
             />
           </div>
           <div className={styles.sendButtonContainer}>
-            <Button icon={RightArrowIcon} disabled={waiting} />
+            <Button icon={RightArrowIcon} disabled={uploadInProgress} />
           </div>
         </div>
       </form>

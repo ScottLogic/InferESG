@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './app.module.css';
 import { Chat } from './components/chat';
 import { Input } from './components/input';
@@ -11,7 +11,6 @@ export const App = () => {
     appendMessage,
     sendMessage,
     messages,
-    waiting,
     suggestions,
     resetMessages,
     initSuggestions,
@@ -19,6 +18,7 @@ export const App = () => {
     selectedMessage,
   } = useMessages();
 
+  const [isWaiting, setWaiting] = useState(false);
   useEffect(() => {
     initSuggestions();
   }, []);
@@ -39,16 +39,18 @@ export const App = () => {
           <div className={styles.chatContainer}>
             <Chat
               messages={messages}
-              waiting={waiting}
+              waiting={isWaiting}
+              setWaiting={setWaiting}
               selectedMessage={selectedMessage}
               selectMessage={selectMessage}
             />
             <Input
               key={messages?.[0]?.time}
               sendMessage={sendMessage}
-              waiting={waiting}
               suggestions={suggestions}
               appendMessage={appendMessage}
+              waiting={setWaiting}
+              isWaiting={isWaiting}
             />
           </div>
         </div>

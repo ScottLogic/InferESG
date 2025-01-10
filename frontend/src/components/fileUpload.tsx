@@ -7,23 +7,28 @@ import CheckCircleIcon from '../icons/check-circle.svg';
 interface FileUploaderProps {
   onFileUpload: (file: File) => Promise<void>;
   uploadInProgress: boolean;
+  uploadComplete: boolean;
   disabled: boolean;
 }
 
 export const FileUpload = ({
   onFileUpload,
   uploadInProgress,
+  uploadComplete,
   disabled,
 }: FileUploaderProps) => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      onFileUpload(file);
+      try {
+        await onFileUpload(file);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
-
   const tooltipContent = disabled ? (
     <>
       <p>You already uploaded one file.</p>
@@ -47,7 +52,7 @@ export const FileUpload = ({
             src={UploadInProgressIcon}
             alt="Uploading..."
           />
-        ) : disabled ? (
+        ) : uploadComplete ? (
           <img src={CheckCircleIcon} alt="Upload Complete" />
         ) : (
           <img src={UploadIcon} alt="Upload" />

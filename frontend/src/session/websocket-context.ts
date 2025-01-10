@@ -5,6 +5,8 @@ export enum MessageType {
   CHAT = 'chat',
   IMAGE = 'image',
   CONFIRMATION = 'confirmation',
+  REPORT_IN_PROGRESS = 'report:in-progress',
+  REPORT_COMPLETE = 'report:complete',
 }
 
 export interface Message {

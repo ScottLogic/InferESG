@@ -1,10 +1,13 @@
 from contextlib import asynccontextmanager
+import json
 import logging.config
 import os
 from typing import NoReturn
-from fastapi import FastAPI, HTTPException, Response, WebSocket, UploadFile
+import uuid
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from src.session.llm_file_upload import get_llm_file_upload
 from src.utils.scratchpad import ScratchPadMiddleware
 from src.session.chat_response import get_session_chat_response_ids
 from src.chat_storage_service import clear_chat_messages, get_chat_message
@@ -18,6 +21,7 @@ from src.session import RedisSessionMiddleware
 from src.suggestions_generator import generate_suggestions
 from src.utils.file_utils import get_file_upload
 from src.llm.openai import OpenAILLMFileUploadManager
+from src.websockets.connection_manager import Message, MessageTypes
 
 config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.ini"))
 logging.config.fileConfig(fname=config_file_path, disable_existing_loggers=False)
@@ -133,16 +137,66 @@ async def suggestions():
 
 
 @app.post("/report")
-async def report(file: UploadFile):
-    logger.info(f"upload file type={file.content_type} name={file.filename} size={file.size}")
+async def report(file: UploadFile, background_tasks: BackgroundTasks):
+    logger.info(f"Uploading file: {file.filename}")
     try:
-        processed_upload = await create_report_from_file(file)
-        return JSONResponse(status_code=200, content=processed_upload)
+        file_contents = await file.read()
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="Filename missing from file upload.")
+
+        existing_id = await check_if_file_exists_in_openai(file.filename)
+        if existing_id:
+            logger.info(f"File {file.filename} already uploaded to OpenAI with id '{existing_id}'")
+
+            background_tasks.add_task(generate_report, file_contents, file.filename, existing_id)
+            return JSONResponse(
+                status_code=200,
+                content={"message": "File already uploaded", "id": existing_id},
+            )
+
+        new_id = str(uuid.uuid4())
+        background_tasks.add_task(generate_report, file_contents, file.filename, new_id)
+
+        return JSONResponse(
+            status_code=200,
+            content={"message": "File uploaded successfully", "id": new_id},
+        )
     except HTTPException as he:
         raise he
     except Exception as e:
         logger.exception(e)
         return JSONResponse(status_code=500, content=file_upload_failed_response)
+
+
+async def generate_report(file_contents: bytes, filename: str, file_id: str | None = None):
+    try:
+        logger.info(f"Generating report for file: {filename} with ID: {file_id}")
+        progress_message = Message(type=MessageTypes.REPORT_IN_PROGRESS, data="Report generation started")
+        await connection_manager.broadcast(progress_message)
+
+        report_response = await create_report_from_file(file_contents, filename)
+
+        complete_message = Message(
+            type=MessageTypes.REPORT_COMPLETE,
+            data=json.dumps(
+                {
+                    "id": file_id,
+                    "filename": report_response["filename"],
+                    "report": report_response["report"],
+                    "answer": report_response["answer"],
+                }
+            ),
+        )
+        await connection_manager.broadcast(complete_message)
+    except Exception as e:
+        logger.error(f"Error generating report: {e}")
+
+
+async def check_if_file_exists_in_openai(filename: str) -> str | None:
+    file_id = get_llm_file_upload(filename)
+    if file_id:
+        return file_id
+    return None
 
 
 @app.get("/report/{id}")

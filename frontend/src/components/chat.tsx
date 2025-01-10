@@ -12,6 +12,7 @@ import { Confirmation, ConfirmModal } from './confirm-modal';
 export interface ChatProps {
   messages: Message[];
   waiting: boolean;
+  setWaiting: (isWaiting: boolean) => void;
   selectedMessage: Message | null;
   selectMessage: (message: Message | null) => void;
 }
@@ -29,6 +30,7 @@ const mapWsMessageToConfirmation = (
 export const Chat = ({
   messages,
   waiting,
+  setWaiting,
   selectedMessage,
   selectMessage,
 }: ChatProps) => {
@@ -38,15 +40,29 @@ export const Chat = ({
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
 
   useEffect(() => {
-    if (lastMessage && lastMessage.type === MessageType.IMAGE) {
-      const imageData = `data:image/png;base64,${lastMessage.data}`;
-      setChart(imageData);
+    if (lastMessage) {
+      switch (lastMessage.type) {
+        case MessageType.REPORT_IN_PROGRESS:
+          setWaiting(true);
+          break;
+        case MessageType.REPORT_COMPLETE:
+          setWaiting(false);
+          break;
+        case MessageType.IMAGE: {
+          const imageData = `data:image/png;base64,${lastMessage.data}`;
+          setChart(imageData);
+          break;
+        }
+        case MessageType.CONFIRMATION: {
+          const newConfirmation = mapWsMessageToConfirmation(lastMessage);
+          if (newConfirmation) setConfirmation(newConfirmation);
+          break;
+        }
+        default:
+          break;
+      }
     }
-    if (lastMessage && lastMessage.type === MessageType.CONFIRMATION) {
-      const newConfirmation = mapWsMessageToConfirmation(lastMessage);
-      if (newConfirmation) setConfirmation(newConfirmation);
-    }
-  }, [lastMessage]);
+  }, [lastMessage, setWaiting]);
 
   useEffect(() => {
     if (containerRef.current) {
