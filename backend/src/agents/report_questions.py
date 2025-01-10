@@ -2,7 +2,7 @@
 QUESTIONS = {
     "Environmental": [
         {
-            "basic_question": "What environmental goals does this document describe?",
+            "report_question": "What environmental goals does this document describe?",
             "prompt": """
 ## What environmental goals does this document describe?
 Extract and analyze all environmental goals described in the document, including:
@@ -44,7 +44,7 @@ Please identify any environmental goals that:
 """,
         },
         {
-            "basic_question": "What beneficial environmental claims does the company make?",
+            "report_question": "What beneficial environmental claims does the company make?",
             "prompt": """
 ## What beneficial environmental claims does the company make?
 Please identify and analyze all environmental claims made by the company, including:
@@ -58,7 +58,7 @@ Please note any environmental claims that lack specific metrics or verification.
         """,
         },
         {
-            "basic_question": "What potential environment greenwashing can you identify that should be fact checked?",
+            "report_question": "What potential environment greenwashing can you identify that should be fact checked?",
             "prompt": """
 ## What potential environment greenwashing can you identify that should be fact checked?
 Analyze the company's environmental claims for potential greenwashing indicators by examining:
@@ -87,7 +87,7 @@ Please cite specific examples where claims require additional verification or ap
         """,
         },
         {
-            "basic_question": "What environmental regulations, standards or certifications can you identify in the document?",
+            "report_question": "What environmental regulations, standards or certifications can you identify in the document?",
             "prompt": """
 ## What environmental regulations, standards or certifications can you identify in the document?
 Identify and categorize all environmental regulations, standards, and certifications mentioned in the document, including:
@@ -123,7 +123,7 @@ Please note any expired certifications, pending renewals, or areas where require
     ],
     "Social": [
         {
-            "basic_question": "What social goals does this document describe?",
+            "report_question": "What social goals does this document describe?",
             "prompt": """
 ## What social goals does this document describe?
 Analyze all social goals and commitments described in the document, including:
@@ -160,7 +160,7 @@ Please note any social goals lacking specific metrics, timelines, or verificatio
 """,
         },
         {
-            "basic_question": "What beneficial societal claims does the company make?",
+            "report_question": "What beneficial societal claims does the company make?",
             "prompt": """
 ## What beneficial societal claims does the company make?
 Identify and analyze all societal benefit claims made by the company, including:
@@ -202,7 +202,7 @@ Please note any societal benefit claims that:
 """,
         },
         {
-            "basic_question": "What potential societal social-washing can you identify that should be fact checked?",
+            "report_question": "What potential societal social-washing can you identify that should be fact checked?",
             "prompt": """
 ## What potential societal social-washing can you identify that should be fact checked?
 Analyze the company's societal benefit claims for potential social-washing indicators by examining:
@@ -244,7 +244,7 @@ Please cite specific examples where:
 """,
         },
         {
-            "basic_question": "What societal regulations, standards or certifications can you identify in the document?",
+            "report_question": "What societal regulations, standards or certifications can you identify in the document?",
             "prompt": """
 ## What societal regulations, standards or certifications can you identify in the document?
 Identify and analyze all societal regulations, standards, and certifications mentioned in the document, including:
@@ -289,7 +289,7 @@ For each identified item, note:
     ],
     "Governance": [
         {
-            "basic_question": "What governance goals does this document describe?",
+            "report_question": "What governance goals does this document describe?",
             "prompt": """
 ## What governance goals does this document describe?
 Analyze all governance goals and commitments described in the document, including:
@@ -339,7 +339,7 @@ Please note any governance goals that lack:
 """,
         },
         {
-            "basic_question": "What beneficial governance claims does the company make?",
+            "report_question": "What beneficial governance claims does the company make?",
             "prompt": """
 ## What beneficial governance claims does the company make?
 Identify and analyze all beneficial governance claims made by the company, including:
@@ -388,7 +388,7 @@ Please identify claims that:
 """,
         },
         {
-            "basic_question": "What potential governance greenwashing can you identify that should be fact checked?",
+            "report_question": "What potential governance greenwashing can you identify that should be fact checked?",
             "prompt": """
 ## What potential governance greenwashing can you identify that should be fact checked?
 Analyze the company's governance claims for potential misrepresentation or overstatement by examining:
@@ -430,7 +430,7 @@ Please cite specific examples where:
 """,
         },
         {
-            "basic_question": "What governance regulations, standards or certifications can you identify in the document?",
+            "report_question": "What governance regulations, standards or certifications can you identify in the document?",
             "prompt": """
 ## What governance regulations, standards or certifications can you identify in the document?
 Identify and analyze all governance regulations, standards, and certifications mentioned in the document, including:
