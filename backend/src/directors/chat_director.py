@@ -34,8 +34,7 @@ async def question(question: str) -> ChatResponse:
     update_session_chat(role="user", content=question)
     logger.info(f"Intent determined: {intent}")
 
-    questions = intent_json["questions"]
-    await solve_questions(questions if len(questions) > 0 else [intent_json["question"]])
+    await solve_questions(intent_json["questions"])
 
     current_scratchpad = get_scratchpad()
 
@@ -52,7 +51,7 @@ async def question(question: str) -> ChatResponse:
 
     final_answer = FinalAnswer()
     try:
-        final_answer = await __create_final_answer(question, intent_json)
+        final_answer = await __create_final_answer(question)
         update_session_chat(role="system", content=final_answer.message)
     except Exception as error:
         logger.error(f"Error during answer generation: {error}", error)
@@ -74,18 +73,13 @@ async def question(question: str) -> ChatResponse:
     return response
 
 
-async def __create_final_answer(question: str, intent_json: dict) -> FinalAnswer:
-    dataset = None
-    if intent_json['result_type'] == 'dataset':
-        # get the last DatastoreAgent result dataset from the scratchpad
-        datastore_agents = [answer for answer in get_scratchpad() if answer['agent_name'] == 'DatastoreAgent']
-        query_result = datastore_agents[-1]['result'] if datastore_agents else None
-        if query_result is not None:
-            dataset = query_result
+async def __create_final_answer(question: str) -> FinalAnswer:
+    datastore_agents = [scratch for scratch in get_scratchpad() if scratch['agent_name'] == 'DatastoreAgent']
+    query_result = datastore_agents[-1]['result'] if datastore_agents else None
 
     message = await get_answer_agent().create_answer(question)
 
-    return FinalAnswer(message, dataset)
+    return FinalAnswer(message, query_result)
 
 
 async def dataset_upload() -> None:
