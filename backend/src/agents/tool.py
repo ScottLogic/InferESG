@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Callable, Coroutine, Any
 from dataclasses import dataclass, field
 
@@ -27,7 +28,7 @@ ToolAction = Callable[..., Coroutine[Any, Any, ToolActionSuccess | ToolActionFai
 
 
 @dataclass
-class Tool:
+class Tool(ABC):
     name: str
     description: str
     action: ToolAction

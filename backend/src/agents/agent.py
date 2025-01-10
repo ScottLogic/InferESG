@@ -76,10 +76,10 @@ class ChatAgent(Agent):
         try:
             (tool, parameters) = await self.__select_tool(utterance)
             logger.info(f"{name} selected tool [{tool.name}] with parameters [{parameters}]")
+
+            result = await tool.action(**parameters, llm=self.llm, model=self.model)
         except Exception as e:
             return ChatAgentFailure(name, f"{name} raised the following exception: {e}")
-
-        result = await tool.action(**parameters, llm=self.llm, model=self.model)
 
         if isinstance(result, ToolActionFailure):
             return ChatAgentFailure(name, f"{name} tool failed with: {result.reason}", result.retry)

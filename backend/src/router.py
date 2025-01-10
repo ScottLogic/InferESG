@@ -16,7 +16,7 @@ def find_agent_from_name(name):
     return next((agent for agent in get_chat_agents() if agent.name == name), None)
 
 
-async def get_agent_for_task(
+async def select_agent_for_task(
     task: str,
     scratchpad: Scratchpad,
     excluded_agents: Optional[list[str]] = None

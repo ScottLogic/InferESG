@@ -49,7 +49,7 @@ async def test_solve_questions(mocker):
     chat_agent.invoke = mocker.AsyncMock(side_effect=[chat_agent_success_1, chat_agent_success_2])
     spy_invoke = mocker.spy(chat_agent, 'invoke')
 
-    patched_get_agent = mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
+    patched_get_agent = mocker.patch("src.supervisors.supervisor.select_agent_for_task", return_value=chat_agent)
     mock_scratchpad = mocker.patch("src.supervisors.supervisor.update_scratchpad")
     await solve_questions(["question1", "question2"])
 
@@ -66,7 +66,7 @@ async def test_solve_question_when_first_agent_succeeds(mocker):
     chat_agent.invoke = mocker.AsyncMock(return_value=expected)
     spy_invoke = mocker.spy(chat_agent, 'invoke')
 
-    patched_get_agent = mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
+    patched_get_agent = mocker.patch("src.supervisors.supervisor.select_agent_for_task", return_value=chat_agent)
     answer = await solve_question(task, scratchpad)
 
     assert answer == expected
@@ -83,7 +83,7 @@ async def test_solve_question_when_agent_fails_first_attempt_and_succeeds_on_ret
     ])
     spy_invoke = mocker.spy(chat_agent, 'invoke')
 
-    patched_get_agent = mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
+    patched_get_agent = mocker.patch("src.supervisors.supervisor.select_agent_for_task", return_value=chat_agent)
     answer = await solve_question(task, scratchpad)
 
     assert answer == expected
@@ -101,25 +101,51 @@ async def test_solve_question_when_first_agent_fails_no_retry_and_second_agent_s
     good_agent.invoke = mocker.AsyncMock(return_value=expected)
     bad_agent.invoke = mocker.AsyncMock(return_value=ChatAgentFailure("MockChatAgent", "failure"))
 
-    good_agent_spy_invoke_1 = mocker.spy(good_agent, 'invoke')
-    bad_agent_spy_invoke_2 = mocker.spy(bad_agent, 'invoke')
+    good_agent_spy_invoke = mocker.spy(good_agent, 'invoke')
+    bad_agent_spy_invoke = mocker.spy(bad_agent, 'invoke')
 
     patched_get_agent = mocker.patch(
-        "src.supervisors.supervisor.get_agent_for_task",
+        "src.supervisors.supervisor.select_agent_for_task",
         side_effect=[bad_agent, good_agent]
     )
     answer = await solve_question(task, scratchpad)
 
     assert answer == expected
     assert patched_get_agent.call_count == 2
-    assert good_agent_spy_invoke_1.call_count == 1
-    assert bad_agent_spy_invoke_2.call_count == 1
+    assert good_agent_spy_invoke.call_count == 1
+    assert bad_agent_spy_invoke.call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_solve_question_when_no_agents_succeed_will_default_to_generalist(mocker):
+    expected = ChatAgentSuccess("MockChatAgent2", mock_answer)
+
+    bad_agent = MockChatAgent("mockllm", mock_model)
+    bad_agent.invoke = mocker.AsyncMock(return_value=ChatAgentFailure("MockChatAgent", "failure", retry=True))
+    bad_agent_spy_invoke = mocker.spy(bad_agent, 'invoke')
+
+    generalist_agent = MockChatAgent("mockllm", mock_model)
+    generalist_agent.invoke = mocker.AsyncMock(return_value=expected)
+    generalist_agent_spy_invoke = mocker.spy(generalist_agent, 'invoke')
+
+    patched_get_agent = mocker.patch("src.supervisors.supervisor.select_agent_for_task", return_value=bad_agent)
+    patched_generalist = mocker.patch(
+        "src.supervisors.supervisor.get_generalist_agent",
+        return_value=generalist_agent
+    )
+    answer = await solve_question(task, scratchpad)
+
+    assert patched_get_agent.call_count == 1
+    assert patched_generalist.call_count == 1
+    assert bad_agent_spy_invoke.call_count == 3
+    assert generalist_agent_spy_invoke.call_count == 1
+    assert answer == expected
 
 
 @pytest.mark.asyncio
 async def test_solve_question_unsolvable(mocker):
     chat_agent.invoke = mocker.MagicMock(return_value=ChatAgentFailure("MockChatAgent", "failure"))
-    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=chat_agent)
+    mocker.patch("src.supervisors.supervisor.select_agent_for_task", return_value=chat_agent)
 
     with pytest.raises(Exception) as error:
         await solve_question(task, scratchpad)
@@ -128,7 +154,7 @@ async def test_solve_question_unsolvable(mocker):
 
 @pytest.mark.asyncio
 async def test_solve_question_no_agent_found(mocker):
-    mocker.patch("src.supervisors.supervisor.get_agent_for_task", return_value=None)
+    mocker.patch("src.supervisors.supervisor.select_agent_for_task", return_value=None)
 
     with pytest.raises(Exception) as error:
         await solve_question(task, scratchpad)

@@ -31,14 +31,12 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
     urls = search_result.get("urls", [])
     logger.info(f"URLs found: {urls}")
 
-    # Step 2: Scrape content from the URLs found
     for url in urls:
         content = await perform_scrape(url)
         if not content:
             continue  # Skip to the next URL if no content is found
         logger.info(f"Content scraped for url: {url}")
         logger.info(f"Content scraped successfully: {content}")
-        # Step 3: Summarize the scraped content based on the search term
         summary = await summarise_content(search_query, content, llm, model)
 
         if summary:
