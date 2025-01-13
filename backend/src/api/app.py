@@ -150,18 +150,12 @@ async def report(file: UploadFile, background_tasks: BackgroundTasks):
         if existing_id:
             logger.info(f"File {file.filename} already uploaded to OpenAI with id '{existing_id}'")
 
-            background_tasks.add_task(generate_report, file_contents, file.filename, existing_id)
-            return JSONResponse(
-                status_code=200,
-                content={"message": "File already uploaded", "id": existing_id},
-            )
-        else:
-            new_id = str(uuid.uuid4())
-            background_tasks.add_task(generate_report, file_contents, file.filename, new_id)
+        file_id = existing_id if existing_id else str(uuid.uuid4())
+        background_tasks.add_task(generate_report, file_contents, file.filename, file_id)
 
         return JSONResponse(
             status_code=200,
-            content={"message": "File uploaded successfully", "id": new_id},
+            content={"message": "File uploaded successfully", "id": file_id},
         )
     except HTTPException as he:
         raise he
@@ -191,7 +185,9 @@ async def generate_report(file_contents: bytes, filename: str, file_id: str | No
         )
         await connection_manager.broadcast(complete_message)
     except Exception as e:
-        logger.error(f"Error generating report: {e}")
+        logger.exception(f"Error generating report: {e}")
+        error_message = Message(type=MessageTypes.REPORT_FAILED, data="Report generation failed")
+        await connection_manager.broadcast(error_message)
 
 
 async def check_if_file_exists_in_openai(filename: str) -> str | None:

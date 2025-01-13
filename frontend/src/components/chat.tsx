@@ -51,6 +51,9 @@ export const Chat = ({
         case MessageType.REPORT_CANCELLED:
           setWaiting(false);
           break;
+        case MessageType.REPORT_FAILED:
+          setWaiting(false);
+          break;
         case MessageType.IMAGE: {
           const imageData = `data:image/png;base64,${lastMessage.data}`;
           setChart(imageData);

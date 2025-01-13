@@ -15,6 +15,7 @@ class MessageTypes(Enum):
     REPORT_IN_PROGRESS = "report:in-progress"
     REPORT_COMPLETE = "report:complete"
     REPORT_CANCELLED = "report:cancelled"
+    REPORT_FAILED = "report:failed"
 
 
 @dataclass
