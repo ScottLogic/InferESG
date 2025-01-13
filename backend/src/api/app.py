@@ -102,6 +102,8 @@ async def chat(utterance: str):
 async def clear_chat():
     logger.info("Delete the chat session")
     try:
+        cancellation_message = Message(type=MessageTypes.REPORT_CANCELLED, data="Chat session cleared")
+        await connection_manager.broadcast(cancellation_message)
         # clear chatresponses and files first as need session data for keys
         clear_chat_messages(get_session_chat_response_ids())
         clear_session_file_uploads()
@@ -153,9 +155,9 @@ async def report(file: UploadFile, background_tasks: BackgroundTasks):
                 status_code=200,
                 content={"message": "File already uploaded", "id": existing_id},
             )
-
-        new_id = str(uuid.uuid4())
-        background_tasks.add_task(generate_report, file_contents, file.filename, new_id)
+        else:
+            new_id = str(uuid.uuid4())
+            background_tasks.add_task(generate_report, file_contents, file.filename, new_id)
 
         return JSONResponse(
             status_code=200,

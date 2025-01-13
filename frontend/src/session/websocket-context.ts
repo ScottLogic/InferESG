@@ -7,6 +7,7 @@ export enum MessageType {
   CONFIRMATION = 'confirmation',
   REPORT_IN_PROGRESS = 'report:in-progress',
   REPORT_COMPLETE = 'report:complete',
+  REPORT_CANCELLED = 'report:cancelled',
 }
 
 export interface Message {
