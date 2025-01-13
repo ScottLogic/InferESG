@@ -4,6 +4,8 @@ providers:
   - id: openai:gpt-4o
     config:
       temperature: 0
+      response_format:
+        type: json_object
 
 prompts: file://promptfoo_test_runner.py:create_prompt
 
@@ -24,7 +26,7 @@ tests:
       file_attachment: "../library/AstraZeneca-Sustainability-Report-2023.pdf"
     assert:
       - type: contains
-        value: "In 2023, we announced an expansion of our AZ Forest programme, raising our commitment to plant and ensure the long-term survival of 200 million trees by 2030, bringing our investment to $400m. This includes new or expanded projects in Brazil, India, Vietnam, Ghana, Rwanda and Kenya that will contribute to our climate action, restore nature, promote biodiversity and build ecological and community resilience, spanning over 100,000 hectares worldwide."
+        value: "We’re also restoring nature and supporting biodiversity through our AZ Forest programme, which expanded in 2023 to a $400 million initiative to plant and maintain 200 million trees by 2030."
 
   - description: "test find WWF collaboration - single match"
     vars:

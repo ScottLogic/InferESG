@@ -80,8 +80,12 @@ class OpenAI(LLM):
             ]
         )
 
-        run = await client.beta.threads.runs.create_and_poll(thread_id=thread.id,
-                                                             assistant_id=file_assistant.id, temperature=0)
+        run = await client.beta.threads.runs.create_and_poll(
+            thread_id=thread.id,
+            assistant_id=file_assistant.id,
+            temperature=0,
+            response_format={"type": "json_object"} if return_json else NOT_GIVEN,
+        )
 
         messages = await client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id)
 

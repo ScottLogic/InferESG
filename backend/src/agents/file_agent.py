@@ -1,5 +1,6 @@
 import logging
 
+from src.utils.json import to_json
 from src.llm.llm import LLMFile
 from src.agents.base_chat_agent import BaseChatAgent
 from src.prompts.prompting import PromptEngine
@@ -42,16 +43,17 @@ async def read_file(question, filename: str, llm, model)  -> ToolActionSuccess |
     logger.info(f"file {file}")
 
     if not file:
-        return ToolActionSuccess(f"No file {filename} available.")
+        return ToolActionFailure(f"No file {filename} available.")
 
     final_info = await llm.chat_with_file(
         model,
         system_prompt=engine.load_prompt("extract-text-from-file-system-prompt"),
         user_prompt=question,
-        files=[LLMFile(file["filename"], bytes())]
+        files=[LLMFile(file["filename"], bytes())],
+        return_json=True
         )
 
-    return ToolActionSuccess(final_info)
+    return ToolActionSuccess(to_json(final_info))
 
 
 @chat_agent(
