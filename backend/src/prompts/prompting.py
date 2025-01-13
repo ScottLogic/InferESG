@@ -23,3 +23,6 @@ class PromptEngine:
         except Exception as e:
             logger.exception(f"Error loading or rendering template: {e}")
             raise
+
+    def load_template(self, template_name: str, **kwargs) -> str:
+        return self.load_prompt(template_name, **kwargs)
