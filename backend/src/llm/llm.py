@@ -37,21 +37,13 @@ class LLM(ABC, metaclass=LLMMeta):
 
     @abstractmethod
     def chat(
-        self,
-        model: str,
-        system_prompt: str,
-        user_prompt: str,
-        return_json: bool = False
+        self, model: str, system_prompt: str, user_prompt: str, return_json: bool = False
     ) -> Coroutine[Any, Any, str]:
         pass
 
     @abstractmethod
     def chat_with_file(
-        self,
-        model: str,
-        system_prompt: str,
-        user_prompt: str,
-        files: list[LLMFile]
+        self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile], return_json: bool = False
     ) -> Coroutine:
         pass
 

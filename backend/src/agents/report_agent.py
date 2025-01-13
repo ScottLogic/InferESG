@@ -79,5 +79,6 @@ class ReportAgent(Agent):
             system_prompt=engine.load_prompt("find-company-name-from-file-system-prompt"),
             user_prompt=engine.load_prompt("find-company-name-from-file-user-prompt"),
             files=[file],
+            return_json=True,
         )
         return json.loads(response)["company_name"]

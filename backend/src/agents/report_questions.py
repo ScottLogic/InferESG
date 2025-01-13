@@ -2,59 +2,54 @@
 QUESTIONS = {
     "Environmental": [
         {
-            "report_question": "What environmental goals does this document describe?",
+            "report_question": "What environmental goals and claims does this document describe?",
             "prompt": """
-## What environmental goals does this document describe?
-Extract and analyze all environmental goals described in the document, including:
+## What environmental goals and claims does this document describe
+Analyze all environmental goals and beneficial claims described in the document, including:
 
-### Emissions and climate:
-* Specific greenhouse gas reduction targets with baseline years
-* Scope 1, 2, and 3 emissions coverage
-* Science-based targets alignment details
-* Energy efficiency goals with metrics
-* Renewable energy adoption targets
+### Emissions and climate commitments:
+* Specific greenhouse gas reduction targets with baseline years and progress
+* Scope 1, 2, and 3 emissions coverage and achievements
+* Science-based targets alignment and verification
+* Energy efficiency goals and current performance
+* Renewable energy adoption targets and progress
 
 ### Resource management:
-* Water usage reduction goals with specific metrics
-* Waste reduction and recycling targets
-* Raw material sourcing commitments
+* Water usage reduction goals and achievements
+* Waste reduction and recycling targets with current status
+* Raw material sourcing commitments and implementation
 * Circular economy initiatives with measurable outcomes
-* Resource efficiency metrics and deadlines
+* Resource efficiency metrics and performance data
 
 ### Biodiversity and ecosystems:
-* Land use and restoration targets
-* Species protection commitments
-* Habitat conservation goals
-* Environmental impact reduction metrics
-* Ecosystem services preservation plans
+* Land use and restoration targets with progress
+* Species protection commitments and achievements
+* Habitat conservation goals and current status
+* Environmental impact reduction metrics and results
+* Ecosystem services preservation implementation
 
-### Implementation framework:
-* Specific milestone dates
-* Investment commitments
-* Measurement methodologies
-* Verification processes
+### Implementation and verification:
+* Specific milestone dates and completion status
+* Investment commitments and actual spending
+* Measurement methodologies used
+* Third-party verification processes
 * Progress tracking mechanisms
 
-Please identify any environmental goals that:
-* Lack specific numerical targets
+For each goal and claim, identify:
+* Relationship between goals and achieved results
+* Supporting evidence and methodology
+* Independent verification status
+* Areas lacking specific metrics
+* Gaps between commitments and implementation
+* Timeline accuracy and progress rates
+
+Please note any environmental goals or claims that:
+* Lack quantifiable metrics
 * Have undefined timelines
 * Missing baseline measurements
 * Need verification methods
 * Have unclear scope definitions
-""",
-        },
-        {
-            "report_question": "What beneficial environmental claims does the company make?",
-            "prompt": """
-## What beneficial environmental claims does the company make?
-Please identify and analyze all environmental claims made by the company, including:
-* Specific quantifiable metrics or targets (e.g., CO2 reduction goals, waste reduction numbers)
-* Time periods for these commitments
-* Current progress against stated goals
-* Third-party verification or certification of claims
-* Supporting evidence or methodology used to measure impact
-
-Please note any environmental claims that lack specific metrics or verification. For claims with numerical targets, include baseline years and target completion dates.
+* Show misalignment between goals and achievements
         """,
         },
         {
@@ -62,27 +57,22 @@ Please note any environmental claims that lack specific metrics or verification.
             "prompt": """
 ## What potential environment greenwashing can you identify that should be fact checked?
 Analyze the company's environmental claims for potential greenwashing indicators by examining:
-
 ### Quantitative verification:
 * Compare stated environmental metrics against industry standard measurements
 * Identify any missing baseline data or calculation methodologies
 * Flag claims using non-standard or proprietary measurement methods
-
 ### Timeline accuracy:
 * Check for vague or distant target dates without interim milestones
 * Identify any missed previous environmental commitments
 * Compare progress rates against stated goals
-
 ### Scope definition:
 * Examine whether environmental claims cover all operations or select facilities
 * Identify any excluded business units or geographical regions
 * Check if supply chain impacts are included in environmental calculations
-
 ### Documentation gaps:
 List environmental claims lacking third-party verification
 Flag any missing emissions scopes (1, 2, or 3) in carbon reporting
 Note absence of standardized reporting frameworks (GRI, SASB, TCFD)
-
 Please cite specific examples where claims require additional verification or appear inconsistent with available data.
         """,
         },
@@ -123,81 +113,53 @@ Please note any expired certifications, pending renewals, or areas where require
     ],
     "Social": [
         {
-            "report_question": "What social goals does this document describe?",
+            "report_question": "What social goals and claims does this document describe?",
             "prompt": """
-## What social goals does this document describe?
-Analyze all social goals and commitments described in the document, including:
+## What social goals and claims does this document describe?
+Analyze all social goals and societal benefit claims described in the document, including:
 
 ### Workforce initiatives:
-* Specific diversity, equity, and inclusion targets with deadlines
-* Employee training and development programs with participation metrics
-* Worker safety objectives with quantifiable measures
-* Labor rights commitments and verification methods
-* Compensation and benefits targets
+* Specific diversity, equity, and inclusion targets with progress metrics
+* Employee development programs with participation rates and outcomes
+* Worker safety objectives and achievement data
+* Labor rights commitments and implementation status
+* Compensation and benefits targets with current performance
 
 ### Community impact:
-* Quantified community investment goals
-* Specific beneficiary populations with reach metrics
-* Local employment or procurement targets
-* Community engagement program metrics
-* Timeline for community-focused initiatives
+* Quantified community investment goals and actual spending
+* Specific beneficiary populations with reach metrics and validation
+* Local employment or procurement targets and achievements
+* Economic contribution data with verification
+* Infrastructure investment commitments and implementation
 
 ### Supply chain responsibility:
-* Supplier code of conduct requirements
-* Human rights due diligence processes
-* Fair labor practice verification methods
-* Supplier diversity targets
-* Audit frequencies and coverage
+* Supplier code of conduct requirements and compliance rates
+* Human rights due diligence processes and findings
+* Fair labor practice verification results
+* Supplier diversity targets and current status
+* Audit frequencies and compliance outcomes
 
-### Implementation details:
-* Baseline measurements for each goal
-* Specific target dates and milestones
-* Current progress metrics
-* Responsible parties or oversight mechanisms
-* Independent verification methods
+### Social value creation:
+* Healthcare or education access improvements with metrics
+* Poverty reduction initiatives with measured outcomes
+* Quality of life improvements with verification data
+* Technology access goals and achievement rates
+* Knowledge transfer initiatives with impact measures
 
-Please note any social goals lacking specific metrics, timelines, or verification methods.
-""",
-        },
-        {
-            "report_question": "What beneficial societal claims does the company make?",
-            "prompt": """
-## What beneficial societal claims does the company make?
-Identify and analyze all societal benefit claims made by the company, including:
-
-### Economic impact claims:
-* Job creation numbers with timeframes
-* Local economic contribution metrics
-* Tax contribution data
-* Supply chain economic impacts
-* Investment in local infrastructure
-
-### Social value claims:
-* Specific beneficiary populations with reach metrics
-* Healthcare or education access improvements
-* Poverty reduction initiatives with metrics
-* Quality of life improvements with measurements
-* Technology access or digital inclusion data
-
-### Innovation claims:
-* Research and development investments
-* Patents or technological advances
-* Societal problem solutions
-* Access to essential services
-* Knowledge transfer initiatives
-
-### Verification elements:
-* Independent assessment methods
-* Measurement methodologies
+For each goal and claim, identify:
+* Relationship between commitments and achievements
+* Measurement methodologies used
+* Independent verification status
 * Baseline comparisons
 * Progress tracking mechanisms
-* Third-party validations
+* Implementation timelines and current status
 
-Please note any societal benefit claims that:
+Please note any goals or claims that:
 * Lack quantifiable metrics
 * Have undefined measurement methods
 * Missing impact assessments
 * Need independent verification
+* Show gaps between goals and achievements
 * Make broad generalizations without evidence
 """,
         },
@@ -289,102 +251,56 @@ For each identified item, note:
     ],
     "Governance": [
         {
-            "report_question": "What governance goals does this document describe?",
+            "report_question": "What governance goals and claims does this document describe?",
             "prompt": """
-## What governance goals does this document describe?
-Analyze all governance goals and commitments described in the document, including:
+## What governance goals and claims does this document describe?
+Analyze all governance goals and beneficial governance claims described in the document, including:
 
-### Board structure and oversight:
-* Board composition targets with deadlines
-* Independence requirements
-* Diversity objectives with metrics
-* Committee structure goals
-* Succession planning frameworks
+### Board structure and effectiveness:
+* Board composition targets and current metrics
+* Independence requirements and achievement rates
+* Diversity objectives and current statistics
+* Committee structure goals and implementation
+* Meeting attendance targets and actual rates
+* Skills matrix objectives and current coverage
 
-### Risk management:
-* Specific risk oversight mechanisms
-* Compliance program targets
-* Internal control objectives
-* Audit frequency requirements
-* Incident response protocols
+### Risk and compliance management:
+* Specific risk oversight mechanisms and performance
+* Compliance program targets and achievement rates
+* Internal control objectives and effectiveness measures
+* Audit frequency requirements and completion rates
+* Incident response protocols and implementation results
 
 ### Ethics and transparency:
-* Anti-corruption program metrics
-* Whistleblower protection goals
-* Disclosure requirements
-* Reporting frequency targets
-* Stakeholder engagement frameworks
+* Anti-corruption program metrics and performance
+* Whistleblower protection goals and implementation
+* Disclosure requirements and completion rates
+* Stakeholder engagement targets and achievement
+* Information accessibility measures and results
 
-### Implementation details:
-* Specific timeline commitments
-* Measurement methodologies
+### Implementation and verification:
+* Timeline commitments and completion status
+* Measurement methodologies used
 * Progress tracking mechanisms
-* Accountability structures
-* Independent verification processes
-
-For each goal, identify:
-* Quantifiable targets
-* Baseline measurements
-* Implementation deadlines
-* Responsible parties
-* Verification methods
-* Performance indicators
-
-Please note any governance goals that lack:
-* Specific metrics
-* Clear timelines
-* Verification processes
-* Accountability measures
-* Progress tracking methods
-""",
-        },
-        {
-            "report_question": "What beneficial governance claims does the company make?",
-            "prompt": """
-## What beneficial governance claims does the company make?
-Identify and analyze all beneficial governance claims made by the company, including:
-
-### Board effectiveness:
-* Board independence metrics
-* Diversity statistics and trends
-* Meeting attendance rates
-* Skills matrix coverage
-* Committee performance measures
-
-### Risk and compliance:
-* Specific compliance achievement rates
-* Risk management effectiveness metrics
-* Audit findings and resolutions
-* Incident response statistics
-* Control effectiveness measures
-
-### Transparency claims:
-* Disclosure comprehensiveness metrics
-* Reporting framework adherence
-* Stakeholder engagement statistics
-* Information accessibility measures
-* Response times to inquiries
-
-### Verification elements:
+* Accountability structures in place
 * Independent assessment results
-* External ratings or rankings
-* Peer comparison data
-* Industry benchmark positions
-* Third-party evaluations
+* External ratings or benchmark positions
 
-For each claim, note:
-* Specific measurement methods
-* Comparative industry data
+For each goal and claim, identify:
+* Relationship between commitments and achievements
+* Supporting evidence and methodology
+* Comparative industry context
 * Historical performance trends
-* Supporting evidence
-* External validation
+* External validation status
+* Implementation effectiveness
 
-Please identify claims that:
-* Lack quantitative support
+Please note any goals or claims that:
+* Lack specific metrics
 * Need independent verification
-* Make broad generalizations
-* Omit contextual data
-* Use non-standard metrics
+* Have unclear accountability measures
+* Show gaps between policy and practice
+* Use non-standard measurements
+* Make unsubstantiated comparisons
 """,
         },
         {

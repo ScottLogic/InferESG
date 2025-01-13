@@ -36,17 +36,13 @@ class Mistral(LLM):
         return content
 
     async def chat_with_file(
-        self,
-        model: str,
-        system_prompt: str,
-        user_prompt: str,
-        files: list[LLMFile],
+        self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile], return_json=False
     ) -> str:
         try:
             for file in files:
                 file = handle_file_upload(file)
                 extracted_content = file["content"]
                 user_prompt += f"\n\nDocument:\n{extracted_content}"
-            return await self.chat(model, system_prompt, user_prompt)
+            return await self.chat(model, system_prompt, user_prompt, return_json)
         except Exception as file_error:
             raise HTTPException(status_code=500, detail=f"Failed to process files: {str(file_error)}") from file_error

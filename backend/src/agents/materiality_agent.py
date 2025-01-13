@@ -75,6 +75,7 @@ class MaterialityAgent(BaseChatAgent):
             self.model,
             system_prompt=engine.load_prompt("list-material-topics-system-prompt"),
             user_prompt=f"What topics are material for {company_name}?",
-            files=create_llm_files(materiality_files)
+            files=create_llm_files(materiality_files),
+            return_json=True,
         )
         return json.loads(materiality_topics)["material_topics"]

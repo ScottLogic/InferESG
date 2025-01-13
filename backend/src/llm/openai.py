@@ -54,7 +54,9 @@ class OpenAI(LLM):
             logger.error(f"Error calling OpenAI model: {e}")
             return "An error occurred while processing the request."
 
-    async def chat_with_file(self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile]) -> str:
+    async def chat_with_file(
+        self, model: str, system_prompt: str, user_prompt: str, files: list[LLMFile], return_json=False
+    ) -> str:
         client = AsyncOpenAI(api_key=config.openai_key)
         file_ids = await OpenAILLMFileUploadManager().upload_files(files)
 
@@ -63,6 +65,7 @@ class OpenAI(LLM):
             instructions=system_prompt,
             model=model,
             tools=[{"type": "file_search"}],
+            response_format={"type": "json_object"} if return_json else NOT_GIVEN,
         )
 
         thread = await client.beta.threads.create(
