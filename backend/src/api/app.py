@@ -7,7 +7,7 @@ import uuid
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Response, WebSocket, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from src.session.llm_file_upload import get_llm_file_upload
+from src.session.llm_file_upload import get_llm_file_upload_id
 from src.utils.scratchpad import ScratchPadMiddleware
 from src.session.chat_response import get_session_chat_response_ids
 from src.chat_storage_service import clear_chat_messages, get_chat_message
@@ -146,7 +146,7 @@ async def report(file: UploadFile, background_tasks: BackgroundTasks):
         if not file.filename:
             raise HTTPException(status_code=400, detail="Filename missing from file upload.")
 
-        existing_id = await check_if_file_exists_in_openai(file.filename)
+        existing_id = get_llm_file_upload_id(file.filename)
         if existing_id:
             logger.info(f"File {file.filename} already uploaded to OpenAI with id '{existing_id}'")
 
@@ -164,13 +164,13 @@ async def report(file: UploadFile, background_tasks: BackgroundTasks):
         return JSONResponse(status_code=500, content=file_upload_failed_response)
 
 
-async def generate_report(file_contents: bytes, filename: str, file_id: str | None = None):
+async def generate_report(file_contents: bytes, filename: str, file_id: str ):
     try:
         logger.info(f"Generating report for file: {filename} with ID: {file_id}")
         progress_message = Message(type=MessageTypes.REPORT_IN_PROGRESS, data="Report generation started")
         await connection_manager.broadcast(progress_message)
 
-        report_response = await create_report_from_file(file_contents, filename)
+        report_response = await create_report_from_file(file_contents, filename, file_id)
 
         complete_message = Message(
             type=MessageTypes.REPORT_COMPLETE,
@@ -188,14 +188,6 @@ async def generate_report(file_contents: bytes, filename: str, file_id: str | No
         logger.exception(f"Error generating report: {e}")
         error_message = Message(type=MessageTypes.REPORT_FAILED, data="Report generation failed")
         await connection_manager.broadcast(error_message)
-
-
-async def check_if_file_exists_in_openai(filename: str) -> str | None:
-    file_id = get_llm_file_upload(filename)
-    if file_id:
-        return file_id
-    return None
-
 
 @app.get("/report/{id}")
 def download_report(id: str):

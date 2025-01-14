@@ -1,5 +1,5 @@
+import sys
 import uuid
-
 from fastapi import HTTPException
 from src.llm.llm import LLMFile
 from src.session.file_uploads import (
@@ -13,11 +13,26 @@ from src.agents import get_report_agent, get_materiality_agent
 MAX_FILE_SIZE = 10 * 1024 * 1024
 
 
-async def create_report_from_file(file_contents: bytes, filename: str | None) -> ReportResponse:
+async def create_report_from_file(file_contents: bytes, filename: str | None, file_id:  str ) -> ReportResponse:
+    file_size = sys.getsizeof(file_contents)
+
     if filename is None or filename == "":
         raise HTTPException(status_code=400, detail="Filename missing from file upload")
 
+    if file_size > MAX_FILE_SIZE:
+        raise HTTPException(status_code=413, detail=f"File upload must be less than {MAX_FILE_SIZE} bytes")
+
+
     file = LLMFile(filename=filename, file=file_contents)
+
+    session_file = FileUpload(
+        id=file_id,
+        filename=file.filename,
+        upload_id=None,
+        content=None
+    )
+
+    update_session_file_uploads(session_file)
 
     report_agent = get_report_agent()
 
