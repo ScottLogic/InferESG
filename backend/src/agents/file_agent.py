@@ -4,8 +4,8 @@ from src.utils.json import to_json
 from src.llm.llm import LLMFile
 from src.agents.base_chat_agent import BaseChatAgent
 from src.prompts.prompting import PromptEngine
-from .agent import chat_agent
-from .tool import Parameter, ToolActionFailure, ToolActionSuccess, tool
+from src.agents.agent import chat_agent
+from src.agents.tool import Parameter, ToolActionFailure, ToolActionSuccess, tool, CommonParameters
 from src.utils.config import Config
 from src.session.file_uploads import get_file_meta_for_filename, get_session_file_uploads_meta
 
@@ -14,7 +14,7 @@ config = Config()
 engine = PromptEngine()
 
 
-def generate_files_description(self) -> str:
+def generate_files_description() -> str:
     file_meta = get_session_file_uploads_meta() or []
     filenames = [file["filename"] for file in file_meta]
 
@@ -24,16 +24,16 @@ def generate_files_description(self) -> str:
 @tool(
     name="read_file",
     description="Extract parts of the content of a text or pdf file",
-    requires_user_question=True,
     parameters={
+        **CommonParameters.USER_QUESTION,
         "filename": Parameter(
             type="string",
             description="The name of the file to extract related information from",
         ),
     },
 )
-async def read_file(question, filename: str, llm, model)  -> ToolActionSuccess | ToolActionFailure:
-    logger.info(f"intent {question} filename {filename}")
+async def read_file(user_question, filename: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
+    logger.info(f"intent {user_question} filename {filename}")
 
     file = get_file_meta_for_filename(filename)
     logger.info(f"file {file}")
@@ -44,7 +44,7 @@ async def read_file(question, filename: str, llm, model)  -> ToolActionSuccess |
     final_info = await llm.chat_with_file(
         model,
         system_prompt=engine.load_prompt("extract-text-from-file-system-prompt"),
-        user_prompt=question,
+        user_prompt=user_question,
         files=[LLMFile(file["filename"], bytes())],
         return_json=True
         )
