@@ -8,7 +8,7 @@ from src.utils import to_json
 from src.utils.log_publisher import LogPrefix, publish_log_info
 from src.agents.agent import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
-from src.agents.tool import Parameter, parameterised_tool, ToolActionSuccess, ToolActionFailure
+from src.agents.tool import tool, Parameter, ToolActionSuccess, ToolActionFailure
 from src.utils.semantic_layer_builder import get_semantic_layer
 
 logger = logging.getLogger(__name__)
@@ -53,7 +53,7 @@ async def generate_cypher_query_core(
     return ToolActionSuccess(response)
 
 
-@parameterised_tool(
+@tool(
     name="generate cypher query",
     description="Generate Cypher query if the category is data driven, based on the operation to be performed",
     parameters={
@@ -67,10 +67,8 @@ async def generate_cypher_query_core(
         ),
         "question_params": Parameter(
             type="string",
-            description="""
-                The specific parameters required for the question to be answered with the question_intent
-                or none if no params required
-            """,
+            description="The specific parameters required for the question to be answered with the question_intent"
+            "or none if no params required"
         ),
         "aggregation": Parameter(
             type="string",
@@ -106,7 +104,11 @@ async def get_semantic_layer_cache(llm, model):
 
 @chat_agent(
     name="DatastoreAgent",
-    description="This agent is responsible for handling database queries to the bloomberg.csv dataset. This includes retrieving ESG scores, financial metrics, and other bloomberg-specific information. It interacts with the graph database to extract, process, and return ESG-related information from various sources, such as company sustainability reports or fund portfolios. This agent can not complete any task that is not specifically about the bloomberg.csv dataset.",  # noqa: E501
+    description="This agent is responsible for answering questions about the bloomberg.csv dataset. This includes "
+                "retrieving ESG scores, financial metrics, and other bloomberg-specific information. It interacts with "
+                "the graph database to extract, process, and return ESG-related information from various sources, such "
+                "as company sustainability reports or fund portfolios. This agent can not answer questions that do not "
+                "specifically reference the bloomberg.csv dataset.",
     tools=[generate_cypher],
 )
 class DatastoreAgent(BaseChatAgent):

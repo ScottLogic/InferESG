@@ -1,6 +1,5 @@
-import json
 import logging
-from typing import Optional
+from typing import Optional, Tuple, Any
 
 from src.utils import to_json, Config, Scratchpad
 from src.prompts import PromptEngine
@@ -12,38 +11,39 @@ prompt_engine = PromptEngine()
 config = Config()
 
 
-def find_agent_from_name(name):
+def find_selected_agent(name: str) -> ChatAgent | None:
     return next((agent for agent in get_chat_agents() if agent.name == name), None)
 
 
-async def select_agent_for_task(
+async def select_tool_for_question(
     task: str,
     scratchpad: Scratchpad,
     excluded_agents: Optional[list[str]] = None
-) -> ChatAgent | None:
+) -> Tuple[ChatAgent, str, dict[str, Any]] | None:
     if excluded_agents is None:
         excluded_agents = []
-
-    agents = [
-        {"name": agent.name, "description": agent.description() if callable(agent.description) else agent.description}
-        for agent in get_chat_agents() if agent.name not in excluded_agents
-    ]
-    logger.info("#####  ~  Calling LLM for next best step  ~  #####")
-    logger.info(f"Scratchpad so far: {scratchpad}")
-    logger.info(f"Agents: {agents}")
 
     if not config.router_model:
         raise Exception("Router config model missing")
 
+    agents = [
+        agent.get_agent_details()
+        for agent in get_chat_agents() if agent.name not in excluded_agents
+    ]
+    logger.info("#####  ~  Calling LLM for next best step  ~  #####")
+    logger.info(f"Excluded agents: {excluded_agents}")
+    logger.info(f"Scratchpad so far: {scratchpad}")
+
     best_next_step_response = await get_llm(config.router_llm).chat(
         config.router_model,
-        prompt_engine.load_prompt(
-            "agent-selection-system-prompt", list_of_agents=json.dumps(agents, indent=4)
-        ),
-        prompt_engine.load_prompt("agent-selection-user-prompt", task=task),
+        prompt_engine.load_prompt("agent-selection-system-prompt"),
+        prompt_engine.load_prompt("agent-selection-user-prompt", list_of_agents_and_tools=agents, question=task),
         return_json=True
     )
 
     best_next_step = to_json(best_next_step_response, "Failed to interpret LLM next step format from step string")
+    agent = find_selected_agent(best_next_step["agent"])
+    tool_name = best_next_step["tool"]
+    parameters = best_next_step["parameters"]
 
-    return find_agent_from_name(best_next_step["agent_name"])
+    return agent, tool_name, parameters

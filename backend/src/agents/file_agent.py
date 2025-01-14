@@ -5,7 +5,7 @@ from src.llm.llm import LLMFile
 from src.agents.base_chat_agent import BaseChatAgent
 from src.prompts.prompting import PromptEngine
 from .agent import chat_agent
-from .tool import Parameter, ToolActionFailure, ToolActionSuccess, parameterised_tool
+from .tool import Parameter, ToolActionFailure, ToolActionSuccess, tool
 from src.utils.config import Config
 from src.session.file_uploads import get_file_meta_for_filename, get_session_file_uploads_meta
 
@@ -21,20 +21,16 @@ def generate_files_description(self) -> str:
     return f"Extract parts of the following files {", ".join(filenames)}"
 
 
-@parameterised_tool(
+@tool(
     name="read_file",
     description="Extract parts of the content of a text or pdf file",
+    requires_user_question=True,
     parameters={
-        "question": Parameter(
-            type="string",
-            description="The question that is being asked",
-        ),
         "filename": Parameter(
             type="string",
             description="The name of the file to extract related information from",
         ),
     },
-
 )
 async def read_file(question, filename: str, llm, model)  -> ToolActionSuccess | ToolActionFailure:
     logger.info(f"intent {question} filename {filename}")

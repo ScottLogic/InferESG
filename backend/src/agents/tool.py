@@ -1,6 +1,5 @@
-from abc import ABC
-from typing import Callable, Coroutine, Any
-from dataclasses import dataclass, field
+from typing import Callable, Coroutine, Any, Optional
+from dataclasses import dataclass
 
 
 @dataclass
@@ -28,35 +27,25 @@ ToolAction = Callable[..., Coroutine[Any, Any, ToolActionSuccess | ToolActionFai
 
 
 @dataclass
-class Tool(ABC):
+class Tool:
     name: str
     description: str
     action: ToolAction
+    parameters: Optional[dict[str, Parameter]] = None
 
 
-@dataclass
-class UtteranceTool(Tool):
-    """This class represents tools which require utterance only"""
-
-
-@dataclass
-class ParameterisedTool(Tool):
-    parameters: dict[str, Parameter] = field(default_factory=lambda: {})
-
-
-def utterance_tool(name: str, description: str) -> Callable[[ToolAction], UtteranceTool]:
-    def create_tool_from(action: ToolAction) -> UtteranceTool:
-        return UtteranceTool(name, description, action)
-
-    return create_tool_from
-
-
-def parameterised_tool(
+def tool(
     name: str,
     description: str,
-    parameters: dict[str, Parameter]
-) -> Callable[[ToolAction], ParameterisedTool]:
-    def create_tool_from(action: ToolAction) -> ParameterisedTool:
-        return ParameterisedTool(name, description, action, parameters)
+    requires_user_question: Optional[bool] = False,
+    parameters: Optional[dict[str, Parameter]] = None
+) -> Callable[[ToolAction], Tool]:
+    if not parameters:
+        parameters = {}
+
+    def create_tool_from(action: ToolAction) -> Tool:
+        if requires_user_question:
+            parameters["user_question"] = Parameter(type="string", description="The full question asked by the user.")
+        return Tool(name, description, action, parameters)
 
     return create_tool_from

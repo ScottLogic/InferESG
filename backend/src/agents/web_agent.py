@@ -2,7 +2,7 @@ import logging
 from src.prompts import PromptEngine
 from src.agents.agent import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
-from src.agents.tool import parameterised_tool, Parameter, ToolActionSuccess, ToolActionFailure
+from src.agents.tool import tool, Parameter, ToolActionSuccess, ToolActionFailure
 from src.utils import Config
 from src.utils.web_utils import (
     search_urls,
@@ -36,7 +36,7 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
         if not content:
             continue  # Skip to the next URL if no content is found
         logger.info(f"Content scraped for url: {url}")
-        logger.info(f"Content scraped successfully: {content}")
+        logger.debug(f"Content scraped successfully: {content}")
         summary = await summarise_content(search_query, content, llm, model)
 
         if summary:
@@ -70,7 +70,7 @@ async def web_pdf_download_core(pdf_url, llm, model) -> ToolActionSuccess | Tool
         return ToolActionFailure("An error occurred while processing the search query.")
 
 
-@parameterised_tool(
+@tool(
     name="web_general_search",
     description=(
         "Search the internet based on the query provided and then get the meaningful answer from the content found"
@@ -86,7 +86,7 @@ async def web_general_search(search_query, llm, model) -> ToolActionSuccess | To
     return await web_general_search_core(search_query, llm, model)
 
 
-@parameterised_tool(
+@tool(
     name="web_pdf_download",
     description=("Download the data from the provided pdf url"),
     parameters={
@@ -114,7 +114,7 @@ async def web_scrape_core(url: str) -> ToolActionSuccess | ToolActionFailure:
         return ToolActionFailure(str(e))
 
 
-@parameterised_tool(
+@tool(
     name="web_scrape",
     description="Scrapes the content from the given URL.",
     parameters={
@@ -157,8 +157,9 @@ async def perform_pdf_summarization(content: str, llm: Any, model: str) -> str:
 
 @chat_agent(
     name="WebAgent",
-    description="This agent can perform general internet searches to complete the task by retrieving and summarizing the results and it can also perform web scrapes to retreive specific inpormation from web pages.",  # noqa: E501
-    tools=[web_general_search, web_pdf_download, web_scrape],
+    description="This agent can search the internet to answer questions which require current information or general "
+                "ESG or company related questions.",
+    tools=[web_general_search],
 )
 class WebAgent(BaseChatAgent):
     pass

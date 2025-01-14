@@ -2,9 +2,9 @@ import json
 from pathlib import Path
 import logging
 
-from src.agents.tool import ToolActionSuccess, ToolActionFailure
+from src.agents.tool import ToolActionSuccess, ToolActionFailure, Parameter
 from src.llm import LLM
-from src.agents import utterance_tool
+from src.agents import tool
 from src.llm import LLMFile
 from src.agents import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
@@ -21,7 +21,7 @@ def create_llm_files(filenames: list[str]) -> list[LLMFile]:
     ]
 
 
-async def select_material_files(utterance, llm: LLM, model) -> list[str]:
+async def select_material_files(subject: str, llm: LLM, model) -> list[str]:
     with open('./library/catalogue.json') as file:
         catalogue = json.load(file)
         files_json = await llm.chat(
@@ -30,39 +30,48 @@ async def select_material_files(utterance, llm: LLM, model) -> list[str]:
                 "select-material-files-system-prompt",
                 catalogue=catalogue
             ),
-            user_prompt=utterance,
+            user_prompt=subject,
             return_json=True
         )
         return json.loads(files_json)["files"]
 
 
-@utterance_tool(
-    name="answer materiality question",
-    description="This tool can help answer questions about ESG Materiality, what topics are relevant to a company"
-                "or sector and explain materiality topics in detail. The Materiality Agent can also answer"
-                "questions about typical sector activities, value chain and business relationships."
+@tool(
+    name="answer_materiality_question",
+    description="This tool can answer questions about ESG Materiality for a specific named company or "
+                "sector and explain materiality topics in detail. Topics include:  typical sector activities, value "
+                "chain and business relationships.",
+    requires_user_question=True,
+    parameters={
+        "subject": Parameter(
+            type="string",
+            description="The name of a specific sector, industry or company.",
+        )
+    }
 )
-async def answer_materiality_question(utterance: str, llm: LLM, model) -> ToolActionSuccess | ToolActionFailure:
-    materiality_files = await select_material_files(utterance, llm, model)
+async def answer_materiality_question(
+    user_question: str, subject: str, llm: LLM, model
+) -> ToolActionSuccess | ToolActionFailure:
+    materiality_files = await select_material_files(subject, llm, model)
     if materiality_files:
         answer = await llm.chat_with_file(
             model,
             system_prompt=engine.load_prompt("answer-materiality-question"),
-            user_prompt=utterance,
+            user_prompt=user_question,
             files=create_llm_files(materiality_files)
         )
     else:
         return ToolActionFailure(
-            f"Materiality Agent cannot find suitable reference documents to answer: {utterance}"
+            f"Materiality Agent cannot find suitable reference documents to answer: {user_question}"
         )
     return ToolActionSuccess(answer)
 
 
 @chat_agent(
     name="MaterialityAgent",
-    description="This agent can help answer questions about ESG Materiality, what topics are relevant to a company"
-                "or sector and explain materiality topics in detail. The Materiality Agent can also answer"
-                "questions about typical sector activities, value chain and business relationships.",
+    description="The Materiality Agent can answer questions about specific industry ESG Materiality standards and "
+                "reporting practices. The agent cannot provide current information about specific companies, their "
+                "performance, or their individual ESG practices.",
     tools=[answer_materiality_question]
 )
 class MaterialityAgent(BaseChatAgent):

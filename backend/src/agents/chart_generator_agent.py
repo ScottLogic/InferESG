@@ -2,7 +2,7 @@ import logging
 from src.prompts import PromptEngine
 from src.agents.agent import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
-from src.agents.tool import Parameter, parameterised_tool, ToolActionSuccess, ToolActionFailure, ToolAnswerType
+from src.agents.tool import tool, Parameter, ToolActionSuccess, ToolActionFailure, ToolAnswerType
 from src.llm.llm import LLM
 from io import BytesIO
 import base64
@@ -66,7 +66,7 @@ def sanitise_script(script: str) -> str:
     return script.strip()
 
 
-@parameterised_tool(
+@tool(
     name="generate_code_chart",
     description="Generate Matplotlib bar chart code if the user's query involves creating a chart",
     parameters={
@@ -80,10 +80,8 @@ def sanitise_script(script: str) -> str:
         ),
         "question_params": Parameter(
             type="string",
-            description="""
-                The specific parameters required for the question to be answered with the question_intent,
-                extracted from data_provided
-            """,
+            description="The specific parameters required for the question to be answered with the question_intent, "
+                        "extracted from data_provided",
         ),
     },
 )

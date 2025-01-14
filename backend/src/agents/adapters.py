@@ -1,38 +1,29 @@
-from typing import List
-from src.agents.tool import Parameter, Tool, ParameterisedTool
-import dataclasses
+from typing import List, Any
+from src.agents.tool import Tool
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-def create_all_tools_str(tools: List[Tool]) -> str:
-    return "".join(str(dataclasses.asdict(tool)) + "\n\n" for tool in tools)
-
-
-def extract_tool(chosen_tool_name: str, agent_tools: List[Tool]) -> Tool:
-    if chosen_tool_name == "None":
-        raise Exception("No tool deemed appropriate for task")
+def extract_tool(tool_name: str, agent_tools: List[Tool], parameters: dict[str, Any]) -> Tool:
     try:
-        tool = next(tool for tool in agent_tools if tool.name == chosen_tool_name)
+        tool = next((tool for tool in agent_tools if tool.name == tool_name), None)
     except Exception:
-        raise Exception(f"Unable to find tool {chosen_tool_name} in available tools")
+        raise Exception(f"Unable to find tool {tool_name} in available tools")
+    validate_args(tool, parameters)
     return tool
 
 
-def get_required_args(tool: ParameterisedTool) -> dict[str, Parameter]:
-    parameters_no_optional_args = tool.parameters.copy()
-    for key, param in tool.parameters.items():
-        if not param.required:
-            parameters_no_optional_args.pop(key)
-    return parameters_no_optional_args
+def validate_args(tool: Tool, parameters: dict[str, Any]):
+    all_params = set(tool.parameters.keys())
+    required_params = {key for key, param in tool.parameters.items() if param.required}
+    input_params = set(parameters.keys())
 
+    unknown_parameters = input_params - all_params
+    missing_parameters = required_params - input_params
 
-def validate_args(tool: ParameterisedTool, parameters: dict):
-    # Get just the required arguments
-    all_args_set = set(tool.parameters.keys())
-    required_args_set = set(get_required_args(tool).keys())
-    passed_args_set = set(parameters.keys())
-
-    if len(passed_args_set) > len(all_args_set):
-        raise Exception(f"Unable to fit parameters {parameters} to Tool arguments {all_args_set}: Extra params")
-
-    if not required_args_set.issubset(passed_args_set):
-        raise Exception(f"Unable to fit parameters {parameters} to Tool arguments {all_args_set}: Wrong params")
+    if missing_parameters or unknown_parameters:
+        raise Exception(
+            f"Tool {tool.name} has parameters {tool.parameters}. Tool was called with {input_params}. "
+            f"Missing Parameters: {missing_parameters}. Unknown Parameters: {unknown_parameters}."
+        )
