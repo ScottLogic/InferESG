@@ -11,8 +11,13 @@ export const UploadedFileDisplay = ({
   fileName,
   onClick,
 }: UploadedFileDisplayProps) => (
-  <div className={styles.uploadedFileContainer} onClick={onClick}>
-    <span className={styles.uploadedFile}>
+  <div className={styles.uploadedFileContainer}>
+    <span
+      className={styles.uploadedFile}
+      role="button"
+      onClick={onClick}
+      title="Append the filename to the end of the message"
+    >
       <img
         src={AttachmentIcon}
         alt="Attachment"

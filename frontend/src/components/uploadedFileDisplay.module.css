@@ -18,6 +18,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 65px;
+}
+
+.uploadedFile:hover {
+  background-color: var(--grey-100);
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 0.2);
   cursor: pointer;
 }
 
