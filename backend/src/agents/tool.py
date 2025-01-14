@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Callable, Coroutine, Any, Optional
 from dataclasses import dataclass
 
@@ -7,6 +8,12 @@ class Parameter:
     type: str
     description: str
     required: bool = True
+
+
+class CommonParameters:
+    USER_QUESTION = {
+        "user_question": Parameter("string", "The full question asked by the user.")
+    }
 
 
 ToolAnswerType = str | list[Any] | dict[str, Any]
@@ -37,15 +44,12 @@ class Tool:
 def tool(
     name: str,
     description: str,
-    requires_user_question: Optional[bool] = False,
     parameters: Optional[dict[str, Parameter]] = None
 ) -> Callable[[ToolAction], Tool]:
     if not parameters:
         parameters = {}
 
     def create_tool_from(action: ToolAction) -> Tool:
-        if requires_user_question:
-            parameters["user_question"] = Parameter(type="string", description="The full question asked by the user.")
         return Tool(name, description, action, parameters)
 
     return create_tool_from

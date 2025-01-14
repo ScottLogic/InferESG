@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import logging
 
-from src.agents.tool import ToolActionSuccess, ToolActionFailure, Parameter
+from src.agents.tool import ToolActionSuccess, ToolActionFailure, Parameter, CommonParameters
 from src.llm import LLM
 from src.agents import tool
 from src.llm import LLMFile
@@ -41,8 +41,8 @@ async def select_material_files(subject: str, llm: LLM, model) -> list[str]:
     description="This tool can answer questions about ESG Materiality for a specific named company or "
                 "sector and explain materiality topics in detail. Topics include:  typical sector activities, value "
                 "chain and business relationships.",
-    requires_user_question=True,
     parameters={
+        **CommonParameters.USER_QUESTION,
         "subject": Parameter(
             type="string",
             description="The name of a specific sector, industry or company.",
