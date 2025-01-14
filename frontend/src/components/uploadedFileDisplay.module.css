@@ -7,8 +7,15 @@
   box-sizing: border-box;
 }
 
+.uploadedFileTooltipContainer {
+  position: relative;
+  margin-right: 65px;
+  max-width: calc(100% - 65px);
+}
+
 .uploadedFile {
   font-size: 14px;
+  display: inline-block;
   color: var(--grey-900);
   background-color: var(--grey-200);
   padding: 8px 12px;
@@ -17,7 +24,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 65px;
+  max-width: 100%;
 }
 
 .uploadedFile:hover {

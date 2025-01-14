@@ -3,6 +3,7 @@ import styles from './fileUpload.module.css';
 import UploadIcon from '../icons/upload.svg';
 import UploadInProgressIcon from '../icons/upload-in-progress.svg';
 import CheckCircleIcon from '../icons/check-circle.svg';
+import { Tooltip } from './tooltip';
 
 interface FileUploaderProps {
   onFileUpload: (file: File) => Promise<void>;
@@ -60,7 +61,7 @@ export const FileUpload = ({
           disabled={disabled}
         />
       </label>
-      {showTooltip && <div className={styles.tooltip}>{tooltipContent}</div>}
+      {showTooltip && <Tooltip>{tooltipContent}</Tooltip>}
     </div>
   );
 };
