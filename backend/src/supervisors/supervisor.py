@@ -26,9 +26,9 @@ async def solve_questions(questions: list[str]) -> None:
 
 
 async def solve_question(question, scratchpad) -> ChatAgentSuccess:
-    agent, tool_name, parameters = await select_tool_for_question(question, scratchpad)
     unsuccessful_agents = []
     for attempt in range(number_of_attempts):
+        agent, tool_name, parameters = await select_tool_for_question(question, scratchpad, unsuccessful_agents)
         if agent is None:
             break
 
@@ -39,7 +39,6 @@ async def solve_question(question, scratchpad) -> ChatAgentSuccess:
         else:
             if not answer.retry:
                 unsuccessful_agents.append(answer.agent_name)
-                agent, tool_name, parameters = await select_tool_for_question(question, scratchpad, unsuccessful_agents)
 
     logger.info("Defaulting to Generalist Agent")
     return await get_generalist_agent().generalist_answer(question)
