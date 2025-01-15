@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import TypedDict
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
@@ -27,7 +28,13 @@ def get_scratchpad() -> Scratchpad:
 
 
 def update_scratchpad(agent_name=None, question=None, result=None, error=None):
-    get_scratchpad().append({"agent_name": agent_name, "question": question, "result": result, "error": error})
+    get_scratchpad().append({
+        "agent_name": agent_name,
+        "question": question,
+        "result": result,
+        "error": error,
+        "timestamp": datetime.now()
+    })
 
 
 def clear_scratchpad():
