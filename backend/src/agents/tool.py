@@ -38,17 +38,14 @@ class Tool:
     name: str
     description: str
     action: ToolAction
-    parameters: Optional[dict[str, Parameter]] = None
+    parameters: dict[str, Parameter]
 
 
 def tool(
     name: str,
     description: str,
-    parameters: Optional[dict[str, Parameter]] = None
+    parameters: dict[str, Parameter]
 ) -> Callable[[ToolAction], Tool]:
-    if not parameters:
-        parameters = {}
-
     def create_tool_from(action: ToolAction) -> Tool:
         return Tool(name, description, action, parameters)
 
