@@ -42,8 +42,4 @@ async def solve_question(question, scratchpad) -> ChatAgentSuccess:
                 agent, tool_name, parameters = await select_tool_for_question(question, scratchpad, unsuccessful_agents)
 
     logger.info("Defaulting to Generalist Agent")
-    answer = await get_generalist_agent().generalist_answer(question)
-    if isinstance(answer, ChatAgentSuccess):
-        return answer
-
-    raise Exception(unsolvable_response)
+    return await get_generalist_agent().generalist_answer(question)
