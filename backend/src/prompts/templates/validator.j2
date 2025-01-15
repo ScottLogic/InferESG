@@ -16,7 +16,6 @@ json
 **Validation Guidelines:**
 - Be lenient - if the answer looks reasonably accurate, return "true".
 - If multiple entities have the same highest score and this matches the query intent, return "true".
-- Spending is negative; ensure any calculations involving spending reflect this if relevant to the task.
 
 Example:
 Task: What is 2 + 2?
@@ -47,11 +46,11 @@ Answer: Microsoft's ESG (Environmental, Social, and Governance) scores are as fo
     "reasoning": "The answer provides scores for Microsoft, not Apple, which does not match the task's intent."
 }
 
-Task: Tell me the lowest Fund size?
-Answer: 'WhiteRock ETF', 'Size': '100.0 Billion USD'
+Task: Which company has the second highest ESG score?
+Answer: [{'c.name': 'Waste Management Inc', 'r.esg_score': 90.90240769}]
 {
     "response": "true",
-    "reasoning": "The answer correctly identifies 'WhiteRock ETF' with a fund size of '100.0 Billion USD', and the context of the question implies that this is the lowest fund size in the database."
+    "reasoning": "The answer correctly identifies 'Waste Management Inc' with an esg score of '90.90240769', and the context of the question implies that this is the second highest ESG score in the database."
 }
 
 Ensure the response is always in valid JSON format.
