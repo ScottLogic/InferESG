@@ -1,5 +1,5 @@
-from src.agents import ChatAgent, chat_agent, utterance_tool, parameterised_tool, Parameter
-from src.agents.tool import ToolActionSuccess, ToolActionFailure, ToolAnswerType
+from src.agents import ChatAgent, chat_agent, tool, Parameter
+from src.agents.tool import ToolActionSuccess, ToolActionFailure, ToolAnswerType, CommonParameters
 from tests.llm.mock_llm import MockLLM
 
 description = "A test tool"
@@ -12,7 +12,7 @@ mock_tool_failure_name = "Mock Parameterised Failure Tool"
 mock_utterance_tool_name = "Mock Utterance Tool"
 
 
-@parameterised_tool(
+@tool(
     name=mock_tool_a_name,
     description="A test tool",
     parameters={
@@ -21,11 +21,13 @@ mock_utterance_tool_name = "Mock Utterance Tool"
         "another_optional": Parameter(type="string", description=param_description, required=False),
     },
 )
-async def mock_tool_a(input: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
+async def mock_tool_a(
+    input: str, optional: str, another_optional: str, llm, model
+) -> ToolActionSuccess | ToolActionFailure:
     return ToolActionSuccess(input)
 
 
-@parameterised_tool(
+@tool(
     name=mock_tool_b_name,
     description="A test tool",
     parameters={
@@ -37,7 +39,7 @@ async def mock_tool_b(input: str, llm, model) -> ToolActionSuccess | ToolActionF
     return ToolActionSuccess(input)
 
 
-@parameterised_tool(
+@tool(
     name=mock_tool_failure_name,
     description="Used for mocking a failure response from the tool",
     parameters={
@@ -49,12 +51,15 @@ async def mock_tool_failure(input: str, retry: bool, llm, model) -> ToolActionSu
     return ToolActionFailure(input, True) if retry else ToolActionFailure(input)
 
 
-@utterance_tool(
+@tool(
     name=mock_utterance_tool_name,
     description="Used for mocking a failure response from the tool",
+    parameters={
+        **CommonParameters.USER_QUESTION
+    }
 )
-async def mock_utterance_tool(utterance: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
-    return ToolActionSuccess(utterance)
+async def mock_utterance_tool(user_question: str, llm, model) -> ToolActionSuccess | ToolActionFailure:
+    return ToolActionSuccess(user_question)
 
 
 mock_agent_description = "A test agent"

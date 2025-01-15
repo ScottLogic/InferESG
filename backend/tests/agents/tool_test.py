@@ -1,13 +1,13 @@
 import pytest
 
 from src.agents.tool import ToolActionSuccess
-from src.agents import Parameter, parameterised_tool
+from src.agents import Parameter, tool
 
 name = "Mock Tool"
 description = "A test tool"
 
 
-@parameterised_tool(
+@tool(
     description=description,
     name=name,
     parameters={

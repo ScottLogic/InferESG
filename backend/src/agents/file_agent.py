@@ -14,7 +14,7 @@ config = Config()
 engine = PromptEngine()
 
 
-def generate_files_description() -> str:
+def generate_files_description(self) -> str:
     file_meta = get_session_file_uploads_meta() or []
     filenames = [file["filename"] for file in file_meta]
 

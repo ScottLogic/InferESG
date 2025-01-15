@@ -70,7 +70,7 @@ class ChatAgent(Agent):
     def get_agent_details(self) -> dict[str, Any]:
         return {
             "agent": self.name,
-            "description": self.description if callable(self.description) else self.description,
+            "description": self.description() if callable(self.description) else self.description,
             "tools": [
                 {
                     "name": tool.name,

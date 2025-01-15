@@ -6,10 +6,9 @@ logger = logging.getLogger(__name__)
 
 
 def extract_tool(tool_name: str, agent_tools: List[Tool], parameters: dict[str, Any]) -> Tool:
-    try:
-        tool = next((tool for tool in agent_tools if tool.name == tool_name), None)
-    except Exception:
-        raise Exception(f"Unable to find tool {tool_name} in available tools")
+    tool = next((tool for tool in agent_tools if tool.name == tool_name), None)
+    if not tool:
+        raise Exception(f"Unable to find tool \"{tool_name}\" in available tools")
     validate_args(tool, parameters)
     return tool
 
@@ -24,6 +23,6 @@ def validate_args(tool: Tool, parameters: dict[str, Any]):
 
     if missing_parameters or unknown_parameters:
         raise Exception(
-            f"Tool {tool.name} has parameters {tool.parameters}. Tool was called with {input_params}. "
+            f"Tool {tool.name} has parameters {all_params}. Tool was called with {input_params}. "
             f"Missing Parameters: {missing_parameters}. Unknown Parameters: {unknown_parameters}."
         )

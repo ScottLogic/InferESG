@@ -10,7 +10,7 @@ def test_generate_description(mocker):
         upload_id=None
     )])
 
-    agent = FileAgent(llm_name="mockllm", model="mock_model")
+    agent = FileAgent("mockllm", "mock_model")
 
-    assert (callable(agent.description) and agent.description() ==
-             "Extract parts of the following files test.pdf")
+    assert callable(agent.description)
+    assert agent.description() == "Extract parts of the following files test.pdf"

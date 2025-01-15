@@ -20,5 +20,5 @@ async def test_generalist_agent(mock_validate, mocker):
 
     agent = GeneralistAgent(llm_name="mockllm", model=mock_model)
 
-    result = await agent.invoke("example query")
+    result = await agent.generalist_answer("example query")
     assert result == ChatAgentSuccess("GeneralistAgent", "Example summary.")
