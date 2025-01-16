@@ -13,7 +13,7 @@ tests:
       user_prompt: |
         Task: What does ESG stand for?
         Answer: {'answer': 'ESG stands for Environmental, Social, and Governance.', 'citation_url': 'https://www.7im.co.uk/financial-adviser/investments/responsible-investing/what-is-esg-investing'}
-      system_prompt_template: "datastore-agent-validator"
+      system_prompt_template: "validator"
     assert:
       - type: is-json
         value:
@@ -24,7 +24,7 @@ tests:
     vars:
       user_prompt: |
         Task: which company has the highest ESG governance score in the bloomberg dataset  Answer: [{'c.name': 'Waste Management Inc', 'g.gov_score': 94.56030602}]
-      system_prompt_template: "datastore-agent-validator"
+      system_prompt_template: "validator"
     assert:
       - type: contains
         value: '"response": "true"'
@@ -35,7 +35,7 @@ tests:
     vars:
       user_prompt: |
         Task: Which company has the second highest ESG score?  Answer: [{'c.name': 'Waste Management Inc', 'r.esg_score': 90.90240769}]
-      system_prompt_template: "datastore-agent-validator"
+      system_prompt_template: "validator"
     assert:
       - type: contains
         value: '"response": "true"'
