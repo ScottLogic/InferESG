@@ -34,7 +34,7 @@ def update_scratchpad(agent_name=None, question=None, result=None, error=None):
         "question": question,
         "result": result,
         "error": error,
-        "timestamp": datetime.now()
+        "timestamp": str(datetime.now())
     })
 
 

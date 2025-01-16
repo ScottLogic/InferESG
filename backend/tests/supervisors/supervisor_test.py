@@ -1,6 +1,5 @@
 import pytest
 
-from src.llm import get_llm
 from src.agents.generalist_agent import GeneralistAgent
 from src.agents.agent import ChatAgentFailure, ChatAgentSuccess
 from tests.agents import MockChatAgent, mock_tool_a_name
