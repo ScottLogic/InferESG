@@ -165,7 +165,10 @@ export const Input = ({
             />
           </div>
           <div className={styles.sendButtonContainer}>
-            <Button icon={RightArrowIcon} disabled={uploadInProgress} />
+            <Button
+              icon={RightArrowIcon}
+              disabled={uploadInProgress || isWaiting}
+            />
           </div>
         </div>
       </form>
