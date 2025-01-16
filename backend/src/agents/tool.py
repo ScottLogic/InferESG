@@ -1,5 +1,4 @@
-from enum import Enum
-from typing import Callable, Coroutine, Any, Optional
+from typing import Callable, Coroutine, Any
 from dataclasses import dataclass
 
 

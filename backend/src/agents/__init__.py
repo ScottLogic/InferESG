@@ -9,7 +9,6 @@ from src.agents.tool import tool, Parameter
 from src.agents.validator_agent import ValidatorAgent
 from src.agents.answer_agent import AnswerAgent
 from src.agents.file_agent import FileAgent
-from src.agents.chart_generator_agent import ChartGeneratorAgent
 from src.agents.report_agent import ReportAgent
 from src.agents.materiality_agent import MaterialityAgent
 from src.agents.generalist_agent import GeneralistAgent
@@ -46,7 +45,6 @@ def get_chat_agents() -> List[ChatAgent]:
     return [
         DatastoreAgent(config.datastore_agent_llm, config.datastore_agent_model),
         WebAgent(config.web_agent_llm, config.web_agent_model),
-        # ChartGeneratorAgent(config.chart_generator_llm, config.chart_generator_model),
         get_materiality_agent(),
         FileAgent(config.file_agent_llm, config.file_agent_model)
     ]

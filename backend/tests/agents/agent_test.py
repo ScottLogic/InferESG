@@ -6,14 +6,7 @@ from pytest import raises
 
 from src.agents.tool import ToolAnswerType
 from src.agents.agent import chat_agent, ChatAgent, ChatAgentSuccess, ChatAgentFailure
-from tests.agents import (
-    MockChatAgent,
-    mock_utterance_tool_name,
-    mock_tool_a_name,
-    mock_tool_failure_name,
-    mock_utterance_tool,
-    mock_tool_a, mock_agent_name
-)
+from tests.agents import MockChatAgent, mock_tool_a_name, mock_tool_a
 from src.llm.factory import get_llm
 
 

@@ -21,7 +21,7 @@ def create_llm_files(filenames: list[str]) -> list[LLMFile]:
     ]
 
 
-async def select_material_files(subject: str, llm: LLM, model) -> list[str]:
+async def select_material_files(user_question: str, llm: LLM, model) -> list[str]:
     with open('./library/catalogue.json') as file:
         catalogue = json.load(file)
         files_json = await llm.chat(
@@ -30,7 +30,7 @@ async def select_material_files(subject: str, llm: LLM, model) -> list[str]:
                 "select-material-files-system-prompt",
                 catalogue=catalogue
             ),
-            user_prompt=subject,
+            user_prompt=user_question,
             return_json=True
         )
         return json.loads(files_json)["files"]
@@ -41,18 +41,10 @@ async def select_material_files(subject: str, llm: LLM, model) -> list[str]:
     description="This tool can answer questions about ESG Materiality for a specific named company or "
                 "sector and explain materiality topics in detail. Topics include:  typical sector activities, value "
                 "chain and business relationships.",
-    parameters={
-        **CommonParameters.USER_QUESTION,
-        "subject": Parameter(
-            type="string",
-            description="The name of a specific sector, industry or company.",
-        )
-    }
+    parameters=CommonParameters.USER_QUESTION
 )
-async def answer_materiality_question(
-    user_question: str, subject: str, llm: LLM, model
-) -> ToolActionSuccess | ToolActionFailure:
-    materiality_files = await select_material_files(subject, llm, model)
+async def answer_materiality_question(user_question: str, llm: LLM, model) -> ToolActionSuccess | ToolActionFailure:
+    materiality_files = await select_material_files(user_question, llm, model)
     if materiality_files:
         answer = await llm.chat_with_file(
             model,

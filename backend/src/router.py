@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Tuple, Any
+from typing import Tuple, Any
 
 from src.utils import to_json, Config, Scratchpad
 from src.prompts import PromptEngine
