@@ -1,6 +1,6 @@
 import pytest
 
-from tests.agents import mock_tool_a, mock_tool_b, mock_tool_a_name, MockChatAgent
+from tests.agents import mock_tool_a, mock_tool_b, mock_tool_a_name
 from src.agents.adapters import extract_tool
 
 

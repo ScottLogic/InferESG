@@ -19,7 +19,7 @@ async def select_tool_for_question(
     task: str,
     scratchpad: Scratchpad,
     excluded_agents: list[str]
-) -> Tuple[ChatAgent, str, dict[str, Any]] | None:
+) -> Tuple[ChatAgent | None, str, dict[str, Any]]:
     if not config.router_model:
         raise Exception("Router config model missing")
 
