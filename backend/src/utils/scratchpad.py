@@ -13,6 +13,7 @@ class Answer(TypedDict):
     question: str | None
     result: str | None
     error: str | None
+    timestamp: str
 
 scratchpad_context = contextvars.ContextVar("scratchpad", default=[])
 
