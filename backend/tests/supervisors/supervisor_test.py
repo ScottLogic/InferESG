@@ -1,5 +1,6 @@
 import pytest
 
+from src.llm import get_llm
 from src.agents.generalist_agent import GeneralistAgent
 from src.agents.agent import ChatAgentFailure, ChatAgentSuccess
 from tests.agents import MockChatAgent, mock_tool_a_name
@@ -135,7 +136,7 @@ async def test_solve_question_when_no_agents_succeed_will_default_to_generalist(
     bad_agent_spy_invoke = mocker.spy(bad_agent, 'invoke')
 
     generalist_agent = GeneralistAgent("mockllm", mock_model)
-    generalist_agent.invoke = mocker.AsyncMock(return_value=expected)
+    generalist_agent.generalist_answer = mocker.AsyncMock(return_value=expected)
     generalist_agent_spy_invoke = mocker.spy(generalist_agent, 'generalist_answer')
 
     patched_get_agent = mocker.patch(
