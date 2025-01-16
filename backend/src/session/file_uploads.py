@@ -110,10 +110,10 @@ def clear_session_file_uploads():
 def get_uploaded_report_content() -> str | None:
     session_file_meta = get_session_file_uploads_meta()
     if session_file_meta:
-        upload_id = session_file_meta[0]['uploadId']
+        upload_id = session_file_meta[0]['id']
         session_report_data = get_report(upload_id)
         if session_report_data:
-            session_report_content = session_report_data.get('content')
+            session_report_content = session_report_data.get('report')
             return session_report_content
         else:
             logger.warning("No session report data found.")

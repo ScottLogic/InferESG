@@ -88,6 +88,7 @@ def test_chat_message_not_found(mocker):
 
 def test_report_response_success(mocker):
     mock_generate_report = mocker.patch("src.api.app.generate_report")
+    mock_prepare_report_from_file = mocker.patch("src.api.app.prepare_report_from_file")
     mocker.patch("uuid.uuid4", return_value="mock-uuid")
     mocker.patch("src.api.app.get_llm_file_upload_id", return_value=None)
 
@@ -96,12 +97,14 @@ def test_report_response_success(mocker):
     assert response.status_code == 200
     assert response.json() == {"message": "File uploaded successfully", "id": "mock-uuid"}
 
+    mock_prepare_report_from_file.assert_called_once_with(b"test data", "filename", "mock-uuid")
     mock_generate_report.assert_called_once_with(b"test data", "filename", "mock-uuid")
 
 
 @pytest.mark.asyncio
 async def test_lifespan_populates_db(mocker) -> None:
     mock_dataset_upload = mocker.patch("src.api.app.dataset_upload", return_value=mocker.Mock())
+    mocker.patch("src.api.app.OpenAILLMFileUploadManager.delete_all_files")
 
     with client:
         mock_dataset_upload.assert_called_once_with()
