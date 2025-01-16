@@ -196,6 +196,18 @@ tests:
       - type: javascript
         value: JSON.parse(output).agent === ""
 
+# Note: This test is known to fail. We plan for this test to pass through improvements to the agent selection prompt
+  - description: "Test the DatastoreAgent is not selected when the question does not reference the bloomberg dataset"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What was the ESG score of AstraZeneca in 2020?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent != "DatastoreAgent"
+
   - description: "Test the DatastoreAgent is selected for a data query related to the bloomberg dataset"
     vars:
       user_prompt_template: "agent-selection-user-prompt"
