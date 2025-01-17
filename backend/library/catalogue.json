@@ -2,8 +2,38 @@
   "library": {
     "TFND": [
       {
+        "name": "Additional-Sector-Guidance-Aquaculture.pdf",
+        "sector-label": "Aquaculture",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
         "name": "Additional-Sector-Guidance-Biotech-and-Pharma.pdf",
         "sector-label": "Biotechnology and Pharmaceuticals",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Additional-Sector-Guidance-Chemicals.pdf",
+        "sector-label": "Chemicals",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Additional-Sector-Guidance-Electric-Utilities-and-Power.pdf",
+        "sector-label": "Utilities and Power",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Additional-Sector-Guidance-Food-and-Agri.pdf",
+        "sector-label": "Food and Agriculture",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Additional-Sector-Guidance-Forestry-and-paper.pdf",
+        "sector-label": "Forestry and Paper",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Additional-Sector-Guidance-Metals-and-mining.pdf",
+        "sector-label": "Metals and Mining",
         "esg-labels": ["Environment", "Nature"]
       },
       {
@@ -16,6 +46,21 @@
       {
         "name": "GRI 11_ Oil and Gas Sector 2021.pdf",
         "sector-label": "Oil and Gas",
+        "esg-labels": ["Environment", "Social", "Governance"]
+      },
+      {
+        "name": "GRI 12_ Coal Sector 2022.pdf",
+        "sector-label": "Coal",
+        "esg-labels": ["Environment", "Social", "Governance"]
+      },
+      {
+        "name": "GRI GRI 13_ Agriculture Aquaculture and Fishing Sectors 2022.pdf",
+        "sector-label": "Agriculture Aquaculture and Fishing",
+        "esg-labels": ["Environment", "Social", "Governance"]
+      },
+      {
+        "name": "GRI 14_ Mining Sector 2024 - English.pdf",
+        "sector-label": "Mining",
         "esg-labels": ["Environment", "Social", "Governance"]
       }
     ]
