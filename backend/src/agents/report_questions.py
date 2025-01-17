@@ -2,9 +2,9 @@
 QUESTIONS = {
     "Environmental": [
         {
-            "report_question": "What environmental goals and claims does this document describe?",
+            "report_question": "Environmental Goals and Progress",
             "prompt": """
-## What environmental goals and claims does this document describe
+What environmental goals and claims does this document describe?
 Analyze all environmental goals and beneficial claims described in the document, including:
 
 ### Emissions and climate commitments:
@@ -53,9 +53,9 @@ Please note any environmental goals or claims that:
         """,
         },
         {
-            "report_question": "What potential environment greenwashing can you identify that should be fact checked?",
+            "report_question": "Potential Environmental Greenwashing",
             "prompt": """
-## What potential environment greenwashing can you identify that should be fact checked?
+What potential environmental greenwashing can you identify that should be fact checked?
 Analyze the company's environmental claims for potential greenwashing indicators by examining:
 ### Quantitative verification:
 * Compare stated environmental metrics against industry standard measurements
@@ -77,9 +77,10 @@ Please cite specific examples where claims require additional verification or ap
         """,
         },
         {
-            "report_question": "What environmental regulations, standards or certifications can you identify in the document?",
+            "report_question": "Environmental Regulations, Standards and Certifications",
             "prompt": """
-## What environmental regulations, standards or certifications can you identify in the document?
+
+What environmental regulations, standards or certifications can you identify in the document?
 Identify and categorize all environmental regulations, standards, and certifications mentioned in the document, including:
 
 ### Regulatory compliance:
@@ -113,9 +114,9 @@ Please note any expired certifications, pending renewals, or areas where require
     ],
     "Social": [
         {
-            "report_question": "What social goals and claims does this document describe?",
+            "report_question": "Social Goals and Progress",
             "prompt": """
-## What social goals and claims does this document describe?
+What social goals and claims does this document describe?
 Analyze all social goals and societal benefit claims described in the document, including:
 
 ### Workforce initiatives:
@@ -164,9 +165,9 @@ Please note any goals or claims that:
 """,
         },
         {
-            "report_question": "What potential societal social-washing can you identify that should be fact checked?",
+            "report_question": "Potential Societal Social-Washing",
             "prompt": """
-## What potential societal social-washing can you identify that should be fact checked?
+What potential societal social-washing can you identify that should be fact checked?
 Analyze the company's societal benefit claims for potential social-washing indicators by examining:
 
 ### Impact measurement:
@@ -206,9 +207,9 @@ Please cite specific examples where:
 """,
         },
         {
-            "report_question": "What societal regulations, standards or certifications can you identify in the document?",
+            "report_question": "Societal Regulations, Standards and Certifications",
             "prompt": """
-## What societal regulations, standards or certifications can you identify in the document?
+What societal regulations, standards or certifications can you identify in the document?
 Identify and analyze all societal regulations, standards, and certifications mentioned in the document, including:
 
 ### Labor and workplace:
@@ -251,9 +252,9 @@ For each identified item, note:
     ],
     "Governance": [
         {
-            "report_question": "What governance goals and claims does this document describe?",
+            "report_question": "Governance Goals and Progress",
             "prompt": """
-## What governance goals and claims does this document describe?
+What governance goals and claims does this document describe?
 Analyze all governance goals and beneficial governance claims described in the document, including:
 
 ### Board structure and effectiveness:
@@ -304,9 +305,9 @@ Please note any goals or claims that:
 """,
         },
         {
-            "report_question": "What potential governance greenwashing can you identify that should be fact checked?",
+            "report_question": "Potential Governance Greenwashing",
             "prompt": """
-## What potential governance greenwashing can you identify that should be fact checked?
+What potential governance greenwashing can you identify that should be fact checked?
 Analyze the company's governance claims for potential misrepresentation or overstatement by examining:
 
 ### Leadership structure claims:
@@ -346,9 +347,9 @@ Please cite specific examples where:
 """,
         },
         {
-            "report_question": "What governance regulations, standards or certifications can you identify in the document?",
+            "report_question": "Governance Regulations, Standards and Certifications",
             "prompt": """
-## What governance regulations, standards or certifications can you identify in the document?
+What governance regulations, standards or certifications can you identify in the document?
 Identify and analyze all governance regulations, standards, and certifications mentioned in the document, including:
 
 ### Regulatory compliance:
