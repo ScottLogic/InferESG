@@ -1,88 +1,101 @@
 description: "Agent selection"
 
-
-data_store_agent: &data_store_agent {
-  "agent": "DatastoreAgent",
-  "description": "This agent is responsible for answering questions about the bloomberg.csv dataset. This includes retrieving ESG scores, financial metrics, and other bloomberg-specific information. It interacts with the graph database to extract, process, and return ESG-related information from various sources, such as company sustainability reports or fund portfolios. This agent can not answer questions that do not specifically reference the bloomberg.csv dataset.",
-  "tools": [
-    {
-      "name": "generate cypher query",
-      "description": "Generate Cypher query if the category is data driven, based on the operation to be performed",
-      "parameters": {
-        "question_intent": {
-          "type": "string",
-          "description": "The intent the question will be based on"
+data_store_agent:
+  &data_store_agent {
+    "agent": "DatastoreAgent",
+    "description": "This agent is responsible for answering questions about the bloomberg.csv dataset. This includes retrieving ESG scores, financial metrics, and other bloomberg-specific information. It interacts with the graph database to extract, process, and return ESG-related information from various sources, such as company sustainability reports or fund portfolios. This agent can not answer questions that do not specifically reference the bloomberg.csv dataset.",
+    "tools":
+      [
+        {
+          "name": "generate cypher query",
+          "description": "Generate Cypher query if the category is data driven, based on the operation to be performed",
+          "parameters":
+            {
+              "question_intent":
+                {
+                  "type": "string",
+                  "description": "The intent the question will be based on",
+                },
+              "operation":
+                {
+                  "type": "string",
+                  "description": "The operation the cypher query will have to perform",
+                },
+              "question_params":
+                {
+                  "type": "string",
+                  "description": "The specific parameters required for the question to be answered with the question_intent or none if no params required",
+                },
+              "aggregation":
+                {
+                  "type": "string",
+                  "description": "Any aggregation that is required to answer the question or none if no aggregation is needed",
+                },
+              "sort_order":
+                {
+                  "type": "string",
+                  "description": "The order a list should be sorted in or none if no sort_order is needed",
+                },
+              "timeframe":
+                {
+                  "type": "string",
+                  "description": "string of the timeframe to be considered or none if no timeframe is needed",
+                },
+            },
         },
-        "operation": {
-          "type": "string",
-          "description": "The operation the cypher query will have to perform"
+      ],
+  }
+web_agent:
+  &web_agent {
+    "name": "WebAgent",
+    "description": "This agent can search the internet to answer questions which require current information or general ESG or company related questions.",
+    "tools":
+      [
+        {
+          "name": "web_general_search",
+          "description": "Search the internet based on the query provided and then get the meaningful answer from the content found",
+          "parameters":
+            {
+              "search_query":
+                {
+                  "type": "string",
+                  "description": "The search query to find information on the internet",
+                },
+            },
         },
-        "question_params": {
-          "type": "string",
-          "description": "The specific parameters required for the question to be answered with the question_intent or none if no params required"
+      ],
+  }
+materiality_agent:
+  &materiality_agent {
+    "name": "MaterialityAgent",
+    "description": "The Materiality Agent can answer questions about specific industry ESG Materiality standards and reporting practices. The agent cannot provide current information about specific companies, their performance, or their individual ESG practices.",
+    "tools":
+      [
+        {
+          "name": "answer_materiality_question",
+          "description": "This tool can answer questions about ESG Materiality for a specific named company or sector and explain materiality topics in detail. Topics include:  typical sector activities, value chain and business relationships..",
+          "parameters":
+            {
+              "question":
+                { "type": "string", "description": "The question to answer." },
+              "subject":
+                {
+                  "type": "string",
+                  "description": "The name of a specific sector, industry or company.",
+                },
+            },
         },
-        "aggregation": {
-          "type": "string",
-          "description": "Any aggregation that is required to answer the question or none if no aggregation is needed"
-        },
-        "sort_order": {
-          "type": "string",
-          "description": "The order a list should be sorted in or none if no sort_order is needed"
-        },
-        "timeframe": {
-          "type": "string",
-          "description": "string of the timeframe to be considered or none if no timeframe is needed"
-        }
-      }
-    }
-  ]
-}
-web_agent: &web_agent {
-  "name": "WebAgent",
-  "description": "This agent can search the internet to answer questions which require current information or general ESG or company related questions.",
-  "tools": [
-    {
-      "name": "web_general_search",
-      "description": "Search the internet based on the query provided and then get the meaningful answer from the content found",
-      "parameters": {
-        "search_query": {
-          "type": "string",
-          "description": "The search query to find information on the internet"
-        }
-      }
-    }
-  ]
-}
-materiality_agent: &materiality_agent {
-  "name": "MaterialityAgent",
-  "description": "The Materiality Agent can answer questions about specific industry ESG Materiality standards and reporting practices. The agent cannot provide current information about specific companies, their performance, or their individual ESG practices.",
-  "tools": [
-    {
-      "name": "answer_materiality_question",
-      "description": "This tool can answer questions about ESG Materiality for a specific named company or sector and explain materiality topics in detail. Topics include:  typical sector activities, value chain and business relationships..",
-      "parameters": {
-        "question": {
-          "type": "string",
-          "description": "The question to answer."
-        },
-        "subject": {
-          "type": "string",
-          "description": "The name of a specific sector, industry or company."
-        }
-      }
-    }
-  ]
-}
-list_of_agents_and_tools: &list_of_agents_and_tools [
-  *data_store_agent,
-  *web_agent,
-  *materiality_agent
-]
+      ],
+  }
+list_of_agents_and_tools:
+  &list_of_agents_and_tools [*data_store_agent, *web_agent, *materiality_agent]
 
 providers:
   - id: openai:gpt-4o
     config:
       temperature: 0
+      response_format:
+        type: json_object
 
 prompts: file://promptfoo_test_runner.py:create_prompt
 
@@ -97,17 +110,17 @@ tests:
     options:
       transform: JSON.parse(output)
     assert:
-     - type: javascript
-       value: output.agent === "WebAgent" && output.tool === "web_general_search"
-     - type: javascript
-       value: output.parameters.search_query === "Astra Zeneca current greenhouse gas emissions reporting methodology primary calculation approach location-based vs market-based"
+      - type: javascript
+        value: output.agent === "WebAgent" && output.tool === "web_general_search"
+      - type: javascript
+        value: output.parameters.search_query === "Astra Zeneca current greenhouse gas emissions reporting methodology primary calculation approach location-based vs market-based"
 
   - description: "Test WHEN the Web Agent tool has failed and been removed from the list of options and answering a question for current information on a company THEN no agent is selected"
     vars:
       user_prompt_template: "agent-selection-user-prompt"
       user_prompt_args:
         question: "What is Astra Zeneca's current greenhouse gas emissions reporting methodology, specifically the primary calculation approach (location-based vs. market-based)?"
-        list_of_agents_and_tools: [ *data_store_agent, *materiality_agent ]
+        list_of_agents_and_tools: [*data_store_agent, *materiality_agent]
       system_prompt_template: "agent-selection-system-prompt"
     options:
       transform: JSON.parse(output)
@@ -196,7 +209,7 @@ tests:
       - type: javascript
         value: JSON.parse(output).agent === ""
 
-# Note: This test is known to fail. We plan for this test to pass through improvements to the agent selection prompt
+  # Note: This test is known to fail. We plan for this test to pass through improvements to the agent selection prompt
   - description: "Test the DatastoreAgent is not selected when the question does not reference the bloomberg dataset"
     vars:
       user_prompt_template: "agent-selection-user-prompt"

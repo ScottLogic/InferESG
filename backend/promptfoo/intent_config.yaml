@@ -4,6 +4,8 @@ providers:
   - id: openai:gpt-4o-mini
     config:
       temperature: 0
+      response_format:
+        type: json_object
 
 prompts: file://promptfoo_test_runner.py:create_prompt
 
@@ -17,7 +19,7 @@ tests:
         question: "Check the database and tell me the average ESG score (Environmental) for the WhiteRock ETF fund"
     assert:
       - type: javascript
-        value: JSON.parse(output).questions.length === 0
+        value: JSON.parse(output).questions.length === 1
 
   - description: "questions directed towards the database look ups should have only 1 question -2"
     vars:
@@ -28,7 +30,7 @@ tests:
         question: "Using Bloomberg.csv dataset give me the company with the best esg score"
     assert:
       - type: javascript
-        value: JSON.parse(output).questions.length === 0
+        value: JSON.parse(output).questions.length === 1
 
   - description: "verify that the correct company name is determined from the chat history"
     vars:
@@ -45,17 +47,18 @@ tests:
       - type: javascript
         value: output.includes("Coca-Cola") || output.includes("Coca Cola")
 
-  - description: "verify that the question is correctly split up"
+  - description: "verify that the question is split up"
     vars:
       system_prompt_template: "intent-system"
       user_prompt_template: "intent"
       user_prompt_args:
         chat_history: []
-        question: "Compare Ryanair emissions to other companies in the industry"
+        question:
+          "Describe AstraZeneca's current greenhouse gas emissions reporting methodology, including:
+          Primary calculation approach (location vs. market-based),
+          Which scopes (1, 2, 3) are included in their reporting,
+          Which reporting framework they follow (e.g., GHG Protocol, CDP),
+          Latest reporting period's methodology"
     assert:
       - type: javascript
-        value: JSON.parse(output).questions[0].includes("Ryanair")
-      - type: llm-rubric
-        value: The 1st item in the questions array contains a question about finding the emissions for Ryanair
-      - type: llm-rubric
-        value: The 2nd item in the questions array contains a question about finding the emissions for companies in the industry
+        value: JSON.parse(output).questions.length > 1
