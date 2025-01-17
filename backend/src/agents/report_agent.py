@@ -28,7 +28,7 @@ class ReportAgent(Agent):
             categorized_tasks = {
                 category: [
                     {
-                        "report_question": question["report_question"],
+                        "report_heading": question["report_heading"],
                         "task": tg.create_task(
                             self.llm.chat_with_file(
                                 self.model,
@@ -56,7 +56,7 @@ class ReportAgent(Agent):
         for category, tasks in categorized_tasks.items():
             esg_report_result += f"\n## {category}\n"
             for i, task in enumerate(tasks, start=1):
-                esg_report_result += f"\n### {i}. {task['report_question']}\n{task['task'].result()}\n"
+                esg_report_result += f"\n### {i}. {task['report_heading']}\n{task['task'].result()}\n"
 
         report = engine.load_template(
             template_name="report-template",
