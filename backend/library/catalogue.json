@@ -40,6 +40,31 @@
         "name": "Additional-Sector-Guidance-Oil-and-gas.pdf",
         "sector-label": "Oil and Gas",
         "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Draft-sector-guidance-Apparel-accessories-and-footwear-PDF-Final.pdf",
+        "sector-label": "Apparel Accessories and Footwear",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Draft-sector-guidance-Beverages-PDF-Final.pdf",
+        "sector-label": "Beverages",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Draft-sector-guidance-Construction-materials-PDF-Final.pdf",
+        "sector-label": "Construction Materials",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Draft-sector-guidance-Engineering-construction-and-real-estate-PDF-Final.pdf",
+        "sector-label": "Engineering Construction and Real Estate",
+        "esg-labels": ["Environment", "Nature"]
+      },
+      {
+        "name": "Draft-sector-guidance-Fishing-PDF-Final.pdf",
+        "sector-label": "Fishing",
+        "esg-labels": ["Environment", "Nature"]
       }
     ],
     "GRI": [
