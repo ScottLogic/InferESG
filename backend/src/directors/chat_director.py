@@ -1,9 +1,15 @@
+import asyncio
 from dataclasses import dataclass
 import json
 import logging
+import os
 from typing import Optional
 from uuid import uuid4
 
+from dotenv import load_dotenv
+
+from src.agents.datastore_agent import get_semantic_layer_cache
+from src.llm.llm import LLM
 from src.session.chat_response import update_session_chat_response_ids
 from src.utils.json import try_pretty_print
 from src.chat_storage_service import ChatResponse, store_chat_message
@@ -21,6 +27,7 @@ logger = logging.getLogger(__name__)
 config = Config()
 engine = PromptEngine()
 director_prompt = engine.load_prompt("chat_director")
+
 
 @dataclass
 class FinalAnswer:
@@ -43,11 +50,13 @@ async def question(question: str) -> ChatResponse:
             generated_figure = entry["result"]
             await connection_manager.send_chart({"type": "image", "data": generated_figure})
             clear_scratchpad()
-            return ChatResponse(id=str(uuid4()),
-                                question=question,
-                                answer="",
-                                dataset=None,
-                                reasoning=try_pretty_print(current_scratchpad))
+            return ChatResponse(
+                id=str(uuid4()),
+                question=question,
+                answer="",
+                dataset=None,
+                reasoning=try_pretty_print(current_scratchpad),
+            )
 
     final_answer = FinalAnswer()
     try:
@@ -59,11 +68,13 @@ async def question(question: str) -> ChatResponse:
 
     logger.info(f"final answer: {final_answer}")
 
-    response = ChatResponse(id=str(uuid4()),
-                            question=question,
-                            answer=final_answer.message or '',
-                            dataset=final_answer.dataset,
-                            reasoning=try_pretty_print(current_scratchpad))
+    response = ChatResponse(
+        id=str(uuid4()),
+        question=question,
+        answer=final_answer.message or "",
+        dataset=final_answer.dataset,
+        reasoning=try_pretty_print(current_scratchpad),
+    )
 
     store_chat_message(response)
     update_session_chat_response_ids(response.get("id"))
@@ -87,14 +98,27 @@ async def dataset_upload() -> None:
 
     if is_db_populated():
         logger.info("Skipping database population as already has data")
+        asyncio.create_task(initialize_semantic_layer())
         return
 
-    with open(dataset_file, 'r') as file:
-        csv_data = [
-            [entry for entry in line.strip('\n').split(",")]
-            for line in file
-        ]
+    with open(dataset_file, "r") as file:
+        csv_data = [[entry for entry in line.strip("\n").split(",")] for line in file]
 
     knowledge_graph_config = await generate_dynamic_knowledge_graph(csv_data)
 
     populate_db(knowledge_graph_config["cypher_query"], csv_data)
+    asyncio.create_task(initialize_semantic_layer())
+
+
+async def initialize_semantic_layer():
+    try:
+        load_dotenv()
+        llm_name = os.getenv("DATASTORE_AGENT_LLM")
+        model_name = os.getenv("DATASTORE_AGENT_MODEL")
+
+        llm_instances = LLM.get_instances()
+        llm = llm_instances.get(llm_name)
+
+        await get_semantic_layer_cache(llm, model_name)
+    except Exception as e:
+        logger.exception(e)

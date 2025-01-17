@@ -1,3 +1,4 @@
+import asyncio
 from contextlib import asynccontextmanager
 import json
 import logging.config
@@ -34,7 +35,8 @@ config = Config()
 async def lifespan(app: FastAPI):
     # start up
     try:
-        await dataset_upload()
+        logger.info("Starting dataset upload and semantic layer initialization.")
+        asyncio.create_task(dataset_upload())
     except Exception as e:
         logger.exception(f"Failed to populate database with initial data from file: {e}")
     yield

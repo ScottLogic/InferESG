@@ -9,7 +9,7 @@ from src.utils.log_publisher import LogPrefix, publish_log_info
 from src.agents.agent import chat_agent
 from src.agents.base_chat_agent import BaseChatAgent
 from src.agents.tool import tool, Parameter, ToolActionSuccess, ToolActionFailure
-from src.utils.semantic_layer_builder import get_semantic_layer
+from src.utils.semantic_layer_builder import get_semantic_layer, semantic_layer_ready
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,7 @@ cache = {}
 async def generate_cypher_query_core(
     question_intent, operation, question_params, aggregation, sort_order, timeframe, llm: LLM, model
 ) -> ToolActionSuccess | ToolActionFailure:
+    await semantic_layer_ready.wait()
     details_to_create_cypher_query = engine.load_prompt(
         "details-to-create-cypher-query",
         question_intent=question_intent,
