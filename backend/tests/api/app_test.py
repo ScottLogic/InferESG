@@ -88,7 +88,7 @@ def test_chat_message_not_found(mocker):
 
 def test_report_response_success(mocker):
     mock_generate_report = mocker.patch("src.api.app.generate_report")
-    mock_prepare_report_from_file = mocker.patch("src.api.app.prepare_report_from_file")
+    mock_prepare_file_for_report = mocker.patch("src.api.app.prepare_file_for_report")
     mocker.patch("uuid.uuid4", return_value="mock-uuid")
     mocker.patch("src.api.app.get_llm_file_upload_id", return_value=None)
 
@@ -97,7 +97,7 @@ def test_report_response_success(mocker):
     assert response.status_code == 200
     assert response.json() == {"message": "File uploaded successfully", "id": "mock-uuid"}
 
-    mock_prepare_report_from_file.assert_called_once_with(b"test data", "filename", "mock-uuid")
+    mock_prepare_file_for_report.assert_called_once_with(b"test data", "filename", "mock-uuid")
     mock_generate_report.assert_called_once_with(b"test data", "filename", "mock-uuid")
 
 

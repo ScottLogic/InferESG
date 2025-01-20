@@ -16,7 +16,7 @@ expected_answer = ("Your report for test.txt is ready to view.\n\n"
                    "topic1\ntopic1 description\n\n"
                    "topic2\ntopic2 description")
 
-async def test_prepare_report_from_file(mocker):
+async def test_prepare_file_for_report(mocker):
 
     mock_id = str(uuid.uuid4())
     filename = "test.pdf"
