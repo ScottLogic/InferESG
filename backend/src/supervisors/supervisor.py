@@ -18,7 +18,7 @@ async def solve_questions(questions: list[str]) -> None:
     if len(questions) == 0:
         Exception(no_questions_response)
 
-    tasks = [solve_question(question, get_scratchpad()) for question in questions]
+    tasks = [solve_question(question) for question in questions]
 
     results = await asyncio.gather(*tasks, return_exceptions=True)
 
@@ -37,10 +37,10 @@ async def solve_questions(questions: list[str]) -> None:
     #         update_scratchpad(error=str(error))
 
 
-async def solve_question(question, scratchpad) -> ChatAgentSuccess:
-    unsuccessful_agents = []
+async def solve_question(question) -> ChatAgentSuccess:
+    chat_agent_failures = []
     for attempt in range(number_of_attempts):
-        agent, tool_name, parameters = await select_tool_for_question(question, scratchpad, unsuccessful_agents)
+        agent, tool_name, parameters = await select_tool_for_question(question, chat_agent_failures)
         if agent is None:
             break
 
@@ -49,8 +49,7 @@ async def solve_question(question, scratchpad) -> ChatAgentSuccess:
         if isinstance(answer, ChatAgentSuccess):
             return answer
         else:
-            if not answer.retry:
-                unsuccessful_agents.append(answer.agent_name)
+            chat_agent_failures.append(answer)
 
     logger.info("Defaulting to Generalist Agent")
     return await get_generalist_agent().generalist_answer(question)

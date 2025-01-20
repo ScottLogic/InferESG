@@ -1,7 +1,8 @@
 import logging
 from typing import Tuple, Any
 
-from src.utils import to_json, Config, Scratchpad
+from src.agents.agent import ChatAgentFailure
+from src.utils import to_json, Config
 from src.prompts import PromptEngine
 from src.agents import ChatAgent, get_chat_agents
 from src.llm import get_llm
@@ -15,26 +16,35 @@ def find_selected_agent(name: str) -> ChatAgent | None:
     return next((agent for agent in get_chat_agents() if agent.name == name), None)
 
 
+def create_agent_failure_message(chat_agent_failures: list[ChatAgentFailure]) -> str:
+    return f"Take into account the previous agent failure(s): {chat_agent_failures}" if chat_agent_failures else ""
+
+
 async def select_tool_for_question(
     task: str,
-    scratchpad: Scratchpad,
-    excluded_agents: list[str]
+    chat_agent_failures: list[ChatAgentFailure]
 ) -> Tuple[ChatAgent | None, str, dict[str, Any]]:
     if not config.router_model:
         raise Exception("Router config model missing")
 
+    failed_agents = [failure.agent_name for failure in chat_agent_failures]
+
     agents = [
         agent.get_agent_details()
-        for agent in get_chat_agents() if agent.name not in excluded_agents
+        for agent in get_chat_agents() if agent.name not in failed_agents
     ]
     logger.info("#####  ~  Calling LLM for next best step  ~  #####")
-    logger.info(f"Excluded agents: {excluded_agents}")
-    logger.info(f"Scratchpad so far: {scratchpad}")
+    logger.info(f"Excluded agents: {failed_agents}")
 
     best_next_step_response = await get_llm(config.router_llm).chat(
         config.router_model,
         prompt_engine.load_prompt("agent-selection-system-prompt"),
-        prompt_engine.load_prompt("agent-selection-user-prompt", list_of_agents_and_tools=agents, question=task),
+        prompt_engine.load_prompt(
+            "agent-selection-user-prompt",
+            list_of_agents_and_tools=agents,
+            agent_failure_message=create_agent_failure_message(chat_agent_failures),
+            question=task
+        ),
         return_json=True
     )
     logger.info(prompt_engine.load_prompt("agent-selection-user-prompt", list_of_agents_and_tools=agents, question=task))
