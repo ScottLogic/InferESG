@@ -5,14 +5,17 @@ from src.agents.tool import ToolActionSuccess
 from src.agents.datastore_agent import generate_cypher_query_core
 
 @pytest.mark.asyncio
+@patch("src.agents.datastore_agent.semantic_layer_ready", new_callable=AsyncMock)
 @patch("src.agents.datastore_agent.get_semantic_layer", new_callable=AsyncMock)
 @patch("src.agents.datastore_agent.execute_query", new_callable=MagicMock)
 @patch("src.agents.datastore_agent.publish_log_info", new_callable=AsyncMock)
 @patch("src.agents.datastore_agent.engine.load_prompt", autospec=True)
 async def test_generate_query_success(mock_load_prompt, mock_publish_log_info,
-                                      mock_execute_query, mock_get_semantic_layer):
+                                      mock_execute_query, mock_get_semantic_layer, mock_semantic_layer_ready):
     llm = AsyncMock()
     model = "mock_model"
+
+    mock_semantic_layer_ready.wait = AsyncMock(return_value=None)
 
     mock_load_prompt.side_effect = [
         "details to create cypher query prompt",
@@ -37,6 +40,7 @@ async def test_generate_query_success(mock_load_prompt, mock_publish_log_info,
                                               timeframe, llm, model)
 
     assert result == ToolActionSuccess("Mocked response from the database")
+    mock_semantic_layer_ready.wait.assert_called_once()
     mock_load_prompt.assert_called()
     llm.chat.assert_called_once_with(
         model,
@@ -48,14 +52,17 @@ async def test_generate_query_success(mock_load_prompt, mock_publish_log_info,
     mock_publish_log_info.assert_called()
 
 @pytest.mark.asyncio
+@patch("src.agents.datastore_agent.semantic_layer_ready", new_callable=AsyncMock)
 @patch("src.agents.datastore_agent.get_semantic_layer", new_callable=AsyncMock)
 @patch("src.agents.datastore_agent.execute_query", new_callable=MagicMock)
 @patch("src.agents.datastore_agent.publish_log_info", new_callable=AsyncMock)
 @patch("src.agents.datastore_agent.engine.load_prompt", autospec=True)
 async def test_generate_query_failure(mock_load_prompt, mock_publish_log_info,
-                                      mock_execute_query, mock_get_semantic_layer):
+                                      mock_execute_query, mock_get_semantic_layer, mock_semantic_layer_ready):
     llm = AsyncMock()
     model = "mock_model"
+
+    mock_semantic_layer_ready.wait = AsyncMock(return_value=None)
 
     mock_load_prompt.side_effect = [
         "details to create cypher query prompt",
@@ -77,7 +84,7 @@ async def test_generate_query_failure(mock_load_prompt, mock_publish_log_info,
     with pytest.raises(Exception, match="LLM chat failed"):
         await generate_cypher_query_core(question_intent, operation, question_params, aggregation, sort_order,
                                          timeframe, llm, model)
-
+    mock_semantic_layer_ready.wait.assert_called_once()
     mock_load_prompt.assert_called()
     llm.chat.assert_called_once_with(
         model,
