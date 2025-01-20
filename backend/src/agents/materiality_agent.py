@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import logging
 
-from src.agents.tool import ToolActionSuccess, ToolActionFailure, CommonParameters
+from src.agents.tool import ToolActionSuccess, ToolActionFailure, CommonParameters, Parameter
 from src.llm import LLM
 from src.agents import tool
 from src.llm import LLMFile
@@ -38,12 +38,19 @@ async def select_material_files(user_question: str, llm: LLM, model) -> list[str
 
 @tool(
     name="answer_materiality_question",
-    description="This tool can answer questions about ESG Materiality for a specific named company or "
-                "sector and explain materiality topics in detail. Topics include:  typical sector activities, value "
-                "chain and business relationships.",
-    parameters=CommonParameters.USER_QUESTION
+    description="This tool can answer questions about ESG Materiality about an industry or sector, including "
+                "typical sector activities, value chain and business relationships.",
+    parameters={
+        **CommonParameters.USER_QUESTION,
+        "sector": Parameter(
+            type="string",
+            description="The sector to ask materiality questions about."
+        )
+    }
 )
-async def answer_materiality_question(user_question: str, llm: LLM, model) -> ToolActionSuccess | ToolActionFailure:
+async def answer_materiality_question(
+    user_question: str, sector: str, llm: LLM, model
+) -> ToolActionSuccess | ToolActionFailure:
     materiality_files = await select_material_files(user_question, llm, model)
     if materiality_files:
         answer = await llm.chat_with_file(
@@ -61,9 +68,9 @@ async def answer_materiality_question(user_question: str, llm: LLM, model) -> To
 
 @chat_agent(
     name="MaterialityAgent",
-    description="The Materiality Agent can answer questions about specific industry ESG Materiality standards and "
-                "reporting practices. The agent cannot provide current information about specific companies, their "
-                "performance, or their individual ESG practices.",
+    description="The Materiality Agent can answer questions about specific industry wide ESG Materiality standards and "
+                "reporting practices. The agent cannot provide information about companies themselves, only industries"
+                "and sectors as a whole.",
     tools=[answer_materiality_question]
 )
 class MaterialityAgent(BaseChatAgent):
