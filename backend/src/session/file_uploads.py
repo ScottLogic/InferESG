@@ -64,11 +64,13 @@ def update_session_file_uploads(file_upload: FileUpload):
     file_uploads_meta_session.append({"id": file_upload["id"], "filename": file_upload["filename"]})
     redis_client.set(UPLOADS_KEY_PREFIX + file_upload["id"], json.dumps(file_upload))
 
+
 def get_file_meta_for_filename(filename: str) -> FileUploadMeta | None:
     files = get_session_file_uploads_meta() or []
     for file in files:
         if file["filename"] == filename:
             return file
+
 
 def get_file_content_for_filename(filename: str) -> str | None:
     file_meta = get_file_meta_for_filename(filename)
@@ -76,6 +78,7 @@ def get_file_content_for_filename(filename: str) -> str | None:
         file = get_session_file_upload(file_meta["id"])
         return file["content"] if file else None
     return None
+
 
 def set_file_content_for_filename(filename: str, content:str):
     file_meta = get_file_meta_for_filename(filename)
@@ -88,6 +91,7 @@ def set_file_content_for_filename(filename: str, content:str):
             logger.warning(f"set file content for missing id {id}")
     else:
         logger.warning(f"set file content for missing filename {filename}")
+
 
 def clear_session_file_uploads():
     logger.info("Clearing file uploads and reports from session")
@@ -107,19 +111,15 @@ def clear_session_file_uploads():
     set_session(UPLOADS_META_SESSION_KEY, [])
 
 
-def get_uploaded_report_content() -> str | None:
+def get_uploaded_report() -> ReportResponse | None:
     session_file_meta = get_session_file_uploads_meta()
     if session_file_meta:
         upload_id = session_file_meta[0]['id']
-        session_report_data = get_report(upload_id)
-        if session_report_data:
-            session_report_content = session_report_data.get('report')
-            return session_report_content
-        else:
-            logger.warning("No session report data found.")
+        return get_report(upload_id)
     else:
         logger.warning("No session report uploads found.")
     return None
+
 
 def store_report(report: ReportResponse):
     redis_client.set(REPORT_KEY_PREFIX + report["id"], json.dumps(report))
