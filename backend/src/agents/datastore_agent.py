@@ -1,5 +1,8 @@
 import json
 import logging
+import os
+
+from dotenv import load_dotenv
 from src.llm.llm import LLM
 from src.utils.graph_db_utils import execute_query
 from src.prompts import PromptEngine
@@ -101,6 +104,19 @@ async def get_semantic_layer_cache(llm, model):
         return cache
     else:
         return cache
+
+async def initialize_semantic_layer():
+    try:
+        load_dotenv()
+        llm_name = os.getenv("DATASTORE_AGENT_LLM")
+        model_name = os.getenv("DATASTORE_AGENT_MODEL")
+
+        llm_instances = LLM.get_instances()
+        llm = llm_instances.get(llm_name)
+
+        await get_semantic_layer_cache(llm, model_name)
+    except Exception as e:
+        logger.exception(e)
 
 
 @chat_agent(

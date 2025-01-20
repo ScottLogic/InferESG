@@ -2,14 +2,10 @@ import asyncio
 from dataclasses import dataclass
 import json
 import logging
-import os
 from typing import Optional
 from uuid import uuid4
 
-from dotenv import load_dotenv
-
-from src.agents.datastore_agent import get_semantic_layer_cache
-from src.llm.llm import LLM
+from src.agents.datastore_agent import initialize_semantic_layer
 from src.session.chat_response import update_session_chat_response_ids
 from src.utils.json import try_pretty_print
 from src.chat_storage_service import ChatResponse, store_chat_message
@@ -109,16 +105,3 @@ async def dataset_upload() -> None:
     populate_db(knowledge_graph_config["cypher_query"], csv_data)
     asyncio.create_task(initialize_semantic_layer())
 
-
-async def initialize_semantic_layer():
-    try:
-        load_dotenv()
-        llm_name = os.getenv("DATASTORE_AGENT_LLM")
-        model_name = os.getenv("DATASTORE_AGENT_MODEL")
-
-        llm_instances = LLM.get_instances()
-        llm = llm_instances.get(llm_name)
-
-        await get_semantic_layer_cache(llm, model_name)
-    except Exception as e:
-        logger.exception(e)
