@@ -27,7 +27,7 @@ async def select_tool_for_question(
     if not config.router_model:
         raise Exception("Router config model missing")
 
-    failed_agents = [failure.agent_name for failure in chat_agent_failures]
+    failed_agents = [failure.agent_name for failure in chat_agent_failures if not failure.retry]
 
     agents = [
         agent.get_agent_details()
@@ -47,7 +47,6 @@ async def select_tool_for_question(
         ),
         return_json=True
     )
-    logger.info(prompt_engine.load_prompt("agent-selection-user-prompt", list_of_agents_and_tools=agents, question=task))
 
     best_next_step = to_json(best_next_step_response, "Failed to interpret LLM next step format from step string")
     agent = find_selected_agent(best_next_step["agent"])

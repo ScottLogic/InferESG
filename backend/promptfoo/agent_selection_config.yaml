@@ -118,161 +118,161 @@ providers:
         type: json_object
 
 prompts: file://promptfoo_test_runner.py:create_prompt
-
+# TODO update these tests with new params
 tests:
-#  - description: "Test WHEN answering a question for current information on a company THEN the web agent is selected"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "What is Astra Zeneca's current greenhouse gas emissions reporting methodology, specifically the primary calculation approach (location-based vs. market-based)?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    options:
-#      transform: JSON.parse(output)
-#    assert:
-#      - type: javascript
-#        value: output.agent === "WebAgent" && output.tool === "web_general_search"
-#      - type: javascript
-#        value: output.parameters.search_query === "Astra Zeneca current greenhouse gas emissions reporting methodology primary calculation approach location-based vs market-based"
-#
-#  - description: "Test WHEN the Web Agent tool has failed and been removed from the list of options and answering a question for current information on a company THEN no agent is selected"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "What is Astra Zeneca's current greenhouse gas emissions reporting methodology, specifically the primary calculation approach (location-based vs. market-based)?"
-#        list_of_agents_and_tools: [*data_store_agent, *materiality_agent]
-#      system_prompt_template: "agent-selection-system-prompt"
-#    options:
-#      transform: JSON.parse(output)
-#    assert:
-#      - type: javascript
-#        value: output.agent === ""
-#
-#  - description: "Test WHEN answering a question about materiality THEN materiality agent is selected"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "What topics are material to the Biotech industry?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    options:
-#      transform: JSON.parse(output)
-#    assert:
-#      - type: javascript
-#        value: output.agent === "MaterialityAgent" && output.tool === "answer_materiality_question"
-#
-#  - description: "Test WHEN the materiality and web agent have failed answering a question about materiality THEN no agent is selected"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "Identify topics material to Shell?"
-#        list_of_agents_and_tools: [*data_store_agent]
-#      system_prompt_template: "agent-selection-system-prompt"
-#    options:
-#      transform: JSON.parse(output)
-#    assert:
-#      - type: javascript
-#        value: output.agent === ""
-#
-#  - description: "Test the WebAgent is selected for an ESG data query when not related to bloomberg dataset"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "What are the environmental factors that influence a company's ESG score?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "WebAgent"
-#
-#  - description: "Test the WebAgent is selected for queries about the news"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "Are there any recent news articles discussing 3M Co's ESG initiatives?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "WebAgent"
-#
-#  - description: "Test the WebAgent is selected for queries about todays weather"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "what is todays weather in dublin?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "WebAgent"
-#
-#  - description: "Test the WebAgent is selected for a website query"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "What are Ryanair saying they are doing to combat climate change on their website?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "WebAgent"
-#
-#  - description: "Test the WebAgent is selected for conversational matters"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "Hello how are you?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === ""
-#
-#  # Note: This test is known to fail. We plan for this test to pass through improvements to the agent selection prompt
-#  - description: "Test the DatastoreAgent is not selected when the question does not reference the bloomberg dataset"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "What was the ESG score of AstraZeneca in 2020?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent != "DatastoreAgent"
-#
-#  - description: "Test the DatastoreAgent is selected for a data query related to the bloomberg dataset"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "Which company name has the highest environmental ESG score in the bloomberg dataset?"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "DatastoreAgent"
-#
-#  - description: "Test the DatastoreAgent is selected for a data query from the bloomberg.csv"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "From the Bloomberg.csv data show me all the governance scores for american airlines in date order starting in the past."
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "DatastoreAgent"
-#
-#  - description: "Test the DatastoreAgent is selected for a query of 'the database'"
-#    vars:
-#      user_prompt_template: "agent-selection-user-prompt"
-#      user_prompt_args:
-#        question: "Check the database and give me all data for Masco Corp"
-#        list_of_agents_and_tools: *list_of_agents_and_tools
-#      system_prompt_template: "agent-selection-system-prompt"
-#    assert:
-#      - type: javascript
-#        value: JSON.parse(output).agent === "DatastoreAgent"
+  - description: "Test WHEN answering a question for current information on a company THEN the web agent is selected"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What is Astra Zeneca's current greenhouse gas emissions reporting methodology, specifically the primary calculation approach (location-based vs. market-based)?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    options:
+      transform: JSON.parse(output)
+    assert:
+      - type: javascript
+        value: output.agent === "WebAgent" && output.tool === "web_general_search"
+      - type: javascript
+        value: output.parameters.search_query === "Astra Zeneca current greenhouse gas emissions reporting methodology primary calculation approach location-based vs market-based"
+
+  - description: "Test WHEN the Web Agent tool has failed and been removed from the list of options and answering a question for current information on a company THEN no agent is selected"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What is Astra Zeneca's current greenhouse gas emissions reporting methodology, specifically the primary calculation approach (location-based vs. market-based)?"
+        list_of_agents_and_tools: [*data_store_agent, *materiality_agent]
+      system_prompt_template: "agent-selection-system-prompt"
+    options:
+      transform: JSON.parse(output)
+    assert:
+      - type: javascript
+        value: output.agent === ""
+
+  - description: "Test WHEN answering a question about materiality THEN materiality agent is selected"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What topics are material to the Biotech industry?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    options:
+      transform: JSON.parse(output)
+    assert:
+      - type: javascript
+        value: output.agent === "MaterialityAgent" && output.tool === "answer_materiality_question"
+
+  - description: "Test WHEN the materiality and web agent have failed answering a question about materiality THEN no agent is selected"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "Identify topics material to Shell?"
+        list_of_agents_and_tools: [*data_store_agent]
+      system_prompt_template: "agent-selection-system-prompt"
+    options:
+      transform: JSON.parse(output)
+    assert:
+      - type: javascript
+        value: output.agent === ""
+
+  - description: "Test the WebAgent is selected for an ESG data query when not related to bloomberg dataset"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What are the environmental factors that influence a company's ESG score?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "WebAgent"
+
+  - description: "Test the WebAgent is selected for queries about the news"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "Are there any recent news articles discussing 3M Co's ESG initiatives?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "WebAgent"
+
+  - description: "Test the WebAgent is selected for queries about todays weather"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "what is todays weather in dublin?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "WebAgent"
+
+  - description: "Test the WebAgent is selected for a website query"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What are Ryanair saying they are doing to combat climate change on their website?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "WebAgent"
+
+  - description: "Test the WebAgent is selected for conversational matters"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "Hello how are you?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === ""
+
+  # Note: This test is known to fail. We plan for this test to pass through improvements to the agent selection prompt
+  - description: "Test the DatastoreAgent is not selected when the question does not reference the bloomberg dataset"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "What was the ESG score of AstraZeneca in 2020?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent != "DatastoreAgent"
+
+  - description: "Test the DatastoreAgent is selected for a data query related to the bloomberg dataset"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "Which company name has the highest environmental ESG score in the bloomberg dataset?"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "DatastoreAgent"
+
+  - description: "Test the DatastoreAgent is selected for a data query from the bloomberg.csv"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "From the Bloomberg.csv data show me all the governance scores for american airlines in date order starting in the past."
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "DatastoreAgent"
+
+  - description: "Test the DatastoreAgent is selected for a query of 'the database'"
+    vars:
+      user_prompt_template: "agent-selection-user-prompt"
+      user_prompt_args:
+        question: "Check the database and give me all data for Masco Corp"
+        list_of_agents_and_tools: *list_of_agents_and_tools
+      system_prompt_template: "agent-selection-system-prompt"
+    assert:
+      - type: javascript
+        value: JSON.parse(output).agent === "DatastoreAgent"
 
 
   - description: "Test WHEN company file is uploaded and user has asked a question and web agent not available THEN FileAgent is selected"

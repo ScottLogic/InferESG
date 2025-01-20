@@ -29,14 +29,6 @@ async def solve_questions(questions: list[str]) -> None:
             update_scratchpad(error=str(result))
 
 
-    # for question in questions:
-    #     try:
-    #         result = await solve_question(question, get_scratchpad())
-    #         update_scratchpad(result.agent_name, question, result.answer)
-    #     except Exception as error:
-    #         update_scratchpad(error=str(error))
-
-
 async def solve_question(question) -> ChatAgentSuccess:
     chat_agent_failures = []
     for attempt in range(number_of_attempts):

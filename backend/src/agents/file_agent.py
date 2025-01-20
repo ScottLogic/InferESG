@@ -16,7 +16,6 @@ engine = PromptEngine()
 
 def generate_files_description(self) -> str:
     file_meta = get_session_file_uploads_meta() or []
-    logger.info(f"==================================== {file_meta}")
     filenames = [file["filename"] for file in file_meta]
 
     return (f"This agent can retrieve information from files uploaded into InferESG. The following files have been "
