@@ -5,7 +5,7 @@ import pytest
 import uuid
 
 from src.session.file_uploads import FileUpload
-from src.directors.report_director import create_report_from_file, prepare_report_from_file
+from src.directors.report_director import create_report_from_file, prepare_file_for_report
 
 
 mock_topics = {"topic1": "topic1 description", "topic2": "topic2 description"}
@@ -31,7 +31,7 @@ async def test_prepare_report_from_file(mocker):
     mock_update_session_file_uploads = mocker.patch("src.directors.report_director.update_session_file_uploads")
 
     file_contents = b"test"
-    prepare_report_from_file(file_contents, filename, mock_id)
+    prepare_file_for_report(file_contents, filename, mock_id)
 
 
     mock_update_session_file_uploads.assert_called_once_with(session_file)

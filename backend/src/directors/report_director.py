@@ -12,7 +12,7 @@ from src.agents import get_report_agent, get_materiality_agent
 MAX_FILE_SIZE = 10 * 1024 * 1024
 
 
-def prepare_report_from_file(file_contents: bytes, filename: str, file_id:  str):
+def prepare_file_for_report(file_contents: bytes, filename: str, file_id:  str):
     file_size = sys.getsizeof(file_contents)
 
     if file_size > MAX_FILE_SIZE:

@@ -47,7 +47,7 @@ async def read_file(user_question, filename: str, llm, model) -> ToolActionSucce
         user_prompt=user_question,
         files=[LLMFile(file["filename"], bytes())],
         return_json=True
-        )
+    )
 
     return ToolActionSuccess(to_json(final_info))
 

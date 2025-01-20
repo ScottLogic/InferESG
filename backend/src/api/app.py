@@ -11,7 +11,7 @@ from src.session.llm_file_upload import get_llm_file_upload_id
 from src.utils.scratchpad import ScratchPadMiddleware
 from src.session.chat_response import get_session_chat_response_ids
 from src.chat_storage_service import clear_chat_messages, get_chat_message
-from src.directors.report_director import create_report_from_file, prepare_report_from_file
+from src.directors.report_director import create_report_from_file, prepare_file_for_report
 from src.session.file_uploads import clear_session_file_uploads, get_report
 from src.session.redis_session_middleware import reset_session
 from src.utils import Config, test_connection
@@ -152,7 +152,7 @@ async def report(file: UploadFile, background_tasks: BackgroundTasks):
 
         file_id = existing_id if existing_id else str(uuid.uuid4())
 
-        prepare_report_from_file(file_contents, file.filename, file_id)
+        prepare_file_for_report(file_contents, file.filename, file_id)
 
         background_tasks.add_task(generate_report, file_contents, file.filename, file_id)
 
