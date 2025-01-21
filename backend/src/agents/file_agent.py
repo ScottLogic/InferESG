@@ -18,12 +18,11 @@ def generate_files_description(self) -> str:
     file_meta = get_session_file_uploads_meta() or []
     filenames = [file["filename"] for file in file_meta]
 
-    return (f"This agent can retrieve information from files uploaded into InferESG. The following files have been "
-            f"uploaded {", ".join(filenames)}")
+    return f"Extract parts of the following files {", ".join(filenames)}"
 
 
 @tool(
-    name="find_info_in_file",
+    name="read_file",
     description="Extract parts of the content of a text or pdf file",
     parameters={
         **CommonParameters.USER_QUESTION,
