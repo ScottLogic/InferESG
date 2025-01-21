@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from src.agents.agent import ChatAgentSuccess, ChatAgentFailure
-from src.utils import get_scratchpad, update_scratchpad
+from src.utils import update_scratchpad
 from src.router import select_tool_for_question
 from src.agents import get_generalist_agent
 

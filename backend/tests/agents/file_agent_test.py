@@ -13,4 +13,5 @@ def test_generate_description(mocker):
     agent = FileAgent("mockllm", "mock_model")
 
     assert callable(agent.description)
-    assert agent.description() == "Extract parts of the following files test.pdf"
+    assert agent.description() == ("This agent can retrieve information from files uploaded into InferESG. "
+                                   "The following files have been uploaded test.pdf")

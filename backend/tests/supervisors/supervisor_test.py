@@ -74,7 +74,7 @@ async def test_solve_question_when_first_agent_succeeds(mocker):
         "src.supervisors.supervisor.select_tool_for_question",
         return_value=(chat_agent, mock_tool_a_name, {})
     )
-    answer = await solve_question(task, scratchpad)
+    answer = await solve_question(task)
 
     assert answer == expected
     assert patched_get_agent.call_count == 1
@@ -94,7 +94,7 @@ async def test_solve_question_when_agent_fails_first_attempt_and_succeeds_on_ret
         "src.supervisors.supervisor.select_tool_for_question",
         return_value=(chat_agent, mock_tool_a_name, {})
     )
-    answer = await solve_question(task, scratchpad)
+    answer = await solve_question(task)
 
     assert answer == expected
     assert patched_get_agent.call_count == 2
@@ -118,7 +118,7 @@ async def test_solve_question_when_first_agent_fails_no_retry_and_second_agent_s
         "src.supervisors.supervisor.select_tool_for_question",
         side_effect=[(bad_agent, mock_tool_a_name, {}), (good_agent, mock_tool_a_name, {})]
     )
-    answer = await solve_question(task, scratchpad)
+    answer = await solve_question(task)
 
     assert answer == expected
     assert patched_get_agent.call_count == 2
@@ -146,7 +146,7 @@ async def test_solve_question_when_no_agents_succeed_will_default_to_generalist(
         "src.supervisors.supervisor.get_generalist_agent",
         return_value=generalist_agent
     )
-    answer = await solve_question(task, scratchpad)
+    answer = await solve_question(task)
 
     assert patched_get_agent.call_count == 4
     assert patched_generalist.call_count == 1
@@ -161,7 +161,7 @@ async def test_solve_question_unsolvable(mocker):
     mocker.patch("src.supervisors.supervisor.select_tool_for_question", return_value=chat_agent)
 
     with pytest.raises(Exception) as error:
-        await solve_question(task, scratchpad)
+        await solve_question(task)
         assert error == unsolvable_response
 
 
@@ -170,5 +170,5 @@ async def test_solve_question_no_agent_found(mocker):
     mocker.patch("src.supervisors.supervisor.select_tool_for_question", return_value=None)
 
     with pytest.raises(Exception) as error:
-        await solve_question(task, scratchpad)
+        await solve_question(task)
         assert error == no_agent_response

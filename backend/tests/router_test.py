@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from src.agents.agent import ChatAgentFailure
 from tests.agents import MockChatAgent, mock_tool_a_name
 from tests.llm.mock_llm import MockLLM
 from src.router import select_tool_for_question
@@ -24,7 +25,7 @@ async def test_select_agent_for_task_no_agent_found(mocker):
     mocker.patch("src.router.config.router_model", new_callable=MagicMock)
     mock_llm.chat = mocker.AsyncMock(return_value=selected_agent)
 
-    agent, tool, parameters = await select_tool_for_question("task1", [], [])
+    agent, tool, parameters = await select_tool_for_question("task1", [])
 
     assert agent is None
 
@@ -37,7 +38,7 @@ async def test_select_agent_for_task_agent_found(mocker):
     mocker.patch("src.router.config.router_model", new_callable=MagicMock)
     mock_llm.chat = mocker.AsyncMock(return_value=json.dumps(selected_agent_and_tool))
 
-    agent, tool, parameters = await select_tool_for_question("task1", [], [])
+    agent, tool, parameters = await select_tool_for_question("task1", [])
 
     assert agent is mock_agent_1
     assert tool == mock_tool_a_name
@@ -47,16 +48,17 @@ async def test_select_agent_for_task_agent_found(mocker):
 @pytest.mark.asyncio
 async def test_select_agent_for_task_given_excluded_agents(mocker):
     plan = {"agent": mock_agent_2.name, "tool": mock_tool_a_name, "parameters": {"input": "input"}}
+    chat_agent_failure = ChatAgentFailure(mock_agent_1.name, "failure")
     mocker.patch("src.router.get_llm", return_value=mock_llm)
     mocker.patch("src.router.get_chat_agents", return_value=mock_agents)
     mocker.patch("src.router.config.router_model", new_callable=MagicMock)
     mock_llm.chat = mocker.AsyncMock(return_value=json.dumps(plan))
     spy_chat = mocker.spy(mock_llm, 'chat')
 
-    agent, tool, parameters = await select_tool_for_question("task1", [], [mock_agent_1.name])
+    agent, tool, parameters = await select_tool_for_question("task1", [chat_agent_failure])
 
     spy_chat_user_prompt_args = spy_chat.call_args_list[0][0][2]
 
     assert agent is mock_agent_2
-    assert mock_agent_1.name not in spy_chat_user_prompt_args
-    assert mock_agent_2.name in spy_chat_user_prompt_args
+    assert "[ChatAgentFailure(agent_name='Mock Agent', reason='failure', retry=False)]" in spy_chat_user_prompt_args
+    assert "[{'agent': 'mock_agent_2', 'description': 'A test agent'" in spy_chat_user_prompt_args
