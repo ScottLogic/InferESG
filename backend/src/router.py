@@ -34,6 +34,7 @@ async def select_tool_for_question(
         for agent in get_chat_agents() if agent.name not in failed_agents
     ]
     logger.info("#####  ~  Calling LLM for next best step  ~  #####")
+    logger.info(f"Agents: {agents}")
     logger.info(f"Excluded agents: {failed_agents}")
 
     best_next_step_response = await get_llm(config.router_llm).chat(

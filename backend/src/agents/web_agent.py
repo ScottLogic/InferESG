@@ -23,7 +23,7 @@ engine = PromptEngine()
 
 
 async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess | ToolActionFailure:
-    search_result_json = await search_urls(search_query, num_results=15)
+    search_result_json = await search_urls(search_query, num_results=50)
     search_result = json.loads(search_result_json)
 
     if search_result.get("status") == "error":

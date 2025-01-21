@@ -44,4 +44,8 @@ async def solve_question(question) -> ChatAgentSuccess:
             chat_agent_failures.append(answer)
 
     logger.info("Defaulting to Generalist Agent")
-    return await get_generalist_agent().generalist_answer(question)
+    answer = await get_generalist_agent().generalist_answer(question)
+    if isinstance(answer, ChatAgentSuccess):
+        return answer
+    else:
+        raise Exception(f"Could not create answer for question: {question}")

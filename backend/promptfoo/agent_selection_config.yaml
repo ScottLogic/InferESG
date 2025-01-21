@@ -118,7 +118,6 @@ providers:
         type: json_object
 
 prompts: file://promptfoo_test_runner.py:create_prompt
-# TODO update these tests with new params
 tests:
   - description: "Test WHEN answering a question for current information on a company THEN the web agent is selected"
     vars:

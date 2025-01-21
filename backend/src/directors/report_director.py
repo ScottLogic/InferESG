@@ -9,7 +9,7 @@ from src.session.file_uploads import (
 )
 from src.agents import get_report_agent, get_materiality_agent
 
-MAX_FILE_SIZE = 10 * 1024 * 1024
+MAX_FILE_SIZE = 40 * 1024 * 1024
 
 
 def prepare_file_for_report(file_contents: bytes, filename: str, file_id:  str):
