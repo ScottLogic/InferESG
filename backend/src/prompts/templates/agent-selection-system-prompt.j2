@@ -35,6 +35,7 @@ The user may also provide a list of ChatAgentFailure(s), as shown below:
 ChatAgentFailure(agent_name='AGENT_NAME', reason='REASON', retry=True or False)
 
 You will take into consideration whether the agent wants to be retried or not.
+Do not retry an agent more than once.
 If you decide to retry an agent, you will try slightly changing the chosen parameters to improve it's chances of success.
 
 Reply using a single line of json. Do not provide any formatting or markdown:

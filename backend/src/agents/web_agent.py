@@ -31,6 +31,7 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
     urls = search_result.get("urls", [])
     logger.info(f"URLs found: {urls}")
 
+    summaries = []
     for url in urls:
         content = await perform_scrape(url)
         if not content:
@@ -40,10 +41,15 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
         summary = await summarise_content(search_query, content, llm, model)
 
         if summary:
-            return ToolActionSuccess({"answer": summary, "citation_url": url})
+            summaries.append({"answer": summary, "citation_url": url})
+            if len(summaries) >= 3:
+                break
         else:
             logger.info(f"No relevant content found for url: {url}")
-    return ToolActionFailure("No relevant information found on the internet for the given query.")
+    if summaries:
+        return ToolActionSuccess(summaries)
+    else:
+        return ToolActionFailure("No relevant information found on the internet for the given query.")
 
 
 async def web_pdf_download_core(pdf_url, llm, model) -> ToolActionSuccess | ToolActionFailure:
