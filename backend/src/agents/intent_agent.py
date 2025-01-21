@@ -9,7 +9,7 @@ from src.utils.config import Config
 config = Config()
 
 engine = PromptEngine()
-intent_system = engine.load_prompt("intent-system")
+
 logger = logging.getLogger(__name__)
 
 report_prompt_template = "The following report was generated from the file {filename}:\n{report_content}"
@@ -27,10 +27,16 @@ class IntentAgent(Agent):
         else:
             report_prompt = "There is no report content"
 
-        user_prompt = engine.load_prompt(
-            "intent",
-            question=utterance,
-            chat_history=session_chat if session_chat else "There is no chat history",
-            report_prompt=report_prompt
+        return await self.llm.chat(
+            self.model,
+            engine.load_prompt(
+                "intent-system",
+                chat_history=session_chat if session_chat else "There is no chat history",
+                report_prompt=report_prompt
+            ),
+            user_prompt=engine.load_prompt(
+                "intent",
+                question=utterance
+            ),
+            return_json=True
         )
-        return await self.llm.chat(self.model, intent_system, user_prompt=user_prompt, return_json=True)

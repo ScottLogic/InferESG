@@ -23,7 +23,7 @@ engine = PromptEngine()
 
 
 async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess | ToolActionFailure:
-    search_result_json = await search_urls(search_query, num_results=20)
+    search_result_json = await search_urls(search_query, num_results=15)
     search_result = json.loads(search_result_json)
 
     if search_result.get("status") == "error":
@@ -36,13 +36,11 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
         content = await perform_scrape(url)
         if not content:
             continue  # Skip to the next URL if no content is found
-        logger.info(f"Content scraped for url: {url}")
-        logger.debug(f"Content scraped successfully: {content}")
         summary = await summarise_content(search_query, content, llm, model)
 
         if summary:
             summaries.append({"answer": summary, "citation_url": url})
-            if len(summaries) >= 3:
+            if len(summaries) >= 2:
                 break
         else:
             logger.info(f"No relevant content found for url: {url}")
@@ -139,7 +137,7 @@ async def perform_scrape(url: str) -> str:
     try:
         if not str(url).startswith("https"):
             return ""
-        scrape_result_json = await scrape_content(url)
+        scrape_result_json = await scrape_content(url, )
         scrape_result = json.loads(scrape_result_json)
         if scrape_result["status"] == "error":
             return ""
