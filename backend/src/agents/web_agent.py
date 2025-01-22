@@ -40,7 +40,7 @@ async def web_general_search_core(search_query, llm, model) -> ToolActionSuccess
 
         if summary:
             summaries.append({"answer": summary, "citation_url": url})
-            if len(summaries) >= 2:
+            if len(summaries) >= 3:
                 break
         else:
             logger.info(f"No relevant content found for url: {url}")

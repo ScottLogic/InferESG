@@ -1,4 +1,6 @@
 import logging
+import random
+
 from googlesearch import search
 import aiohttp
 from bs4 import BeautifulSoup
@@ -11,6 +13,23 @@ logger = logging.getLogger(__name__)
 config = Config()
 
 engine = PromptEngine()
+
+
+def create_fake_headers() -> dict[str, str]:
+    user_agents = ["Macintosh; Intel Mac OS X 10_15_7", "Windows NT 10.0; Win64; x64"]
+    return {
+        "User-Agent": f"Mozilla/5.0 ({random.choice(user_agents)}) Gecko/20100101 Firefox/98.0",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Cache-Control": "max-age=0",
+    }
 
 
 async def search_urls(search_query, num_results=10) -> str:
@@ -39,7 +58,7 @@ async def search_urls(search_query, num_results=10) -> str:
 async def scrape_content(url, limit=100000) -> str:
     try:
         logger.info(f"Scraping content from URL: {url}")
-        async with aiohttp.request("GET", url) as response:
+        async with aiohttp.request("GET", url, headers=create_fake_headers()) as response:
             response.raise_for_status()
             soup = BeautifulSoup(await response.text(), "html.parser")
             paragraphs_and_tables = soup.find_all(["p", "table", "h1", "h2", "h3", "h4", "h5", "h6"])
