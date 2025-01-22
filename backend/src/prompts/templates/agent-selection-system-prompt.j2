@@ -31,12 +31,11 @@ The user will provide tools to select from in the following json format:
     }
 ]
 
-The user may also provide a list of ChatAgentFailure(s), as shown below:
+The user may also provide a list of Agents that have already attempted the question and failed, as shown below:
 ChatAgentFailure(agent_name='AGENT_NAME', reason='REASON', retry=True or False)
 
-You will take into consideration whether the agent wants to be retried or not.
-Do not retry an agent more than once.
-If you decide to retry an agent, you will try slightly changing the chosen parameters to improve it's chances of success.
+You will take into consideration whether the agent wants to be retried or not, but if an agent already has two failures, you will not try it again.
+If you select an agent listed in the ChatAgentFailures it has already tried to answer the question and failed, you will slightly change the chosen parameters to improve its chances of success.
 
 Reply using a single line of json. Do not provide any formatting or markdown:
 

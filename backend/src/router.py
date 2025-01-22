@@ -16,8 +16,18 @@ def find_selected_agent(name: str) -> ChatAgent | None:
     return next((agent for agent in get_chat_agents() if agent.name == name), None)
 
 
-def create_agent_failure_message(chat_agent_failures: list[ChatAgentFailure]) -> str:
-    return f"Take into account the previous agent failure(s): {chat_agent_failures}" if chat_agent_failures else ""
+def create_agent_failure_message(chat_agent_failures: list[ChatAgentFailure], excluded_agents: list[str]) -> str:
+    if chat_agent_failures:
+        failures = [failure for failure in chat_agent_failures if failure.agent_name not in excluded_agents]
+        return f"Take into account the previous agent failure(s): {failures}"
+    else:
+        return ""
+
+
+def list_excluded_agents(chat_agent_failures: list[ChatAgentFailure]) -> list[str]:
+    failed_agents = [failure.agent_name for failure in chat_agent_failures if not failure.retry]
+    agents_failed_more_than_once = [agent for agent in failed_agents if failed_agents.count(agent) > 1]
+    return agents_failed_more_than_once
 
 
 async def select_tool_for_question(
@@ -27,15 +37,15 @@ async def select_tool_for_question(
     if not config.router_model:
         raise Exception("Router config model missing")
 
-    failed_agents = [failure.agent_name for failure in chat_agent_failures if not failure.retry]
+    excluded_agents = list_excluded_agents(chat_agent_failures)
 
     agents = [
         agent.get_agent_details()
-        for agent in get_chat_agents() if agent.name not in failed_agents
+        for agent in get_chat_agents() if agent.name not in excluded_agents
     ]
     logger.info("#####  ~  Calling LLM for next best step  ~  #####")
     logger.info(f"Agents: {agents}")
-    logger.info(f"Excluded agents: {failed_agents}")
+    logger.info(f"Excluded agents: {excluded_agents}")
 
     best_next_step_response = await get_llm(config.router_llm).chat(
         config.router_model,
@@ -43,7 +53,7 @@ async def select_tool_for_question(
         prompt_engine.load_prompt(
             "agent-selection-user-prompt",
             list_of_agents_and_tools=agents,
-            agent_failure_message=create_agent_failure_message(chat_agent_failures),
+            agent_failure_message=create_agent_failure_message(chat_agent_failures, excluded_agents),
             question=task
         ),
         return_json=True

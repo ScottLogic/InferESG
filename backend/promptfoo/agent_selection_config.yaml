@@ -93,8 +93,8 @@ file_agent:
     "tools":
       [
         {
-          "name": "find_info_in_file",
-          "description": "This tool can answer questions about ESG Materiality for a specific named company or sector and explain materiality topics in detail. Topics include:  typical sector activities, value chain and business relationships..",
+          "name": "read_file",
+          "description": "Extract parts of the content of a text or pdf file",
           "parameters":
             {
               "question": { "type": "string", "description": "The question to answer." },
@@ -273,14 +273,13 @@ tests:
       - type: javascript
         value: JSON.parse(output).agent === "DatastoreAgent"
 
-
-  - description: "Test WHEN company file is uploaded and user has asked a question and web agent not available THEN FileAgent is selected"
+  - description: "Test WHEN company file is uploaded and user has asked a question not about the report file THEN any agent is selected except for FileAgent"
     vars:
       user_prompt_template: "agent-selection-user-prompt"
       user_prompt_args:
         question: "What is AstraZeneca's current greenhouse gas emissions reporting methodology, specifically the primary calculation approach (location-based vs. market-based)"
-        list_of_agents_and_tools: [*data_store_agent, *materiality_agent, *file_agent]
+        list_of_agents_and_tools: *list_of_agents_and_tools
       system_prompt_template: "agent-selection-system-prompt"
     assert:
       - type: javascript
-        value: JSON.parse(output).agent === "FileAgent"
+        value: JSON.parse(output).agent != "FileAgent"

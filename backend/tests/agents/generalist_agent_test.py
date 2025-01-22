@@ -12,9 +12,9 @@ mock_llm = get_llm("mockllm")
 
 
 @pytest.mark.asyncio
-@patch('src.agents.base_chat_agent.BaseChatAgent.validate', new_callable=AsyncMock)
+@patch('src.agents.validator_agent.ValidatorAgent.validate', new_callable=AsyncMock)
 async def test_generalist_agent(mock_validate, mocker):
-    mock_validate.return_value = True
+    mock_validate.return_value = "true"
 
     mock_llm.chat = mocker.AsyncMock(return_value="Example summary.")
 
