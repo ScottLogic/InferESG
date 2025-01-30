@@ -88,7 +88,7 @@ async def summarise_content(search_query, contents, llm, model) -> str | None:
         "",
         return_json=True
     ))
-    if "relevant" in response and response["relevant"].lower() == "true" and "summary" in response:
+    if "relevant" in response and str(response["relevant"]).lower() == "true" and "summary" in response:
         return response["summary"]
     return None
 
